@@ -1,0 +1,5 @@
+station_id,station_name,station_type,latitude,longitude,elevation_m
+S01,Central Avenue,traffic,50.062,19.938,212
+S02,Old Town,urban_background,50.071,19.925,205
+S03,Riverside Industrial,industrial,50.041,19.981,198
+S04,Green Hills,suburban,50.095,19.902,265
