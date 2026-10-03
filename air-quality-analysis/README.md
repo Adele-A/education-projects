@@ -41,6 +41,7 @@ From the project root:
 
 ```bash
 pip install -r requirements.txt
+python src/clean_text.py
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
@@ -49,6 +50,8 @@ python -m pytest -q
 ```
 
 The generator creates the `data/` folder if needed and writes the CSV files. Running it again with the same seed (42) produces identical files.
+
+`src/clean_text.py` replaces any old `data/notes.csv` or `data/comments.csv` that contains non-English text with the English-only version, and checks that every CSV in `data/` is English-only. The other scripts do the same replacement automatically when they start.
 
 ## Tests
 
@@ -61,10 +64,12 @@ python -m pytest -q
 | File | What it checks |
 |------|----------------|
 | `tests/test_data_generator.py` | Column names, row count (4 stations x 1096 days), unique keys, date range, value ranges (clipping bounds), PM10 above PM2.5, small share of missing values, reproducibility with the fixed seed, English-only notes file |
+| `tests/test_comments.py` | English-only comments file, replacement of old non-English files |
+| `tests/test_data_text_english.py` | No non-English text left in the CSV files of `data/` |
 | `tests/test_utils.py` | Feature building, time-based split without overlap, regression metrics |
 | `tests/test_utils_extra.py` | Smearing factor, dropping rows with a missing target, error when data files are missing |
 
-The tests generate data in memory with seed 42, so they do not need the files in `data/` or `figures/`, and they run in a few seconds.
+The data-generation tests build data in memory with seed 42, so they do not need the files in `data/` or `figures/`, and they run in a few seconds.
 
 ## Exploratory data analysis
 
