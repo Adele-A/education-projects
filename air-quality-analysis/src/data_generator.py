@@ -7,7 +7,6 @@ Outputs (relative to the project root):
     data/stations.csv
     data/daily_measurements.csv
     data/notes.csv
-    data/comments.csv
 
 Run from the project root:
     python src/data_generator.py
@@ -45,13 +44,9 @@ NOTES = pd.DataFrame(
     }
 )
 
-# Free-text project comments (English only).
-COMMENTS = pd.DataFrame(
-    {
-        "comment_id": [1],
-        "comment": ["Test comment for checking the data pipeline"],
-    }
-)
+# Files written by older versions of this project that are no longer used.
+# They may contain non-English text, so they are deleted on cleanup.
+LEGACY_FILES = ["comments.csv"]
 
 # Baseline levels (ug/m3) by station type.
 BASE_PM25 = {"traffic": 24.0, "urban_background": 18.0, "industrial": 22.0, "suburban": 12.0}
@@ -203,37 +198,45 @@ def write_notes(path):
     write_english_table(NOTES, "note", path)
 
 
-def write_comments(path):
-    """Write the English-only comments file, replacing any older version."""
-    write_english_table(COMMENTS, "comment", path)
+def remove_legacy_file(path):
+    """Delete an unused legacy file; if that fails, empty it of all text."""
+    print(f"Removing unused legacy file {path.name}.")
+    try:
+        path.unlink()
+    except OSError:
+        # Fall back to truncating so no old text can remain.
+        with open(path, "w", encoding="utf-8", newline="") as f:
+            f.write("")
 
 
 def clean_text_files(data_dir=DATA_DIR):
-    """Replace existing notes/comments files that are not the English version.
+    """Remove legacy text files and replace a non-English notes file.
 
-    Files that do not exist are left alone. A file is rewritten when it
-    contains non-ASCII bytes, cannot be read as UTF-8 text, or differs from
-    the English table defined in this module. Safe to call before any data
-    loading.
+    - Legacy files (e.g. comments.csv) are no longer used and are deleted.
+    - notes.csv is rewritten when it contains non-ASCII bytes, cannot be read
+      as UTF-8 text, or differs from the English table defined in this module.
+    Files that do not exist are left alone. Safe to call before any data loading.
     """
     data_dir = Path(data_dir)
-    for name, writer, table in (("notes.csv", write_notes, NOTES),
-                                ("comments.csv", write_comments, COMMENTS)):
+    for name in LEGACY_FILES:
         path = data_dir / name
-        if not path.exists():
-            continue
-        expected = table.to_csv(index=False)
+        if path.exists():
+            remove_legacy_file(path)
+
+    path = data_dir / "notes.csv"
+    if path.exists():
+        expected = NOTES.to_csv(index=False)
         try:
             current = path.read_bytes().decode("utf-8")
         except UnicodeDecodeError:
             current = None
         if current is None or not current.isascii() \
                 or current.replace("\r\n", "\n") != expected:
-            writer(path)
+            write_notes(path)
 
 
-# Clean old non-English text files as soon as this module is imported, so every
-# script (and the tests) that uses the generator leaves only English text behind.
+# Clean old text files as soon as this module is imported, so every script
+# (and the tests) that uses the generator leaves only English text behind.
 clean_text_files(DATA_DIR)
 
 
@@ -246,12 +249,10 @@ def main():
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
     write_notes(DATA_DIR / "notes.csv")
-    write_comments(DATA_DIR / "comments.csv")
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
     print(f"Saved {len(NOTES)} rows to {DATA_DIR / 'notes.csv'}")
-    print(f"Saved {len(COMMENTS)} rows to {DATA_DIR / 'comments.csv'}")
 
 
 if __name__ == "__main__":

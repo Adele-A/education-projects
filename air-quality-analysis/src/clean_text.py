@@ -1,9 +1,10 @@
-"""Replace old non-English text files in data/ with English-only versions.
+"""Clean old text files in data/ and verify that all CSV files are English-only.
 
-Some earlier versions of data/notes.csv and data/comments.csv contained
-non-English text. This script rewrites such files with the English-only
-tables defined in src/data_generator.py and then verifies that every CSV
-file in data/ is plain ASCII (English only).
+Some earlier versions of the project wrote data/comments.csv (with
+non-English text). That file is no longer used and is deleted. A
+data/notes.csv with non-English text is rewritten with the English-only
+table defined in src/data_generator.py. Afterwards every CSV file in data/
+is checked to be plain ASCII (English only).
 
 Run from the project root:
     python src/clean_text.py
