@@ -214,6 +214,11 @@ def clean_text_files(data_dir=DATA_DIR):
             writer(path)
 
 
+# Clean old non-English text files as soon as this module is imported, so every
+# script (and the tests) that uses the generator leaves only English text behind.
+clean_text_files(DATA_DIR)
+
+
 def main():
     rng = np.random.default_rng(SEED)
     os.makedirs(DATA_DIR, exist_ok=True)
