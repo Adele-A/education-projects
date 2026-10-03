@@ -184,18 +184,18 @@ def write_english_table(table, text_column, path):
     """Write a small free-text table, replacing any older version of the file.
 
     If a previous file contains non-English (non-ASCII) text, it is reported
-    and then overwritten.
+    and then overwritten in place (so a failed delete cannot leave old text).
     """
     # Safety check: all project text must be English (ASCII).
     assert all(str(t).isascii() for t in table[text_column]), \
         f"{path.name}: text must be English only"
 
-    if path.exists():
-        if has_non_english_text(path):
-            print(f"Found non-English text in old {path.name}; replacing it with English text.")
-        path.unlink()  # always start from a clean file
+    if path.exists() and has_non_english_text(path):
+        print(f"Found non-English text in old {path.name}; replacing it with English text.")
 
-    table.to_csv(path, index=False, encoding="utf-8")
+    # Opening with "w" truncates any old content, whatever its encoding was.
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write(table.to_csv(index=False))
 
 
 def write_notes(path):
