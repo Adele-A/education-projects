@@ -15,3 +15,12 @@ def test_write_comments_replaces_non_english_file(tmp_path):
     assert text.isascii()
     assert text.splitlines()[0] == "comment_id,comment"
     assert len(text.splitlines()) == 2
+
+
+def test_clean_text_files_replaces_only_non_english(tmp_path):
+    comments = tmp_path / "comments.csv"
+    comments.write_text("comment_id,comment\n1,\u0422\u0435\u0441\u0442\n", encoding="utf-8")
+    dg.clean_text_files(tmp_path)
+    assert comments.read_text(encoding="utf-8").isascii()
+    # A missing notes file is not created by the cleanup.
+    assert not (tmp_path / "notes.csv").exists()

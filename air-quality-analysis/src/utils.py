@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+from data_generator import clean_text_files
+
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
 
@@ -23,6 +25,8 @@ STATION_TYPES = ["suburban", "traffic", "urban_background", "industrial"]
 def load_data(data_dir: Path | str = DATA_DIR) -> pd.DataFrame:
     """Load both CSV tables and return measurements merged with station metadata.
 
+    Also replaces any old notes/comments file that contains non-English text.
+
     Args:
         data_dir: Path to the data directory containing stations.csv and daily_measurements.csv.
 
@@ -33,6 +37,7 @@ def load_data(data_dir: Path | str = DATA_DIR) -> pd.DataFrame:
         FileNotFoundError: If data files do not exist in data_dir.
     """
     data_dir = Path(data_dir)
+    clean_text_files(data_dir)
     stations_path = data_dir / "stations.csv"
     meas_path = data_dir / "daily_measurements.csv"
     if not stations_path.exists() or not meas_path.exists():

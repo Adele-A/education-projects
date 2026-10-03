@@ -201,6 +201,19 @@ def write_comments(path):
     write_english_table(COMMENTS, "comment", path)
 
 
+def clean_text_files(data_dir=DATA_DIR):
+    """Replace existing notes/comments files that contain non-English text.
+
+    Files that do not exist are left alone; files that are already English
+    (ASCII) are not touched. Safe to call before any data loading.
+    """
+    data_dir = Path(data_dir)
+    for name, writer in (("notes.csv", write_notes), ("comments.csv", write_comments)):
+        path = data_dir / name
+        if path.exists() and not path.read_text(encoding="utf-8", errors="replace").isascii():
+            writer(path)
+
+
 def main():
     rng = np.random.default_rng(SEED)
     os.makedirs(DATA_DIR, exist_ok=True)

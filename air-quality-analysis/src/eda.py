@@ -8,6 +8,7 @@ Run from the project root:
     python src/eda.py
 """
 import os
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -16,6 +17,9 @@ matplotlib.use("Agg")  # non-interactive backend, no display needed
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from data_generator import clean_text_files  # noqa: E402
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -28,12 +32,15 @@ WEATHER = ["temperature_c", "humidity_pct", "wind_speed_ms", "precipitation_mm",
 def load_data():
     """Load both tables and merge station metadata into the measurements.
 
+    Also replaces any old notes/comments file that contains non-English text.
+
     Raises:
         FileNotFoundError: if required data files do not exist.
             Run src/data_generator.py first to create them.
     """
+    clean_text_files(DATA_DIR)
     stations_path = DATA_DIR / "stations.csv"
-    meas_path = DATA_DIR / "daily_measurements.csv"  # fixed: file name was misspelled
+    meas_path = DATA_DIR / "daily_measurements.csv"
 
     if not stations_path.exists() or not meas_path.exists():
         raise FileNotFoundError(

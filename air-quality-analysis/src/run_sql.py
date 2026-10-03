@@ -9,9 +9,13 @@ Run from the project root:
 """
 import re
 import sqlite3
+import sys
 from pathlib import Path
 
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from data_generator import clean_text_files  # noqa: E402
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -24,6 +28,7 @@ QUERY_MARKER = re.compile(r"^--\s*(Q\d+:.*)$")
 
 def load_database():
     """Create an in-memory SQLite database with both CSV tables."""
+    clean_text_files(DATA_DIR)  # replace old non-English notes/comments files
     stations_path = DATA_DIR / "stations.csv"
     meas_path = DATA_DIR / "daily_measurements.csv"
     if not stations_path.exists() or not meas_path.exists():
