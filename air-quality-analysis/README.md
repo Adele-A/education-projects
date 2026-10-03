@@ -22,7 +22,7 @@ Build a reproducible analysis that:
 2. **EDA** (`src/eda.py`): data quality checks, distributions, time series plots, seasonality by month and weekday, station comparison.
 3. **Analysis / model** (`src/analysis.py`, `src/utils.py`): Spearman correlation analysis and a regression model for PM2.5 with time-based validation.
 4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): queries for monthly averages, station rankings, days exceeding a threshold and more.
-5. **Tests**: pytest checks in `tests/` (utility tests exist in `tests/test_utils.py`; generator tests still to be added).
+5. **Tests**: pytest checks in `tests/` for the data generator and the utility functions (see "Tests" below).
 
 ## Dataset (synthetic)
 
@@ -45,10 +45,26 @@ python src/data_generator.py
 python src/eda.py
 python src/analysis.py
 python src/run_sql.py
-pytest tests/
+python -m pytest -q
 ```
 
 The generator creates the `data/` folder if needed and writes the CSV files. Running it again with the same seed (42) produces identical files.
+
+## Tests
+
+Run all tests from the project root:
+
+```bash
+python -m pytest -q
+```
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | Column names, row count (4 stations x 1096 days), unique keys, date range, value ranges (clipping bounds), PM10 above PM2.5, small share of missing values, reproducibility with the fixed seed, English-only notes file |
+| `tests/test_utils.py` | Feature building, time-based split without overlap, regression metrics |
+| `tests/test_utils_extra.py` | Smearing factor, dropping rows with a missing target, error when data files are missing |
+
+The tests generate data in memory with seed 42, so they do not need the files in `data/` or `figures/`, and they run in a few seconds.
 
 ## Exploratory data analysis
 
