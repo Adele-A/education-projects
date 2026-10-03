@@ -6,6 +6,7 @@ measurement data.
 Outputs (relative to the project root):
     data/stations.csv
     data/daily_measurements.csv
+    data/notes.csv
 
 Run from the project root:
     python src/data_generator.py
@@ -32,6 +33,14 @@ STATIONS = pd.DataFrame(
         "latitude": [50.062, 50.071, 50.041, 50.095],
         "longitude": [19.938, 19.925, 19.981, 19.902],
         "elevation_m": [212, 205, 198, 265],
+    }
+)
+
+# Free-text project notes (English only).
+NOTES = pd.DataFrame(
+    {
+        "note_id": [1],
+        "note": ["Test note for checking the data pipeline"],
     }
 )
 
@@ -162,9 +171,11 @@ def main():
 
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
+    NOTES.to_csv(DATA_DIR / "notes.csv", index=False)
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
+    print(f"Saved {len(NOTES)} rows to {DATA_DIR / 'notes.csv'}")
 
 
 if __name__ == "__main__":
