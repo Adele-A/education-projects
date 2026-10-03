@@ -172,6 +172,14 @@ def generate_measurements(rng):
     return data
 
 
+def has_non_english_text(path):
+    """Return True if the file contains any non-ASCII byte (non-English text).
+
+    Works on raw bytes, so files in any encoding are detected.
+    """
+    return not path.read_bytes().isascii()
+
+
 def write_english_table(table, text_column, path):
     """Write a small free-text table, replacing any older version of the file.
 
@@ -183,8 +191,7 @@ def write_english_table(table, text_column, path):
         f"{path.name}: text must be English only"
 
     if path.exists():
-        old_text = path.read_text(encoding="utf-8", errors="replace")
-        if not old_text.isascii():
+        if has_non_english_text(path):
             print(f"Found non-English text in old {path.name}; replacing it with English text.")
         path.unlink()  # always start from a clean file
 
@@ -210,7 +217,7 @@ def clean_text_files(data_dir=DATA_DIR):
     data_dir = Path(data_dir)
     for name, writer in (("notes.csv", write_notes), ("comments.csv", write_comments)):
         path = data_dir / name
-        if path.exists() and not path.read_text(encoding="utf-8", errors="replace").isascii():
+        if path.exists() and has_non_english_text(path):
             writer(path)
 
 
