@@ -99,8 +99,6 @@ The tests generate data in memory with seed 42, so they do not need the files in
 | `pm25_pred_vs_actual.png` | Predicted vs actual PM2.5 on the test period |
 | `pm25_model_coefficients.png` | Standardised coefficients of the log(PM2.5) model |
 
-**Limitations.** The data is synthetic and was generated with known effects of temperature, wind and rain, so a good fit mostly shows that the model recovers the simulated structure, not that it would work on real data. The model is linear and ignores multi-day pollution episodes (no lagged features). Read all results from the script output and `reports/metrics.json`.
-
 ## SQL analysis
 
 `sql/queries.sql` contains 8 commented queries in the SQLite dialect. Each query is preceded by a comment line starting with `-- Q<n>:` that states the question it answers. `src/run_sql.py` loads `stations.csv` and `daily_measurements.csv` into an in-memory SQLite database (`pandas.to_sql`), splits the file into statements, runs each one and prints the description with the first 10 rows of the result. No database file is created.
@@ -120,7 +118,89 @@ The tests generate data in memory with seed 42, so they do not need the files in
 python src/run_sql.py
 ```
 
-Missing values are NULL in SQL, so `AVG` and `COUNT` skip them. The query results come from the synthetic data and are printed at run time. See the script output for the numbers.
+Missing values are NULL in SQL, so `AVG` and `COUNT` skip them. The query results come from the synthetic data and are printed at run time.
+
+## Results
+
+All numbers below come from the output of `src/eda.py`, `src/analysis.py` and `src/run_sql.py` on the synthetic data (seed 42).
+
+### Data
+
+- 4384 station-day rows. PM2.5 has 4287 non-missing values, so 4287 rows are usable for modelling.
+- Mean PM2.5 is 24.23 ug/m3 (median 21.0, max 123.6).
+
+### Stations
+
+| Station | Type | Mean PM2.5 | Mean NO2 |
+|---------|------|-----------:|---------:|
+| S01 | traffic | 30.4 | 53.0 |
+| S03 | industrial | 27.6 | 41.4 |
+| S02 | urban_background | 23.3 | 36.9 |
+| S04 | suburban | 15.7 | 21.0 |
+
+### Seasonality and trend
+
+- Monthly mean PM2.5 is highest in December (30.6) and February (30.5), and lowest in June (18.7).
+- O3 shows the opposite pattern: 51.2 in July versus 9.7 in December.
+- Annual mean PM2.5: 24.6 (2022), 24.7 (2023), 23.4 (2024). The SQL year-over-year change is +0.11 for 2023 and -1.24 for 2024.
+
+![Seasonality by month](figures/seasonality_by_month.png)
+
+### Weather relationships (Spearman)
+
+| Pair | rho |
+|------|----:|
+| O3 vs temperature | 0.85 |
+| PM2.5 vs wind speed | -0.55 |
+| PM10 vs wind speed | -0.53 |
+| O3 vs humidity | -0.49 |
+| NO2 vs wind speed | -0.43 |
+| PM2.5 vs temperature | -0.29 |
+| PM2.5 vs precipitation | -0.27 |
+
+- Mean PM2.5 by wind band: 33.2 (below 2 m/s), 25.2 (2 to 4 m/s), 18.8 (4 to 6 m/s), 12.0 (6 m/s and above).
+- Mean PM2.5 on dry days is 26.3 versus 17.3 on rainy days (precipitation > 1 mm).
+
+![Correlation heatmap](figures/correlation_heatmap.png)
+
+### PM2.5 regression model
+
+Time-based split: train 2852 rows (before 2024-01-01), test 1435 rows (2024).
+
+| Model | MAE | RMSE | R2 |
+|-------|----:|-----:|---:|
+| Linear model (train) | 6.55 | 9.35 | 0.605 |
+| Linear model (test) | 6.26 | 8.89 | 0.577 |
+| Baseline: station-type mean (test) | 9.69 | 12.73 | 0.133 |
+| Linear model, random 80/20 split (test) | 6.51 | 9.18 | 0.589 |
+
+Largest standardised coefficients on log(PM2.5): wind speed -0.358, traffic type 0.289, industrial type 0.256, heating degrees 0.212, urban background type 0.172, rainy day -0.120.
+
+![Predicted vs actual PM2.5](figures/pm25_pred_vs_actual.png)
+
+## Conclusions
+
+- In this synthetic dataset, PM2.5 is higher in winter and lower in summer, while O3 follows the opposite pattern (monthly means above).
+- Wind speed is the strongest weather correlate of PM2.5 (rho = -0.55), and mean PM2.5 falls from 33.2 to 12.0 between the lowest and highest wind bands.
+- Rainy days have lower mean PM2.5 than dry days (17.3 vs 26.3).
+- The traffic station has the highest mean PM2.5 (30.4) and the suburban station the lowest (15.7).
+- The linear model beats the station-type baseline on the 2024 test period (MAE 6.26 vs 9.69; R2 0.577 vs 0.133).
+- Test R2 (0.577) is close to the random-split R2 (0.589), so on this data the split choice changed the result only slightly.
+- The annual mean PM2.5 changes little over three years (24.6, 24.7, 23.4). With only three years, no long-term trend is claimed.
+
+## Limitations & next steps
+
+**Limitations**
+- The data is **synthetic**, generated with built-in effects of temperature, wind, rain and heating season. Good model fit mostly shows that the simulated structure is recovered, not that the results hold for a real city.
+- The model is linear and has no lagged features, so it ignores multi-day pollution episodes.
+- Spearman correlations describe association only, not causation. Weather variables are also correlated with each other (for example temperature and humidity: -0.58).
+- Only three years of data are available, which is too short to judge trends.
+
+**Next steps**
+- Add lagged PM2.5 and weather features (previous day values).
+- Try non-linear models (for example gradient boosting) and compare them to the linear model on the same time-based split.
+- Add confidence intervals or cross-validation with several time-based folds.
+- Repeat the workflow on real open monitoring data, if available, to check which findings carry over.
 
 ---
 
