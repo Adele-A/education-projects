@@ -169,9 +169,13 @@ def main():
 
     measurements = generate_measurements(rng)
 
+    # Safety check: all project text must be English (ASCII), so an old
+    # notes file with other-language text is always replaced by clean content.
+    assert all(str(t).isascii() for t in NOTES["note"]), "Notes must be English only"
+
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
-    NOTES.to_csv(DATA_DIR / "notes.csv", index=False)
+    NOTES.to_csv(DATA_DIR / "notes.csv", index=False, encoding="utf-8")
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
