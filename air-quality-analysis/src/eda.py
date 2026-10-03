@@ -26,9 +26,24 @@ WEATHER = ["temperature_c", "humidity_pct", "wind_speed_ms", "precipitation_mm",
 
 
 def load_data():
-    """Load both tables and merge station metadata into the measurements."""
-    stations = pd.read_csv(DATA_DIR / "stations.csv")
-    meas = pd.read_csv(DATA_DIR / "daily_measurements.csv", parse_dates=["date"])
+    """Load both tables and merge station metadata into the measurements.
+    
+    Raises:
+        FileNotFoundError: if required data files do not exist. 
+            Run src/data_generator.py first to create them.
+    """
+    stations_path = DATA_DIR / "stations.csv"
+    meas_path = DATA_DIR / "daily_measurements.csv"
+    
+    if not stations_path.exists() or not meas_path.exists():
+        raise FileNotFoundError(
+            f"Data files not found in {DATA_DIR}.\n"
+            "Please run the data generator first:\n"
+            "  python src/data_generator.py"
+        )
+    
+    stations = pd.read_csv(stations_path)
+    meas = pd.read_csv(meas_path, parse_dates=["date"])
     df = meas.merge(stations, on="station_id", how="left")
     return stations, meas, df
 
