@@ -19,12 +19,10 @@ Build a reproducible analysis that:
 ## Plan of the work
 
 1. **Data generation** (`src/data_generator.py`): create synthetic station metadata and daily measurements.
-2. **EDA** (`src/eda.py`): data quality checks (missing values, ranges, duplicates), distributions, time series plots, seasonality by month and weekday, station comparison.
-3. **Analysis / model**: correlation analysis (Pearson/Spearman) between pollutants and weather, followed by a regression model (e.g. linear regression with statsmodels / scikit-learn) for PM2.5, with validation on a time-based split.
-4. **SQL**: queries in `sql/` for monthly averages, station rankings and days exceeding a threshold.
-5. **Tests**: pytest checks in `tests/` for the data generator (shape, ranges, reproducibility, key integrity).
-
-Steps 3-5 will be added incrementally; at this stage the data generator and the EDA script exist.
+2. **EDA** (`src/eda.py`): data quality checks, distributions, time series plots, seasonality by month and weekday, station comparison.
+3. **Analysis / model** (`src/analysis.py`, `src/utils.py`): Spearman correlation analysis and a regression model for PM2.5 with time-based validation.
+4. **SQL**: queries in `sql/` for monthly averages, station rankings and days exceeding a threshold (not yet added).
+5. **Tests**: pytest checks in `tests/` (utility tests exist in `tests/test_utils.py`; generator tests still to be added).
 
 ## Dataset (synthetic)
 
@@ -45,21 +43,15 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+pytest tests/
 ```
 
 The generator creates the `data/` folder if needed and writes the CSV files. Running it again with the same seed (42) produces identical files.
 
 ## Exploratory data analysis
 
-`src/eda.py` reads the CSV files from `data/` and prints to the console:
-
-- shape and dtypes of both tables,
-- missing values per column,
-- key integrity checks (duplicate `(date, station_id)` keys, unknown stations) and the date range,
-- descriptive statistics of pollutants and weather variables,
-- aggregations: mean pollutant levels by station, by year, by calendar month and by weekday, dry vs rainy days, and a Spearman correlation matrix of pollutants and weather.
-
-It also saves four charts to `figures/`:
+`src/eda.py` prints data quality checks (shape, dtypes, missing values, key integrity, date range), descriptive statistics and aggregations (by station, year, month, weekday, dry vs rainy days, Spearman matrix). It saves four charts to `figures/`:
 
 | File | Content |
 |------|---------|
@@ -68,7 +60,29 @@ It also saves four charts to `figures/`:
 | `pm25_by_station_type.png` | PM2.5 distribution by station type (box plot) |
 | `correlation_heatmap.png` | Spearman correlation of pollutants with weather variables |
 
-All figures and printed numbers come from the synthetic data at run time; findings should be read from the script output, not from this README.
+## Method (analysis and model)
+
+`src/analysis.py` runs two steps; shared logic (data loading, feature preparation, time split, metrics) lives in `src/utils.py`.
+
+**1. Correlation analysis.** For every pollutant-weather pair, Spearman rank correlation (rho) with its p-value is computed on pairwise complete observations. Spearman is used because the relationships are not necessarily linear and the pollutant distributions are skewed.
+
+**2. PM2.5 regression model.**
+- *Target:* daily PM2.5, modelled on the log scale because the effects of wind, rain and season are multiplicative; predictions are back-transformed with a Duan smearing factor.
+- *Features:* temperature, humidity, wind speed, precipitation, pressure, heating degrees (how far temperature is below 15 C), rainy-day flag (precipitation > 1 mm), weekend flag, cyclic month encoding (sin/cos) and station type dummies (suburban is the baseline).
+- *Model:* standardised linear regression (scikit-learn), so coefficients are comparable across features.
+- *Validation:* time-based split, training on days before 2024-01-01 and testing on 2024. Rows with missing PM2.5 are dropped.
+- *Baseline:* the training-period mean PM2.5 of each station type.
+- *Metrics:* MAE, RMSE and R2 on the original ug/m3 scale.
+- *Comparison:* the same model on a random 80/20 split (`random_state=42`), reported only to show how a split that ignores time order can differ from the time-based one.
+
+**Outputs.** Printed metrics and coefficients, `reports/metrics.json` (split sizes, metrics for model, baseline and random split, coefficients, all Spearman results) and two charts in `figures/`:
+
+| File | Content |
+|------|---------|
+| `pm25_pred_vs_actual.png` | Predicted vs actual PM2.5 on the test period |
+| `pm25_model_coefficients.png` | Standardised coefficients of the log(PM2.5) model |
+
+**Limitations.** The data is synthetic and was generated with known effects of temperature, wind and rain, so a good fit mostly shows that the model recovers the simulated structure, not that it would work on real data. The model is linear and ignores multi-day pollution episodes (no lagged features). Read all results from the script output and `reports/metrics.json`.
 
 ---
 

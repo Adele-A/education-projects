@@ -1,0 +1,183 @@
+{
+  "split_cutoff": "2024-01-01",
+  "n_train": 2852,
+  "n_test": 1435,
+  "smearing_factor": 1.0558674207312602,
+  "model_train": {
+    "mae": 6.547521210580813,
+    "rmse": 9.350182049554798,
+    "r2": 0.6047046201429672
+  },
+  "model_test": {
+    "mae": 6.26481084211186,
+    "rmse": 8.892663593109965,
+    "r2": 0.5766209589571557
+  },
+  "baseline_station_type_mean_test": {
+    "mae": 9.689823395078136,
+    "rmse": 12.725050127064494,
+    "r2": 0.1330688026736625
+  },
+  "random_split_test": {
+    "mae": 6.507166417022351,
+    "rmse": 9.179839319632924,
+    "r2": 0.5890654676701603
+  },
+  "standardised_coefficients_log_pm25": {
+    "temperature_c": 0.019574621789103654,
+    "humidity_pct": 0.0010287762379209142,
+    "wind_speed_ms": -0.35788425967429005,
+    "precipitation_mm": -0.03157812282869596,
+    "pressure_hpa": -0.008535904604213548,
+    "heating_degrees": 0.2119819682226267,
+    "rainy": -0.12002055356740182,
+    "is_weekend": 0.0035054414749796764,
+    "month_sin": 0.0015925073425703035,
+    "month_cos": -0.01411617043325032,
+    "type_traffic": 0.288932537629225,
+    "type_urban_background": 0.17196105725940414,
+    "type_industrial": 0.25580649336898026
+  },
+  "spearman_correlations": [
+    {
+      "pollutant": "pm25",
+      "weather": "temperature_c",
+      "rho": -0.29465737556047883,
+      "p_value": 1.27234810588269e-86,
+      "n": 4287
+    },
+    {
+      "pollutant": "pm25",
+      "weather": "humidity_pct",
+      "rho": 0.05007383010225949,
+      "p_value": 0.0010391949077072293,
+      "n": 4287
+    },
+    {
+      "pollutant": "pm25",
+      "weather": "wind_speed_ms",
+      "rho": -0.5486184930506153,
+      "p_value": 0.0,
+      "n": 4287
+    },
+    {
+      "pollutant": "pm25",
+      "weather": "precipitation_mm",
+      "rho": -0.27029031247571317,
+      "p_value": 1.159031667234252e-72,
+      "n": 4287
+    },
+    {
+      "pollutant": "pm25",
+      "weather": "pressure_hpa",
+      "rho": -0.03630509741155642,
+      "p_value": 0.017445882873515936,
+      "n": 4287
+    },
+    {
+      "pollutant": "pm10",
+      "weather": "temperature_c",
+      "rho": -0.2799346222397361,
+      "p_value": 1.7573648355169427e-78,
+      "n": 4313
+    },
+    {
+      "pollutant": "pm10",
+      "weather": "humidity_pct",
+      "rho": 0.04151337447162347,
+      "p_value": 0.00639690357862632,
+      "n": 4313
+    },
+    {
+      "pollutant": "pm10",
+      "weather": "wind_speed_ms",
+      "rho": -0.5269681912631862,
+      "p_value": 6.827532923038555e-307,
+      "n": 4313
+    },
+    {
+      "pollutant": "pm10",
+      "weather": "precipitation_mm",
+      "rho": -0.26718970679831205,
+      "p_value": 2.0939348503848215e-71,
+      "n": 4313
+    },
+    {
+      "pollutant": "pm10",
+      "weather": "pressure_hpa",
+      "rho": -0.037276291438971584,
+      "p_value": 0.014357061771569429,
+      "n": 4313
+    },
+    {
+      "pollutant": "no2",
+      "weather": "temperature_c",
+      "rho": -0.19156519495914687,
+      "p_value": 5.23314723751551e-37,
+      "n": 4323
+    },
+    {
+      "pollutant": "no2",
+      "weather": "humidity_pct",
+      "rho": 0.11719994439656091,
+      "p_value": 1.0732273367172883e-14,
+      "n": 4323
+    },
+    {
+      "pollutant": "no2",
+      "weather": "wind_speed_ms",
+      "rho": -0.4321490663830283,
+      "p_value": 3.047276068878647e-196,
+      "n": 4323
+    },
+    {
+      "pollutant": "no2",
+      "weather": "precipitation_mm",
+      "rho": -0.034296319592980816,
+      "p_value": 0.024134713628196955,
+      "n": 4323
+    },
+    {
+      "pollutant": "no2",
+      "weather": "pressure_hpa",
+      "rho": -0.02379124001748809,
+      "p_value": 0.11781012046552916,
+      "n": 4323
+    },
+    {
+      "pollutant": "o3",
+      "weather": "temperature_c",
+      "rho": 0.8469872343753002,
+      "p_value": 0.0,
+      "n": 4319
+    },
+    {
+      "pollutant": "o3",
+      "weather": "humidity_pct",
+      "rho": -0.4853165957630896,
+      "p_value": 4.254050669757528e-254,
+      "n": 4319
+    },
+    {
+      "pollutant": "o3",
+      "weather": "wind_speed_ms",
+      "rho": 0.29908402037304843,
+      "p_value": 5.800619779018237e-90,
+      "n": 4319
+    },
+    {
+      "pollutant": "o3",
+      "weather": "precipitation_mm",
+      "rho": 0.05754067528075179,
+      "p_value": 0.00015460002400376134,
+      "n": 4319
+    },
+    {
+      "pollutant": "o3",
+      "weather": "pressure_hpa",
+      "rho": 0.09279506546021954,
+      "p_value": 9.973785769732415e-10,
+      "n": 4319
+    }
+  ]
+}
