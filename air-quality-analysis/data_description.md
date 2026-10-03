@@ -42,6 +42,15 @@ Free-text project notes (1 row, English only). Not used by the analysis.
 | note_id | int | Note identifier |
 | note | string | Note text |
 
+## Table `data/comments.csv`
+
+Free-text project comments (1 row, English only). Not used by the analysis. The generator replaces any older version of this file, so old non-English text does not remain.
+
+| Column | Type | Meaning |
+|--------|------|---------|
+| comment_id | int | Comment identifier |
+| comment | string | Comment text |
+
 Notes:
 - Missing values are empty cells in the CSV (NaN in pandas), missing completely at random.
 - Pollutant levels are simulated to be higher in cold periods, lower on windy and rainy days, and to differ by station type; ozone rises with temperature.

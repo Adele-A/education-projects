@@ -7,6 +7,7 @@ Outputs (relative to the project root):
     data/stations.csv
     data/daily_measurements.csv
     data/notes.csv
+    data/comments.csv
 
 Run from the project root:
     python src/data_generator.py
@@ -41,6 +42,14 @@ NOTES = pd.DataFrame(
     {
         "note_id": [1],
         "note": ["Test note for checking the data pipeline"],
+    }
+)
+
+# Free-text project comments (English only).
+COMMENTS = pd.DataFrame(
+    {
+        "comment_id": [1],
+        "comment": ["Test comment for checking the data pipeline"],
     }
 )
 
@@ -163,22 +172,33 @@ def generate_measurements(rng):
     return data
 
 
-def write_notes(path):
-    """Write the English-only notes file, replacing any older version.
+def write_english_table(table, text_column, path):
+    """Write a small free-text table, replacing any older version of the file.
 
-    If a previous notes file contains non-English (non-ASCII) text, it is
-    reported and then overwritten.
+    If a previous file contains non-English (non-ASCII) text, it is reported
+    and then overwritten.
     """
     # Safety check: all project text must be English (ASCII).
-    assert all(str(t).isascii() for t in NOTES["note"]), "Notes must be English only"
+    assert all(str(t).isascii() for t in table[text_column]), \
+        f"{path.name}: text must be English only"
 
     if path.exists():
         old_text = path.read_text(encoding="utf-8", errors="replace")
         if not old_text.isascii():
-            print(f"Found non-English text in old {path.name}; replacing it with English notes.")
+            print(f"Found non-English text in old {path.name}; replacing it with English text.")
         path.unlink()  # always start from a clean file
 
-    NOTES.to_csv(path, index=False, encoding="utf-8")
+    table.to_csv(path, index=False, encoding="utf-8")
+
+
+def write_notes(path):
+    """Write the English-only notes file, replacing any older version."""
+    write_english_table(NOTES, "note", path)
+
+
+def write_comments(path):
+    """Write the English-only comments file, replacing any older version."""
+    write_english_table(COMMENTS, "comment", path)
 
 
 def main():
@@ -190,10 +210,12 @@ def main():
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
     write_notes(DATA_DIR / "notes.csv")
+    write_comments(DATA_DIR / "comments.csv")
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
     print(f"Saved {len(NOTES)} rows to {DATA_DIR / 'notes.csv'}")
+    print(f"Saved {len(COMMENTS)} rows to {DATA_DIR / 'comments.csv'}")
 
 
 if __name__ == "__main__":
