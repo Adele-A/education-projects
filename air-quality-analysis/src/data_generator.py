@@ -209,15 +209,26 @@ def write_comments(path):
 
 
 def clean_text_files(data_dir=DATA_DIR):
-    """Replace existing notes/comments files that contain non-English text.
+    """Replace existing notes/comments files that are not the English version.
 
-    Files that do not exist are left alone; files that are already English
-    (ASCII) are not touched. Safe to call before any data loading.
+    Files that do not exist are left alone. A file is rewritten when it
+    contains non-ASCII bytes, cannot be read as UTF-8 text, or differs from
+    the English table defined in this module. Safe to call before any data
+    loading.
     """
     data_dir = Path(data_dir)
-    for name, writer in (("notes.csv", write_notes), ("comments.csv", write_comments)):
+    for name, writer, table in (("notes.csv", write_notes, NOTES),
+                                ("comments.csv", write_comments, COMMENTS)):
         path = data_dir / name
-        if path.exists() and has_non_english_text(path):
+        if not path.exists():
+            continue
+        expected = table.to_csv(index=False)
+        try:
+            current = path.read_bytes().decode("utf-8")
+        except UnicodeDecodeError:
+            current = None
+        if current is None or not current.isascii() \
+                or current.replace("\r\n", "\n") != expected:
             writer(path)
 
 
