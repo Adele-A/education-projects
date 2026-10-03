@@ -20,8 +20,18 @@ WEATHER = ["temperature_c", "humidity_pct", "wind_speed_ms", "precipitation_mm",
 STATION_TYPES = ["suburban", "traffic", "urban_background", "industrial"]
 
 
-def load_data(data_dir=DATA_DIR):
-    """Load both CSV tables and return measurements merged with station metadata."""
+def load_data(data_dir: Path | str = DATA_DIR) -> pd.DataFrame:
+    """Load both CSV tables and return measurements merged with station metadata.
+
+    Args:
+        data_dir: Path to the data directory containing stations.csv and daily_measurements.csv.
+
+    Returns:
+        DataFrame with measurements and station metadata merged on station_id.
+
+    Raises:
+        FileNotFoundError: If data files do not exist in data_dir.
+    """
     data_dir = Path(data_dir)
     stations_path = data_dir / "stations.csv"
     meas_path = data_dir / "daily_measurements.csv"
@@ -34,12 +44,18 @@ def load_data(data_dir=DATA_DIR):
     return meas.merge(stations, on="station_id", how="left")
 
 
-def build_features(df):
+def build_features(df: pd.DataFrame) -> pd.DataFrame:
     """Build the model feature matrix from merged measurements.
 
     Features: raw weather variables, heating degrees (how far the temperature is
     below 15 C), a rainy-day flag, a weekend flag, cyclic month encoding and
-    station type dummies. Returns a DataFrame with the same index as df.
+    station type dummies.
+
+    Args:
+        df: DataFrame with measurements and station metadata.
+
+    Returns:
+        Feature matrix with index matching df.
     """
     X = pd.DataFrame(index=df.index)
     for col in WEATHER:
@@ -55,22 +71,51 @@ def build_features(df):
     return X
 
 
-def prepare_model_data(df, target="pm25"):
-    """Drop rows with a missing target or features; return (rows, X, y)."""
+def prepare_model_data(
+    df: pd.DataFrame, target: str = "pm25"
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series]:
+    """Drop rows with a missing target or features; return (rows, X, y).
+
+    Args:
+        df: DataFrame with measurements and station metadata.
+        target: Name of the target column (typically "pm25").
+
+    Returns:
+        Tuple of (filtered measurements DataFrame, feature matrix, target Series).
+    """
     X = build_features(df)
     mask = df[target].notna() & X.notna().all(axis=1)
     return df.loc[mask], X.loc[mask], df.loc[mask, target]
 
 
-def time_split(df, cutoff):
-    """Split by date: rows before the cutoff are train, the rest are test."""
+def time_split(df: pd.DataFrame, cutoff: str) -> tuple[pd.Series, pd.Series]:
+    """Split by date: rows before the cutoff are train, the rest are test.
+
+    Args:
+        df: DataFrame with a 'date' column.
+        cutoff: Cutoff date as a string in YYYY-MM-DD format.
+
+    Returns:
+        Tuple of (train_mask, test_mask) as boolean Series.
+    """
     cutoff = pd.Timestamp(cutoff)
     train_mask = df["date"] < cutoff
     return train_mask, ~train_mask
 
 
-def regression_metrics(y_true, y_pred):
-    """MAE, RMSE and R2 as plain Python floats."""
+def regression_metrics(
+    y_true: np.ndarray | pd.Series,
+    y_pred: np.ndarray | pd.Series
+) -> dict[str, float]:
+    """Compute regression metrics (MAE, RMSE, R2).
+
+    Args:
+        y_true: True target values.
+        y_pred: Predicted target values.
+
+    Returns:
+        Dictionary with keys 'mae', 'rmse', 'r2' and float values.
+    """
     return {
         "mae": float(mean_absolute_error(y_true, y_pred)),
         "rmse": float(np.sqrt(mean_squared_error(y_true, y_pred))),
@@ -78,6 +123,17 @@ def regression_metrics(y_true, y_pred):
     }
 
 
-def smearing_factor(log_residuals):
-    """Duan smearing factor to correct bias when back-transforming log predictions."""
+def smearing_factor(log_residuals: np.ndarray | pd.Series) -> float:
+    """Compute the Duan smearing factor for log-scale bias correction.
+
+    The smearing factor is the mean of exp(log_residuals) and is used to adjust
+    predictions made on the log scale when back-transformed to the original scale,
+    correcting for Jensen's inequality bias.
+
+    Args:
+        log_residuals: Residuals on the log scale (log(actual) - log(predicted)).
+
+    Returns:
+        Smearing factor as a float; equals 1.0 if residuals are zero.
+    """
     return float(np.mean(np.exp(np.asarray(log_residuals))))
