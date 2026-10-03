@@ -21,8 +21,8 @@ Build a reproducible analysis that:
 1. **Data generation** (`src/data_generator.py`): create synthetic station metadata and daily measurements.
 2. **EDA** (`src/eda.py`): data quality checks, distributions, time series plots, seasonality by month and weekday, station comparison.
 3. **Analysis / model** (`src/analysis.py`, `src/utils.py`): Spearman correlation analysis and a regression model for PM2.5 with time-based validation.
-4. **SQL**: queries in `sql/` for monthly averages, station rankings and days exceeding a threshold (not yet added).
-5. **Tests**: pytest checks in `tests/` (utility tests exist in `tests/test_utils.py`; generator tests still to be added).
+4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): queries for monthly averages, station rankings, days exceeding a threshold and more.
+5. **Tests**: pytest checks in `tests/` for the data generator and the utility functions (see "Tests" below).
 
 ## Dataset (synthetic)
 
@@ -44,10 +44,27 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
-pytest tests/
+python src/run_sql.py
+python -m pytest -q
 ```
 
 The generator creates the `data/` folder if needed and writes the CSV files. Running it again with the same seed (42) produces identical files.
+
+## Tests
+
+Run all tests from the project root:
+
+```bash
+python -m pytest -q
+```
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | Column names, row count (4 stations x 1096 days), unique keys, date range, value ranges (clipping bounds), PM10 above PM2.5, small share of missing values, reproducibility with the fixed seed, English-only notes file |
+| `tests/test_utils.py` | Feature building, time-based split without overlap, regression metrics |
+| `tests/test_utils_extra.py` | Smearing factor, dropping rows with a missing target, error when data files are missing |
+
+The tests generate data in memory with seed 42, so they do not need the files in `data/` or `figures/`, and they run in a few seconds.
 
 ## Exploratory data analysis
 
@@ -83,6 +100,27 @@ The generator creates the `data/` folder if needed and writes the CSV files. Run
 | `pm25_model_coefficients.png` | Standardised coefficients of the log(PM2.5) model |
 
 **Limitations.** The data is synthetic and was generated with known effects of temperature, wind and rain, so a good fit mostly shows that the model recovers the simulated structure, not that it would work on real data. The model is linear and ignores multi-day pollution episodes (no lagged features). Read all results from the script output and `reports/metrics.json`.
+
+## SQL analysis
+
+`sql/queries.sql` contains 8 commented queries in the SQLite dialect. Each query is preceded by a comment line starting with `-- Q<n>:` that states the question it answers. `src/run_sql.py` loads `stations.csv` and `daily_measurements.csv` into an in-memory SQLite database (`pandas.to_sql`), splits the file into statements, runs each one and prints the description with the first 10 rows of the result. No database file is created.
+
+| Query | Question |
+|-------|----------|
+| Q1 | Monthly mean PM2.5 and PM10 across all stations |
+| Q2 | Station ranking by overall mean PM2.5 (window function `RANK`) |
+| Q3 | Days per station and year above a PM2.5 threshold of 25 ug/m3 (an illustrative value, not a regulatory claim) |
+| Q4 | Seasonal pattern: mean pollutants and temperature by calendar month |
+| Q5 | Dry vs rainy days by station type (join with `stations`) |
+| Q6 | The 10 days with the highest city-wide mean PM2.5 and their weather |
+| Q7 | PM2.5 and NO2 by wind speed band (`CASE`) |
+| Q8 | Year-over-year change of annual mean PM2.5 (CTE and `LAG`) |
+
+```bash
+python src/run_sql.py
+```
+
+Missing values are NULL in SQL, so `AVG` and `COUNT` skip them. The query results come from the synthetic data and are printed at run time. See the script output for the numbers.
 
 ---
 

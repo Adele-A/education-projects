@@ -33,6 +33,15 @@ One row per station per day (4 stations x 1096 days = 4384 rows). Period: 2022-0
 | precipitation_mm | float | Daily precipitation total, mm (0 on dry days) | 0.0 to 80.0 |
 | pressure_hpa | float | Daily mean air pressure, hPa | 980.0 to 1045.0 |
 
+## Table `data/notes.csv`
+
+Free-text project notes (1 row, English only). Not used by the analysis.
+
+| Column | Type | Meaning |
+|--------|------|---------|
+| note_id | int | Note identifier |
+| note | string | Note text |
+
 Notes:
 - Missing values are empty cells in the CSV (NaN in pandas), missing completely at random.
 - Pollutant levels are simulated to be higher in cold periods, lower on windy and rainy days, and to differ by station type; ozone rises with temperature.

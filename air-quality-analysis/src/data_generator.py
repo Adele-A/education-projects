@@ -6,6 +6,7 @@ measurement data.
 Outputs (relative to the project root):
     data/stations.csv
     data/daily_measurements.csv
+    data/notes.csv
 
 Run from the project root:
     python src/data_generator.py
@@ -32,6 +33,14 @@ STATIONS = pd.DataFrame(
         "latitude": [50.062, 50.071, 50.041, 50.095],
         "longitude": [19.938, 19.925, 19.981, 19.902],
         "elevation_m": [212, 205, 198, 265],
+    }
+)
+
+# Free-text project notes (English only).
+NOTES = pd.DataFrame(
+    {
+        "note_id": [1],
+        "note": ["Test note for checking the data pipeline"],
     }
 )
 
@@ -154,6 +163,24 @@ def generate_measurements(rng):
     return data
 
 
+def write_notes(path):
+    """Write the English-only notes file, replacing any older version.
+
+    If a previous notes file contains non-English (non-ASCII) text, it is
+    reported and then overwritten.
+    """
+    # Safety check: all project text must be English (ASCII).
+    assert all(str(t).isascii() for t in NOTES["note"]), "Notes must be English only"
+
+    if path.exists():
+        old_text = path.read_text(encoding="utf-8", errors="replace")
+        if not old_text.isascii():
+            print(f"Found non-English text in old {path.name}; replacing it with English notes.")
+        path.unlink()  # always start from a clean file
+
+    NOTES.to_csv(path, index=False, encoding="utf-8")
+
+
 def main():
     rng = np.random.default_rng(SEED)
     os.makedirs(DATA_DIR, exist_ok=True)
@@ -162,9 +189,11 @@ def main():
 
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
+    write_notes(DATA_DIR / "notes.csv")
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
+    print(f"Saved {len(NOTES)} rows to {DATA_DIR / 'notes.csv'}")
 
 
 if __name__ == "__main__":
