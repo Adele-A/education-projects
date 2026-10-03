@@ -163,19 +163,33 @@ def generate_measurements(rng):
     return data
 
 
+def write_notes(path):
+    """Write the English-only notes file, replacing any older version.
+
+    If an existing file contains non-English (non-ASCII) text, for example
+    from an earlier version of the project, it is reported and overwritten.
+    """
+    # Safety check: all project text must be English (ASCII).
+    assert all(str(t).isascii() for t in NOTES["note"]), "Notes must be English only"
+
+    if path.exists():
+        old_text = path.read_text(encoding="utf-8", errors="replace")
+        if not old_text.isascii():
+            print(f"Found non-English text in old {path.name}; replacing it with English notes.")
+        path.unlink()  # always start from a clean file
+
+    NOTES.to_csv(path, index=False, encoding="utf-8")
+
+
 def main():
     rng = np.random.default_rng(SEED)
     os.makedirs(DATA_DIR, exist_ok=True)
 
     measurements = generate_measurements(rng)
 
-    # Safety check: all project text must be English (ASCII), so an old
-    # notes file with other-language text is always replaced by clean content.
-    assert all(str(t).isascii() for t in NOTES["note"]), "Notes must be English only"
-
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
-    NOTES.to_csv(DATA_DIR / "notes.csv", index=False, encoding="utf-8")
+    write_notes(DATA_DIR / "notes.csv")
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
