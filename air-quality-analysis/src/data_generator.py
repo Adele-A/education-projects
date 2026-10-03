@@ -7,6 +7,7 @@ Outputs (relative to the project root):
     data/stations.csv
     data/daily_measurements.csv
     data/notes.csv
+    data/comments.csv
 
 Run from the project root:
     python src/data_generator.py
@@ -44,9 +45,20 @@ NOTES = pd.DataFrame(
     }
 )
 
-# Files written by older versions of this project that are no longer used.
-# They may contain non-English text, so they are deleted on cleanup.
-LEGACY_FILES = ["comments.csv"]
+# Free-text comments (English only). Older versions wrote this file with
+# non-English text; it is now always kept in English.
+COMMENTS = pd.DataFrame(
+    {
+        "comment_id": [1],
+        "comment": ["Test comment for checking the data pipeline"],
+    }
+)
+
+# Small free-text files: file name -> (table, text column).
+TEXT_TABLES = {
+    "notes.csv": (NOTES, "note"),
+    "comments.csv": (COMMENTS, "comment"),
+}
 
 # Baseline levels (ug/m3) by station type.
 BASE_PM25 = {"traffic": 24.0, "urban_background": 18.0, "industrial": 22.0, "suburban": 12.0}
@@ -179,7 +191,7 @@ def write_english_table(table, text_column, path):
     """Write a small free-text table, replacing any older version of the file.
 
     If a previous file contains non-English (non-ASCII) text, it is reported
-    and then overwritten in place (so a failed delete cannot leave old text).
+    and then overwritten in place.
     """
     # Safety check: all project text must be English (ASCII).
     assert all(str(t).isascii() for t in table[text_column]), \
@@ -198,41 +210,32 @@ def write_notes(path):
     write_english_table(NOTES, "note", path)
 
 
-def remove_legacy_file(path):
-    """Delete an unused legacy file; if that fails, empty it of all text."""
-    print(f"Removing unused legacy file {path.name}.")
-    try:
-        path.unlink()
-    except OSError:
-        # Fall back to truncating so no old text can remain.
-        with open(path, "w", encoding="utf-8", newline="") as f:
-            f.write("")
+def write_comments(path):
+    """Write the English-only comments file, replacing any older version."""
+    write_english_table(COMMENTS, "comment", path)
 
 
 def clean_text_files(data_dir=DATA_DIR):
-    """Remove legacy text files and replace a non-English notes file.
+    """Replace small text files that are not exactly the English-only version.
 
-    - Legacy files (e.g. comments.csv) are no longer used and are deleted.
-    - notes.csv is rewritten when it contains non-ASCII bytes, cannot be read
-      as UTF-8 text, or differs from the English table defined in this module.
-    Files that do not exist are left alone. Safe to call before any data loading.
+    notes.csv and comments.csv are rewritten when they contain non-ASCII
+    bytes, cannot be read as UTF-8 text, or differ from the English tables
+    defined in this module. Files that do not exist are left alone.
+    Safe to call before any data loading.
     """
     data_dir = Path(data_dir)
-    for name in LEGACY_FILES:
+    for name, (table, column) in TEXT_TABLES.items():
         path = data_dir / name
-        if path.exists():
-            remove_legacy_file(path)
-
-    path = data_dir / "notes.csv"
-    if path.exists():
-        expected = NOTES.to_csv(index=False)
+        if not path.exists():
+            continue
+        expected = table.to_csv(index=False)
         try:
             current = path.read_bytes().decode("utf-8")
         except UnicodeDecodeError:
             current = None
         if current is None or not current.isascii() \
                 or current.replace("\r\n", "\n") != expected:
-            write_notes(path)
+            write_english_table(table, column, path)
 
 
 # Clean old text files as soon as this module is imported, so every script
@@ -249,10 +252,12 @@ def main():
     STATIONS.to_csv(DATA_DIR / "stations.csv", index=False)
     measurements.to_csv(DATA_DIR / "daily_measurements.csv", index=False)
     write_notes(DATA_DIR / "notes.csv")
+    write_comments(DATA_DIR / "comments.csv")
 
     print(f"Saved {len(STATIONS)} rows to {DATA_DIR / 'stations.csv'}")
     print(f"Saved {len(measurements)} rows to {DATA_DIR / 'daily_measurements.csv'}")
     print(f"Saved {len(NOTES)} rows to {DATA_DIR / 'notes.csv'}")
+    print(f"Saved {len(COMMENTS)} rows to {DATA_DIR / 'comments.csv'}")
 
 
 if __name__ == "__main__":

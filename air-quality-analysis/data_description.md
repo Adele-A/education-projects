@@ -42,9 +42,14 @@ Free-text project notes (1 row, English only). Not used by the analysis.
 | note_id | int | Note identifier |
 | note | string | Note text |
 
-## Removed file `data/comments.csv`
+## Table `data/comments.csv`
 
-Older versions of the project wrote a `comments.csv` file. It is no longer used or generated. If an old copy exists in `data/`, the cleanup in `src/data_generator.py` deletes it, so no old non-English text remains.
+Free-text project comments (1 row, English only). Not used by the analysis. Older versions of the project wrote this file with non-English text; if such a copy exists in `data/`, the cleanup in `src/data_generator.py` replaces it with the English-only version.
+
+| Column | Type | Meaning |
+|--------|------|---------|
+| comment_id | int | Comment identifier |
+| comment | string | Comment text |
 
 Notes:
 - Missing values are empty cells in the CSV (NaN in pandas), missing completely at random.

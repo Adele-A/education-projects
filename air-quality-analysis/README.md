@@ -26,13 +26,14 @@ Build a reproducible analysis that:
 
 ## Dataset (synthetic)
 
-Three CSV tables are written to `data/` (the first two are used by the analysis):
+Four CSV tables are written to `data/` (the first two are used by the analysis):
 
 | File | Description | Rows |
 |------|-------------|------|
 | `data/stations.csv` | Metadata of 4 monitoring stations | 4 |
 | `data/daily_measurements.csv` | Daily pollutant and weather values per station, 2022-01-01 to 2024-12-31 | 4 x 1096 = 4384 |
 | `data/notes.csv` | One English-only project note, not used by the analysis | 1 |
+| `data/comments.csv` | One English-only project comment, not used by the analysis | 1 |
 
 The generator builds in a seasonal temperature cycle, a heating-season effect on pollutants, wind dilution, rain washout, and a small share of missing values. See `data_description.md` for all columns.
 
@@ -52,7 +53,7 @@ python -m pytest -q
 
 The generator creates the `data/` folder if needed and writes the CSV files. Running it again with the same seed (42) produces identical files.
 
-`src/clean_text.py` deletes the old, unused `data/comments.csv` (earlier versions of the project wrote it with non-English text), replaces a `data/notes.csv` that contains non-English text with the English-only version, and checks that every CSV in `data/` is English-only. The other scripts and the tests do the same cleanup automatically when `src/data_generator.py` is imported.
+`src/clean_text.py` replaces a `data/notes.csv` or `data/comments.csv` that contains non-English text (earlier versions of the project wrote `comments.csv` in another language) with the English-only version, and checks that every CSV in `data/` is English-only. The other scripts and the tests do the same cleanup automatically when `src/data_generator.py` is imported.
 
 ## Tests
 
@@ -65,7 +66,7 @@ python -m pytest -q
 | File | What it checks |
 |------|----------------|
 | `tests/test_data_generator.py` | Column names, row count (4 stations x 1096 days), unique keys, date range, value ranges (clipping bounds), PM10 above PM2.5, small share of missing values, reproducibility with the fixed seed, English-only notes file |
-| `tests/test_comments.py` | Removal of the legacy comments file, replacement of a non-English notes file |
+| `tests/test_comments.py` | Replacement of non-English comments and notes files with English text |
 | `tests/test_data_text_english.py` | No non-English text left in the CSV files of `data/` |
 | `tests/test_utils.py` | Feature building, time-based split without overlap, regression metrics |
 | `tests/test_utils_extra.py` | Smearing factor, dropping rows with a missing target, error when data files are missing |
