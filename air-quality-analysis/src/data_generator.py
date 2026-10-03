@@ -166,8 +166,8 @@ def generate_measurements(rng):
 def write_notes(path):
     """Write the English-only notes file, replacing any older version.
 
-    If an existing file contains non-English (non-ASCII) text, for example
-    from an earlier version of the project, it is reported and overwritten.
+    If a previous notes file contains non-English (non-ASCII) text, it is
+    reported and then overwritten.
     """
     # Safety check: all project text must be English (ASCII).
     assert all(str(t).isascii() for t in NOTES["note"]), "Notes must be English only"
