@@ -33,7 +33,7 @@ def load_data():
             Run src/data_generator.py first to create them.
     """
     stations_path = DATA_DIR / "stations.csv"
-    meas_path = DATA_DIR / "daily_measurements.csv"
+    meas_path = DATA_DIR / "daily_measurement.csv"
     
     if not stations_path.exists() or not meas_path.exists():
         raise FileNotFoundError(
