@@ -20,8 +20,8 @@ Build a reproducible weekly forecasting workflow that:
 
 1. **Data generation** (done): create synthetic stores and weekly sales tables.
 2. **EDA** (done): check data quality, plot sales over time, compare categories and stores, look at promotion and holiday effects.
-3. **Analysis / model**: seasonal decomposition (trend, seasonal, residual) and Holt-Winters forecasting, evaluated against a seasonal-naive baseline on a time-based holdout.
-4. **SQL**: aggregation queries (monthly revenue, store and category rankings, promotion uplift).
+3. **Analysis / model** (done): seasonal decomposition (trend, seasonal, residual) and Holt-Winters forecasting, evaluated against naive and seasonal-naive baselines on a time-based holdout.
+4. **SQL** (done): aggregation queries (monthly revenue, store and category rankings, promotion uplift).
 5. **Tests**: pytest checks for the data generator and the forecasting code.
 
 ## Dataset (synthetic)
@@ -48,6 +48,43 @@ The sales are built from a base level per store and category, a gentle growth tr
 
 "Relative units" means units divided by the average of the same store and category, so categories and stores of different sizes can be compared. The raw promotion comparison does not adjust for seasonality, so it is only a rough indication. All results come from the script output when you run it.
 
+## Method
+
+`src/analysis.py` works on one weekly series per product category: total units sold across all stores (156 weeks, four series). Reusable logic (series preparation, time split, forecast functions, error metrics, decomposition strength) lives in `src/utils.py`.
+
+1. **Seasonal decomposition.** A multiplicative decomposition with a 52-week period splits each series into trend, seasonal index and residual. A strength score between 0 and 1 is computed for the seasonal and trend components as `max(0, 1 - Var(residual) / Var(component + residual))` on log values. Higher means the component explains more of the variation.
+2. **Time-based holdout.** The last 26 weeks are held out as the test set and all models are fitted on the earlier weeks only. No random split is used, because shuffling would leak future information into training.
+3. **Models compared.**
+   - *Naive*: repeats the last observed week.
+   - *Seasonal naive*: uses the value from the same week one year earlier.
+   - *Holt-Winters*: exponential smoothing from `statsmodels` with a damped additive trend and multiplicative yearly seasonality (52 weeks), parameters estimated on the training data.
+4. **Metrics.** MAE, RMSE and MAPE on the holdout for each category and model, the mean across categories, and the best model per category by RMSE.
+
+Limitations: the series are aggregated over stores, so the forecasts are category-level rather than store-level. Holt-Winters has no explicit holiday or promotion regressors, so holiday weeks in the holdout are expected to be harder to forecast, and with only three years of history the seasonal pattern is estimated from few cycles. All numbers come from the script output and `reports/metrics.json`; none are quoted here.
+
+Outputs:
+
+- `figures/decomposition_seasonal.png`: seasonal index and relative trend per category;
+- `figures/forecast_vs_actual.png`: actuals and forecasts on the holdout period;
+- `reports/metrics.json`: configuration, decomposition strengths, holdout metrics and best model per category.
+
+## SQL analysis
+
+`sql/queries.sql` contains eight queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: question`. `src/run_sql.py` loads both CSV files into an in-memory SQLite database (`pandas.to_sql`), splits the file into statements, runs each one and prints the question and the first rows of the result. No database file is created.
+
+| Query | Question |
+|---|---|
+| Q1 | Total units and revenue per month |
+| Q2 | Yearly revenue per category and growth versus the previous year (`LAG` window function) |
+| Q3 | Store ranking by revenue, with revenue per square meter (`RANK`, join with `stores`) |
+| Q4 | Top revenue category in each store (CTE and `RANK`) |
+| Q5 | Promotion uplift per category, relative to the store and category average |
+| Q6 | Average weekly units in holiday versus regular weeks, by category |
+| Q7 | Share of each category in regional revenue (window `SUM`) |
+| Q8 | The five weeks with the highest total revenue and their holiday and promotion flags |
+
+Dates are stored as `YYYY-MM-DD` text so that SQLite functions such as `strftime` work. The promotion and holiday comparisons are not adjusted for seasonality beyond the relative-units scaling, so they are descriptive only. Window functions need SQLite 3.25 or newer, which is included with current Python 3.11 builds. Results come from the script output when you run it; none are quoted here.
+
 ## How to run
 
 From the project root:
@@ -56,9 +93,11 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+python src/run_sql.py
 ```
 
-The generator creates the `data/` folder if needed and overwrites the CSV files on each run (seed 42, so the output is identical every time). The EDA script creates the `figures/` folder and overwrites the PNG files on each run.
+The generator creates the `data/` folder if needed and overwrites the CSV files on each run (seed 42, so the output is identical every time). The EDA script creates the `figures/` folder and overwrites the PNG files on each run. The analysis script creates `reports/`, and overwrites its charts and `metrics.json` on each run. The SQL script only reads the CSV files and prints results to the console.
 
 ---
 
