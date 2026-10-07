@@ -25,7 +25,7 @@ Build a reproducible pipeline that:
 4. **SQL**: Portfolio queries (default rate by purpose, region, score band, etc.) on the generated tables.
 5. **Tests**: Pytest checks for the data generator (shape, ranges, reproducibility, keys) and later for the modelling code.
 
-Currently, only **step 1** is implemented. Steps 2–5 are planned and will be added as the project progresses.
+Currently, **steps 1 and 2** are implemented. Steps 3–5 are planned and will be added as the project progresses.
 
 ## Dataset (synthetic)
 
@@ -55,7 +55,28 @@ Saved loans.csv: 5000 rows, 10 columns
 Default rate in generated loans: 0.0900
 ```
 
-All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder.
+Then run the exploratory analysis:
+
+```bash
+python src/eda.py
+```
+
+All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder and charts to `figures/`.
+
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files and:
+
+- prints shape, data types, missing values and duplicate counts for each table;
+- prints descriptive statistics for the numeric columns and checks that every loan has a matching customer;
+- joins loans with customer attributes and prints the target balance and default rates by loan purpose, credit score band, number of delinquencies, region and home ownership, and loan term;
+- saves four charts to `figures/`:
+  - `default_rate_by_score_band.png`
+  - `default_rate_by_purpose.png`
+  - `dti_by_default.png`
+  - `correlation_heatmap.png`
+
+All numbers are produced by the script at run time; read them from its printed output.
 
 ## Project structure
 
@@ -65,8 +86,10 @@ credit-default-risk/
 ├── requirements.txt
 ├── data_description.md
 ├── data/            # generated CSV files
+├── figures/         # EDA charts
 └── src/
-    └── data_generator.py
+    ├── data_generator.py
+    └── eda.py
 ```
 
 ---
