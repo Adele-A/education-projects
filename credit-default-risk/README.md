@@ -21,11 +21,11 @@ Build a reproducible pipeline that:
 
 1. **Data generation**: Create synthetic `customers` and `loans` tables with a fixed seed.
 2. **EDA**: Data quality checks, default rate by segment, distributions of the key features, correlations.
-3. **Analysis / model**: Baseline logistic regression, then class-imbalance handling (class weights, resampling, threshold tuning), model comparison with ROC AUC, precision-recall and a cost-based threshold choice.
+3. **Analysis / model**: Baseline logistic regression, class-imbalance handling (class weights, threshold tuning), model comparison with ROC AUC, precision-recall and a cost-based threshold choice.
 4. **SQL**: Portfolio queries (default rate by purpose, region, score band, etc.) on the generated tables.
-5. **Tests**: Pytest checks for the data generator (shape, ranges, reproducibility, keys) and later for the modelling code.
+5. **Tests**: Pytest checks for the data generator (shape, ranges, reproducibility, keys) and for the modelling code.
 
-Currently, **steps 1 and 2** are implemented. Steps 3–5 are planned and will be added as the project progresses.
+Currently, **steps 1, 2 and 3** are implemented. Steps 4 and 5 are planned and will be added as the project progresses.
 
 ## Dataset (synthetic)
 
@@ -55,13 +55,14 @@ Saved loans.csv: 5000 rows, 10 columns
 Default rate in generated loans: 0.0900
 ```
 
-Then run the exploratory analysis:
+Then run the exploratory analysis and the model:
 
 ```bash
 python src/eda.py
+python src/analysis.py
 ```
 
-All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder and charts to `figures/`.
+All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder, charts to `figures/` and the metrics summary to `reports/`.
 
 ## Exploratory data analysis
 
@@ -78,6 +79,25 @@ All scripts are run from the project root and work non-interactively. Generated 
 
 All numbers are produced by the script at run time; read them from its printed output.
 
+## Method (modelling)
+
+`src/analysis.py` (with helpers in `src/utils.py`) does the following:
+
+1. **Data and features.** Loans are joined to customers (one row per loan). Features are 11 numeric columns (age, income, employment years, credit score, existing debt, number of credit lines, loan amount, term, interest rate, debt-to-income, delinquencies) and 3 categorical columns (home ownership, region, loan purpose). Identifiers and the application date are not used. Numeric features are standardised and categorical features one-hot encoded inside a scikit-learn pipeline, so preprocessing is fitted on training data only.
+2. **Split.** Stratified 75/25 train/test split with `random_state=42`, so both parts keep the same default rate.
+3. **Imbalance handling.** Three candidates are compared: a plain logistic regression (baseline), a logistic regression with `class_weight="balanced"` and a random forest with balanced class weights.
+4. **Model selection.** Models are compared with 5-fold stratified cross-validated ROC AUC on the training set only. The model with the highest CV AUC is marked as selected.
+5. **Threshold choice.** A default threshold of 0.5 is poor for rare defaults. For each model a decision threshold is chosen that minimises a simple cost function on out-of-fold training predictions: `cost = FN x 5 + FP x 1`. The 5:1 ratio is a **business assumption** (a missed default is more costly than a wrongly rejected good borrower), not something estimated from the data; change `COST_FN` and `COST_FP` in `src/analysis.py` to test other values.
+6. **Evaluation on the test set.** ROC AUC, PR AUC (average precision), precision, recall, F1, confusion-matrix counts and total cost are reported at both the 0.5 threshold and the tuned threshold, together with the cost of the trivial strategies "approve all" and "reject all".
+
+Outputs:
+
+- `figures/roc_curves.png`: ROC curves of all models on the test set;
+- `figures/cost_vs_threshold.png`: total cost against the decision threshold for the selected model;
+- `reports/metrics.json`: all metrics, thresholds and the cost assumption.
+
+All metric values are produced at run time; read them from the script output or `reports/metrics.json`.
+
 ## Project structure
 
 ```
@@ -86,10 +106,13 @@ credit-default-risk/
 ├── requirements.txt
 ├── data_description.md
 ├── data/            # generated CSV files
-├── figures/         # EDA charts
+├── figures/         # EDA and model charts
+├── reports/         # metrics.json
 └── src/
     ├── data_generator.py
-    └── eda.py
+    ├── eda.py
+    ├── utils.py
+    └── analysis.py
 ```
 
 ---
