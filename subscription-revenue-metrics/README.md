@@ -16,7 +16,7 @@ This is a **learning project in development**. Current implementation status:
 
 1. **Data generation** (✓ Complete): create a synthetic dataset with a fixed seed.
 2. **EDA** (✓ Complete): check data quality, distributions of plans, channels and MRR changes, and customer growth over time.
-3. **Analysis** (☐ Planned): compute monthly MRR bridge, churn, expansion and cohort revenue tables; compare segments (plan, channel, company size) and visualize.
+3. **Analysis** (✓ Complete): monthly MRR bridge, churn and retention rates, segment comparison, cohort revenue and charts (`src/analysis.py`, `src/utils.py`).
 4. **SQL** (☐ Planned): reproduce the key metrics (MRR bridge, churn, cohorts) with SQL queries on the same tables.
 5. **Tests** (☐ Planned): pytest checks for the data generator and the metric calculations (for example, the MRR bridge must reconcile).
 
@@ -42,7 +42,28 @@ It also saves four PNG charts to `figures/`:
 - `mrr_change_by_event_type.png`: size of MRR changes by event type (log scale)
 - `churn_share_by_channel.png`: share of churned customers by acquisition channel
 
-All numbers come from the script output when you run it; none are hard-coded.
+## Method
+The analysis is descriptive (no predictive model, so no train/test split). Reusable functions live in `src/utils.py`; `src/analysis.py` calls them, prints the results and saves the outputs.
+
+1. **MRR bridge.** `mrr_change` is summed by event type and calendar month. Closing MRR is the cumulative sum of all movements, and opening MRR is the previous month's closing MRR. So for each month: opening + new + expansion + contraction + churned = closing. Contraction and churned MRR are negative.
+2. **Reconciliation check.** The bridge is compared with an independent calculation: a customer x month matrix of month-end MRR. Closing MRR must equal the column sums of that matrix. The result is printed and stored as `bridge_reconciles`.
+3. **Monthly rates**, using the opening position of each month as the base:
+   - customer churn rate = churned customers / customers active at the start of the month
+   - revenue churn rate = churned MRR / opening MRR
+   - GRR = (opening + contraction + churned) / opening MRR
+   - NRR = (opening + expansion + contraction + churned) / opening MRR
+
+   Overall figures are opening-MRR weighted over all months with a non-zero opening MRR (the first month is excluded). They are monthly rates, not annualised. In this data a customer has no expansion, contraction or churn event in its signup month, so NRR is not mixed with new customers.
+4. **Segment comparison.** The same bridge and retention metrics are computed separately for initial plan, acquisition channel and company size. Segment attributes are fixed at signup.
+5. **Cohort revenue.** Customers are grouped by signup month. For each cohort, month-end MRR is tracked by months since signup. Retention is the cohort MRR as a percentage of its MRR in the signup month. Pooled retention at month k uses only cohorts that have reached month k. Recent cohorts have short histories, so late offsets rest on few cohorts.
+
+All figures come from the program output; none are hard-coded here. Because the data is synthetic, the results describe the simulation rules in `data_generator.py`, not a real business.
+
+## Outputs of the analysis
+- Console: MRR bridge table, monthly rates, overall retention, period totals, segment tables and pooled cohort retention.
+- `figures/mrr_bridge_monthly.png`: stacked monthly MRR movements (new, expansion, contraction, churned) with the net change line.
+- `figures/cohort_mrr_retention.png`: heatmap of cohort MRR retention by months since signup.
+- `reports/metrics.json`: overall monthly retention, period totals, segment metrics and pooled cohort retention.
 
 ## How to run
 From the project root:
@@ -51,13 +72,14 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
 ```
 
 The generator creates the `data/` folder and writes two CSV files:
 - `customers.csv`: 700 rows (one per customer)
 - `subscription_events.csv`: sorted by event date
 
-The EDA script reads these files, prints the summaries and writes charts to `figures/`. Both scripts run non-interactively, require no network access, and need Python 3.11 or later.
+The EDA script reads these files, prints the summaries and writes charts to `figures/`. The analysis script writes two more charts to `figures/` and the metrics summary to `reports/`. All scripts run non-interactively, require no network access, and need Python 3.11 or later.
 
 ---
 
