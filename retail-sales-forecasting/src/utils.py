@@ -68,21 +68,26 @@ def holt_winters_forecast(train: pd.Series, horizon: int,
     return np.asarray(fit.forecast(horizon), dtype=float)
 
 
+def _as_float_arrays(actual, forecast) -> tuple[np.ndarray, np.ndarray]:
+    """Convert actual and forecast values to float numpy arrays."""
+    return np.asarray(actual, float), np.asarray(forecast, float)
+
+
 def mae(actual, forecast) -> float:
     """Mean absolute error."""
-    a, f = np.asarray(actual, float), np.asarray(forecast, float)
+    a, f = _as_float_arrays(actual, forecast)
     return float(np.mean(np.abs(a - f)))
 
 
 def rmse(actual, forecast) -> float:
     """Root mean squared error."""
-    a, f = np.asarray(actual, float), np.asarray(forecast, float)
+    a, f = _as_float_arrays(actual, forecast)
     return float(np.sqrt(np.mean((a - f) ** 2)))
 
 
 def mape(actual, forecast) -> float:
     """Mean absolute percentage error in percent (zero actuals are skipped)."""
-    a, f = np.asarray(actual, float), np.asarray(forecast, float)
+    a, f = _as_float_arrays(actual, forecast)
     mask = a != 0
     if not mask.any():
         return float("nan")
