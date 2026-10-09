@@ -25,7 +25,7 @@ Build a reproducible pipeline that:
 4. **SQL**: Portfolio queries (default rate by purpose, region, score band, etc.) on the generated tables.
 5. **Tests**: Pytest checks for the data generator (shape, ranges, reproducibility, keys) and for the modelling code.
 
-Currently, **steps 1, 2 and 3** are implemented. Steps 4 and 5 are planned and will be added as the project progresses.
+Currently, **steps 1, 2, 3 and 4** are implemented. Step 5 is planned and will be added as the project progresses.
 
 ## Dataset (synthetic)
 
@@ -55,11 +55,12 @@ Saved loans.csv: 5000 rows, 10 columns
 Default rate in generated loans: 0.0900
 ```
 
-Then run the exploratory analysis and the model:
+Then run the exploratory analysis, the model and the SQL queries:
 
 ```bash
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
 ```
 
 All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder, charts to `figures/` and the metrics summary to `reports/`.
@@ -98,6 +99,23 @@ Outputs:
 
 All metric values are produced at run time; read them from the script output or `reports/metrics.json`.
 
+## SQL analysis
+
+`sql/queries.sql` contains 8 portfolio queries in the SQLite dialect. Each query is preceded by a comment line starting with `-- Q<n>:` that states the business question:
+
+| Query | Question |
+|-------|----------|
+| Q1 | Size, default rate and average interest rate of the whole portfolio |
+| Q2 | Default rate by loan purpose |
+| Q3 | Default rate by credit score band (CASE expression inside a CTE) |
+| Q4 | Default rate by region and home ownership (JOIN with `customers`, HAVING filter) |
+| Q5 | Default rate by number of past delinquencies |
+| Q6 | Repeat borrowers (2 or more loans) with the most defaults |
+| Q7 | Default rate by application quarter |
+| Q8 | Share of the defaulted amount by loan purpose (window function) |
+
+`src/run_sql.py` loads `customers.csv` and `loans.csv` into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints the description together with the first rows of the result. Nothing is written to disk. The target column `default` is a reserved SQL word, so it is quoted in the queries. As everywhere else, the numbers come from the script output at run time.
+
 ## Project structure
 
 ```
@@ -108,11 +126,14 @@ credit-default-risk/
 ├── data/            # generated CSV files
 ├── figures/         # EDA and model charts
 ├── reports/         # metrics.json
+├── sql/
+│   └── queries.sql
 └── src/
     ├── data_generator.py
     ├── eda.py
     ├── utils.py
-    └── analysis.py
+    ├── analysis.py
+    └── run_sql.py
 ```
 
 ---
