@@ -22,7 +22,7 @@ Build a reproducible weekly forecasting workflow that:
 2. **EDA** (done): check data quality, plot sales over time, compare categories and stores, look at promotion and holiday effects.
 3. **Analysis / model** (done): seasonal decomposition (trend, seasonal, residual) and Holt-Winters forecasting, evaluated against naive and seasonal-naive baselines on a time-based holdout.
 4. **SQL** (done): aggregation queries (monthly revenue, store and category rankings, promotion uplift).
-5. **Tests**: pytest checks for the data generator and the forecasting code.
+5. **Tests** (done): pytest checks for the data generator and the helper functions in `src/utils.py`.
 
 ## Dataset (synthetic)
 
@@ -85,6 +85,15 @@ Outputs:
 
 Dates are stored as `YYYY-MM-DD` text so that SQLite functions such as `strftime` work. The promotion and holiday comparisons are not adjusted for seasonality beyond the relative-units scaling, so they are descriptive only. Window functions need SQLite 3.25 or newer, which is included with current Python 3.11 builds. Results come from the script output when you run it; none are quoted here.
 
+## Tests
+
+The `tests/` folder contains pytest checks that run in a few seconds:
+
+- `tests/test_data_generator.py`: column names, row counts, value ranges, Monday-based weekly dates, revenue consistency, reproducibility with the fixed seed and holiday-week flags. The data is generated in memory, so no CSV files are needed.
+- `tests/test_utils.py`: weekly series preparation, the time-based split, naive, seasonal-naive and Holt-Winters forecasts (on small hand-made series), error metrics with known values and the bounds of the decomposition strength.
+
+The tests do not depend on figures or on files created by the other scripts.
+
 ## How to run
 
 From the project root:
@@ -95,9 +104,10 @@ python src/data_generator.py
 python src/eda.py
 python src/analysis.py
 python src/run_sql.py
+python -m pytest -q
 ```
 
-The generator creates the `data/` folder if needed and overwrites the CSV files on each run (seed 42, so the output is identical every time). The EDA script creates the `figures/` folder and overwrites the PNG files on each run. The analysis script creates `reports/`, and overwrites its charts and `metrics.json` on each run. The SQL script only reads the CSV files and prints results to the console.
+The generator creates the `data/` folder if needed and overwrites the CSV files on each run (seed 42, so the output is identical every time). The EDA script creates the `figures/` folder and overwrites the PNG files on each run. The analysis script creates `reports/`, and overwrites its charts and `metrics.json` on each run. The SQL script only reads the CSV files and prints results to the console. The tests only read the code in `src/` and write nothing to the project folders.
 
 ---
 
