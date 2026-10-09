@@ -17,7 +17,7 @@ This is a **learning project in development**. Current implementation status:
 1. **Data generation** (✓ Complete): create a synthetic dataset with a fixed seed.
 2. **EDA** (✓ Complete): check data quality, distributions of plans, channels and MRR changes, and customer growth over time.
 3. **Analysis** (✓ Complete): monthly MRR bridge, churn and retention rates, segment comparison, cohort revenue and charts (`src/analysis.py`, `src/utils.py`).
-4. **SQL** (☐ Planned): reproduce the key metrics (MRR bridge, churn, cohorts) with SQL queries on the same tables.
+4. **SQL** (✓ Complete): the key metrics (MRR bridge, churn, retention, cohorts) reproduced with SQLite queries on the same tables (`sql/queries.sql`, `src/run_sql.py`).
 5. **Tests** (☐ Planned): pytest checks for the data generator and the metric calculations (for example, the MRR bridge must reconcile).
 
 ## Dataset (synthetic)
@@ -65,6 +65,21 @@ All figures come from the program output; none are hard-coded here. Because the 
 - `figures/cohort_mrr_retention.png`: heatmap of cohort MRR retention by months since signup.
 - `reports/metrics.json`: overall monthly retention, period totals, segment metrics and pooled cohort retention.
 
+## SQL
+The same metrics can be reproduced in SQL. `src/run_sql.py` loads both CSV files into an in-memory SQLite database (`pandas.to_sql`, dates stored as `YYYY-MM-DD` text), reads `sql/queries.sql`, splits it into statements, runs each one and prints its description and the first rows of the result. Nothing is written to disk.
+
+`sql/queries.sql` contains seven queries, each preceded by a `-- Q<n>:` comment with the question:
+
+1. Q1: monthly MRR bridge (opening, new, expansion, contraction, churned, closing) using window functions.
+2. Q2: monthly customer churn rate, revenue churn rate, GRR and NRR.
+3. Q3: churned customers and churned MRR by acquisition channel.
+4. Q4: opening-MRR weighted monthly GRR and NRR by initial plan, using a month x segment grid.
+5. Q5: cohort MRR at signup and retention 3, 6 and 12 months later (NULL for offsets a cohort has not reached).
+6. Q6: top 10 customers by current MRR.
+7. Q7: average months from signup to churn by initial plan.
+
+The definitions are the same as in the Method section, so the SQL results for Q1, Q2 and Q4 can be compared with the Python output of `src/analysis.py`. The queries use window functions, which need SQLite 3.25 or later (bundled with Python 3.11).
+
 ## How to run
 From the project root:
 
@@ -73,13 +88,14 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
 ```
 
 The generator creates the `data/` folder and writes two CSV files:
 - `customers.csv`: 700 rows (one per customer)
 - `subscription_events.csv`: sorted by event date
 
-The EDA script reads these files, prints the summaries and writes charts to `figures/`. The analysis script writes two more charts to `figures/` and the metrics summary to `reports/`. All scripts run non-interactively, require no network access, and need Python 3.11 or later.
+The EDA script reads these files, prints the summaries and writes charts to `figures/`. The analysis script writes two more charts to `figures/` and the metrics summary to `reports/`. The SQL script prints the query results to the console. All scripts run non-interactively, require no network access, and need Python 3.11 or later.
 
 ---
 
