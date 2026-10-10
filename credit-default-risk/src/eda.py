@@ -14,6 +14,7 @@ matplotlib.use("Agg")  # non-interactive backend: figures are only saved to file
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from matplotlib.ticker import PercentFormatter
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -85,15 +86,18 @@ def plot_figures(data: pd.DataFrame) -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     sns.set_theme(style="whitegrid")
 
-    # 1. Default rate by credit score band
+    # 1. Default rate by credit score band (rates shown as percentages)
     by_band = default_rate_by(data, "score_band").sort_index().reset_index()
     by_band["score_band"] = by_band["score_band"].astype(str)
-    fig, ax = plt.subplots(figsize=(7, 4))
+    overall = data["default"].mean()
+    fig, ax = plt.subplots(figsize=(7, 4.5))
     sns.barplot(data=by_band, x="score_band", y="default_rate", color="steelblue", ax=ax)
-    ax.axhline(data["default"].mean(), color="red", linestyle="--", label="Overall default rate")
+    ax.axhline(overall, color="red", linestyle="--",
+               label=f"Overall default rate ({overall:.1%})")
+    ax.yaxis.set_major_formatter(PercentFormatter(xmax=1.0))
     ax.set_title("Default rate by credit score band (synthetic data)")
-    ax.set_xlabel("Credit score band")
-    ax.set_ylabel("Default rate")
+    ax.set_xlabel("Credit score band (FICO-style score range)")
+    ax.set_ylabel("Default rate (%)")
     ax.legend()
     fig.tight_layout()
     fig.savefig(FIG_DIR / "default_rate_by_score_band.png", dpi=120)
@@ -101,21 +105,22 @@ def plot_figures(data: pd.DataFrame) -> None:
 
     # 2. Default rate by loan purpose
     by_purpose = default_rate_by(data, "loan_purpose").reset_index()
-    fig, ax = plt.subplots(figsize=(8, 4))
+    fig, ax = plt.subplots(figsize=(8, 4.5))
     sns.barplot(data=by_purpose, x="default_rate", y="loan_purpose", color="darkorange", ax=ax)
+    ax.xaxis.set_major_formatter(PercentFormatter(xmax=1.0))
     ax.set_title("Default rate by loan purpose (synthetic data)")
-    ax.set_xlabel("Default rate")
+    ax.set_xlabel("Default rate (%)")
     ax.set_ylabel("Loan purpose")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "default_rate_by_purpose.png", dpi=120)
     plt.close(fig)
 
     # 3. Distribution of debt-to-income by default status
-    fig, ax = plt.subplots(figsize=(7, 4))
+    fig, ax = plt.subplots(figsize=(7, 4.5))
     sns.boxplot(data=data, x="default", y="debt_to_income", ax=ax)
     ax.set_title("Debt-to-income by default status (synthetic data)")
-    ax.set_xlabel("Default (0 = repaid, 1 = defaulted)")
-    ax.set_ylabel("Debt-to-income")
+    ax.set_xlabel("Default status (0 = repaid, 1 = defaulted)")
+    ax.set_ylabel("Debt-to-income ratio (total debt / annual income)")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "dti_by_default.png", dpi=120)
     plt.close(fig)
@@ -127,7 +132,8 @@ def plot_figures(data: pd.DataFrame) -> None:
     corr = data[num_cols].corr()
     fig, ax = plt.subplots(figsize=(9, 7))
     sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", center=0,
-                square=True, cbar_kws={"shrink": 0.8}, ax=ax)
+                square=True, cbar_kws={"shrink": 0.8, "label": "Pearson correlation"},
+                ax=ax)
     ax.set_title("Correlation matrix (synthetic data)")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "correlation_heatmap.png", dpi=120)
