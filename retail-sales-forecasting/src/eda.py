@@ -116,6 +116,13 @@ def aggregations(stores: pd.DataFrame, sales: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def save_figure(fig, filename: str) -> None:
+    """Apply a tight layout, save the figure to figures/ and close it."""
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / filename, dpi=120)
+    plt.close(fig)
+
+
 def plot_weekly_units(df: pd.DataFrame) -> None:
     """Line chart of total weekly units per category (one panel each)."""
     weekly = df.groupby(["week_start", "category"])["units_sold"].sum().reset_index()
@@ -128,9 +135,7 @@ def plot_weekly_units(df: pd.DataFrame) -> None:
         ax.set_title(cat, loc="left", fontsize=10)
     axes[-1].set_xlabel("Week start")
     fig.suptitle("Total weekly units sold by category (all stores, synthetic data)")
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "weekly_units_by_category.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "weekly_units_by_category.png")
 
 
 def plot_seasonality_heatmap(df: pd.DataFrame) -> None:
@@ -142,9 +147,7 @@ def plot_seasonality_heatmap(df: pd.DataFrame) -> None:
     ax.set_xlabel("Month")
     ax.set_ylabel("Category")
     ax.set_title("Seasonal profile: units relative to store/category mean")
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "seasonality_heatmap.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "seasonality_heatmap.png")
 
 
 def plot_promo_holiday(df: pd.DataFrame) -> None:
@@ -160,9 +163,7 @@ def plot_promo_holiday(df: pd.DataFrame) -> None:
         ax.set_xlabel("Category")
         ax.set_ylabel("Mean relative units")
     fig.suptitle("Relative units (store/category mean = 1) by week type")
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "promo_holiday_effect.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "promo_holiday_effect.png")
 
 
 def plot_store_revenue(df: pd.DataFrame) -> None:
@@ -174,9 +175,7 @@ def plot_store_revenue(df: pd.DataFrame) -> None:
     ax.set_xlabel("Store")
     ax.set_ylabel("Total revenue")
     ax.set_title("Total revenue by store (synthetic data)")
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "revenue_by_store.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "revenue_by_store.png")
 
 
 def main() -> None:
