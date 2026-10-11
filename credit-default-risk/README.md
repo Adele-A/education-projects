@@ -23,9 +23,9 @@ Build a reproducible pipeline that:
 2. **EDA**: Data quality checks, default rate by segment, distributions of the key features, correlations.
 3. **Analysis / model**: Baseline logistic regression, class-imbalance handling (class weights, threshold tuning), model comparison with ROC AUC, precision-recall and a cost-based threshold choice.
 4. **SQL**: Portfolio queries (default rate by purpose, region, score band, etc.) on the generated tables.
-5. **Tests**: Pytest checks for the data generator (shape, ranges, reproducibility, keys) and for the modelling code.
+5. **Tests**: Pytest checks for the data generator (columns, row counts, ranges, keys, reproducibility) and for the helper functions in `src/utils.py`.
 
-Currently, **steps 1, 2, 3 and 4** are implemented. Step 5 is planned and will be added as the project progresses.
+All five steps are implemented.
 
 ## Dataset (synthetic)
 
@@ -64,6 +64,19 @@ python src/run_sql.py
 ```
 
 All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder, charts to `figures/` and the metrics summary to `reports/`.
+
+## Tests
+
+Run the test suite from the project root:
+
+```bash
+python -m pytest -q
+```
+
+The tests are fast and self-contained: they generate small synthetic tables in memory (or in a temporary folder), so they do not need the files in `data/` or `figures/`.
+
+- `tests/test_data_generator.py`: column names, row counts, value ranges, key integrity (every loan has a customer), chronological loan ids, the minority default class and reproducibility with the fixed seed.
+- `tests/test_utils.py`: joining the tables, feature preparation, the model pipeline, the cost function, the cost curve, threshold selection and metrics checked against hand-computed values.
 
 ## Exploratory data analysis
 
@@ -128,12 +141,15 @@ credit-default-risk/
 ├── reports/         # metrics.json
 ├── sql/
 │   └── queries.sql
-└── src/
-    ├── data_generator.py
-    ├── eda.py
-    ├── utils.py
-    ├── analysis.py
-    └── run_sql.py
+├── src/
+│   ├── data_generator.py
+│   ├── eda.py
+│   ├── utils.py
+│   ├── analysis.py
+│   └── run_sql.py
+└── tests/
+    ├── test_data_generator.py
+    └── test_utils.py
 ```
 
 ---
