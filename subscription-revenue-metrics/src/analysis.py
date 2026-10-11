@@ -12,11 +12,13 @@ Run from the project root:
 import json
 import math
 from pathlib import Path
+from typing import Any
 
 import matplotlib
 
 matplotlib.use("Agg")  # non-interactive backend
 import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
 import seaborn as sns  # noqa: E402
 
 from utils import (  # noqa: E402
@@ -41,10 +43,11 @@ COHORT_OFFSETS = [1, 3, 6, 12]
 
 
 def section(title: str) -> None:
+    """Print a section header framed by lines of '=' characters."""
     print(f"\n{'=' * 70}\n{title}\n{'=' * 70}")
 
 
-def clean(obj):
+def clean(obj: Any) -> Any:
     """Make nested structures JSON safe (NaN -> None, numpy -> python)."""
     if isinstance(obj, dict):
         return {str(k): clean(v) for k, v in obj.items()}
@@ -57,8 +60,12 @@ def clean(obj):
     return obj
 
 
-def plot_bridge(bridge) -> None:
-    """Stacked bars of MRR movements per month with the net change line."""
+def plot_bridge(bridge: pd.DataFrame) -> None:
+    """Stacked bars of MRR movements per month with the net change line.
+
+    Expects the columns of monthly_mrr_bridge(): new_mrr, expansion_mrr,
+    contraction_mrr and churned_mrr, indexed by monthly periods.
+    """
     months = bridge.index.to_timestamp()
     fig, ax = plt.subplots(figsize=(11, 5.5))
     ax.bar(months, bridge["new_mrr"], width=20, label="New", color="tab:green")
@@ -80,7 +87,7 @@ def plot_bridge(bridge) -> None:
     plt.close(fig)
 
 
-def plot_cohorts(retention_pct) -> None:
+def plot_cohorts(retention_pct: pd.DataFrame) -> None:
     """Heatmap of cohort MRR retention by months since signup."""
     data = retention_pct.copy()
     data.index = [str(p) for p in data.index]
@@ -95,6 +102,7 @@ def plot_cohorts(retention_pct) -> None:
 
 
 def main() -> None:
+    """Run the full analysis: bridge, rates, segments, cohorts, charts and report."""
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
