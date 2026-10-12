@@ -1,0 +1,5 @@
+ticker,sector,annual_drift,annual_volatility,start_price
+ALFA,Technology,0.12,0.32,100.0
+BRVO,Utilities,0.05,0.16,60.0
+CHRL,Energy,0.08,0.28,45.0
+DLTA,Healthcare,0.1,0.22,80.0
