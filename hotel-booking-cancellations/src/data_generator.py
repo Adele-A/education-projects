@@ -25,6 +25,10 @@ N_BOOKINGS = 5000
 
 def generate_guests(rng: np.random.Generator, n: int) -> pd.DataFrame:
     """Create the guests table with travel history."""
+    # Validate the size up front: a non-positive n would produce an empty or
+    # invalid table and fail later with a less helpful message.
+    if n < 1:
+        raise ValueError(f"n must be a positive integer, got {n}")
     guest_id = [f"G{i:05d}" for i in range(1, n + 1)]
     country = rng.choice(
         ["USA", "UK", "Germany", "France", "Spain", "Italy", "Netherlands", "Other"],
@@ -52,6 +56,12 @@ def generate_bookings(
     rng: np.random.Generator, n: int, guests: pd.DataFrame
 ) -> pd.DataFrame:
     """Create the bookings table, including the cancellation target."""
+    # Bookings are linked to guests by random index, which fails with an
+    # obscure error when there are no guests, so check the inputs first.
+    if n < 1:
+        raise ValueError(f"n must be a positive integer, got {n}")
+    if len(guests) == 0:
+        raise ValueError("guests table is empty; cannot link bookings to guests")
     # Link each booking to a guest.
     g_idx = rng.integers(0, len(guests), size=n)
     guest_id = guests["guest_id"].to_numpy()[g_idx]
