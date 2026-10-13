@@ -18,9 +18,9 @@ Build a reproducible pipeline that:
 ## Plan of the work
 
 1. **Data generation** (`src/data_generator.py`): simulate prices with a geometric random walk, fat-tailed returns and calm/stressed volatility regimes.
-2. **EDA**: price and return distributions, volatility regimes, volume vs. absolute returns, data quality checks.
-3. **Analysis / model**: compute SMA/EMA, RSI and MACD; define signals; run a simple backtest (returns, Sharpe ratio, max drawdown, number of trades) against buy-and-hold.
-4. **SQL**: load the tables into SQLite and answer questions with queries, for example the monthly return per ticker and the most volatile periods.
+2. **EDA** (`src/eda.py`): price and return distributions, volatility regimes, volume vs. absolute returns, data quality checks.
+3. **Analysis / model** (`src/analysis.py`, helpers in `src/utils.py`): compute SMA/EMA, RSI and MACD; define signals; run a simple backtest (returns, Sharpe ratio, max drawdown, number of trades) against buy-and-hold.
+4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): load the tables into SQLite and answer questions with queries, for example the monthly return per ticker and the most volatile periods.
 5. **Tests**: pytest checks for the data generator (schema, reproducibility, price consistency) and later for the indicator functions.
 
 ## Dataset (synthetic)
@@ -41,15 +41,95 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
+python src/run_sql.py
 ```
 
-This creates `data/tickers.csv` and `data/prices.csv`. Running it again with the same seed reproduces identical files.
+The first command creates `data/tickers.csv` and `data/prices.csv`. Running it again with the same seed reproduces identical files. The second command runs the exploratory analysis, the third runs the indicator backtest and the fourth runs the SQL queries (all three need the data files to exist).
 
 To run the tests (once they are added):
 
 ```bash
 pytest tests
 ```
+
+## Exploratory data analysis
+
+`src/eda.py` loads the two CSV files and prints its results to the console. It does the following:
+
+- **Overview:** shape, dtypes and missing values for both tables.
+- **Data quality checks:** duplicate (date, ticker) rows, OHLC ordering violations, non-positive prices and volumes.
+- **Descriptive statistics:** count, mean, std, quartiles and extremes for prices, volume and daily log returns.
+- **Aggregations:**
+  1. per-ticker summary (price range, total return, realised vs. assumed volatility, average volume),
+  2. realised volatility and volume by calm/stressed regime,
+  3. monthly log return summary per ticker,
+  4. skewness and excess kurtosis of daily returns (to check for fat tails),
+  5. correlation of daily returns between tickers, plus the correlation of volume with absolute returns.
+
+It also saves three charts to `figures/` (created automatically):
+
+- `close_prices.png`: close prices rebased to 100 for each ticker.
+- `return_distribution.png`: histograms of daily log returns by ticker and boxplots by volatility regime.
+- `volume_vs_abs_return.png`: scatter plot of volume against absolute daily return.
+
+## Method: indicators and backtest
+
+`src/utils.py` holds the reusable, testable logic and `src/analysis.py` runs the comparison.
+
+**Indicators**
+
+- SMA and EMA (rolling mean and exponentially weighted mean of the close).
+- RSI with Wilder smoothing, 14-day window.
+- MACD: EMA(12) minus EMA(26), a 9-day EMA signal line and the histogram.
+
+**Strategies** (long or flat only, no shorting, decided at the daily close)
+
+| Strategy | Rule |
+|---|---|
+| `buy_and_hold` | Always long (benchmark) |
+| `sma_crossover` | Long while SMA(20) is above SMA(50) |
+| `rsi_reversion` | Enter long when RSI(14) < 30, exit when RSI(14) > 50 |
+| `macd_crossover` | Long while the MACD line is above its signal line |
+
+**Backtest rules**
+
+- A position decided at the close of day *t* earns the return of day *t+1* (one-day lag, so there is no look-ahead bias).
+- Every position change costs 0.1% of traded value.
+- Indicator warm-up days are spent flat.
+- The Sharpe ratio is annualised with 252 days and a zero risk-free rate.
+- Parameters are standard defaults chosen in advance and are not tuned on the data, so no train/test split is used.
+
+**Metrics** reported per ticker and strategy: total return, annualised return, annualised volatility, Sharpe ratio, maximum drawdown, number of trades (entries) and share of time in the market.
+
+**Outputs**
+
+- Console tables with all metrics and a summary of how many tickers each strategy beats buy-and-hold on (Sharpe, total return, drawdown).
+- `figures/equity_curves.png`: equity curves of all strategies, one panel per ticker.
+- `figures/sharpe_by_strategy.png`: Sharpe ratio by ticker and strategy.
+- `reports/metrics.json`: parameters, all metrics and the summary versus buy-and-hold.
+
+**Limitations**
+
+The data is a random walk with a small drift, so there is no genuine technical pattern to exploit by construction. Results with only 4 tickers and 1000 days are noisy and should not be generalised to real markets. Conclusions must be read from the actual script output; this README does not quote numbers.
+
+## SQL analysis
+
+`sql/queries.sql` contains 8 commented queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: <question>`. `src/run_sql.py` loads `data/tickers.csv` and `data/prices.csv` into an in-memory SQLite database with `pandas.to_sql`, splits the file into statements, runs each one and prints the question together with the first 10 rows of the result.
+
+| Query | Question |
+|---|---|
+| Q1 | Price range, total return and average volume per ticker, with sector |
+| Q2 | Monthly return per ticker (month-end close vs. previous month-end close) |
+| Q3 | The most volatile ticker-months (highest mean absolute daily return) |
+| Q4 | Calm vs. stressed regime: size of moves and trading volume |
+| Q5 | The 10 largest one-day price moves and their regime |
+| Q6 | Share of days each ticker closes above its 20-day SMA |
+| Q7 | Maximum drawdown per ticker and the date of the trough |
+| Q8 | Volume on large-move days (above 3% absolute return) vs. normal days |
+
+The queries use CTEs, joins, window functions (`LAG`, running `MAX`, moving `AVG`) and conditional aggregation. Daily returns in SQL are simple returns (close / previous close - 1), so the numbers differ slightly from the log returns used in the Python scripts. The results are printed to the console only, and this README does not quote them.
 
 ---
 
