@@ -40,12 +40,14 @@ The default flag is drawn from a logistic risk function of credit score, debt-to
 
 ## How to run
 
-Install dependencies and generate the synthetic data:
+Use Python 3.11 with the packages listed in `requirements.txt`. Install them and generate the synthetic data from the project root:
 
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
 ```
+
+Run the generator first: the other scripts read the CSV files it creates.
 
 After running the data generator, you should see output like:
 
@@ -63,7 +65,7 @@ python src/analysis.py
 python src/run_sql.py
 ```
 
-All scripts are run from the project root and work non-interactively. Generated CSV files are saved to the `data/` folder, charts to `figures/` and the metrics summary to `reports/`.
+All scripts must be started from the project root and work non-interactively (no prompts, no pop-up windows). The generator writes the CSV files to `data/`, `eda.py` and `analysis.py` write charts to `figures/`, and `analysis.py` writes the metrics summary to `reports/`. These folders are created automatically when they are missing. Re-running the generator overwrites the CSV files with identical content, because the seed is fixed.
 
 ## Tests
 
@@ -73,7 +75,7 @@ Run the test suite from the project root:
 python -m pytest -q
 ```
 
-The tests are fast and self-contained: they generate small synthetic tables in memory (or in a temporary folder), so they do not need the files in `data/` or `figures/`. The latest run reported 12 passed.
+The tests are fast and self-contained: they generate small synthetic tables in memory (or in a temporary folder), so they do not need the files in `data/` or `figures/`. They import the modules from `src/` directly, so no extra installation step is needed. The latest run reported 12 passed.
 
 - `tests/test_data_generator.py`: column names, row counts, value ranges, key integrity (every loan has a customer), chronological loan ids, the minority default class and reproducibility with the fixed seed.
 - `tests/test_utils.py`: joining the tables, feature preparation, the model pipeline, the cost function, the cost curve, threshold selection and metrics checked against hand-computed values.
@@ -135,7 +137,7 @@ All numbers below are copied from the program output of one run on the synthetic
 
 ### Portfolio and drivers of default
 
-- 5000 loans, 333 defaults, overall default rate **0.0666** (4667 repaid vs 333 defaulted). Average interest rate is 14.96.
+- 5000 loans, 333 defaults, overall default rate **0.0666** (4667 repaid vs 333 defaulted). Average interest rate is 14.96 (percent).
 - Default rate by credit score band falls steeply as the score rises:
 
 | Score band | Loans | Default rate |
@@ -191,7 +193,7 @@ Reference costs: approve all loans = 415.0, reject all loans = 1167.0.
 
 - Credit score is a strong separator of risk in this dataset: the default rate is 0.2466 in the 300-579 band and 0.0048 in the 800-850 band. Delinquencies also matter (0.0541 with none vs 0.2589 with two).
 - The models rank borrowers moderately well (test ROC AUC 0.7637 to 0.7968) but precision stays low because defaults are rare: at the tuned thresholds precision is between 0.223 and 0.266.
-- At the default threshold of 0.5 the plain logistic regression finds only 1 of the defaults it should (recall 0.012, 82 missed), and its cost (411.0) is barely below "approve all" (415.0). Class imbalance makes 0.5 a poor cutoff for this model.
+- At the default threshold of 0.5 the plain logistic regression catches only 1 of the 83 test-set defaults (recall 0.012, 82 missed), and its cost (411.0) is barely below "approve all" (415.0). Class imbalance makes 0.5 a poor cutoff for this model.
 - Class weights change the operating point rather than the ranking: balanced logistic regression reaches recall 0.747 at 0.5 but with 337 false positives, giving the highest cost (442.0).
 - Cost-based threshold tuning helped every model compared with 0.5 on the test set for the two logistic regressions (411.0 to 339.0 and 442.0 to 348.0) and the random forest (389.0 to 368.0). The lowest test cost, 339.0, comes from the selected plain logistic regression at threshold 0.15, compared with 415.0 for approving everyone. Rejecting everyone (1167.0) is clearly the worst strategy under this cost assumption.
 - The two logistic regressions differ by only about 0.0035 in test ROC AUC and have almost identical PR AUC (0.2412 vs 0.2413), so the data does not show a meaningful ranking difference between them. The random forest is lower on all three AUC-type measures.
@@ -201,7 +203,7 @@ Reference costs: approve all loans = 415.0, reject all loans = 1167.0.
 
 - **The data is synthetic.** It is produced by the project's own generator with a known logistic risk function, so the findings describe that generator, not real borrowers. Absolute numbers (AUC, costs, default rates) should not be transferred to a real lender.
 - **Cost ratio is an assumption.** The 5:1 cost of a missed default vs a wrongly rejected good borrower is not estimated from data. Results, thresholds and the best strategy may change with other ratios.
-- **Single split.** Test metrics come from one 75/25 split with 83 defaults in the test set (82 + 1 at threshold 0.5), so they are noisy. Repeated splits or confidence intervals would show how stable the comparison is.
+- **Single split.** Test metrics come from one 75/25 split with 83 defaults in the test set (82 missed and 1 caught at threshold 0.5), so they are noisy. Repeated splits or confidence intervals would show how stable the comparison is.
 - **Small groups.** Some segments are small (for example 16 loans with 3+ delinquencies), so their default rates are uncertain.
 - **Next steps:** add probability calibration, test other models (for example gradient boosting) and resampling methods such as SMOTE, run a sensitivity analysis over several cost ratios, and check for time-based drift with a chronological train/test split.
 
