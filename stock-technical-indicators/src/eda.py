@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib.ticker import FuncFormatter, PercentFormatter
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -148,7 +149,7 @@ def plot_close_prices(prices):
         ax.plot(grp["date"], grp["close"] / grp["close"].iloc[0] * 100, label=ticker)
     ax.set_title("Synthetic close prices rebased to 100")
     ax.set_xlabel("Date")
-    ax.set_ylabel("Rebased close price")
+    ax.set_ylabel("Rebased close price (first close = 100)")
     ax.legend(title="Ticker")
     save_figure(fig, "close_prices.png")
 
@@ -176,17 +177,20 @@ def plot_return_distribution(prices):
 
 
 def plot_volume_vs_return(prices):
-    """Scatter of volume against absolute daily return."""
+    """Scatter of volume against absolute daily return, with readable axis units."""
     data = prices.dropna(subset=["abs_return"])
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(9, 5.5))
     sns.scatterplot(
         data=data, x="abs_return", y="volume", hue="ticker",
         alpha=0.4, s=15, ax=ax,
     )
-    ax.set_title("Volume vs absolute daily log return")
-    ax.set_xlabel("Absolute daily log return")
-    ax.set_ylabel("Volume (shares)")
-    ax.legend(title="Ticker")
+    ax.set_title("Volume vs absolute daily log return (synthetic data)")
+    ax.set_xlabel("Absolute daily log return (ticks in %)")
+    ax.set_ylabel("Volume (millions of shares)")
+    # Show returns as percentages and volume in millions instead of raw decimals
+    ax.xaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=0))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v / 1e6:.1f}"))
+    ax.legend(title="Ticker", loc="upper right")
     save_figure(fig, "volume_vs_abs_return.png")
 
 
