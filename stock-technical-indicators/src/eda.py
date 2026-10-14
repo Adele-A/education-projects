@@ -134,6 +134,13 @@ def print_aggregations(tickers, prices):
     print(f"\nCorrelation between volume and absolute return (all tickers): {corr:.4f}")
 
 
+def save_figure(fig, filename):
+    """Apply a tight layout, save the figure into FIGURES_DIR and close it."""
+    fig.tight_layout()
+    fig.savefig(FIGURES_DIR / filename, dpi=120)
+    plt.close(fig)
+
+
 def plot_close_prices(prices):
     """Line chart of close prices rebased to 100 for comparability."""
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -143,9 +150,7 @@ def plot_close_prices(prices):
     ax.set_xlabel("Date")
     ax.set_ylabel("Rebased close price")
     ax.legend(title="Ticker")
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "close_prices.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "close_prices.png")
 
 
 def plot_return_distribution(prices):
@@ -167,9 +172,7 @@ def plot_return_distribution(prices):
     axes[1].set_ylabel("Daily log return")
     axes[1].legend(title="Regime")
 
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "return_distribution.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "return_distribution.png")
 
 
 def plot_volume_vs_return(prices):
@@ -184,9 +187,7 @@ def plot_volume_vs_return(prices):
     ax.set_xlabel("Absolute daily log return")
     ax.set_ylabel("Volume (shares)")
     ax.legend(title="Ticker")
-    fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "volume_vs_abs_return.png", dpi=120)
-    plt.close(fig)
+    save_figure(fig, "volume_vs_abs_return.png")
 
 
 def main():
