@@ -22,6 +22,9 @@ SEED = 42
 N_GUESTS = 3500
 N_BOOKINGS = 5000
 
+# Columns that generate_bookings reads from the guests table.
+REQUIRED_GUEST_COLUMNS = ("guest_id", "previous_stays", "previous_cancellations")
+
 
 def generate_guests(rng: np.random.Generator, n: int) -> pd.DataFrame:
     """Create the guests table with travel history."""
@@ -62,6 +65,11 @@ def generate_bookings(
         raise ValueError(f"n must be a positive integer, got {n}")
     if len(guests) == 0:
         raise ValueError("guests table is empty; cannot link bookings to guests")
+    # A guests table without the expected columns would otherwise raise a bare
+    # KeyError later, so report exactly which columns are missing.
+    missing = [c for c in REQUIRED_GUEST_COLUMNS if c not in guests.columns]
+    if missing:
+        raise ValueError(f"guests table is missing required columns: {missing}")
     # Link each booking to a guest.
     g_idx = rng.integers(0, len(guests), size=n)
     guest_id = guests["guest_id"].to_numpy()[g_idx]
