@@ -15,7 +15,7 @@ Which booking characteristics make a reservation more likely to be canceled, and
 ## Plan of the work
 
 1. **Data generation** (`src/data_generator.py`): create the synthetic tables with a fixed seed.
-2. **EDA**: data quality checks, distributions, cancellation rate by segment, lead time, deposit type, season, and so on.
+2. **EDA** (`src/eda.py`): data quality checks, distributions, cancellation rate by segment, lead time, deposit type, season, and so on.
 3. **Analysis / model**: baseline logistic regression and a gradient boosting classifier, with a train/test split, cross-validation, feature importance and error analysis.
 4. **SQL**: analytical queries (cancellation rate by segment, month, guest history) in `sql/`.
 5. **Tests**: `pytest` checks for the data generator and the data's integrity in `tests/`.
@@ -31,6 +31,20 @@ Tables saved to `data/`:
 
 See `data_description.md` for every column.
 
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files from `data/` and:
+
+- prints data quality checks for each table: shape, dtypes, missing values, duplicate rows, and whether every booking links to a known guest;
+- prints descriptive statistics for the numeric columns and the overall cancellation rate;
+- prints five aggregations of the cancellation rate: by deposit type, market segment, lead time bucket, hotel type combined with number of special requests, and number of earlier cancellations by the guest;
+- saves three charts to `figures/`:
+  - `lead_time_vs_cancellation.png`: lead time distribution by outcome and cancellation rate by lead time bucket;
+  - `cancellation_by_deposit_and_segment.png`: cancellation rate by deposit type and by market segment;
+  - `monthly_bookings_and_cancellations.png`: booking volume and cancellation rate by arrival month.
+
+All figures and tables come from the synthetic data, so the patterns reflect the simulator's design and not real guest behavior. Run the script to see the actual numbers.
+
 ## How to run
 
 From the project root:
@@ -38,9 +52,10 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-This creates `data/guests.csv` and `data/bookings.csv`. Later steps will add further scripts in `src/`, all runnable as `python src/<name>.py`.
+The first script creates `data/guests.csv` and `data/bookings.csv`; the second prints the EDA output and creates the charts in `figures/`. Later steps will add further scripts in `src/`, all runnable as `python src/<name>.py`.
 
 ---
 
