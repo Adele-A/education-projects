@@ -31,6 +31,8 @@ Tables saved to `data/`:
 
 See `data_description.md` for every column.
 
+Because the seed is fixed, running the generator again produces the same two CSV files.
+
 ## Exploratory data analysis
 
 `src/eda.py` loads both CSV files from `data/` and:
@@ -47,6 +49,8 @@ All figures and tables come from the synthetic data, so the patterns reflect the
 
 ## How to run
 
+**Requirements:** Python 3.11 and the packages listed in `requirements.txt`.
+
 From the project root:
 
 ```bash
@@ -55,7 +59,9 @@ python src/data_generator.py
 python src/eda.py
 ```
 
-The first script creates `data/guests.csv` and `data/bookings.csv`; the second prints the EDA output and creates the charts in `figures/`. Later steps will add further scripts in `src/`, all runnable as `python src/<name>.py`.
+The first script creates the `data/` folder with `guests.csv` and `bookings.csv`. The second script prints the EDA output and creates the `figures/` folder with the charts. Both scripts run without user input and do not open any windows, so they can also be run in a headless environment or a CI job.
+
+The `data/` and `figures/` folders are generated outputs. If you delete them, run `python src/data_generator.py` again before `python src/eda.py`. Later steps will add further scripts in `src/`, all runnable as `python src/<name>.py`.
 
 ---
 
