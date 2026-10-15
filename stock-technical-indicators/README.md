@@ -21,7 +21,7 @@ Build a reproducible pipeline that:
 2. **EDA** (`src/eda.py`): price and return distributions, volatility regimes, volume vs. absolute returns, data quality checks.
 3. **Analysis / model** (`src/analysis.py`, helpers in `src/utils.py`): compute SMA/EMA, RSI and MACD; define signals; run a simple backtest (returns, Sharpe ratio, max drawdown, number of trades) against buy-and-hold.
 4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): load the tables into SQLite and answer questions with queries, for example the monthly return per ticker and the most volatile periods.
-5. **Tests**: pytest checks for the data generator (schema, reproducibility, price consistency) and later for the indicator functions.
+5. **Tests** (`tests/`): pytest checks for the data generator (schema, row counts, reproducibility, price consistency) and for the indicator, signal and backtest functions in `src/utils.py`.
 
 ## Dataset (synthetic)
 
@@ -48,11 +48,18 @@ python src/run_sql.py
 
 The first command creates `data/tickers.csv` and `data/prices.csv`. Running it again with the same seed reproduces identical files. The second command runs the exploratory analysis, the third runs the indicator backtest and the fourth runs the SQL queries (all three need the data files to exist).
 
-To run the tests (once they are added):
+## Tests
+
+From the project root:
 
 ```bash
-pytest tests
+python -m pytest -q
 ```
+
+The tests live in `tests/` and run in a few seconds. They do not read data files or figures (the last run reported 14 passed):
+
+- `tests/test_data_generator.py`: column names, row counts (4 tickers x 1000 days), no duplicates or missing values, OHLC consistency, positive prices, volume and regime value ranges, ticker parameter ranges and reproducibility with the fixed seed.
+- `tests/test_utils.py`: known values for SMA and EMA, RSI extremes (100 for a steadily rising series, 0 for a falling one) and range, MACD columns and histogram, binary positions that stay flat during indicator warm-up, the one-day lag and transaction cost in the backtest, trade counting, maximum drawdown and Sharpe ratio edge cases.
 
 ## Exploratory data analysis
 
@@ -110,10 +117,6 @@ It also saves three charts to `figures/` (created automatically):
 - `figures/sharpe_by_strategy.png`: Sharpe ratio by ticker and strategy.
 - `reports/metrics.json`: parameters, all metrics and the summary versus buy-and-hold.
 
-**Limitations**
-
-The data is a random walk with a small drift, so there is no genuine technical pattern to exploit by construction. Results with only 4 tickers and 1000 days are noisy and should not be generalised to real markets. Conclusions must be read from the actual script output; this README does not quote numbers.
-
 ## SQL analysis
 
 `sql/queries.sql` contains 8 commented queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: <question>`. `src/run_sql.py` loads `data/tickers.csv` and `data/prices.csv` into an in-memory SQLite database with `pandas.to_sql`, splits the file into statements, runs each one and prints the question together with the first 10 rows of the result.
@@ -129,7 +132,85 @@ The data is a random walk with a small drift, so there is no genuine technical p
 | Q7 | Maximum drawdown per ticker and the date of the trough |
 | Q8 | Volume on large-move days (above 3% absolute return) vs. normal days |
 
-The queries use CTEs, joins, window functions (`LAG`, running `MAX`, moving `AVG`) and conditional aggregation. Daily returns in SQL are simple returns (close / previous close - 1), so the numbers differ slightly from the log returns used in the Python scripts. The results are printed to the console only, and this README does not quote them.
+The queries use CTEs, joins, window functions (`LAG`, running `MAX`, moving `AVG`) and conditional aggregation. Daily returns in SQL are simple returns (close / previous close - 1), so the numbers differ slightly from the log returns used in the Python scripts. The results are printed to the console only.
+
+## Results
+
+All numbers below come from the actual output of the scripts on the **synthetic** data (seed 42). They describe simulated prices, not real markets.
+
+### Data characteristics (from `src/eda.py`)
+
+| Ticker | Sector | Total return | Annualised volatility | Excess kurtosis |
+|---|---|---|---|---|
+| ALFA | Technology | -0.6353 | 0.4492 | 7.5711 |
+| BRVO | Utilities | -0.0668 | 0.2026 | 9.0283 |
+| CHRL | Energy | 0.3927 | 0.3233 | 4.9027 |
+| DLTA | Healthcare | 2.9933 | 0.2703 | 3.7181 |
+
+- Data quality checks found no duplicates, no OHLC ordering violations, no non-positive prices and no volumes below 1.
+- Daily returns are fat-tailed (positive excess kurtosis for every ticker).
+- Stressed days have roughly double the daily volatility of calm days. For example, ALFA has 0.0203 on calm days vs. 0.0448 on stressed days.
+- Correlations of daily returns between tickers are close to zero (between -0.0460 and 0.0408).
+- Volume and absolute return are correlated at 0.6914.
+
+### Backtest versus buy-and-hold (from `src/analysis.py`)
+
+Sharpe ratio (annualised, zero risk-free rate, 0.10% cost per position change):
+
+| Ticker | buy_and_hold | sma_crossover | rsi_reversion | macd_crossover |
+|---|---|---|---|---|
+| ALFA | -0.5667 | -0.7287 | -0.2104 | -0.7758 |
+| BRVO | -0.0873 | -0.0267 | -0.8536 | 0.3611 |
+| CHRL | 0.2575 | 0.1361 | 0.6323 | 0.1191 |
+| DLTA | 1.2908 | 1.6120 | -0.0879 | 1.1434 |
+
+Summary across the 4 tickers:
+
+| Strategy | Tickers with higher Sharpe than buy-and-hold | Tickers with higher total return | Tickers with smaller drawdown | Mean Sharpe | Mean max drawdown | Mean trades |
+|---|---|---|---|---|---|---|
+| buy_and_hold | - | - | - | 0.2236 | -0.456 | 1 |
+| sma_crossover | 2 of 4 | 2 of 4 | 4 of 4 | 0.2482 | -0.3611 | 9.75 |
+| rsi_reversion | 2 of 4 | 1 of 4 | 4 of 4 | -0.1299 | -0.2249 | 6.0 |
+| macd_crossover | 1 of 4 | 1 of 4 | 4 of 4 | 0.2119 | -0.3455 | 37.75 |
+
+Selected total returns: DLTA buy-and-hold 2.9893 vs. sma_crossover 2.8139, macd_crossover 1.4555 and rsi_reversion -0.0262. ALFA buy-and-hold -0.6357 vs. rsi_reversion -0.1371.
+
+![Equity curves of all strategies per ticker](figures/equity_curves.png)
+
+![Sharpe ratio by ticker and strategy](figures/sharpe_by_strategy.png)
+
+![Close prices rebased to 100](figures/close_prices.png)
+
+### SQL highlights (from `src/run_sql.py`)
+
+- Q6: share of days closing above the 20-day SMA is 0.6514 for DLTA, 0.5015 for CHRL, 0.4893 for BRVO and 0.4353 for ALFA.
+- Q7: maximum drawdown of the close is -0.7281 for ALFA (trough 2024-10-10), -0.4639 for BRVO, -0.3580 for CHRL and -0.2740 for DLTA.
+- Q8: average volume is higher on large-move days than on normal days for every ticker (for example ALFA 4178240 vs. 2488351).
+
+## Conclusions
+
+- **No strategy clearly beats buy-and-hold.** Mean Sharpe is 0.2482 for `sma_crossover` and 0.2119 for `macd_crossover`, against 0.2236 for buy-and-hold. The SMA difference is small and rests on only 4 tickers, so it is not evidence of a real edge. `rsi_reversion` has a negative mean Sharpe (-0.1299).
+- **Results depend heavily on the ticker.** `macd_crossover` has the best Sharpe on BRVO (0.3611 vs. -0.0873), but it is the weakest or close to the weakest strategy on ALFA, CHRL and DLTA. `rsi_reversion` has the best Sharpe on CHRL (0.6323) and the worst on BRVO (-0.8536).
+- **All three strategies reduce maximum drawdown on all 4 tickers** (mean -0.3611, -0.2249 and -0.3455 vs. -0.456 for buy-and-hold). They also spend much less time in the market (for example 0.046 for `rsi_reversion` on DLTA vs. 0.999), so a smaller drawdown goes together with giving up exposure. On DLTA, `rsi_reversion` was in the market only 4.6% of the time and returned -0.0262, against 2.9893 for buy-and-hold.
+- **Buy-and-hold wins on total return when the asset trends up strongly.** On DLTA (total return 2.9933 in the EDA), no strategy beat buy-and-hold on total return.
+- **Trading frequency differs a lot.** `macd_crossover` made 33 to 43 trades per ticker, against 7 to 12 for `sma_crossover` on three tickers and 2 to 8 for `rsi_reversion`, so it is the strategy most exposed to transaction costs.
+
+## Limitations & next steps
+
+**Limitations**
+
+- The data is **synthetic**: a random walk with a small drift, fat-tailed returns and volatility regimes. There is no genuine technical pattern to exploit by construction, so the results say nothing about real markets or real companies.
+- Only 4 fictional tickers and 1000 business days each were used, and a single random seed (42). Differences between strategies are small relative to the ticker-to-ticker spread and are noisy.
+- Strategies are long or flat only, with one fixed parameter set each and a flat 0.10% cost. There is no slippage, no shorting and no position sizing.
+- No statistical tests or confidence intervals are computed, so none of the differences above are tested for significance.
+
+**Next steps**
+
+- Repeat the backtest over many seeds and more tickers, and report the distribution of Sharpe differences against buy-and-hold.
+- Add a bootstrap or permutation test for the Sharpe differences.
+- Test sensitivity to the parameters (windows, RSI thresholds) and to the transaction cost, using a train/test split once parameters are tuned.
+- Generate data with an explicit trend or mean-reversion component, to check whether the indicators can detect a pattern that is known to exist.
+- Add short positions and volatility-based position sizing.
 
 ---
 
