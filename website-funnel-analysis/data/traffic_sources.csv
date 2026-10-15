@@ -1,0 +1,7 @@
+traffic_source,channel_type,cost_per_session
+organic_search,unpaid,0.0
+paid_search,paid,1.2
+direct,unpaid,0.0
+social,paid,0.65
+email,owned,0.1
+referral,unpaid,0.3
