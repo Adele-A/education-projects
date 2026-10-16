@@ -17,8 +17,8 @@ Where do website visitors drop out of the purchase funnel, and which traffic sou
 
 ## Plan of the work
 
-1. **Data generation** (this step): build a synthetic sessions table and a traffic source cost table.
-2. **EDA**: data quality checks, distributions, funnel counts and rates, segment breakdowns, charts.
+1. **Data generation** (done): build a synthetic sessions table and a traffic source cost table.
+2. **EDA** (done): data quality checks, distributions, funnel counts and rates, segment breakdowns, charts.
 3. **Analysis / model**: drop-off analysis per segment, statistical tests (chi-square, proportion tests), and a logistic regression of purchase probability on source, device and user type.
 4. **SQL**: funnel and traffic source queries (conversion rates, revenue per session, cost per order) stored in `sql/`.
 5. **Tests**: pytest checks for data integrity (funnel nesting, value ranges, reproducibility) in `tests/`.
@@ -41,9 +41,26 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-The script is deterministic (seed 42) and creates the `data/` folder if needed.
+The data generator is deterministic (seed 42) and creates the `data/` folder if needed. The EDA script reads the CSV files, so run the generator first.
+
+## EDA
+
+`src/eda.py` explores the synthetic tables and does not modify them. It:
+
+- prints shape, data types, missing values and duplicate counts for both tables;
+- checks that the funnel steps are nested and shows the session date range;
+- prints descriptive statistics for pages viewed, session duration and order value, plus category shares for source, device, country and user type;
+- prints four aggregations: the overall funnel (counts, step conversion, drop-off), traffic source performance (funnel rates, revenue per session, average order value, cost, cost per order, net revenue), funnel by device and user type, and funnel by month;
+- saves four charts to `figures/`:
+  - `funnel_overall.png`: sessions at each funnel step with step conversion;
+  - `purchase_rate_by_source.png`: purchase rate by traffic source;
+  - `funnel_by_device.png`: share of sessions reaching each step, by device;
+  - `order_value_distribution.png`: histogram of order values.
+
+All results are produced by the script at run time; read the printed output and charts for the actual numbers.
 
 ---
 
