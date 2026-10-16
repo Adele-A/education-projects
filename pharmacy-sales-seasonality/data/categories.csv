@@ -1,0 +1,9 @@
+category,seasonality_pattern,base_weekly_units,base_unit_price
+cold_and_flu,winter peak,1800,6.5
+allergy,spring peak,900,9.0
+vitamins,mild winter peak,1200,12.0
+sun_care,summer peak,600,14.5
+digestive,weak summer peak,1000,7.5
+pain_relief,almost flat,1500,5.0
+first_aid,weak summer peak,700,4.0
+cardio_chronic,flat with upward trend,1300,18.0
