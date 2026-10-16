@@ -8,7 +8,7 @@ Quantify the effect of distance, weather and courier load on delivery time, and 
 
 ## Plan of the work
 1. **Data generation** – create a synthetic dataset of couriers and orders (`src/data_generator.py`).
-2. **EDA** – check data quality, distributions and relationships between delivery time and distance, weather, courier load and time of day.
+2. **EDA** – check data quality, distributions and relationships between delivery time and distance, weather, courier load and time of day (`src/eda.py`).
 3. **Analysis / model** – baseline and multiple linear regression (plus a comparison with a tree-based model), validated on a hold-out set.
 4. **SQL** – analytical queries on the order and courier tables (average delivery time by weather, by load, by vehicle, etc.).
 5. **Tests** – pytest checks for the data generator and the data quality of the generated tables.
@@ -22,15 +22,29 @@ Two tables are saved to `data/`:
 
 Full column descriptions are in [data_description.md](data_description.md).
 
+## Exploratory data analysis
+`src/eda.py` loads both CSV files from `data/` and:
+- prints the shape, data types, missing values and duplicate count of each table;
+- prints descriptive statistics for the numeric columns;
+- prints aggregations of delivery time (order count, mean, median) by weather, courier load, vehicle type, distance band and peak-hour flag, plus the correlation of numeric features with delivery time;
+- saves charts to `figures/`:
+  - `delivery_time_distribution.png` – histogram of the target;
+  - `delivery_vs_distance.png` – delivery time vs distance, colored by weather;
+  - `delivery_by_weather_and_load.png` – boxplots by weather and by courier load;
+  - `delivery_by_hour.png` – mean delivery time by hour of day.
+
+Because the data is synthetic, any patterns seen in the output reflect the assumptions coded in the generator, not real-world behavior. Findings should be read from the actual output of the script.
+
 ## How to run
 From the project root:
 
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-The script is non-interactive and writes `data/couriers.csv` and `data/orders.csv`.
+Both scripts are non-interactive. The generator writes `data/couriers.csv` and `data/orders.csv`; the EDA script prints its report to the console and writes PNG files to `figures/`.
 
 ---
 
