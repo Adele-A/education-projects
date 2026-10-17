@@ -17,7 +17,7 @@ Which medicine categories follow a strong seasonal pattern, and how far ahead ca
 ## Plan of the work
 
 1. **Data generation** (`src/data_generator.py`): create synthetic weekly sales per category, plus a category reference table.
-2. **EDA**: data quality checks, trends, seasonal profiles by category, the effect of promotions and temperature.
+2. **EDA** (`src/eda.py`): data quality checks, trends, seasonal profiles by category, the effect of promotions and temperature.
 3. **Analysis / model**: seasonal decomposition, then SARIMAX per category, with a time-based train/test split and a naive seasonal baseline.
 4. **SQL**: aggregation queries (monthly totals, seasonal index, year-over-year growth) in `sql/`.
 5. **Tests** (`tests/`): pytest checks for the generated data (schema, ranges, reproducibility) and for the helper functions.
@@ -48,6 +48,26 @@ python src/data_generator.py
 ```
 
 This creates the `data/` folder and the two CSV files. Running it again produces identical files (seed 42).
+
+Run the exploratory analysis (needs the data files from the previous step):
+
+```bash
+python src/eda.py
+```
+
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files and:
+
+- prints shape, dtypes, missing values and duplicate checks for each table, plus integrity checks on the sales table (key uniqueness, date range, weeks per category, non-negative units, positive prices, Monday week starts);
+- prints descriptive statistics of the numeric columns;
+- prints five aggregations: totals per category, yearly units per category, a monthly seasonal index, seasonality strength (peak month and peak-to-trough ratio) and the promo vs non-promo comparison, together with the correlation of units with temperature;
+- saves three charts to `figures/`:
+  - `weekly_units_by_category.png`: weekly units for each category;
+  - `seasonal_index_heatmap.png`: monthly seasonal index by category;
+  - `promo_and_temperature.png`: relative units in promo vs non-promo weeks, and relative units vs temperature for selected categories.
+
+All numbers are produced by the script output on the synthetic data; run it to see them. The promo comparison is a raw ratio and is mixed with seasonality, so a model with exogenous variables (next step) is needed for a cleaner effect estimate.
 
 ---
 
