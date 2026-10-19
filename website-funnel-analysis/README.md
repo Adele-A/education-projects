@@ -19,9 +19,9 @@ Where do website visitors drop out of the purchase funnel, and which traffic sou
 
 1. **Data generation** (done): build a synthetic sessions table and a traffic source cost table.
 2. **EDA** (done): data quality checks, distributions, funnel counts and rates, segment breakdowns, charts.
-3. **Analysis / model**: drop-off analysis per segment, statistical tests (chi-square, proportion tests), and a logistic regression of purchase probability on source, device and user type.
-4. **SQL**: funnel and traffic source queries (conversion rates, revenue per session, cost per order) stored in `sql/`.
-5. **Tests**: pytest checks for data integrity (funnel nesting, value ranges, reproducibility) in `tests/`.
+3. **Analysis / model** (done): drop-off analysis per segment, statistical tests (chi-square, proportion tests), and a logistic regression of purchase probability on source, device and user type.
+4. **SQL** (done): funnel and traffic source queries (conversion rates, revenue per session, cost per order) stored in `sql/`.
+5. **Tests** (done): pytest checks for data generation (columns, row counts, value ranges, funnel nesting, reproducibility) and for the helper functions in `src/utils.py`, stored in `tests/`.
 
 ## Dataset (synthetic)
 
@@ -42,9 +42,25 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+python src/run_sql.py
+python -m pytest -q
 ```
 
-The data generator is deterministic (seed 42) and creates the `data/` folder if needed. The EDA script reads the CSV files, so run the generator first.
+The data generator is deterministic (seed 42) and creates the `data/` folder if needed. The EDA, analysis and SQL scripts read the CSV files, so run the generator first.
+
+## Tests
+
+The tests in `tests/` run in a few seconds, do not need the CSV files or any figures, and write nothing to disk.
+
+```bash
+python -m pytest -q
+```
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | Column names and row counts, category values, value ranges (duration, pages, dates), nested funnel steps, order value consistent with `purchased`, reproducibility with the fixed seed, and the traffic source table |
+| `tests/test_utils.py` | Funnel transitions and segment step conversion on a small hand-made table, two-proportion and chi-square tests, the design matrix for the model, and classification and baseline metrics |
 
 ## EDA
 
@@ -61,6 +77,48 @@ The data generator is deterministic (seed 42) and creates the `data/` folder if 
   - `order_value_distribution.png`: histogram of order values.
 
 All results are produced by the script at run time; read the printed output and charts for the actual numbers.
+
+## Method
+
+`src/analysis.py` answers the business question in three parts. Reusable logic (funnel calculations, statistical test wrappers, feature preparation, metric functions) lives in `src/utils.py`.
+
+1. **Drop-off analysis.** For every funnel transition (session to product view, view to cart, cart to checkout, checkout to purchase) the script computes sessions entering, sessions lost and the drop-off rate. It reports both the transition with the highest drop-off rate and the one that loses the most sessions in absolute terms. Conditional step conversion (each step relative to the previous one) is also broken down by traffic source, device and user type.
+2. **Statistical tests.** A chi-square test of independence (with Cramér's V as effect size) checks whether purchase is associated with traffic source, device, user type and country. Selected pairs (mobile vs desktop, returning vs new, and email, social and paid search vs organic search) are compared with two-proportion z-tests and a 95% confidence interval for the difference in purchase rate. Several tests are run and p-values are not corrected for multiple comparisons, so they should be read as exploratory.
+3. **Logistic regression.** Purchase (0/1) is modelled from traffic source, device and user type, one-hot encoded with organic search, desktop and new users as reference levels. The data is split 80/20 with `train_test_split(random_state=42)`, stratified on the outcome. A scikit-learn model is evaluated on the held-out test set with ROC AUC, average precision, Brier score, log loss, and accuracy, precision, recall and F1 at two thresholds (0.5 and the training purchase rate). It is compared with a constant baseline that always predicts the training purchase rate. Because purchase is a rare outcome, threshold-free metrics (ROC AUC, Brier score, log loss) are the most informative. For interpretation, a statsmodels logistic regression fitted on the same training data provides odds ratios with 95% confidence intervals.
+
+Only session-level categorical features are used. Engagement metrics such as pages viewed and session duration are excluded because they are recorded during the session and partly follow from how deep it went, which would leak the outcome.
+
+### Outputs
+
+- Charts in `figures/`:
+  - `step_conversion_by_source.png`: heatmap of conditional step conversion by traffic source;
+  - `odds_ratios.png`: forest plot of odds ratios for purchase with 95% confidence intervals.
+- `reports/metrics.json`: funnel transitions, test results, split settings, test metrics, baseline metrics and odds ratios.
+
+All numbers are produced by the script at run time; read the printed output and `reports/metrics.json` for the actual values. Because the data is synthetic and built from assumed conversion probabilities, the findings illustrate the method and do not describe real customer behaviour.
+
+## SQL
+
+The funnel and traffic source questions are also answered in SQL (SQLite dialect) in `sql/queries.sql`. Each query is preceded by a comment line `-- Q<n>:` that states the question.
+
+| Query | Question |
+|-------|----------|
+| Q1 | How many sessions reach each funnel step overall, and what share of all sessions is that? |
+| Q2 | Where are the biggest drop-off points (step conversion, sessions lost, drop-off rate per transition)? |
+| Q3 | How do traffic sources compare on purchase rate, revenue per session and average order value? |
+| Q4 | What is the cost efficiency of each source (total cost, cost per order, net revenue)? Joins `traffic_sources`. |
+| Q5 | How does the purchase rate differ by device and user type? |
+| Q6 | How many checkouts turn into purchases on each device? |
+| Q7 | How do sessions, purchase rate and revenue develop month by month? |
+| Q8 | Within each device, how do traffic sources rank by purchase rate? (window function) |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints its description and the first rows of the result. Nothing is written to disk. Because statements are split on the semicolon character, comments in `queries.sql` must not contain one.
+
+```bash
+python src/run_sql.py
+```
+
+The query results are printed at run time; the SQL numbers should agree with the pandas results from `src/eda.py` and `src/analysis.py`.
 
 ---
 
