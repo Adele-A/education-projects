@@ -1,0 +1,229 @@
+{
+  "n_sessions": 5000,
+  "dropoff": {
+    "transitions": [
+      {
+        "transition": "session -> viewed_product",
+        "entered": 5000,
+        "continued": 3313,
+        "lost": 1687,
+        "step_conversion": 0.6626,
+        "drop_off": 0.33740000000000003
+      },
+      {
+        "transition": "viewed_product -> added_to_cart",
+        "entered": 3313,
+        "continued": 1259,
+        "lost": 2054,
+        "step_conversion": 0.3800181104738907,
+        "drop_off": 0.6199818895261093
+      },
+      {
+        "transition": "added_to_cart -> reached_checkout",
+        "entered": 1259,
+        "continued": 741,
+        "lost": 518,
+        "step_conversion": 0.5885623510722796,
+        "drop_off": 0.4114376489277204
+      },
+      {
+        "transition": "reached_checkout -> purchased",
+        "entered": 741,
+        "continued": 494,
+        "lost": 247,
+        "step_conversion": 0.6666666666666666,
+        "drop_off": 0.33333333333333337
+      }
+    ],
+    "highest_drop_off_rate_transition": "viewed_product -> added_to_cart",
+    "most_sessions_lost_transition": "viewed_product -> added_to_cart"
+  },
+  "tests": {
+    "chi_square": [
+      {
+        "segment": "traffic_source",
+        "chi2": 79.51727464887102,
+        "dof": 5,
+        "p_value": 1.0588482879208373e-15,
+        "cramers_v": 0.1261089010727403
+      },
+      {
+        "segment": "device",
+        "chi2": 11.156266119923776,
+        "dof": 2,
+        "p_value": 0.003779615251071731,
+        "cramers_v": 0.04723614319548914
+      },
+      {
+        "segment": "user_type",
+        "chi2": 43.070001098831824,
+        "dof": 1,
+        "p_value": 5.281590664884119e-11,
+        "cramers_v": 0.0928116383853144
+      },
+      {
+        "segment": "country",
+        "chi2": 6.114351684009222,
+        "dof": 5,
+        "p_value": 0.2952505249713865,
+        "cramers_v": 0.034969563005588795
+      }
+    ],
+    "two_proportion": [
+      {
+        "rate_1": 0.08664898320070734,
+        "rate_2": 0.11443898077782745,
+        "difference": -0.027789997577120112,
+        "ci_low": -0.045352527478476276,
+        "ci_high": -0.010227467675763949,
+        "z_stat": -3.100201901035583,
+        "p_value": 0.001933887690881521,
+        "column": "device",
+        "group_1": "mobile",
+        "group_2": "desktop"
+      },
+      {
+        "rate_1": 0.13736903376018628,
+        "rate_2": 0.07861060329067641,
+        "difference": 0.05875843046950986,
+        "ci_low": 0.0400567022452569,
+        "ci_high": 0.07746015869376283,
+        "z_stat": 6.612672109953048,
+        "p_value": 3.7744387696927043e-11,
+        "column": "user_type",
+        "group_1": "returning",
+        "group_2": "new"
+      },
+      {
+        "rate_1": 0.17584745762711865,
+        "rate_2": 0.08532643826761474,
+        "difference": 0.09052101935950391,
+        "ci_low": 0.0534622671674266,
+        "ci_high": 0.1275797715515812,
+        "z_stat": 5.580797379481356,
+        "p_value": 2.3941842446171498e-08,
+        "column": "traffic_source",
+        "group_1": "email",
+        "group_2": "organic_search"
+      },
+      {
+        "rate_1": 0.041379310344827586,
+        "rate_2": 0.08532643826761474,
+        "difference": -0.043947127922787155,
+        "ci_low": -0.06404673327645426,
+        "ci_high": -0.023847522569120053,
+        "z_stat": -3.7944609403503584,
+        "p_value": 0.00014796457164816535,
+        "column": "traffic_source",
+        "group_1": "social",
+        "group_2": "organic_search"
+      },
+      {
+        "rate_1": 0.09918107370336669,
+        "rate_2": 0.08532643826761474,
+        "difference": 0.013854635435751952,
+        "ci_low": -0.008642347750479337,
+        "ci_high": 0.036351618621983245,
+        "z_stat": 1.2205848180759948,
+        "p_value": 0.22224325744723195,
+        "column": "traffic_source",
+        "group_1": "paid_search",
+        "group_2": "organic_search"
+      }
+    ]
+  },
+  "model": {
+    "split": {
+      "test_size": 0.2,
+      "random_state": 42,
+      "n_train": 4000,
+      "n_test": 1000
+    },
+    "test_metrics_threshold_0_5": {
+      "threshold": 0.5,
+      "roc_auc": 0.6836679783405644,
+      "average_precision": 0.17604133693053486,
+      "brier_score": 0.08616782692350855,
+      "log_loss": 0.3060542425592079,
+      "accuracy": 0.901,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "test_metrics_threshold_train_rate": {
+      "threshold": 0.09875,
+      "roc_auc": 0.6836679783405644,
+      "average_precision": 0.17604133693053486,
+      "brier_score": 0.08616782692350855,
+      "log_loss": 0.3060542425592079,
+      "accuracy": 0.567,
+      "precision": 0.14316239316239315,
+      "recall": 0.6767676767676768,
+      "f1": 0.23633156966490299
+    },
+    "baseline": {
+      "train_prevalence": 0.09875,
+      "brier_score": 0.08919906249999997,
+      "log_loss": 0.32288052757995295,
+      "roc_auc": 0.5
+    },
+    "odds_ratios": [
+      {
+        "feature": "traffic_source_paid_search",
+        "odds_ratio": 1.1137215053031382,
+        "ci_low": 0.8207300554742415,
+        "ci_high": 1.5113076255724096,
+        "p_value": 0.4892325538108383
+      },
+      {
+        "feature": "traffic_source_direct",
+        "odds_ratio": 1.863145832722093,
+        "ci_low": 1.394365800019665,
+        "ci_high": 2.4895277795401642,
+        "p_value": 2.5752681965967506e-05
+      },
+      {
+        "feature": "traffic_source_social",
+        "odds_ratio": 0.5138039682730381,
+        "ci_low": 0.3298396868267131,
+        "ci_high": 0.8003722061251382,
+        "p_value": 0.003233336800443307
+      },
+      {
+        "feature": "traffic_source_email",
+        "odds_ratio": 2.2952972950876256,
+        "ci_low": 1.6379080038925249,
+        "ci_high": 3.2165357641064856,
+        "p_value": 1.3938009151574202e-06
+      },
+      {
+        "feature": "traffic_source_referral",
+        "odds_ratio": 0.7485372457564199,
+        "ci_low": 0.4110379354626202,
+        "ci_high": 1.3631540058558935,
+        "p_value": 0.3436324423479934
+      },
+      {
+        "feature": "device_mobile",
+        "odds_ratio": 0.8195008092443066,
+        "ci_low": 0.657003572012223,
+        "ci_high": 1.0221886226511705,
+        "p_value": 0.07750693515801615
+      },
+      {
+        "feature": "device_tablet",
+        "odds_ratio": 0.7837848297586518,
+        "ci_low": 0.5321640012775921,
+        "ci_high": 1.1543784583041583,
+        "p_value": 0.21748762656419496
+      },
+      {
+        "feature": "user_type_returning",
+        "odds_ratio": 1.8224316257864233,
+        "ci_low": 1.4746699171438507,
+        "ci_high": 2.2522036911820758,
+        "p_value": 2.7676402923626578e-08
+      }
+    ]
+  }
+}
