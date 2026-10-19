@@ -7,6 +7,7 @@ to figures/.
 Run from the project root (after python src/data_generator.py):
     python src/eda.py
 """
+import calendar
 from pathlib import Path
 
 import matplotlib
@@ -123,25 +124,34 @@ def aggregations(sales: pd.DataFrame, categories: pd.DataFrame) -> dict:
 
 def plot_weekly_series(sales: pd.DataFrame) -> None:
     """Weekly units per category, one panel each."""
-    g = sns.FacetGrid(sales, col="category", col_wrap=4, height=2.4, aspect=1.5, sharey=False)
+    # Replace underscores in category names for readable panel titles (display only)
+    plot_df = sales.assign(category=sales["category"].str.replace("_", " ", regex=False))
+    g = sns.FacetGrid(plot_df, col="category", col_wrap=4, height=2.6, aspect=1.5, sharey=False)
     g.map_dataframe(sns.lineplot, x="week_start", y="units_sold", linewidth=0.8)
-    g.set_titles("{col_name}")
-    g.set_axis_labels("Week", "Units sold")
+    g.set_titles("{col_name}", size=10)
+    g.set_axis_labels("Week start (Monday)", "Units sold per week")
     for ax in g.axes.flat:
         ax.tick_params(axis="x", rotation=45)
-    g.figure.suptitle("Weekly units sold by category (synthetic data)", y=1.02)
+        ax.yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter("{x:,.0f}"))
+    g.figure.suptitle("Weekly units sold by category, 2019-2023 (synthetic data)", y=1.02)
     g.savefig(FIG_DIR / "weekly_units_by_category.png", dpi=120, bbox_inches="tight")
     plt.close(g.figure)
 
 
 def plot_seasonal_heatmap(seasonal_index: pd.DataFrame) -> None:
     """Heatmap of the monthly seasonal index per category."""
-    fig, ax = plt.subplots(figsize=(9, 4.5))
-    sns.heatmap(seasonal_index, annot=True, fmt=".2f", cmap="coolwarm", center=1.0,
-                cbar_kws={"label": "Index (1.00 = category average)"}, ax=ax)
-    ax.set_title("Seasonal index by month and category (synthetic data)")
-    ax.set_xlabel("Month")
-    ax.set_ylabel("Category")
+    # Month numbers become month names; category names lose underscores (display only)
+    index_df = seasonal_index.rename(
+        columns=lambda m: calendar.month_abbr[m],
+        index=lambda s: s.replace("_", " "),
+    )
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.heatmap(index_df, annot=True, fmt=".2f", cmap="coolwarm", center=1.0,
+                linewidths=0.5, cbar_kws={"label": "Seasonal index (1.00 = category average)"}, ax=ax)
+    ax.set_title("Seasonal index by month and medicine category (synthetic data)", pad=12)
+    ax.set_xlabel("Month of year")
+    ax.set_ylabel("Medicine category")
+    ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
     fig.tight_layout()
     fig.savefig(FIG_DIR / "seasonal_index_heatmap.png", dpi=120)
     plt.close(fig)
@@ -149,24 +159,28 @@ def plot_seasonal_heatmap(seasonal_index: pd.DataFrame) -> None:
 
 def plot_promo_and_temperature(sales: pd.DataFrame) -> None:
     """Promo vs non-promo units and units vs temperature for selected categories."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
 
     # Units normalised by category mean so categories are comparable
     norm = sales.copy()
     norm["units_rel"] = norm["units_sold"] / norm.groupby("category")["units_sold"].transform("mean")
     sns.boxplot(data=norm, x="promo_flag", y="units_rel", ax=axes[0])
-    axes[0].set_title("Relative units: promo vs non-promo weeks")
-    axes[0].set_xlabel("Promotion flag")
-    axes[0].set_ylabel("Units / category mean")
+    axes[0].set_title("Weekly units in promo vs non-promo weeks")
+    axes[0].set_xticks([0, 1])
+    axes[0].set_xticklabels(["No promotion", "Promotion"])
+    axes[0].set_xlabel("Promotion status of the week")
+    axes[0].set_ylabel("Units relative to category mean (1.00 = average)")
 
-    subset = norm[norm["category"].isin(["cold_and_flu", "sun_care", "allergy"])]
-    sns.scatterplot(data=subset, x="avg_temp_c", y="units_rel", hue="category", s=14, ax=axes[1])
-    axes[1].set_title("Relative units vs temperature")
-    axes[1].set_xlabel("Average temperature (deg C)")
-    axes[1].set_ylabel("Units / category mean")
+    subset = norm[norm["category"].isin(["cold_and_flu", "sun_care", "allergy"])].copy()
+    subset["category"] = subset["category"].str.replace("_", " ", regex=False)
+    sns.scatterplot(data=subset, x="avg_temp_c", y="units_rel", hue="category", s=16, alpha=0.7, ax=axes[1])
+    axes[1].set_title("Weekly units vs average temperature")
+    axes[1].set_xlabel("Average weekly temperature (deg C)")
+    axes[1].set_ylabel("Units relative to category mean (1.00 = average)")
+    axes[1].legend(title="Category", loc="upper left", bbox_to_anchor=(1.01, 1))
 
     fig.tight_layout()
-    fig.savefig(FIG_DIR / "promo_and_temperature.png", dpi=120)
+    fig.savefig(FIG_DIR / "promo_and_temperature.png", dpi=120, bbox_inches="tight")
     plt.close(fig)
 
 
