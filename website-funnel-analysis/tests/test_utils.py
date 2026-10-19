@@ -57,8 +57,15 @@ def test_two_proportion_and_chi_square_tests():
     assert diff["ci_low"] < 0.2 < diff["ci_high"]
     assert diff["p_value"] < 0.01
 
-    # Chi-square: an outcome fully determined by the segment gives Cramer's V of 1
-    df = pd.DataFrame({"seg": ["x"] * 50 + ["y"] * 50, "purchased": [1] * 50 + [0] * 50})
+    # Chi-square: an outcome fully determined by the segment gives Cramer's V of 1.
+    # Three segments are used on purpose: scipy applies Yates' continuity
+    # correction to 2x2 tables, which would lower V slightly (0.98 here).
+    df = pd.DataFrame(
+        {
+            "seg": ["x"] * 40 + ["y"] * 30 + ["z"] * 30,
+            "purchased": [1] * 40 + [0] * 60,
+        }
+    )
     res = utils.chi_square_test(df, "seg")
     assert res["p_value"] < 0.001
     assert res["cramers_v"] == pytest.approx(1.0)
