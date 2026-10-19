@@ -35,7 +35,15 @@ PEAK_HOURS = {12, 13, 18, 19, 20}
 
 
 def generate_couriers(rng: np.random.Generator) -> pd.DataFrame:
-    """Create the couriers table."""
+    """Create the couriers table.
+
+    Args:
+        rng: Seeded NumPy random generator shared by the whole script.
+
+    Returns:
+        DataFrame with one row per courier (courier_id, vehicle_type,
+        experience_months, avg_rating).
+    """
     vehicle = rng.choice(["bike", "scooter", "car"], size=N_COURIERS, p=[0.40, 0.40, 0.20])
     experience = np.clip(rng.gamma(shape=2.0, scale=14.0, size=N_COURIERS), 1, 120)
     # Slightly better ratings for more experienced couriers
@@ -49,7 +57,16 @@ def generate_couriers(rng: np.random.Generator) -> pd.DataFrame:
 
 
 def generate_orders(rng: np.random.Generator, couriers: pd.DataFrame) -> pd.DataFrame:
-    """Create the orders table, including the target delivery_time_min."""
+    """Create the orders table, including the target delivery_time_min.
+
+    Args:
+        rng: Seeded NumPy random generator shared by the whole script.
+        couriers: The couriers table returned by generate_couriers().
+
+    Returns:
+        DataFrame with one row per order, sorted by order_datetime and
+        renumbered from 1 to N_ORDERS.
+    """
     n = N_ORDERS
 
     # Order timestamps: random day, hour drawn with lunch and dinner peaks
@@ -106,6 +123,7 @@ def generate_orders(rng: np.random.Generator, couriers: pd.DataFrame) -> pd.Data
 
 
 def main() -> None:
+    """Generate both synthetic tables and save them as CSV files in data/."""
     rng = np.random.default_rng(SEED)
     os.makedirs(DATA_DIR, exist_ok=True)
 

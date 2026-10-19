@@ -27,7 +27,14 @@ VEHICLE_ORDER = ["bike", "scooter", "car"]
 
 
 def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Load couriers and orders from CSV files."""
+    """Load couriers and orders from CSV files.
+
+    Returns:
+        A tuple (couriers, orders). The order_datetime column is parsed as datetime.
+
+    Raises:
+        FileNotFoundError: If either CSV file is missing from data/.
+    """
     couriers_path = DATA_DIR / "couriers.csv"
     orders_path = DATA_DIR / "orders.csv"
     if not couriers_path.exists() or not orders_path.exists():
@@ -40,7 +47,12 @@ def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def print_overview(name: str, df: pd.DataFrame) -> None:
-    """Print shape, dtypes, missing values and duplicates for one table."""
+    """Print shape, dtypes, missing values and duplicates for one table.
+
+    Args:
+        name: Table name used in the printed header.
+        df: The table to inspect.
+    """
     print(f"\n=== {name} ===")
     print(f"Shape: {df.shape[0]} rows x {df.shape[1]} columns")
     print("\nData types:")
@@ -51,7 +63,12 @@ def print_overview(name: str, df: pd.DataFrame) -> None:
 
 
 def print_statistics(couriers: pd.DataFrame, orders: pd.DataFrame) -> None:
-    """Print descriptive statistics for numeric columns."""
+    """Print descriptive statistics for numeric columns.
+
+    Args:
+        couriers: The couriers table (courier_id is excluded from the summary).
+        orders: The orders table; only the key numeric columns are summarized.
+    """
     pd.set_option("display.width", 140)
     pd.set_option("display.max_columns", 20)
     print("\n=== Descriptive statistics: couriers ===")
@@ -62,7 +79,15 @@ def print_statistics(couriers: pd.DataFrame, orders: pd.DataFrame) -> None:
 
 
 def print_aggregations(orders: pd.DataFrame, couriers: pd.DataFrame) -> pd.DataFrame:
-    """Print meaningful aggregations; return orders merged with couriers."""
+    """Print meaningful aggregations; return orders merged with couriers.
+
+    Args:
+        orders: The orders table.
+        couriers: The couriers table, joined to orders on courier_id.
+
+    Returns:
+        The merged DataFrame with extra columns hour and distance_bin.
+    """
     df = orders.merge(couriers, on="courier_id", how="left")
     df["hour"] = df["order_datetime"].dt.hour
     df["distance_bin"] = pd.cut(
@@ -70,7 +95,16 @@ def print_aggregations(orders: pd.DataFrame, couriers: pd.DataFrame) -> pd.DataF
         labels=["0-2", "2-4", "4-6", "6-8", "8+"],
     )
 
-    def summarize(by: str, order=None) -> pd.DataFrame:
+    def summarize(by: str, order: list[str] | None = None) -> pd.DataFrame:
+        """Return count, mean and median delivery time grouped by one column.
+
+        Args:
+            by: Column to group by.
+            order: Optional list of group labels to keep, in the desired order.
+
+        Returns:
+            DataFrame indexed by the group values.
+        """
         res = df.groupby(by, observed=True)["delivery_time_min"].agg(
             orders="count", mean_delivery="mean", median_delivery="median"
         ).round(2)
@@ -100,7 +134,15 @@ def print_aggregations(orders: pd.DataFrame, couriers: pd.DataFrame) -> pd.DataF
 
 
 def make_charts(df: pd.DataFrame) -> None:
-    """Save charts to figures/."""
+    """Save charts to figures/.
+
+    Creates four PNG files: delivery_time_distribution.png,
+    delivery_vs_distance.png, delivery_by_weather_and_load.png and
+    delivery_by_hour.png.
+
+    Args:
+        df: The merged orders table returned by print_aggregations().
+    """
     os.makedirs(FIG_DIR, exist_ok=True)
     sns.set_theme(style="whitegrid")
 
@@ -156,6 +198,7 @@ def make_charts(df: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    """Run the full EDA: load data, print the report and save the charts."""
     couriers, orders = load_data()
     print_overview("couriers", couriers)
     print_overview("orders", orders)
