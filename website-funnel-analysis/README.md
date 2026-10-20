@@ -37,7 +37,7 @@ Full column descriptions are in [data_description.md](data_description.md).
 
 ## How to run
 
-From the project root:
+Requirements: Python 3.11 and the packages in `requirements.txt`. Run all commands from the project root:
 
 ```bash
 pip install -r requirements.txt
@@ -49,6 +49,16 @@ python -m pytest -q
 ```
 
 The data generator is deterministic (seed 42) and creates the `data/` folder if needed. The EDA, analysis and SQL scripts read the CSV files, so run the generator first.
+
+No script asks for input, so each command can run unattended. The table below shows what each script reads and writes. The `figures/` and `reports/` folders are created automatically when they are missing.
+
+| Script | Reads | Writes |
+|--------|-------|--------|
+| `src/data_generator.py` | nothing | `data/sessions.csv`, `data/traffic_sources.csv` |
+| `src/eda.py` | `data/` | four charts in `figures/` |
+| `src/analysis.py` | `data/` | two charts in `figures/`, `reports/metrics.json` |
+| `src/run_sql.py` | `data/` | nothing (in-memory database, results printed only) |
+| `python -m pytest -q` | nothing | nothing |
 
 ## Tests
 
