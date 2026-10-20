@@ -19,7 +19,7 @@ Which medicine categories follow a strong seasonal pattern, and how far ahead ca
 1. **Data generation** (`src/data_generator.py`): create synthetic weekly sales per category, plus a category reference table.
 2. **EDA** (`src/eda.py`): data quality checks, trends, seasonal profiles by category, the effect of promotions and temperature.
 3. **Analysis / model** (`src/analysis.py`, helpers in `src/utils.py`): seasonal decomposition, then SARIMAX per category, with a time-based train/test split and a naive seasonal baseline.
-4. **SQL**: aggregation queries (monthly totals, seasonal index, year-over-year growth) in `sql/`.
+4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): aggregation queries (monthly totals, seasonal index, year-over-year growth) run on an in-memory SQLite database.
 5. **Tests** (`tests/`): pytest checks for the helper functions (and, later, the generated data).
 
 ## Dataset (synthetic)
@@ -47,6 +47,7 @@ Run the steps from the project root, in this order:
 python src/data_generator.py   # creates data/*.csv (seed 42, reproducible)
 python src/eda.py              # data checks, aggregations, 3 charts in figures/
 python src/analysis.py         # seasonality + SARIMAX forecast, charts, reports/metrics.json
+python src/run_sql.py          # runs sql/queries.sql on an in-memory SQLite database
 pytest                         # unit tests of the helper functions
 ```
 
@@ -60,6 +61,22 @@ pytest                         # unit tests of the helper functions
 - saves three charts to `figures/`: `weekly_units_by_category.png`, `seasonal_index_heatmap.png` and `promo_and_temperature.png`.
 
 The promo comparison in the EDA is a raw ratio mixed with seasonality, which is why the model below includes promotions as an exogenous variable.
+
+## SQL analysis
+
+`sql/queries.sql` holds seven commented queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: question`. `src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql` (dates are stored as `YYYY-MM-DD` text), splits the file into statements, runs each of them and prints the question and the first rows of the result. No database file is created.
+
+| Query | Question |
+|-------|----------|
+| Q1 | Total units, revenue and revenue rank per category (join with `categories`). |
+| Q2 | Monthly totals and seasonal index for `cold_and_flu`. |
+| Q3 | Peak month, trough month and peak-to-trough ratio of the monthly index for every category. |
+| Q4 | Year-over-year growth of average weekly units per category (`LAG` window function). |
+| Q5 | Promo uplift measured within the same category and month, which removes most of the seasonal effect. |
+| Q6 | Average weekly units across temperature bands. |
+| Q7 | Share of yearly revenue per category. |
+
+The queries use window functions and CTEs, so they need SQLite 3.25 or newer (bundled with current Python 3.11 builds). Results are printed by the script and are not copied into this README; run `python src/run_sql.py` to see them. As everywhere in this project, they describe synthetic data.
 
 ## Method
 
@@ -95,6 +112,7 @@ All numbers come from the script output on the synthetic data; run it to see the
 - One hold-out year only; no rolling-origin cross-validation yet.
 - SARIMAX orders and the number of Fourier terms are fixed, not tuned per category.
 - The synthetic data has a stable seasonal shape every year, which is easier to forecast than real demand with shocks such as epidemics or supply problems.
+- The SQL queries group weeks by the calendar month and year of their Monday start date, so a week that spans two months is counted in the month where it starts.
 
 ---
 
