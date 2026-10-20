@@ -1,0 +1,138 @@
+{
+  "settings": {
+    "test_weeks": 52,
+    "fourier_k": 3,
+    "arma_order": [
+      1,
+      0,
+      1
+    ],
+    "interval_alpha": 0.05,
+    "data": "synthetic"
+  },
+  "summary": {
+    "mean_mape_model": 5.040099775735918,
+    "mean_mape_baseline": 9.115057354267353,
+    "mean_rmse_model": 83.84737776943905,
+    "mean_rmse_baseline": 153.40083990250454,
+    "mean_interval_coverage": 0.9134615384615384,
+    "categories_where_sarimax_beats_baseline": 8,
+    "n_categories": 8
+  },
+  "seasonality": {
+    "sun_care": {
+      "strength": 0.9851450052,
+      "peak_to_trough": 4.6064424742,
+      "peak_month": "Jul",
+      "trough_month": "Dec"
+    },
+    "cold_and_flu": {
+      "strength": 0.979177748,
+      "peak_to_trough": 3.2360950463,
+      "peak_month": "Jan",
+      "trough_month": "Aug"
+    },
+    "allergy": {
+      "strength": 0.9626053146,
+      "peak_to_trough": 3.052706292,
+      "peak_month": "Apr",
+      "trough_month": "Jan"
+    },
+    "vitamins": {
+      "strength": 0.840624812,
+      "peak_to_trough": 1.6329509897,
+      "peak_month": "Jan",
+      "trough_month": "Jul"
+    },
+    "first_aid": {
+      "strength": 0.6908062993,
+      "peak_to_trough": 1.3893401122,
+      "peak_month": "Jul",
+      "trough_month": "Nov"
+    },
+    "digestive": {
+      "strength": 0.6109767945,
+      "peak_to_trough": 1.4115730125,
+      "peak_month": "Jul",
+      "trough_month": "Feb"
+    },
+    "pain_relief": {
+      "strength": 0.3822204611,
+      "peak_to_trough": 1.2276347901,
+      "peak_month": "Nov",
+      "trough_month": "Aug"
+    },
+    "cardio_chronic": {
+      "strength": 0.2296445776,
+      "peak_to_trough": 1.1751063855,
+      "peak_month": "Jan",
+      "trough_month": "Sep"
+    }
+  },
+  "per_category": {
+    "allergy": {
+      "mape_model": 3.7293457971,
+      "mape_baseline": 8.9440568569,
+      "rmse_model": 49.7407715029,
+      "rmse_baseline": 119.7701324011,
+      "interval_coverage": 1.0,
+      "promo_uplift_pct": 13.6626799072
+    },
+    "cardio_chronic": {
+      "mape_model": 4.4794455368,
+      "mape_baseline": 9.7670692231,
+      "rmse_model": 97.1346275505,
+      "rmse_baseline": 209.0734596702,
+      "interval_coverage": 0.9423076923,
+      "promo_uplift_pct": 16.8722600501
+    },
+    "cold_and_flu": {
+      "mape_model": 5.3127156496,
+      "mape_baseline": 8.946306183,
+      "rmse_model": 144.6092741719,
+      "rmse_baseline": 260.5780556319,
+      "interval_coverage": 0.8653846154,
+      "promo_uplift_pct": 13.9225449402
+    },
+    "digestive": {
+      "mape_model": 5.2074787933,
+      "mape_baseline": 10.2747688639,
+      "rmse_model": 69.9419353182,
+      "rmse_baseline": 126.3682043748,
+      "interval_coverage": 0.9423076923,
+      "promo_uplift_pct": 16.1110013063
+    },
+    "first_aid": {
+      "mape_model": 5.7219049719,
+      "mape_baseline": 9.0082039415,
+      "rmse_model": 50.2687881959,
+      "rmse_baseline": 72.7977968813,
+      "interval_coverage": 0.8846153846,
+      "promo_uplift_pct": 16.0572124868
+    },
+    "pain_relief": {
+      "mape_model": 4.4797647856,
+      "mape_baseline": 8.4341071273,
+      "rmse_model": 90.6667297479,
+      "rmse_baseline": 166.5295076648,
+      "interval_coverage": 0.9230769231,
+      "promo_uplift_pct": 14.9360364894
+    },
+    "sun_care": {
+      "mape_model": 5.6596207609,
+      "mape_baseline": 7.5230820797,
+      "rmse_model": 63.2774293013,
+      "rmse_baseline": 91.149602303,
+      "interval_coverage": 0.9230769231,
+      "promo_uplift_pct": 14.8716644006
+    },
+    "vitamins": {
+      "mape_model": 5.7305219108,
+      "mape_baseline": 10.0228645588,
+      "rmse_model": 105.1394663669,
+      "rmse_baseline": 180.9399602928,
+      "interval_coverage": 0.8269230769,
+      "promo_uplift_pct": 17.7092142811
+    }
+  }
+}

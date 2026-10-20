@@ -18,9 +18,9 @@ Which medicine categories follow a strong seasonal pattern, and how far ahead ca
 
 1. **Data generation** (`src/data_generator.py`): create synthetic weekly sales per category, plus a category reference table.
 2. **EDA** (`src/eda.py`): data quality checks, trends, seasonal profiles by category, the effect of promotions and temperature.
-3. **Analysis / model**: seasonal decomposition, then SARIMAX per category, with a time-based train/test split and a naive seasonal baseline.
+3. **Analysis / model** (`src/analysis.py`, helpers in `src/utils.py`): seasonal decomposition, then SARIMAX per category, with a time-based train/test split and a naive seasonal baseline.
 4. **SQL**: aggregation queries (monthly totals, seasonal index, year-over-year growth) in `sql/`.
-5. **Tests** (`tests/`): pytest checks for the generated data (schema, ranges, reproducibility) and for the helper functions.
+5. **Tests** (`tests/`): pytest checks for the helper functions (and, later, the generated data).
 
 ## Dataset (synthetic)
 
@@ -41,18 +41,13 @@ Install the dependencies (Python 3.11):
 pip install -r requirements.txt
 ```
 
-Generate the data from the project root:
+Run the steps from the project root, in this order:
 
 ```bash
-python src/data_generator.py
-```
-
-This creates the `data/` folder and the two CSV files. Running it again produces identical files (seed 42).
-
-Run the exploratory analysis (needs the data files from the previous step):
-
-```bash
-python src/eda.py
+python src/data_generator.py   # creates data/*.csv (seed 42, reproducible)
+python src/eda.py              # data checks, aggregations, 3 charts in figures/
+python src/analysis.py         # seasonality + SARIMAX forecast, charts, reports/metrics.json
+pytest                         # unit tests of the helper functions
 ```
 
 ## Exploratory data analysis
@@ -62,12 +57,44 @@ python src/eda.py
 - prints shape, dtypes, missing values and duplicate checks for each table, plus integrity checks on the sales table (key uniqueness, date range, weeks per category, non-negative units, positive prices, Monday week starts);
 - prints descriptive statistics of the numeric columns;
 - prints five aggregations: totals per category, yearly units per category, a monthly seasonal index, seasonality strength (peak month and peak-to-trough ratio) and the promo vs non-promo comparison, together with the correlation of units with temperature;
-- saves three charts to `figures/`:
-  - `weekly_units_by_category.png`: weekly units for each category;
-  - `seasonal_index_heatmap.png`: monthly seasonal index by category;
-  - `promo_and_temperature.png`: relative units in promo vs non-promo weeks, and relative units vs temperature for selected categories.
+- saves three charts to `figures/`: `weekly_units_by_category.png`, `seasonal_index_heatmap.png` and `promo_and_temperature.png`.
 
-All numbers are produced by the script output on the synthetic data; run it to see them. The promo comparison is a raw ratio and is mixed with seasonality, so a model with exogenous variables (next step) is needed for a cleaner effect estimate.
+The promo comparison in the EDA is a raw ratio mixed with seasonality, which is why the model below includes promotions as an exogenous variable.
+
+## Method
+
+`src/analysis.py` works on each of the 8 categories separately.
+
+**Split.** The split is time-based: the last 52 weeks are the hold-out test set and all earlier weeks (208) are used for training. A random split would leak future information into training, so no random split is used (the only random element is the data generator, seed 42).
+
+**Seasonality measurement (training period).** The weekly series is log-transformed and decomposed additively (`statsmodels` `seasonal_decompose`, period 52). From the result the script reports:
+- *strength*: `1 - Var(residual) / Var(seasonal + residual)`, floored at 0 (0 = no seasonality, 1 = fully seasonal);
+- *peak-to-trough ratio*: highest over lowest seasonal factor;
+- the calendar months with the highest and lowest seasonal component.
+
+**Forecast model.** SARIMAX is fitted on `log(units_sold)`, so seasonal and promotion effects are multiplicative. A 52-period seasonal ARIMA is impractical on five years of weekly data, so the yearly cycle is modelled with Fourier terms (3 sin/cos harmonics) passed as exogenous regressors. The other regressors are the promotion flag, average temperature and a linear time term for the trend. The error process is ARMA(1,1). Forecasts are transformed back with `exp`; 95% prediction intervals are produced the same way.
+
+**Realistic exogenous inputs.** Promotions are planned in advance, so the real promo flags are used for the hold-out period. Future temperature is not known, so the hold-out period uses the average temperature of the same ISO week in the training data (climatology) instead of the actual values.
+
+**Baseline.** Seasonal naive: the forecast for each week is the value of the same week one year earlier (the last 52 training weeks repeated).
+
+**Metrics.** MAE, RMSE and MAPE on the hold-out, per category and averaged over categories, plus the share of actual values inside the 95% interval. The estimated promotion uplift (from the model coefficient) is also printed per category.
+
+## Outputs
+
+Running `python src/analysis.py` prints the seasonality table, the accuracy table and a summary, and writes:
+
+- `figures/forecast_vs_actual.png`: hold-out forecast, baseline and actuals for every category;
+- `figures/forecast_error_comparison.png`: MAPE of SARIMAX vs the baseline per category;
+- `reports/metrics.json`: settings, summary, seasonality and per-category metrics.
+
+All numbers come from the script output on the synthetic data; run it to see them. Results describe synthetic data built with known seasonal patterns, so they show how the method behaves, not how real pharmacy demand would perform.
+
+## Limitations
+
+- One hold-out year only; no rolling-origin cross-validation yet.
+- SARIMAX orders and the number of Fourier terms are fixed, not tuned per category.
+- The synthetic data has a stable seasonal shape every year, which is easier to forecast than real demand with shocks such as epidemics or supply problems.
 
 ---
 
