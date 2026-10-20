@@ -1,0 +1,133 @@
+{
+  "data": "synthetic",
+  "seed": 42,
+  "test_size": 0.2,
+  "n_rows": 5000,
+  "n_train": 4000,
+  "n_test": 1000,
+  "features": [
+    "distance_km",
+    "courier_active_orders",
+    "prep_time_min",
+    "is_peak_hour",
+    "experience_months",
+    "avg_rating",
+    "weather_cloudy",
+    "weather_rain",
+    "weather_snow",
+    "vehicle_scooter",
+    "vehicle_car"
+  ],
+  "test_metrics": {
+    "baseline_mean": {
+      "mae": 7.5888557500000005,
+      "rmse": 9.841129797214597,
+      "r2": -4.036779356186848e-05
+    },
+    "linear_distance_only": {
+      "mae": 6.078943522575819,
+      "rmse": 7.549292827797273,
+      "r2": 0.4115085543165713
+    },
+    "linear_multiple": {
+      "mae": 2.926486727192412,
+      "rmse": 3.7414190282892847,
+      "r2": 0.855455918831332
+    },
+    "random_forest": {
+      "mae": 3.110855059483548,
+      "rmse": 4.029578518478387,
+      "r2": 0.8323332845406763
+    }
+  },
+  "linear_multiple_cv_r2_mean": 0.8583567413714881,
+  "linear_multiple_cv_r2_std": 0.011833513792886701,
+  "best_model_by_rmse": "linear_multiple",
+  "ols_effects": {
+    "const": {
+      "coef": 2.439300145968618,
+      "ci_low": 0.30776923028926984,
+      "ci_high": 4.570831061647966,
+      "p_value": 0.024910121462905374
+    },
+    "distance_km": {
+      "coef": 3.5393751229689143,
+      "ci_low": 3.4762688340783514,
+      "ci_high": 3.6024814118594772,
+      "p_value": 0.0
+    },
+    "courier_active_orders": {
+      "coef": 2.9378081627435257,
+      "ci_low": 2.844867935906132,
+      "ci_high": 3.0307483895809195,
+      "p_value": 0.0
+    },
+    "prep_time_min": {
+      "coef": 0.9905147245000472,
+      "ci_low": 0.9610245937090358,
+      "ci_high": 1.0200048552910586,
+      "p_value": 0.0
+    },
+    "is_peak_hour": {
+      "coef": -0.043716709935161635,
+      "ci_low": -0.3169572939801974,
+      "ci_high": 0.22952387410987413,
+      "p_value": 0.7537830458619477
+    },
+    "experience_months": {
+      "coef": -0.02162478844245739,
+      "ci_low": -0.027569331782639175,
+      "ci_high": -0.015680245102275604,
+      "p_value": 1.168859897824946e-12
+    },
+    "avg_rating": {
+      "coef": -0.16688252329336173,
+      "ci_low": -0.6552485774771801,
+      "ci_high": 0.3214835308904567,
+      "p_value": 0.5029255848358021
+    },
+    "weather_cloudy": {
+      "coef": 0.6247457591556363,
+      "ci_low": 0.3149206760211708,
+      "ci_high": 0.9345708422901019,
+      "p_value": 7.83964152435318e-05
+    },
+    "weather_rain": {
+      "coef": 2.719699091315924,
+      "ci_low": 2.40328566276192,
+      "ci_high": 3.036112519869928,
+      "p_value": 1.3160818065236088e-61
+    },
+    "weather_snow": {
+      "coef": 5.1139157377669155,
+      "ci_low": 4.660981717461201,
+      "ci_high": 5.56684975807263,
+      "p_value": 1.67869356589975e-102
+    },
+    "vehicle_scooter": {
+      "coef": -5.869808080575725,
+      "ci_low": -6.129120675577471,
+      "ci_high": -5.610495485573979,
+      "p_value": 0.0
+    },
+    "vehicle_car": {
+      "coef": -4.907404179841,
+      "ci_low": -5.235594804935523,
+      "ci_high": -4.579213554746477,
+      "p_value": 2.9661915907780877e-171
+    }
+  },
+  "random_forest_importance": {
+    "distance_km": 0.4843847816966978,
+    "courier_active_orders": 0.1929487229970241,
+    "prep_time_min": 0.1920715362747248,
+    "vehicle_scooter": 0.06015741447204692,
+    "vehicle_car": 0.029190047769629423,
+    "experience_months": 0.014282110998957024,
+    "avg_rating": 0.013833799736998892,
+    "weather_snow": 0.005859434701952662,
+    "weather_rain": 0.0036719226880464464,
+    "is_peak_hour": 0.002702353228522738,
+    "weather_cloudy": 0.000897875435399216
+  }
+}
