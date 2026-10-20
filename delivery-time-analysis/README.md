@@ -10,7 +10,7 @@ Quantify the effect of distance, weather and courier load on delivery time, and 
 1. **Data generation** – create a synthetic dataset of couriers and orders (`src/data_generator.py`).
 2. **EDA** – check data quality, distributions and relationships between delivery time and distance, weather, courier load and time of day (`src/eda.py`).
 3. **Analysis / model** – baseline and multiple linear regression (plus a comparison with a tree-based model), validated on a hold-out set (`src/analysis.py`, helpers in `src/utils.py`).
-4. **SQL** – analytical queries on the order and courier tables (average delivery time by weather, by load, by vehicle, etc.).
+4. **SQL** – analytical queries on the order and courier tables (average delivery time by weather, by load, by vehicle, etc.) in `sql/queries.sql`, executed by `src/run_sql.py`.
 5. **Tests** – pytest checks for the data generator and the data quality of the generated tables.
 
 ## Dataset (synthetic)
@@ -60,6 +60,22 @@ Because the data is synthetic, any patterns seen in the output reflect the assum
 
 Actual numbers should be read from the script output and `reports/metrics.json`.
 
+## SQL analysis
+`sql/queries.sql` contains 8 analytical queries in the SQLite dialect over the `orders` and `couriers` tables. Each query is preceded by a comment line `-- Q<n>: ...` with the question it answers:
+
+| Query | Question |
+|---|---|
+| Q1 | Orders and average delivery time by weather |
+| Q2 | Average delivery time by courier load |
+| Q3 | Delivery time and minutes per km by vehicle type (join) |
+| Q4 | Average delivery time by distance band |
+| Q5 | Weather effect in peak vs off-peak hours |
+| Q6 | Share of slow orders (over 45 minutes) by weather |
+| Q7 | Delivery time by courier experience band (join) |
+| Q8 | Ten couriers with the highest average delivery time (CTE, at least 20 orders) |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints its description and the first rows of the result. No database file is created. As with the rest of the project, the results come from synthetic data and reflect generator assumptions; read them from the script output.
+
 ## How to run
 From the project root:
 
@@ -68,9 +84,10 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
 ```
 
-All scripts are non-interactive. The generator writes `data/couriers.csv` and `data/orders.csv`; the EDA script prints its report and writes PNG files to `figures/`; the analysis script prints the model metrics, writes two more charts to `figures/` and creates `reports/metrics.json`.
+All scripts are non-interactive. The generator writes `data/couriers.csv` and `data/orders.csv`; the EDA script prints its report and writes PNG files to `figures/`; the analysis script prints the model metrics, writes two more charts to `figures/` and creates `reports/metrics.json`; the SQL script prints the result of each query.
 
 ---
 
