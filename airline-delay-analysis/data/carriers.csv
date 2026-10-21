@@ -1,0 +1,7 @@
+carrier_code,carrier_name,carrier_type
+NA,Northern Air,legacy
+SJ,SkyJet,low-cost
+PW,Pacific Wings,legacy
+EC,EconoFly,low-cost
+RL,Regional Link,regional
+AV,Avanti Airways,legacy
