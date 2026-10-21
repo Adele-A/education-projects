@@ -16,6 +16,7 @@ import os
 from pathlib import Path
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -39,7 +40,7 @@ PAYMENT_P = [0.50, 0.28, 0.17, 0.05]
 # Hidden behavioral groups:
 # share of customers, extra orders (Poisson mean), median unit price,
 # range (min, max) of days since the last active day relative to DATA_END
-SEGMENTS = {
+SEGMENTS: dict[str, dict[str, float | tuple[int, int]]] = {
     "champions": {"share": 0.15, "extra_orders": 8.0, "unit_price": 40.0, "lapse": (0, 30)},
     "regulars": {"share": 0.30, "extra_orders": 4.0, "unit_price": 30.0, "lapse": (0, 90)},
     "occasional": {"share": 0.35, "extra_orders": 1.2, "unit_price": 25.0, "lapse": (30, 300)},
@@ -47,8 +48,20 @@ SEGMENTS = {
 }
 
 
-def generate_customers(rng: np.random.Generator) -> tuple[pd.DataFrame, np.ndarray]:
-    """Create the customers table and return it with each customer's hidden group."""
+def generate_customers(rng: np.random.Generator) -> tuple[pd.DataFrame, npt.NDArray[np.str_]]:
+    """Create the customers table and return it with each customer's hidden group.
+
+    Args:
+        rng: Seeded numpy random generator used for all draws in this function.
+
+    Returns:
+        A tuple of (customers, groups):
+        - customers: DataFrame with one row per customer (N_CUSTOMERS rows) and
+          columns customer_id, signup_date, country, age, acquisition_channel,
+          newsletter_subscriber.
+        - groups: array of length N_CUSTOMERS with the hidden behavioral group
+          name of each customer (a key of SEGMENTS). This array is not saved to disk.
+    """
     names = list(SEGMENTS)
     shares = [SEGMENTS[n]["share"] for n in names]
     groups = rng.choice(names, size=N_CUSTOMERS, p=shares)
@@ -73,9 +86,26 @@ def generate_customers(rng: np.random.Generator) -> tuple[pd.DataFrame, np.ndarr
 
 
 def generate_orders(
-    customers: pd.DataFrame, groups: np.ndarray, rng: np.random.Generator
+    customers: pd.DataFrame, groups: npt.NDArray[np.str_], rng: np.random.Generator
 ) -> pd.DataFrame:
-    """Create the orders table; every customer has at least one order."""
+    """Create the orders table; every customer has at least one order.
+
+    Each customer gets 1 + Poisson(extra_orders) orders, placed between the
+    signup date and the customer's last active day. If the total exceeds
+    MAX_ORDERS, random extra orders are dropped (first orders are always kept).
+
+    Args:
+        customers: Customers table from generate_customers, with customer_id and
+            signup_date columns.
+        groups: Hidden behavioral group of each customer, aligned with the rows
+            of ``customers``.
+        rng: Seeded numpy random generator used for all draws in this function.
+
+    Returns:
+        DataFrame with one row per order, sorted by order_date and customer_id,
+        with columns order_id, customer_id, order_date, order_value, items_count,
+        payment_method and discount_used. At most MAX_ORDERS rows.
+    """
     rows = []
     for cust_id, signup, group in zip(customers["customer_id"], customers["signup_date"], groups):
         params = SEGMENTS[group]
