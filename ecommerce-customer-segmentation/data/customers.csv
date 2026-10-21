@@ -1,0 +1,1001 @@
+customer_id,signup_date,country,age,acquisition_channel,newsletter_subscriber
+C0001,2025-05-31,United States,48,referral,0
+C0002,2023-03-04,Canada,29,email,0
+C0003,2024-02-04,United States,28,social_media,0
+C0004,2024-04-05,United States,42,organic_search,0
+C0005,2025-03-12,Germany,48,paid_search,1
+C0006,2023-05-10,United States,37,email,0
+C0007,2024-03-11,United States,23,paid_search,0
+C0008,2023-06-02,Germany,22,email,0
+C0009,2025-03-01,United Kingdom,21,organic_search,1
+C0010,2024-09-26,Germany,18,paid_search,1
+C0011,2024-05-13,Canada,38,paid_search,1
+C0012,2024-01-30,United States,49,paid_search,1
+C0013,2023-06-03,Canada,37,organic_search,1
+C0014,2025-07-14,Canada,18,organic_search,1
+C0015,2024-10-12,Canada,35,email,0
+C0016,2023-11-17,Germany,35,paid_search,1
+C0017,2024-02-20,Germany,60,organic_search,1
+C0018,2024-12-30,Germany,21,organic_search,0
+C0019,2024-12-23,France,33,paid_search,1
+C0020,2024-04-07,United States,56,organic_search,0
+C0021,2023-11-01,Spain,42,social_media,0
+C0022,2024-10-24,Germany,43,email,0
+C0023,2024-10-22,France,38,organic_search,1
+C0024,2024-08-25,United Kingdom,41,social_media,1
+C0025,2023-03-15,United States,46,organic_search,0
+C0026,2024-04-19,United Kingdom,28,paid_search,0
+C0027,2024-09-08,United Kingdom,47,email,0
+C0028,2025-08-11,United Kingdom,22,paid_search,0
+C0029,2024-06-11,United States,41,email,1
+C0030,2023-12-11,United States,39,organic_search,0
+C0031,2024-07-12,United Kingdom,30,paid_search,0
+C0032,2023-06-27,United Kingdom,37,paid_search,0
+C0033,2023-04-02,Spain,30,paid_search,1
+C0034,2024-11-11,United States,25,referral,0
+C0035,2025-09-17,United States,33,organic_search,1
+C0036,2025-04-29,United States,25,email,0
+C0037,2024-08-08,Germany,41,email,0
+C0038,2023-02-10,United Kingdom,24,social_media,1
+C0039,2025-09-18,Germany,45,paid_search,0
+C0040,2024-03-27,Spain,24,paid_search,1
+C0041,2023-10-18,United States,31,organic_search,0
+C0042,2025-06-15,France,30,email,1
+C0043,2025-01-19,United States,52,paid_search,1
+C0044,2025-01-22,United States,41,referral,1
+C0045,2023-10-06,United Kingdom,35,social_media,0
+C0046,2025-09-22,United States,42,paid_search,1
+C0047,2024-03-30,Germany,18,social_media,1
+C0048,2024-06-17,Germany,37,paid_search,0
+C0049,2025-01-23,France,59,referral,0
+C0050,2024-10-24,United Kingdom,38,organic_search,1
+C0051,2023-06-22,Germany,38,referral,0
+C0052,2023-10-31,United Kingdom,43,email,1
+C0053,2023-12-29,United States,47,email,1
+C0054,2025-08-09,United States,18,paid_search,0
+C0055,2024-12-18,Germany,18,email,1
+C0056,2024-01-03,Spain,39,paid_search,1
+C0057,2025-01-07,United States,29,email,0
+C0058,2025-01-11,Germany,51,organic_search,1
+C0059,2024-01-31,France,34,paid_search,0
+C0060,2024-02-09,Canada,18,paid_search,0
+C0061,2025-06-16,Germany,23,paid_search,1
+C0062,2024-07-18,Germany,18,paid_search,0
+C0063,2023-05-31,France,34,email,1
+C0064,2024-12-23,Canada,35,organic_search,0
+C0065,2024-08-14,United States,32,social_media,0
+C0066,2024-05-25,Spain,49,organic_search,0
+C0067,2024-12-29,United States,50,email,1
+C0068,2025-06-29,Canada,35,email,1
+C0069,2023-11-28,United States,18,paid_search,1
+C0070,2024-02-25,United States,44,social_media,1
+C0071,2023-07-10,United States,43,referral,1
+C0072,2024-10-11,United Kingdom,40,email,1
+C0073,2024-02-09,United States,48,paid_search,0
+C0074,2023-12-10,United States,24,paid_search,1
+C0075,2024-11-30,United Kingdom,59,email,1
+C0076,2024-02-14,United Kingdom,26,organic_search,1
+C0077,2024-04-11,France,45,email,0
+C0078,2024-03-17,Canada,18,paid_search,0
+C0079,2023-09-17,Germany,27,email,1
+C0080,2023-05-07,United States,54,organic_search,0
+C0081,2025-04-10,United States,34,organic_search,0
+C0082,2023-04-03,Canada,46,referral,1
+C0083,2023-11-23,United States,40,email,0
+C0084,2024-11-01,United Kingdom,36,email,0
+C0085,2023-05-12,Spain,52,referral,0
+C0086,2024-10-20,Spain,34,paid_search,0
+C0087,2025-01-05,United Kingdom,18,organic_search,1
+C0088,2024-10-27,Germany,28,organic_search,1
+C0089,2023-11-03,United Kingdom,43,paid_search,1
+C0090,2023-01-20,France,41,organic_search,1
+C0091,2025-06-09,United States,20,referral,1
+C0092,2023-11-24,United States,29,organic_search,0
+C0093,2025-03-19,Germany,31,organic_search,1
+C0094,2023-07-18,United States,33,organic_search,0
+C0095,2023-06-13,Germany,22,organic_search,0
+C0096,2025-02-20,United Kingdom,30,organic_search,1
+C0097,2025-08-01,Canada,29,social_media,1
+C0098,2025-05-14,Canada,45,paid_search,0
+C0099,2025-01-24,United Kingdom,46,social_media,1
+C0100,2023-09-05,France,35,email,0
+C0101,2025-07-05,United States,33,social_media,0
+C0102,2024-11-01,United Kingdom,39,social_media,0
+C0103,2023-06-22,United States,28,paid_search,0
+C0104,2023-05-10,Canada,24,organic_search,0
+C0105,2025-05-24,Canada,27,paid_search,0
+C0106,2023-10-04,Canada,30,referral,0
+C0107,2025-02-07,Canada,24,social_media,0
+C0108,2023-05-20,Spain,39,organic_search,1
+C0109,2023-10-09,United States,45,paid_search,1
+C0110,2023-10-12,Spain,20,email,1
+C0111,2023-10-10,Germany,37,social_media,0
+C0112,2024-11-08,United Kingdom,35,social_media,1
+C0113,2025-07-07,Germany,41,email,1
+C0114,2025-07-02,United States,37,social_media,0
+C0115,2025-01-14,United States,21,social_media,0
+C0116,2023-07-23,United States,23,organic_search,0
+C0117,2025-08-22,United States,37,organic_search,0
+C0118,2024-06-28,United Kingdom,48,referral,0
+C0119,2024-07-02,Canada,18,social_media,0
+C0120,2024-12-05,Germany,41,paid_search,0
+C0121,2025-02-11,United Kingdom,50,social_media,1
+C0122,2025-08-14,United Kingdom,35,organic_search,0
+C0123,2024-08-07,United Kingdom,43,email,0
+C0124,2024-09-04,United States,29,organic_search,1
+C0125,2025-01-18,Canada,36,email,0
+C0126,2023-09-14,United States,19,paid_search,0
+C0127,2023-11-05,France,18,organic_search,0
+C0128,2024-09-19,France,47,organic_search,0
+C0129,2023-03-06,Germany,26,email,0
+C0130,2023-11-18,Canada,32,organic_search,0
+C0131,2024-12-21,United States,22,organic_search,0
+C0132,2025-09-07,Canada,21,email,1
+C0133,2024-06-05,France,35,paid_search,1
+C0134,2024-02-06,France,29,paid_search,0
+C0135,2024-03-18,Germany,41,organic_search,0
+C0136,2024-11-19,Canada,42,email,0
+C0137,2024-06-30,Spain,41,organic_search,1
+C0138,2023-01-24,United Kingdom,40,organic_search,1
+C0139,2024-06-25,Canada,54,paid_search,0
+C0140,2024-02-06,France,25,organic_search,0
+C0141,2024-12-04,United Kingdom,36,paid_search,0
+C0142,2025-05-28,Spain,49,organic_search,1
+C0143,2025-08-24,United Kingdom,51,organic_search,1
+C0144,2024-09-04,Germany,21,paid_search,0
+C0145,2023-12-31,United States,34,email,1
+C0146,2024-03-21,United States,52,organic_search,0
+C0147,2023-06-27,Canada,43,organic_search,1
+C0148,2025-07-28,United Kingdom,39,referral,1
+C0149,2025-04-30,United Kingdom,35,email,0
+C0150,2025-05-07,United States,33,social_media,0
+C0151,2023-11-26,United Kingdom,40,organic_search,1
+C0152,2023-11-20,Canada,34,paid_search,0
+C0153,2025-05-10,Canada,37,organic_search,1
+C0154,2024-06-30,United States,38,organic_search,0
+C0155,2024-12-08,Germany,30,paid_search,1
+C0156,2024-05-06,United Kingdom,43,social_media,0
+C0157,2024-03-20,Germany,69,paid_search,0
+C0158,2024-09-26,United Kingdom,18,social_media,0
+C0159,2025-03-27,United Kingdom,41,organic_search,0
+C0160,2023-12-02,United Kingdom,29,paid_search,0
+C0161,2025-03-23,Germany,43,email,1
+C0162,2023-09-03,United Kingdom,38,email,0
+C0163,2024-02-09,United Kingdom,45,paid_search,0
+C0164,2025-07-05,Canada,50,social_media,0
+C0165,2025-08-16,France,39,organic_search,0
+C0166,2025-07-16,United States,49,organic_search,1
+C0167,2023-11-14,Canada,18,social_media,1
+C0168,2025-04-26,Canada,54,organic_search,0
+C0169,2025-07-28,United States,41,paid_search,1
+C0170,2025-09-09,Germany,49,paid_search,1
+C0171,2023-01-21,United States,24,organic_search,1
+C0172,2025-01-17,France,28,organic_search,0
+C0173,2025-09-27,United States,39,paid_search,0
+C0174,2025-02-06,Germany,37,referral,0
+C0175,2023-08-23,United States,40,social_media,1
+C0176,2025-02-04,United Kingdom,49,paid_search,1
+C0177,2023-04-16,Spain,18,organic_search,0
+C0178,2024-04-27,United Kingdom,48,social_media,0
+C0179,2024-09-20,Canada,37,organic_search,1
+C0180,2024-04-03,Spain,35,paid_search,1
+C0181,2024-12-03,Canada,21,email,0
+C0182,2023-08-30,United States,43,paid_search,1
+C0183,2024-08-31,Canada,18,organic_search,0
+C0184,2024-10-09,United States,44,organic_search,0
+C0185,2024-09-28,United Kingdom,21,organic_search,0
+C0186,2023-10-18,Canada,38,paid_search,1
+C0187,2023-11-03,France,36,email,1
+C0188,2023-09-16,Germany,50,organic_search,0
+C0189,2024-04-08,United Kingdom,35,social_media,0
+C0190,2024-08-11,Canada,29,social_media,0
+C0191,2023-12-30,France,31,organic_search,0
+C0192,2024-02-16,United Kingdom,51,organic_search,0
+C0193,2023-10-15,Canada,43,paid_search,0
+C0194,2023-08-08,United States,33,social_media,0
+C0195,2024-10-22,United States,34,paid_search,0
+C0196,2025-03-30,Germany,20,social_media,0
+C0197,2023-10-19,Spain,41,email,1
+C0198,2025-05-14,United States,18,email,0
+C0199,2024-07-27,United States,45,referral,1
+C0200,2023-06-18,United States,38,email,1
+C0201,2024-01-03,Canada,63,email,1
+C0202,2023-01-08,United States,25,email,0
+C0203,2023-02-09,United Kingdom,36,social_media,0
+C0204,2023-12-04,Spain,57,email,1
+C0205,2024-04-01,United States,50,referral,0
+C0206,2025-03-11,Germany,29,paid_search,0
+C0207,2023-05-15,United Kingdom,39,social_media,0
+C0208,2025-04-22,Canada,37,paid_search,0
+C0209,2023-08-24,United Kingdom,40,email,0
+C0210,2023-05-19,United Kingdom,29,paid_search,1
+C0211,2024-12-03,United States,36,email,0
+C0212,2025-02-16,France,19,email,0
+C0213,2024-08-30,France,38,referral,1
+C0214,2023-04-27,United States,42,organic_search,0
+C0215,2023-04-26,United Kingdom,34,social_media,1
+C0216,2024-01-27,Canada,19,email,0
+C0217,2024-03-28,United States,48,referral,0
+C0218,2025-09-29,United States,41,referral,1
+C0219,2023-10-15,Germany,29,social_media,0
+C0220,2023-07-13,United States,34,social_media,0
+C0221,2025-08-07,United States,20,organic_search,1
+C0222,2023-06-04,United Kingdom,26,referral,1
+C0223,2023-01-27,United States,31,organic_search,1
+C0224,2024-02-29,United Kingdom,51,social_media,0
+C0225,2024-02-07,France,30,email,0
+C0226,2024-09-14,Germany,44,paid_search,1
+C0227,2025-05-31,United States,31,organic_search,0
+C0228,2025-07-25,Canada,40,organic_search,0
+C0229,2023-10-18,United States,35,email,1
+C0230,2025-09-11,France,47,paid_search,0
+C0231,2024-09-27,United Kingdom,31,organic_search,0
+C0232,2023-03-11,France,20,social_media,0
+C0233,2025-07-31,United States,22,organic_search,0
+C0234,2023-05-19,United States,31,email,1
+C0235,2024-08-13,United Kingdom,23,paid_search,1
+C0236,2025-03-04,United States,42,organic_search,0
+C0237,2023-09-08,United States,32,organic_search,0
+C0238,2023-09-29,France,63,paid_search,0
+C0239,2024-04-23,Canada,18,paid_search,0
+C0240,2025-06-07,United States,39,email,0
+C0241,2023-08-13,Canada,25,paid_search,1
+C0242,2024-10-28,France,32,paid_search,0
+C0243,2024-03-30,Canada,39,organic_search,0
+C0244,2023-04-23,France,18,organic_search,1
+C0245,2024-12-14,Germany,40,referral,0
+C0246,2025-04-15,United Kingdom,58,organic_search,1
+C0247,2024-07-31,Germany,32,referral,0
+C0248,2023-06-27,Canada,40,paid_search,0
+C0249,2023-06-06,United States,48,organic_search,1
+C0250,2024-03-01,United States,35,organic_search,0
+C0251,2024-05-23,United States,31,organic_search,0
+C0252,2024-07-08,Spain,18,email,0
+C0253,2023-09-02,United Kingdom,44,paid_search,1
+C0254,2024-05-17,Germany,36,paid_search,1
+C0255,2023-10-24,Canada,26,social_media,0
+C0256,2024-11-19,Spain,38,social_media,1
+C0257,2025-03-10,United States,31,referral,1
+C0258,2024-10-17,France,31,referral,0
+C0259,2023-01-02,Canada,44,social_media,0
+C0260,2025-09-23,United States,22,email,0
+C0261,2023-01-24,France,49,email,0
+C0262,2025-09-30,United Kingdom,22,paid_search,0
+C0263,2023-02-01,Germany,30,social_media,0
+C0264,2024-06-02,United Kingdom,58,organic_search,0
+C0265,2023-04-17,United States,49,email,0
+C0266,2023-04-06,United States,38,referral,1
+C0267,2024-11-17,United States,27,organic_search,0
+C0268,2024-12-31,United States,31,email,1
+C0269,2023-04-29,Germany,38,referral,1
+C0270,2025-09-07,United Kingdom,37,organic_search,1
+C0271,2023-11-18,United States,36,paid_search,1
+C0272,2023-11-16,France,37,referral,1
+C0273,2023-10-26,France,35,referral,0
+C0274,2024-04-08,Germany,21,organic_search,1
+C0275,2023-06-28,Spain,31,paid_search,0
+C0276,2024-03-02,United Kingdom,47,social_media,1
+C0277,2023-07-30,Canada,22,organic_search,0
+C0278,2023-02-21,United States,35,paid_search,0
+C0279,2024-01-06,France,28,organic_search,0
+C0280,2024-11-05,Spain,38,organic_search,1
+C0281,2025-02-05,Canada,33,social_media,0
+C0282,2023-12-21,Germany,53,social_media,0
+C0283,2023-11-22,Germany,43,social_media,0
+C0284,2025-03-01,United Kingdom,23,email,0
+C0285,2024-11-14,Germany,44,paid_search,1
+C0286,2025-04-15,France,28,organic_search,1
+C0287,2025-06-28,Spain,31,organic_search,0
+C0288,2025-04-04,United Kingdom,40,organic_search,0
+C0289,2025-07-29,United States,32,paid_search,0
+C0290,2024-02-23,Germany,47,organic_search,0
+C0291,2024-02-01,United States,28,organic_search,1
+C0292,2023-11-19,United States,30,organic_search,1
+C0293,2023-08-25,United States,30,social_media,0
+C0294,2025-01-21,France,31,social_media,1
+C0295,2024-12-18,United States,49,referral,0
+C0296,2025-03-15,United States,44,email,1
+C0297,2023-06-18,United States,56,social_media,0
+C0298,2024-05-08,Canada,62,organic_search,1
+C0299,2023-08-11,France,26,social_media,0
+C0300,2025-06-15,United States,38,organic_search,1
+C0301,2023-09-26,United States,24,paid_search,0
+C0302,2023-05-25,Germany,28,paid_search,0
+C0303,2024-07-26,United States,30,paid_search,0
+C0304,2025-06-01,Germany,25,organic_search,0
+C0305,2025-07-08,United Kingdom,25,social_media,0
+C0306,2023-04-07,Spain,35,email,1
+C0307,2023-11-24,United States,24,email,1
+C0308,2023-06-04,Germany,46,social_media,0
+C0309,2023-11-06,United States,27,paid_search,1
+C0310,2024-06-19,Spain,68,organic_search,1
+C0311,2023-10-09,Spain,32,social_media,0
+C0312,2023-03-09,France,38,paid_search,0
+C0313,2024-05-27,United Kingdom,23,organic_search,0
+C0314,2023-02-23,United States,56,paid_search,0
+C0315,2023-08-16,Canada,49,referral,1
+C0316,2023-01-01,France,40,social_media,1
+C0317,2023-03-29,United States,22,paid_search,1
+C0318,2024-03-14,United Kingdom,39,social_media,0
+C0319,2025-05-04,United Kingdom,25,paid_search,1
+C0320,2025-02-16,Canada,53,paid_search,1
+C0321,2023-04-10,France,46,organic_search,0
+C0322,2023-02-04,Germany,38,paid_search,1
+C0323,2023-12-06,Germany,18,social_media,0
+C0324,2024-10-16,United States,26,organic_search,0
+C0325,2025-01-19,United Kingdom,45,email,0
+C0326,2025-04-06,United States,50,organic_search,0
+C0327,2023-12-10,France,49,social_media,1
+C0328,2023-06-18,United Kingdom,19,social_media,0
+C0329,2023-01-27,United Kingdom,40,social_media,0
+C0330,2023-05-28,United States,48,social_media,0
+C0331,2023-03-07,United States,19,referral,0
+C0332,2025-05-14,Germany,37,paid_search,0
+C0333,2023-09-27,United States,40,social_media,0
+C0334,2025-04-06,United States,34,social_media,1
+C0335,2024-07-09,France,18,organic_search,0
+C0336,2024-06-25,United Kingdom,33,organic_search,1
+C0337,2024-04-01,United Kingdom,33,paid_search,0
+C0338,2025-04-02,United Kingdom,35,organic_search,1
+C0339,2023-02-13,Canada,31,paid_search,1
+C0340,2023-04-04,United States,32,paid_search,0
+C0341,2024-03-01,France,37,social_media,0
+C0342,2024-02-01,Spain,42,organic_search,1
+C0343,2024-07-01,Germany,34,email,0
+C0344,2025-01-10,United Kingdom,32,paid_search,1
+C0345,2024-08-12,France,38,social_media,0
+C0346,2023-09-16,United Kingdom,18,organic_search,0
+C0347,2023-11-25,United Kingdom,42,paid_search,0
+C0348,2025-01-25,United Kingdom,37,organic_search,1
+C0349,2023-07-22,United States,37,social_media,0
+C0350,2024-05-21,United States,48,paid_search,1
+C0351,2024-06-24,United Kingdom,18,referral,1
+C0352,2025-01-23,United States,18,paid_search,0
+C0353,2024-12-18,United Kingdom,40,social_media,0
+C0354,2024-04-11,Germany,37,organic_search,0
+C0355,2023-11-07,Spain,39,social_media,0
+C0356,2024-01-05,United States,32,paid_search,1
+C0357,2024-02-18,Germany,44,paid_search,0
+C0358,2023-08-09,United Kingdom,47,organic_search,0
+C0359,2024-09-19,United States,42,organic_search,1
+C0360,2023-07-29,United States,34,organic_search,1
+C0361,2024-10-13,United States,18,referral,0
+C0362,2025-01-24,United States,45,paid_search,1
+C0363,2025-08-23,United States,50,organic_search,0
+C0364,2023-04-30,United Kingdom,44,referral,1
+C0365,2025-02-01,United Kingdom,27,organic_search,0
+C0366,2023-03-28,United States,44,paid_search,0
+C0367,2023-12-05,United States,46,social_media,0
+C0368,2023-06-26,United States,54,referral,1
+C0369,2023-06-12,Germany,27,social_media,1
+C0370,2023-06-26,United States,35,paid_search,0
+C0371,2023-02-14,Germany,45,referral,1
+C0372,2025-04-06,United States,38,organic_search,1
+C0373,2023-03-03,United States,25,referral,0
+C0374,2024-02-05,Spain,42,email,1
+C0375,2024-12-02,United States,43,referral,0
+C0376,2025-09-21,United States,38,organic_search,1
+C0377,2025-05-07,United States,39,organic_search,0
+C0378,2023-05-18,Spain,34,social_media,0
+C0379,2025-09-18,Germany,53,paid_search,0
+C0380,2024-10-18,Germany,27,paid_search,0
+C0381,2023-06-30,Spain,31,referral,1
+C0382,2024-03-26,United States,37,social_media,0
+C0383,2025-07-10,Spain,47,paid_search,0
+C0384,2024-01-30,United States,21,paid_search,0
+C0385,2023-07-04,Germany,23,organic_search,1
+C0386,2025-05-28,United Kingdom,18,organic_search,1
+C0387,2025-08-14,United Kingdom,37,organic_search,0
+C0388,2025-09-06,Spain,25,email,0
+C0389,2025-08-17,United States,33,social_media,0
+C0390,2025-05-26,Spain,44,paid_search,1
+C0391,2024-04-01,United Kingdom,30,paid_search,1
+C0392,2023-07-13,Germany,40,social_media,1
+C0393,2024-09-11,Spain,34,email,1
+C0394,2023-08-10,United States,44,email,0
+C0395,2024-04-20,Spain,42,paid_search,1
+C0396,2024-10-20,Germany,29,email,0
+C0397,2025-08-08,France,35,paid_search,0
+C0398,2023-10-18,United States,48,paid_search,0
+C0399,2023-09-10,Germany,41,email,0
+C0400,2025-01-07,Germany,22,paid_search,1
+C0401,2023-01-07,United Kingdom,44,paid_search,0
+C0402,2024-07-22,United States,25,paid_search,1
+C0403,2025-01-18,United States,53,paid_search,1
+C0404,2024-07-07,Canada,48,paid_search,1
+C0405,2024-01-21,United States,40,social_media,1
+C0406,2025-04-11,France,39,paid_search,0
+C0407,2024-01-08,Spain,35,organic_search,0
+C0408,2024-12-14,United States,44,email,0
+C0409,2024-04-10,United States,33,paid_search,0
+C0410,2023-01-27,Germany,40,referral,1
+C0411,2024-06-16,United States,47,organic_search,0
+C0412,2023-02-19,Germany,31,social_media,0
+C0413,2025-07-23,France,30,paid_search,0
+C0414,2024-08-26,Germany,24,email,0
+C0415,2024-01-09,United Kingdom,25,organic_search,1
+C0416,2024-05-03,France,18,referral,0
+C0417,2024-09-13,Germany,45,paid_search,1
+C0418,2023-09-19,United States,57,social_media,1
+C0419,2023-10-17,Germany,53,paid_search,1
+C0420,2024-02-25,Canada,19,organic_search,0
+C0421,2023-09-17,Germany,45,paid_search,1
+C0422,2025-01-30,United Kingdom,53,organic_search,0
+C0423,2023-04-15,United States,32,paid_search,0
+C0424,2025-04-09,United States,38,social_media,1
+C0425,2023-12-16,United States,18,paid_search,1
+C0426,2024-07-17,United States,40,organic_search,0
+C0427,2023-06-08,Spain,25,organic_search,1
+C0428,2024-01-22,United States,39,organic_search,0
+C0429,2025-01-27,Canada,20,organic_search,1
+C0430,2023-09-29,United States,43,social_media,1
+C0431,2023-05-13,United States,48,organic_search,0
+C0432,2024-06-08,United Kingdom,28,email,1
+C0433,2023-06-13,United States,24,organic_search,1
+C0434,2023-11-13,France,18,organic_search,1
+C0435,2024-03-28,Spain,34,email,1
+C0436,2024-07-20,Canada,31,organic_search,1
+C0437,2024-10-03,United States,20,paid_search,0
+C0438,2024-11-10,France,42,referral,1
+C0439,2025-04-27,United States,32,referral,0
+C0440,2023-03-08,Canada,25,social_media,1
+C0441,2023-12-30,United Kingdom,31,organic_search,0
+C0442,2023-01-02,United States,49,social_media,0
+C0443,2023-01-10,United States,44,referral,1
+C0444,2023-08-02,United States,36,referral,0
+C0445,2024-08-23,United States,44,organic_search,0
+C0446,2025-06-17,Canada,24,paid_search,1
+C0447,2025-02-15,France,37,paid_search,0
+C0448,2024-10-10,Spain,39,organic_search,0
+C0449,2025-02-20,United States,32,social_media,0
+C0450,2023-06-22,Germany,42,organic_search,0
+C0451,2025-04-23,United States,28,paid_search,0
+C0452,2025-06-12,Germany,43,organic_search,0
+C0453,2023-04-06,United States,43,paid_search,0
+C0454,2024-04-16,United States,18,organic_search,0
+C0455,2025-04-13,Germany,50,paid_search,0
+C0456,2024-04-22,United States,18,organic_search,1
+C0457,2025-04-23,United Kingdom,30,referral,1
+C0458,2025-07-28,Germany,48,organic_search,0
+C0459,2024-04-21,United States,34,paid_search,0
+C0460,2023-03-01,Spain,21,organic_search,1
+C0461,2023-12-08,United Kingdom,25,organic_search,1
+C0462,2023-08-05,Canada,48,organic_search,0
+C0463,2024-04-21,Germany,18,organic_search,0
+C0464,2024-08-11,France,49,organic_search,0
+C0465,2024-04-10,France,36,paid_search,1
+C0466,2023-07-16,Canada,24,social_media,1
+C0467,2023-10-30,Germany,31,organic_search,1
+C0468,2024-11-13,United States,26,paid_search,0
+C0469,2023-01-28,United States,47,social_media,0
+C0470,2023-08-03,Germany,45,organic_search,0
+C0471,2025-06-14,United States,18,paid_search,0
+C0472,2023-04-10,United States,33,organic_search,0
+C0473,2024-02-21,United States,28,organic_search,1
+C0474,2023-07-27,Germany,51,paid_search,0
+C0475,2023-04-16,United States,22,referral,1
+C0476,2024-02-29,Germany,55,referral,0
+C0477,2024-06-07,France,37,referral,0
+C0478,2023-06-26,Canada,24,paid_search,1
+C0479,2023-03-20,United States,30,organic_search,1
+C0480,2023-05-16,Germany,28,paid_search,0
+C0481,2024-10-16,Germany,23,organic_search,1
+C0482,2025-05-13,United Kingdom,38,organic_search,0
+C0483,2023-07-01,Germany,23,organic_search,0
+C0484,2023-11-18,United States,18,paid_search,0
+C0485,2023-12-12,Spain,33,paid_search,0
+C0486,2023-12-29,United States,18,organic_search,1
+C0487,2023-09-03,Canada,29,social_media,0
+C0488,2023-02-25,Germany,27,paid_search,1
+C0489,2024-06-11,United States,27,email,1
+C0490,2023-12-25,France,59,organic_search,0
+C0491,2023-12-10,United States,38,paid_search,0
+C0492,2023-09-23,France,40,organic_search,0
+C0493,2025-07-22,Germany,18,paid_search,1
+C0494,2024-09-04,United States,30,organic_search,1
+C0495,2024-02-25,United States,39,organic_search,1
+C0496,2023-07-26,France,26,social_media,0
+C0497,2025-03-15,United States,47,organic_search,0
+C0498,2025-06-10,Canada,24,organic_search,0
+C0499,2023-02-02,France,34,referral,0
+C0500,2025-07-22,France,31,organic_search,1
+C0501,2024-12-03,United States,39,social_media,0
+C0502,2023-04-11,France,30,paid_search,0
+C0503,2025-01-26,Spain,34,organic_search,0
+C0504,2023-04-18,United States,34,paid_search,0
+C0505,2023-02-21,United States,29,organic_search,1
+C0506,2023-04-26,United States,42,social_media,0
+C0507,2024-04-06,United Kingdom,40,organic_search,1
+C0508,2024-09-14,France,36,organic_search,1
+C0509,2024-02-13,United Kingdom,32,paid_search,1
+C0510,2023-05-03,Germany,46,referral,1
+C0511,2023-07-19,United States,34,email,1
+C0512,2025-05-05,United States,34,referral,1
+C0513,2025-08-24,United States,38,social_media,0
+C0514,2025-01-27,Canada,56,social_media,0
+C0515,2023-04-14,Germany,22,paid_search,1
+C0516,2025-04-03,United Kingdom,45,referral,0
+C0517,2024-11-25,France,18,paid_search,0
+C0518,2024-06-12,United States,39,paid_search,1
+C0519,2023-05-24,United States,54,social_media,0
+C0520,2025-09-27,United States,42,paid_search,0
+C0521,2024-03-20,Spain,39,organic_search,1
+C0522,2023-02-14,France,31,paid_search,0
+C0523,2023-07-30,Germany,37,paid_search,1
+C0524,2024-02-07,United States,34,email,0
+C0525,2023-03-04,United States,28,paid_search,1
+C0526,2023-11-22,Germany,34,email,1
+C0527,2024-04-15,United Kingdom,39,paid_search,0
+C0528,2025-08-10,Spain,29,email,0
+C0529,2023-03-28,France,28,organic_search,0
+C0530,2024-08-02,United Kingdom,22,referral,0
+C0531,2025-07-08,France,41,paid_search,0
+C0532,2025-03-20,Spain,43,organic_search,1
+C0533,2025-07-17,United Kingdom,40,organic_search,0
+C0534,2023-06-21,Germany,48,organic_search,1
+C0535,2025-03-15,Canada,38,paid_search,0
+C0536,2025-09-09,United States,41,social_media,1
+C0537,2023-11-24,Canada,40,referral,0
+C0538,2024-05-15,United States,36,social_media,0
+C0539,2024-06-16,Germany,31,paid_search,1
+C0540,2024-05-10,France,61,paid_search,0
+C0541,2023-10-18,Germany,32,email,1
+C0542,2025-09-01,United Kingdom,30,email,0
+C0543,2025-08-18,Germany,42,organic_search,0
+C0544,2024-01-18,United States,40,referral,0
+C0545,2025-03-19,United States,22,paid_search,1
+C0546,2024-02-04,United States,49,email,0
+C0547,2025-03-08,Germany,36,referral,0
+C0548,2024-08-10,United Kingdom,25,social_media,0
+C0549,2024-04-17,United States,50,organic_search,0
+C0550,2023-05-09,Canada,44,social_media,0
+C0551,2024-10-19,United Kingdom,23,organic_search,1
+C0552,2023-11-19,United Kingdom,57,email,0
+C0553,2023-08-06,United Kingdom,44,organic_search,1
+C0554,2023-07-13,United States,37,social_media,0
+C0555,2025-09-12,France,54,referral,0
+C0556,2023-04-14,United Kingdom,39,organic_search,0
+C0557,2025-03-12,United States,37,paid_search,0
+C0558,2025-05-19,Spain,30,social_media,0
+C0559,2023-02-01,Canada,43,paid_search,0
+C0560,2024-08-14,France,42,organic_search,0
+C0561,2024-08-02,Canada,37,organic_search,1
+C0562,2023-12-27,Canada,28,paid_search,0
+C0563,2024-10-31,United States,38,social_media,0
+C0564,2024-02-15,Germany,36,social_media,0
+C0565,2024-03-17,Germany,22,organic_search,0
+C0566,2024-03-09,United States,21,paid_search,1
+C0567,2025-03-14,United States,43,paid_search,0
+C0568,2024-09-27,United States,18,organic_search,1
+C0569,2024-01-16,Germany,39,social_media,0
+C0570,2025-07-19,France,32,paid_search,0
+C0571,2025-03-16,France,51,paid_search,1
+C0572,2025-07-25,United States,32,referral,0
+C0573,2025-01-03,United States,44,paid_search,1
+C0574,2024-01-29,United Kingdom,33,social_media,0
+C0575,2025-02-15,Germany,38,organic_search,1
+C0576,2023-11-27,Canada,45,organic_search,0
+C0577,2023-09-30,Canada,32,organic_search,0
+C0578,2024-03-28,Canada,48,email,1
+C0579,2025-08-31,Canada,26,email,0
+C0580,2024-07-24,Spain,40,organic_search,0
+C0581,2024-01-21,United Kingdom,47,organic_search,1
+C0582,2024-04-08,United States,44,paid_search,1
+C0583,2023-10-20,United States,58,social_media,1
+C0584,2024-10-23,United Kingdom,29,social_media,1
+C0585,2023-12-18,United States,22,social_media,1
+C0586,2024-07-10,United States,26,referral,1
+C0587,2024-01-07,Spain,44,organic_search,1
+C0588,2023-11-18,United States,42,social_media,0
+C0589,2025-09-01,Spain,38,social_media,0
+C0590,2023-12-14,France,25,paid_search,1
+C0591,2023-03-12,Germany,45,referral,1
+C0592,2024-01-16,Germany,24,organic_search,0
+C0593,2024-06-18,United States,50,social_media,0
+C0594,2023-04-06,Germany,68,social_media,0
+C0595,2023-11-03,United States,41,referral,0
+C0596,2023-06-16,Spain,43,paid_search,1
+C0597,2024-05-17,United States,32,paid_search,0
+C0598,2024-12-27,United States,18,email,1
+C0599,2025-08-30,France,30,email,1
+C0600,2024-01-26,Germany,25,paid_search,1
+C0601,2025-05-16,United Kingdom,21,email,0
+C0602,2023-08-04,Germany,56,organic_search,1
+C0603,2025-02-22,United States,40,social_media,1
+C0604,2024-07-18,Germany,41,email,1
+C0605,2025-01-31,United States,34,paid_search,0
+C0606,2025-01-28,United States,35,paid_search,0
+C0607,2024-06-18,United States,48,referral,1
+C0608,2023-09-16,United States,37,email,0
+C0609,2024-06-12,United States,43,email,0
+C0610,2025-04-10,United Kingdom,35,paid_search,1
+C0611,2025-09-01,United States,33,referral,1
+C0612,2025-07-20,United States,22,organic_search,0
+C0613,2023-07-02,Germany,18,paid_search,0
+C0614,2024-08-22,United States,34,paid_search,0
+C0615,2023-04-16,France,38,email,1
+C0616,2024-11-02,Spain,23,referral,1
+C0617,2025-09-23,United Kingdom,37,social_media,0
+C0618,2023-02-22,Canada,38,social_media,0
+C0619,2024-10-21,United States,18,paid_search,0
+C0620,2025-08-07,United States,27,paid_search,0
+C0621,2025-04-30,France,41,paid_search,1
+C0622,2024-01-30,France,41,organic_search,0
+C0623,2023-04-15,Canada,24,paid_search,0
+C0624,2025-07-16,United States,39,email,0
+C0625,2025-07-14,France,48,social_media,0
+C0626,2024-08-04,United Kingdom,46,email,1
+C0627,2025-09-09,United States,36,paid_search,1
+C0628,2023-01-05,United States,32,paid_search,1
+C0629,2024-09-11,Spain,30,organic_search,0
+C0630,2023-02-08,United States,42,paid_search,1
+C0631,2025-07-28,Canada,39,paid_search,0
+C0632,2024-11-14,Germany,44,organic_search,1
+C0633,2025-07-06,France,38,organic_search,1
+C0634,2024-07-18,France,46,social_media,0
+C0635,2023-03-25,Canada,38,paid_search,1
+C0636,2023-01-27,United States,46,paid_search,0
+C0637,2023-12-03,United States,47,organic_search,1
+C0638,2025-01-16,Germany,28,paid_search,0
+C0639,2023-06-01,United Kingdom,18,paid_search,0
+C0640,2025-05-05,United States,54,paid_search,0
+C0641,2023-08-29,United States,40,social_media,0
+C0642,2024-05-13,United States,18,organic_search,0
+C0643,2023-07-23,United States,29,referral,0
+C0644,2024-04-12,United States,45,organic_search,1
+C0645,2024-03-29,Canada,34,paid_search,0
+C0646,2023-01-06,United States,31,organic_search,0
+C0647,2024-07-24,Spain,52,paid_search,1
+C0648,2025-02-28,Spain,25,organic_search,1
+C0649,2025-07-29,United States,28,email,0
+C0650,2023-11-29,France,39,paid_search,0
+C0651,2025-06-03,Germany,41,social_media,1
+C0652,2025-06-01,France,42,organic_search,1
+C0653,2025-09-19,United States,47,organic_search,0
+C0654,2024-01-10,United States,39,paid_search,1
+C0655,2025-05-04,United States,42,paid_search,0
+C0656,2024-07-21,Germany,34,paid_search,0
+C0657,2023-02-28,Spain,38,referral,1
+C0658,2023-09-29,Germany,38,social_media,1
+C0659,2024-11-05,France,39,referral,1
+C0660,2023-06-11,Spain,45,organic_search,0
+C0661,2024-03-12,Germany,43,email,0
+C0662,2025-02-17,United States,37,social_media,0
+C0663,2023-05-31,Canada,28,social_media,0
+C0664,2024-05-13,United Kingdom,38,referral,0
+C0665,2023-08-04,United States,37,social_media,0
+C0666,2024-06-22,United Kingdom,39,email,0
+C0667,2023-08-30,Spain,61,social_media,1
+C0668,2025-08-27,United States,31,organic_search,0
+C0669,2023-03-19,United Kingdom,42,social_media,0
+C0670,2025-08-25,United States,49,paid_search,1
+C0671,2025-03-06,United States,38,referral,0
+C0672,2025-05-09,United States,63,email,1
+C0673,2025-05-04,France,33,organic_search,0
+C0674,2023-07-08,Canada,41,organic_search,0
+C0675,2025-07-23,United States,28,organic_search,1
+C0676,2024-08-19,United States,33,paid_search,1
+C0677,2025-08-24,United States,40,organic_search,1
+C0678,2025-05-31,United States,46,social_media,1
+C0679,2024-08-04,Germany,41,social_media,0
+C0680,2024-01-11,France,51,email,1
+C0681,2023-04-28,Germany,36,organic_search,1
+C0682,2023-04-12,United Kingdom,33,paid_search,1
+C0683,2024-01-27,Germany,67,organic_search,0
+C0684,2025-03-25,United States,41,email,0
+C0685,2024-05-22,United States,29,organic_search,1
+C0686,2024-04-28,Spain,29,organic_search,0
+C0687,2023-09-03,France,27,organic_search,0
+C0688,2024-07-20,Spain,47,email,0
+C0689,2024-10-02,Canada,33,organic_search,0
+C0690,2025-09-13,Germany,38,social_media,0
+C0691,2025-01-02,Spain,36,social_media,0
+C0692,2024-09-01,United Kingdom,45,email,0
+C0693,2025-07-02,United States,28,organic_search,0
+C0694,2024-03-02,United States,25,organic_search,1
+C0695,2025-07-27,United States,39,paid_search,0
+C0696,2024-01-07,United States,44,organic_search,0
+C0697,2023-05-09,United Kingdom,41,social_media,0
+C0698,2024-02-24,France,28,paid_search,0
+C0699,2023-05-10,France,44,paid_search,1
+C0700,2023-04-29,Germany,29,organic_search,1
+C0701,2025-06-03,United States,31,social_media,0
+C0702,2025-03-08,France,27,organic_search,0
+C0703,2023-08-11,United Kingdom,51,social_media,0
+C0704,2025-04-21,United States,44,organic_search,0
+C0705,2023-03-11,United States,44,referral,0
+C0706,2023-10-13,United States,51,social_media,0
+C0707,2024-12-09,United States,68,organic_search,0
+C0708,2023-11-02,Canada,18,organic_search,1
+C0709,2025-01-03,France,29,paid_search,0
+C0710,2025-05-27,France,30,organic_search,0
+C0711,2023-03-08,United States,28,organic_search,0
+C0712,2023-01-25,Canada,25,email,0
+C0713,2025-08-01,Germany,34,social_media,0
+C0714,2024-06-06,United States,24,organic_search,0
+C0715,2024-05-23,Germany,41,social_media,0
+C0716,2024-04-10,United Kingdom,38,organic_search,0
+C0717,2024-03-11,United Kingdom,42,referral,1
+C0718,2024-11-23,United States,43,organic_search,1
+C0719,2024-08-05,United Kingdom,44,social_media,0
+C0720,2023-06-14,United States,33,email,0
+C0721,2024-09-21,United States,60,organic_search,1
+C0722,2024-11-02,United States,40,organic_search,1
+C0723,2023-04-25,Spain,18,paid_search,0
+C0724,2024-01-14,United States,26,email,0
+C0725,2025-03-04,United Kingdom,18,paid_search,0
+C0726,2024-09-13,United States,37,social_media,1
+C0727,2023-05-17,Canada,36,email,0
+C0728,2023-02-10,Germany,32,email,0
+C0729,2024-08-06,Canada,59,paid_search,0
+C0730,2024-04-08,United States,43,paid_search,0
+C0731,2025-08-22,United States,45,social_media,0
+C0732,2024-06-08,Germany,27,organic_search,1
+C0733,2025-07-24,United States,26,email,0
+C0734,2023-08-04,Canada,37,organic_search,0
+C0735,2024-03-25,Canada,39,organic_search,0
+C0736,2023-05-21,United Kingdom,18,email,1
+C0737,2024-07-30,Spain,35,paid_search,0
+C0738,2023-07-09,Germany,37,organic_search,0
+C0739,2024-05-09,United States,35,organic_search,0
+C0740,2023-12-12,United Kingdom,28,paid_search,1
+C0741,2023-07-06,United States,31,email,1
+C0742,2023-04-08,Canada,35,organic_search,1
+C0743,2024-05-29,United States,38,organic_search,1
+C0744,2025-08-09,United States,44,paid_search,0
+C0745,2023-07-19,Germany,49,referral,0
+C0746,2024-02-11,United States,34,organic_search,0
+C0747,2023-08-14,United States,32,referral,1
+C0748,2025-03-23,France,42,email,1
+C0749,2024-02-21,United States,44,organic_search,0
+C0750,2025-09-05,United Kingdom,32,email,1
+C0751,2023-09-04,United States,46,social_media,0
+C0752,2023-03-23,United States,48,paid_search,0
+C0753,2024-08-07,United States,51,paid_search,0
+C0754,2024-10-16,France,57,email,1
+C0755,2025-09-21,Spain,27,email,1
+C0756,2025-05-24,United States,37,email,0
+C0757,2025-06-06,Spain,37,referral,1
+C0758,2024-09-28,Germany,36,paid_search,1
+C0759,2023-12-28,Germany,30,email,1
+C0760,2024-03-06,France,21,email,1
+C0761,2023-05-15,France,38,organic_search,0
+C0762,2024-03-08,Canada,29,organic_search,1
+C0763,2024-01-01,United Kingdom,38,paid_search,1
+C0764,2023-02-06,Germany,28,email,1
+C0765,2023-07-25,United States,25,organic_search,0
+C0766,2024-06-20,United States,40,social_media,1
+C0767,2024-01-06,Germany,39,organic_search,1
+C0768,2025-09-24,United States,43,paid_search,0
+C0769,2024-04-25,United States,61,social_media,1
+C0770,2025-08-20,United States,40,organic_search,0
+C0771,2024-10-25,United States,42,email,0
+C0772,2023-02-10,Germany,25,organic_search,0
+C0773,2023-07-24,Germany,23,referral,1
+C0774,2024-12-09,United Kingdom,54,organic_search,1
+C0775,2024-07-01,United States,27,referral,0
+C0776,2023-10-30,United Kingdom,26,social_media,1
+C0777,2024-06-08,United Kingdom,37,organic_search,0
+C0778,2025-06-25,France,36,organic_search,0
+C0779,2024-01-26,Germany,27,organic_search,1
+C0780,2023-02-15,United Kingdom,34,social_media,1
+C0781,2023-11-09,United Kingdom,51,email,1
+C0782,2025-07-28,Spain,28,paid_search,1
+C0783,2025-02-03,France,22,paid_search,1
+C0784,2025-04-20,United Kingdom,47,social_media,0
+C0785,2025-07-04,United Kingdom,42,paid_search,0
+C0786,2023-04-28,United States,30,social_media,0
+C0787,2023-10-11,Spain,20,paid_search,1
+C0788,2023-03-02,United States,29,social_media,1
+C0789,2023-01-05,United States,36,referral,1
+C0790,2025-04-18,Spain,50,paid_search,0
+C0791,2025-07-29,France,26,organic_search,0
+C0792,2023-06-06,United States,36,organic_search,1
+C0793,2024-12-26,United States,44,social_media,1
+C0794,2024-06-21,United States,18,paid_search,0
+C0795,2023-03-11,Germany,48,referral,0
+C0796,2025-07-08,United States,24,social_media,0
+C0797,2025-05-24,Spain,41,paid_search,0
+C0798,2024-07-23,Spain,40,email,0
+C0799,2024-12-11,Germany,49,organic_search,0
+C0800,2024-02-03,Germany,43,email,1
+C0801,2025-03-07,United States,18,organic_search,0
+C0802,2024-03-22,United States,28,social_media,0
+C0803,2025-09-20,France,39,referral,0
+C0804,2023-03-05,United States,35,email,1
+C0805,2023-06-22,United States,42,email,0
+C0806,2025-08-30,United States,46,paid_search,0
+C0807,2023-10-17,United States,44,email,0
+C0808,2023-11-08,United Kingdom,35,social_media,1
+C0809,2025-03-05,France,18,social_media,1
+C0810,2023-07-10,Canada,32,organic_search,0
+C0811,2024-05-30,Germany,42,organic_search,0
+C0812,2023-10-15,Canada,25,social_media,0
+C0813,2023-07-18,United Kingdom,44,organic_search,1
+C0814,2025-08-26,Canada,47,social_media,1
+C0815,2023-07-20,United Kingdom,38,email,0
+C0816,2023-04-05,United States,18,referral,0
+C0817,2024-11-07,Spain,23,organic_search,1
+C0818,2025-05-20,United States,58,referral,1
+C0819,2023-05-09,United States,31,organic_search,0
+C0820,2024-12-11,United States,18,paid_search,0
+C0821,2024-06-26,United Kingdom,51,email,0
+C0822,2025-04-13,United Kingdom,37,organic_search,1
+C0823,2023-05-08,United Kingdom,49,organic_search,1
+C0824,2025-09-06,Canada,40,organic_search,1
+C0825,2024-09-13,United States,42,paid_search,1
+C0826,2025-04-25,United Kingdom,41,email,0
+C0827,2023-12-30,United States,45,organic_search,0
+C0828,2025-08-05,Canada,62,organic_search,0
+C0829,2024-09-20,United States,48,social_media,1
+C0830,2023-05-08,United States,20,organic_search,1
+C0831,2025-07-15,United Kingdom,42,social_media,0
+C0832,2025-03-09,Germany,50,referral,0
+C0833,2023-10-29,France,50,email,1
+C0834,2024-07-01,Germany,32,email,1
+C0835,2024-01-25,France,50,paid_search,1
+C0836,2024-06-29,United Kingdom,47,email,0
+C0837,2025-08-27,United States,65,organic_search,1
+C0838,2025-06-21,United States,29,organic_search,1
+C0839,2023-08-05,United States,31,social_media,1
+C0840,2025-09-02,United States,34,organic_search,1
+C0841,2024-03-15,United Kingdom,32,email,1
+C0842,2024-12-08,United Kingdom,27,social_media,1
+C0843,2025-02-06,Germany,18,referral,1
+C0844,2024-04-29,United Kingdom,32,paid_search,0
+C0845,2024-04-03,Germany,41,paid_search,0
+C0846,2024-04-03,Germany,32,social_media,1
+C0847,2025-05-15,United States,58,organic_search,1
+C0848,2024-01-23,United States,37,paid_search,0
+C0849,2023-10-09,Germany,51,social_media,0
+C0850,2023-12-30,Germany,40,referral,1
+C0851,2023-07-15,United States,46,social_media,1
+C0852,2024-01-29,United States,40,organic_search,1
+C0853,2023-04-25,France,52,paid_search,0
+C0854,2023-04-01,Germany,38,social_media,1
+C0855,2024-12-27,United States,42,organic_search,1
+C0856,2023-03-19,United Kingdom,41,paid_search,0
+C0857,2024-07-24,Canada,34,organic_search,0
+C0858,2025-02-21,United States,41,organic_search,1
+C0859,2024-12-28,Canada,62,paid_search,0
+C0860,2024-03-23,United States,34,organic_search,1
+C0861,2023-07-14,United Kingdom,42,social_media,1
+C0862,2025-07-23,United Kingdom,51,organic_search,1
+C0863,2025-04-18,United States,50,social_media,0
+C0864,2024-09-06,Canada,37,organic_search,1
+C0865,2023-03-29,United Kingdom,18,email,0
+C0866,2023-02-05,Spain,43,organic_search,1
+C0867,2023-11-13,United States,18,paid_search,0
+C0868,2023-06-08,Canada,53,paid_search,1
+C0869,2025-05-13,Spain,39,organic_search,1
+C0870,2023-07-26,Germany,48,paid_search,0
+C0871,2023-10-11,United States,27,email,0
+C0872,2025-09-06,France,20,referral,1
+C0873,2025-04-01,Germany,40,paid_search,0
+C0874,2023-08-08,Spain,37,organic_search,0
+C0875,2024-01-21,United Kingdom,32,social_media,0
+C0876,2024-06-01,United States,38,social_media,1
+C0877,2024-10-28,United States,67,organic_search,1
+C0878,2025-07-28,France,46,email,0
+C0879,2025-05-24,Spain,49,paid_search,1
+C0880,2025-09-08,United States,46,social_media,0
+C0881,2023-02-10,France,53,paid_search,0
+C0882,2023-08-26,Spain,35,paid_search,0
+C0883,2024-07-19,United States,18,organic_search,0
+C0884,2023-02-19,United States,35,email,0
+C0885,2023-12-23,France,46,organic_search,1
+C0886,2023-06-04,Germany,26,email,0
+C0887,2025-07-25,United States,35,email,1
+C0888,2023-03-05,Canada,29,social_media,0
+C0889,2023-05-29,United Kingdom,54,organic_search,0
+C0890,2023-07-15,Canada,45,organic_search,0
+C0891,2023-05-30,Canada,44,paid_search,1
+C0892,2024-07-24,Canada,44,social_media,1
+C0893,2024-01-01,United Kingdom,37,referral,0
+C0894,2025-07-05,United States,39,paid_search,0
+C0895,2023-09-19,United Kingdom,24,email,0
+C0896,2024-06-23,United States,18,organic_search,1
+C0897,2024-10-24,Germany,39,paid_search,0
+C0898,2024-09-20,United States,41,organic_search,1
+C0899,2025-03-10,United Kingdom,50,social_media,0
+C0900,2023-07-22,United States,54,organic_search,0
+C0901,2024-05-24,United States,54,organic_search,1
+C0902,2025-03-14,United States,26,email,0
+C0903,2025-05-16,Germany,33,paid_search,0
+C0904,2024-09-12,France,42,organic_search,1
+C0905,2024-10-16,United States,65,organic_search,0
+C0906,2025-05-17,Canada,53,paid_search,0
+C0907,2024-09-19,Canada,49,paid_search,0
+C0908,2025-08-10,United States,33,organic_search,0
+C0909,2023-05-09,Germany,27,social_media,1
+C0910,2023-12-16,United Kingdom,46,organic_search,0
+C0911,2023-04-23,United States,25,social_media,1
+C0912,2023-04-01,United Kingdom,34,paid_search,1
+C0913,2024-04-18,United States,36,organic_search,1
+C0914,2023-08-15,Canada,55,organic_search,1
+C0915,2024-02-13,Spain,33,organic_search,1
+C0916,2024-03-15,Canada,18,organic_search,1
+C0917,2024-09-15,Germany,43,paid_search,0
+C0918,2025-08-07,Germany,29,referral,0
+C0919,2025-05-02,Spain,37,email,1
+C0920,2024-01-15,United States,36,paid_search,0
+C0921,2023-11-23,United States,34,social_media,1
+C0922,2025-02-12,Germany,46,social_media,0
+C0923,2023-05-05,United States,20,email,1
+C0924,2024-06-26,United States,31,organic_search,0
+C0925,2024-02-29,United States,45,organic_search,1
+C0926,2023-07-03,Germany,30,paid_search,0
+C0927,2024-09-10,United States,19,organic_search,0
+C0928,2023-11-19,United States,44,paid_search,1
+C0929,2023-07-06,United States,49,email,1
+C0930,2024-10-17,United Kingdom,37,referral,1
+C0931,2023-06-24,Canada,18,organic_search,1
+C0932,2024-11-06,United States,45,paid_search,0
+C0933,2023-06-12,Germany,19,paid_search,1
+C0934,2024-03-12,France,40,paid_search,0
+C0935,2025-03-22,United States,27,social_media,0
+C0936,2023-08-18,Canada,24,organic_search,0
+C0937,2025-02-09,France,32,email,0
+C0938,2024-12-25,Germany,35,referral,1
+C0939,2025-06-25,United States,30,social_media,1
+C0940,2023-06-19,United States,43,social_media,0
+C0941,2024-12-18,Spain,32,paid_search,1
+C0942,2025-07-29,France,48,paid_search,0
+C0943,2025-02-05,Spain,40,organic_search,0
+C0944,2023-07-08,Canada,29,social_media,1
+C0945,2025-04-05,United States,27,organic_search,0
+C0946,2023-04-18,France,19,email,0
+C0947,2024-08-14,United Kingdom,40,paid_search,1
+C0948,2024-05-14,France,33,paid_search,0
+C0949,2024-06-17,United States,18,paid_search,0
+C0950,2024-06-05,United States,31,referral,1
+C0951,2023-02-01,France,27,organic_search,0
+C0952,2024-05-25,France,54,organic_search,1
+C0953,2025-07-29,Germany,18,organic_search,1
+C0954,2024-03-14,United States,21,social_media,0
+C0955,2023-10-06,United States,49,referral,0
+C0956,2025-09-25,Spain,52,organic_search,0
+C0957,2023-04-10,United Kingdom,29,referral,1
+C0958,2024-05-03,United Kingdom,30,organic_search,0
+C0959,2024-05-29,Germany,44,social_media,1
+C0960,2024-04-24,United Kingdom,18,organic_search,0
+C0961,2025-07-14,Germany,18,paid_search,1
+C0962,2024-02-28,United Kingdom,34,social_media,0
+C0963,2025-09-04,Canada,54,paid_search,0
+C0964,2023-03-09,Canada,32,organic_search,0
+C0965,2025-01-06,Spain,38,email,1
+C0966,2024-08-18,Germany,49,referral,1
+C0967,2023-08-30,United Kingdom,60,paid_search,0
+C0968,2023-08-17,France,31,social_media,0
+C0969,2024-12-23,Canada,37,email,0
+C0970,2024-10-02,Germany,57,organic_search,0
+C0971,2024-09-05,France,20,email,1
+C0972,2023-02-21,France,48,organic_search,1
+C0973,2024-08-23,Germany,26,email,1
+C0974,2025-09-12,France,38,organic_search,0
+C0975,2023-01-18,United States,34,organic_search,0
+C0976,2024-04-15,United Kingdom,26,paid_search,1
+C0977,2024-05-11,Germany,26,paid_search,0
+C0978,2025-06-19,United States,40,email,1
+C0979,2023-10-11,Canada,48,referral,0
+C0980,2024-04-22,Germany,36,organic_search,0
+C0981,2024-12-21,United States,38,organic_search,1
+C0982,2023-03-02,Canada,43,paid_search,0
+C0983,2025-03-15,France,26,paid_search,1
+C0984,2025-04-05,France,45,paid_search,0
+C0985,2024-12-23,United Kingdom,46,email,0
+C0986,2024-10-12,Canada,66,email,0
+C0987,2025-01-20,United Kingdom,33,organic_search,0
+C0988,2025-02-23,Germany,32,paid_search,0
+C0989,2025-06-26,United States,45,social_media,0
+C0990,2024-03-05,Germany,46,paid_search,1
+C0991,2024-04-02,France,31,organic_search,1
+C0992,2024-10-02,Germany,33,paid_search,0
+C0993,2023-07-13,United Kingdom,43,paid_search,0
+C0994,2025-05-09,Canada,28,organic_search,0
+C0995,2025-02-12,France,32,email,1
+C0996,2024-09-25,United States,38,paid_search,1
+C0997,2023-10-30,Spain,48,social_media,0
+C0998,2023-12-16,France,30,paid_search,0
+C0999,2024-03-12,Spain,18,email,0
+C1000,2024-10-27,Spain,18,organic_search,0
