@@ -20,7 +20,7 @@ Which medicine categories follow a strong seasonal pattern, and how far ahead ca
 2. **EDA** (`src/eda.py`): data quality checks, trends, seasonal profiles by category, the effect of promotions and temperature.
 3. **Analysis / model** (`src/analysis.py`, helpers in `src/utils.py`): seasonal decomposition, then SARIMAX per category, with a time-based train/test split and a naive seasonal baseline.
 4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): aggregation queries (monthly totals, seasonal index, year-over-year growth) run on an in-memory SQLite database.
-5. **Tests** (`tests/`): pytest checks for the helper functions (and, later, the generated data).
+5. **Tests** (`tests/`): pytest checks for the data generator and the helper functions.
 
 ## Dataset (synthetic)
 
@@ -48,8 +48,23 @@ python src/data_generator.py   # creates data/*.csv (seed 42, reproducible)
 python src/eda.py              # data checks, aggregations, 3 charts in figures/
 python src/analysis.py         # seasonality + SARIMAX forecast, charts, reports/metrics.json
 python src/run_sql.py          # runs sql/queries.sql on an in-memory SQLite database
-pytest                         # unit tests of the helper functions
+python -m pytest -q            # unit tests (data generator and helper functions)
 ```
+
+## Tests
+
+Run the tests from the project root:
+
+```bash
+python -m pytest -q
+```
+
+The tests live in `tests/` and add `src/` to `sys.path` themselves, so no installation step is needed. They are fast (a few seconds) and do not depend on the CSV files or figures:
+
+- `tests/test_data_generator.py` generates the synthetic data in memory (seed 42) and checks column names, row counts (8 categories, 2080 sales rows, 260 weeks per category), key uniqueness, value ranges (non-negative units, positive prices, binary promo flag, temperature limits, revenue = units x price), consecutive Monday dates and reproducibility.
+- `tests/test_utils.py` checks the helpers in `src/utils.py`: time-based split, seasonal naive baseline, forecast metrics, interval coverage, exogenous feature matrix, temperature climatology and the seasonal profile on a clean synthetic cycle.
+
+The last run reported `13 passed`.
 
 ## Exploratory data analysis
 
@@ -76,7 +91,7 @@ The promo comparison in the EDA is a raw ratio mixed with seasonality, which is 
 | Q6 | Average weekly units across temperature bands. |
 | Q7 | Share of yearly revenue per category. |
 
-The queries use window functions and CTEs, so they need SQLite 3.25 or newer (bundled with current Python 3.11 builds). Results are printed by the script and are not copied into this README; run `python src/run_sql.py` to see them. As everywhere in this project, they describe synthetic data.
+The queries use window functions and CTEs, so they need SQLite 3.25 or newer (bundled with current Python 3.11 builds). Run `python src/run_sql.py` to see all results; selected numbers are quoted in the Results section below. As everywhere in this project, they describe synthetic data.
 
 ## Method
 
@@ -105,14 +120,107 @@ Running `python src/analysis.py` prints the seasonality table, the accuracy tabl
 - `figures/forecast_error_comparison.png`: MAPE of SARIMAX vs the baseline per category;
 - `reports/metrics.json`: settings, summary, seasonality and per-category metrics.
 
-All numbers come from the script output on the synthetic data; run it to see them. Results describe synthetic data built with known seasonal patterns, so they show how the method behaves, not how real pharmacy demand would perform.
+## Results
 
-## Limitations
+All numbers below are copied from the program output (`src/eda.py`, `src/analysis.py`, `src/run_sql.py` and `reports/metrics.json`) on the **synthetic** data (seed 42). They show how the method behaves on data with known patterns, not how a real pharmacy would perform.
 
+### Seasonality by category
+
+The raw monthly index from the EDA (1.00 = category average) gives this ranking by peak-to-trough ratio:
+
+| Category | Peak month | Trough month | Peak-to-trough | Pattern |
+|----------|-----------:|-------------:|---------------:|---------|
+| sun_care | 7 | 1 | 3.96 | summer peak |
+| cold_and_flu | 1 | 8 | 2.94 | winter peak |
+| allergy | 4 | 1 | 2.70 | spring peak |
+| vitamins | 1 | 7 | 1.45 | mild winter peak |
+| first_aid | 6 | 11 | 1.30 | weak summer peak |
+| digestive | 7 | 2 | 1.27 | weak summer peak |
+| pain_relief | 1 | 8 | 1.11 | almost flat |
+| cardio_chronic | 12 | 7 | 1.09 | flat with upward trend |
+
+The decomposition of the training period (log scale, period 52) gives the seasonality strength (0 = none, 1 = fully seasonal):
+
+| Category | Strength | Peak-to-trough (seasonal factor) | Peak month | Trough month |
+|----------|---------:|---------------------------------:|-----------:|-------------:|
+| sun_care | 0.985 | 4.61 | Jul | Dec |
+| cold_and_flu | 0.979 | 3.24 | Jan | Aug |
+| allergy | 0.963 | 3.05 | Apr | Jan |
+| vitamins | 0.841 | 1.63 | Jan | Jul |
+| first_aid | 0.691 | 1.39 | Jul | Nov |
+| digestive | 0.611 | 1.41 | Jul | Feb |
+| pain_relief | 0.382 | 1.23 | Nov | Aug |
+| cardio_chronic | 0.230 | 1.18 | Jan | Sep |
+
+The two tables use different methods (raw monthly index vs a decomposition of the training years on the log scale), so the exact ratios and the peak/trough months of the weak categories (for example `pain_relief`, `sun_care` trough) differ slightly.
+
+![Seasonal index by month and category](figures/seasonal_index_heatmap.png)
+
+Correlation of weekly units with temperature (EDA): `cold_and_flu` -0.92, `sun_care` 0.88, `vitamins` -0.80, `digestive` 0.64, `first_aid` 0.64, `allergy` 0.08.
+
+### Forecast accuracy (hold-out: last 52 weeks)
+
+Summary over the 8 categories (`reports/metrics.json`):
+
+| Metric | SARIMAX | Seasonal naive baseline |
+|--------|--------:|------------------------:|
+| Mean MAPE, % | 5.04 | 9.12 |
+| Mean RMSE, units | 83.85 | 153.40 |
+
+- SARIMAX beats the baseline on MAPE in **8 of 8** categories.
+- Mean coverage of the 95% prediction interval is **0.913** (target 0.95).
+
+Per-category values for the first five categories in the metrics file (the remaining three are in `reports/metrics.json` after running the script):
+
+| Category | MAPE model, % | MAPE baseline, % | Interval coverage | Estimated promo uplift, % |
+|----------|--------------:|-----------------:|------------------:|--------------------------:|
+| allergy | 3.73 | 8.94 | 1.000 | 13.66 |
+| cardio_chronic | 4.48 | 9.77 | 0.942 | 16.87 |
+| cold_and_flu | 5.31 | 8.95 | 0.865 | 13.92 |
+| digestive | 5.21 | 10.27 | 0.942 | 16.11 |
+| first_aid | 5.72 | 9.01 | 0.885 | 16.06 |
+
+![Hold-out forecast vs actual](figures/forecast_vs_actual.png)
+
+![MAPE of SARIMAX vs the baseline](figures/forecast_error_comparison.png)
+
+### Promotions, growth and revenue
+
+- Raw promo vs non-promo ratio of average weekly units (EDA, mixed with seasonality): from 1.12 to 1.16 across categories.
+- Promo uplift within the same category and month (SQL Q5): from 10.9% (`cold_and_flu`) to 18.5% (`allergy`).
+- Units grew between 2019 and 2023 for `allergy` (50311 to 60400) and `cardio_chronic` (70511 to 86858); `first_aid` stayed close to flat (37107 to 36786).
+- Year-over-year growth of average weekly units for `cardio_chronic` in 2023: 7.80% (SQL Q4).
+- `cardio_chronic` has the largest share of yearly revenue: 27.1% in 2019 and 27.9% in 2020 (SQL Q7).
+
+## Conclusions
+
+These conclusions are limited to the synthetic data and the numbers above.
+
+- **Three categories are strongly seasonal.** `sun_care`, `cold_and_flu` and `allergy` have seasonality strength of 0.963 or higher and raw peak-to-trough ratios of 2.70 to 3.96. Their peaks fall in summer, winter and spring, respectively. `cardio_chronic` (strength 0.230) and `pain_relief` (0.382) are the least seasonal.
+- **Temperature moves with seasonality in the strong categories.** The correlation with temperature is -0.92 for `cold_and_flu` and 0.88 for `sun_care`. This is a correlation in the generated data and does not prove a causal link.
+- **A one-year-ahead weekly forecast was more accurate than the naive seasonal baseline on this hold-out.** Mean MAPE was 5.04% vs 9.12%, and the model won in all 8 categories. This is a single hold-out year.
+- **The prediction intervals are somewhat too narrow.** Mean coverage is 0.913 against the 95% target, and it is lowest among the visible categories for `cold_and_flu` (0.865) and `first_aid` (0.885). Safety stock based on these intervals would be slightly optimistic.
+- **Promotions raise units in every category.** The model estimates 13.66% to 16.87% for the five categories shown, and the within-month SQL comparison gives 10.9% to 18.5% for all eight. The estimates differ between methods, so they should be read as a range.
+- **Cardio and chronic products drive revenue**, with 27.1% of 2019 revenue, even though their seasonal pattern is weak.
+
+## Limitations & next steps
+
+- **The data is synthetic.** It was generated with known seasonal curves, a stable yearly shape and simple noise. Real demand has epidemics, supply problems, price changes and shifting habits, so accuracy on real data would likely be lower. The results show how the method works, not real pharmacy performance.
 - One hold-out year only; no rolling-origin cross-validation yet.
 - SARIMAX orders and the number of Fourier terms are fixed, not tuned per category.
-- The synthetic data has a stable seasonal shape every year, which is easier to forecast than real demand with shocks such as epidemics or supply problems.
+- Future temperature in the hold-out is replaced by training-period climatology, so the model does not see real weather extremes.
+- Prediction interval coverage (0.913) is below the nominal 95%; the intervals are not calibrated.
 - The SQL queries group weeks by the calendar month and year of their Monday start date, so a week that spans two months is counted in the month where it starts.
+- The tests cover the data generator and the helper functions only; the SARIMAX fitting in `src/analysis.py` is not unit-tested.
+- The analysis run prints many `statsmodels` warnings (inferred weekly frequency, deprecated `extrapolate_trend='freq'`). They do not change the results but should be cleaned up, for example by passing an explicit weekly index frequency and using `extrapolate_trend='period'`.
+
+Next steps:
+
+1. Add rolling-origin cross-validation over several hold-out windows.
+2. Tune the number of Fourier terms and the ARMA order per category (for example by AIC).
+3. Compare with other models, such as exponential smoothing with seasonality or gradient boosting with calendar features.
+4. Calibrate the prediction intervals, for example with empirical residual quantiles.
+5. Add shocks (an epidemic wave, a stock-out) to the data generator to test how robust the forecast is.
 
 ---
 
