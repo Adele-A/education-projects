@@ -11,7 +11,7 @@ Quantify the effect of distance, weather and courier load on delivery time, and 
 2. **EDA** – check data quality, distributions and relationships between delivery time and distance, weather, courier load and time of day (`src/eda.py`).
 3. **Analysis / model** – baseline and multiple linear regression (plus a comparison with a tree-based model), validated on a hold-out set (`src/analysis.py`, helpers in `src/utils.py`).
 4. **SQL** – analytical queries on the order and courier tables (average delivery time by weather, by load, by vehicle, etc.) in `sql/queries.sql`, executed by `src/run_sql.py`.
-5. **Tests** – pytest checks for the data generator and the data quality of the generated tables.
+5. **Tests** – pytest checks for the data generator and the helper functions in `src/utils.py` (`tests/`).
 
 ## Dataset (synthetic)
 All data is **synthetic**. It is produced by `src/data_generator.py` with `numpy` and a fixed random seed (42). It does not describe any real company, courier or customer. Relationships in the data (for example, rain slows delivery down) are assumptions written into the generator, not real-world findings.
@@ -76,6 +76,17 @@ Actual numbers should be read from the script output and `reports/metrics.json`.
 
 `src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints its description and the first rows of the result. No database file is created. As with the rest of the project, the results come from synthetic data and reflect generator assumptions; read them from the script output.
 
+## Tests
+The `tests/` folder contains pytest checks that run in a few seconds and do not need `data/` or `figures/`:
+- `tests/test_data_generator.py` – generates both tables in memory with the fixed seed and checks column names, row counts, unique keys, value ranges, foreign keys, the peak-hour flag and reproducibility;
+- `tests/test_utils.py` – checks feature preparation (one-hot columns, unknown categories), the MAE / RMSE / R² functions on hand-computed values, and data loading with small temporary CSV files.
+
+Run them from the project root:
+
+```bash
+python -m pytest -q
+```
+
 ## How to run
 From the project root:
 
@@ -85,9 +96,10 @@ python src/data_generator.py
 python src/eda.py
 python src/analysis.py
 python src/run_sql.py
+python -m pytest -q
 ```
 
-All scripts are non-interactive. The generator writes `data/couriers.csv` and `data/orders.csv`; the EDA script prints its report and writes PNG files to `figures/`; the analysis script prints the model metrics, writes two more charts to `figures/` and creates `reports/metrics.json`; the SQL script prints the result of each query.
+All scripts are non-interactive. The generator writes `data/couriers.csv` and `data/orders.csv`; the EDA script prints its report and writes PNG files to `figures/`; the analysis script prints the model metrics, writes two more charts to `figures/` and creates `reports/metrics.json`; the SQL script prints the result of each query; pytest runs the tests.
 
 ---
 
