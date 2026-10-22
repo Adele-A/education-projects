@@ -13,7 +13,7 @@ Build interpretable customer segments from purchase behavior using Recency, Freq
 ## Plan of the work
 
 1. **Data generation** (`src/data_generator.py`): create synthetic customer and order tables with a fixed random seed.
-2. **EDA**: check data quality, distributions of order values and frequencies, activity over time, and differences between countries and acquisition channels.
+2. **EDA** (`src/eda.py`): check data quality, distributions of order values and frequencies, activity over time, and differences between countries and acquisition channels.
 3. **Analysis / model**: compute RFM features, build RFM scores, scale features, choose the number of clusters for k-means (elbow and silhouette), and profile the resulting segments.
 4. **SQL**: queries that reproduce the RFM table and segment summaries.
 5. **Tests**: pytest checks for the data generator and the feature calculations.
@@ -29,6 +29,23 @@ Two tables are saved to `data/`:
 
 Full column descriptions are in [data_description.md](data_description.md).
 
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files and prints the results to the console:
+
+- **Data quality:** shape, dtypes, missing values, duplicates, and integrity checks (unknown customer IDs, customers without orders, orders dated before signup).
+- **Descriptive statistics:** numeric summaries of customer and order columns, plus the skewness of order value.
+- **Aggregations:** orders per customer (frequency), spend concentration among the top 20% of customers, comparison of countries and acquisition channels, discount / payment method / newsletter effects, and monthly activity.
+
+It also saves four charts to `figures/`:
+
+- `order_value_distribution.png`: histogram of order value (log scale).
+- `orders_per_customer.png`: distribution of purchase frequency.
+- `monthly_activity.png`: monthly orders and revenue.
+- `spend_by_channel.png`: average total spend per customer by acquisition channel.
+
+Run the script to see the actual numbers; findings are not reproduced here until they are written up from real output.
+
 ## How to run
 
 From the project root:
@@ -36,9 +53,10 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-This creates `data/customers.csv` and `data/orders.csv`.
+The first script creates `data/customers.csv` and `data/orders.csv`; the second prints the EDA summary and creates the charts in `figures/`.
 
 ---
 
