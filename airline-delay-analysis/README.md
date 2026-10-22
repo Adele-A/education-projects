@@ -8,9 +8,9 @@ Describe delay patterns by airport, carrier and scheduled departure hour, and bu
 
 ## Plan of the work
 1. **Data generation** (`src/data_generator.py`): create a reproducible synthetic dataset (fixed seed 42).
-2. **EDA**: check data quality, distributions of delays, and delay rates by airport, carrier, hour, month and weather.
-3. **Analysis / model**: statistical comparison of groups and a delay classifier (baseline logistic regression and a tree-based model), evaluated on a held-out test set.
-4. **SQL**: analytical queries on the same tables (delay rate by airport, carrier ranking, hourly profile).
+2. **EDA** (`src/eda.py`): check data quality, distributions of delays, and delay rates by airport, carrier, hour, month and weather.
+3. **Analysis / model** (`src/analysis.py`, helpers in `src/utils.py`): statistical comparison of groups and a delay classifier (baseline logistic regression and a tree-based model), evaluated on a held-out test set.
+4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): analytical queries on the same tables (delay rate by airport, carrier ranking, hourly profile and more).
 5. **Tests**: pytest checks for the data generator and the data quality of the output tables.
 
 ## Dataset (synthetic)
@@ -29,9 +29,65 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
+python src/run_sql.py
 ```
 
-The script writes the CSV files to the `data/` folder (created automatically).
+The generator writes the CSV files to the `data/` folder (created automatically). The EDA script reads them and writes charts to `figures/`. The analysis script trains the models, writes charts to `figures/` and a metrics summary to `reports/metrics.json`. The SQL script prints the results of the queries in `sql/queries.sql`.
+
+## Exploratory data analysis
+`src/eda.py` loads the three tables and prints:
+- shape, data types, missing values and duplicate rows for each table;
+- descriptive statistics for the numeric flight columns, the overall delay rate and the skewness of arrival delay;
+- delay rate, flight counts and mean arrival delay by origin airport, carrier (with name and type), scheduled departure hour, month and weather severity band.
+
+It also saves four charts to `figures/`:
+- `arrival_delay_distribution.png`: histogram of arrival delay with the 15-minute threshold;
+- `delay_rate_by_airport.png`: delay rate per origin airport;
+- `delay_rate_by_hour.png`: delay rate per scheduled departure hour;
+- `delay_rate_by_month.png`: delay rate per month.
+
+The findings should be read from the script output, since they come from synthetic data and describe only this generated dataset.
+
+Note: the carrier code `NA` is a valid code, so the CSVs are read with `keep_default_na=False` to stop pandas from treating it as a missing value.
+
+## Method (analysis and model)
+`src/analysis.py` answers the business question in two parts. Reusable logic (loading, feature preparation, model pipelines, metrics, chi-square helper) lives in `src/utils.py`.
+
+**1. Group comparison.** Chi-square tests of independence compare the delay flag across carriers, origin airports, scheduled departure hours and weekend vs. weekday. For each test the script prints the chi-square statistic, degrees of freedom, p-value and Cramer's V as an effect size, so that statistical significance is not confused with practical importance.
+
+**2. Delay classifier.** The target is `is_delayed` (arrival delay of 15 minutes or more).
+- *Features:* only information known before departure: scheduled departure hour, distance, weather severity, origin congestion factor, month, weekend flag, carrier code and origin airport. `dep_delay_min` and `arr_delay_min` are deliberately excluded because they would leak the outcome.
+- *Split:* stratified 80/20 train/test split with `random_state=42`. All reported metrics are computed on the held-out test set only.
+- *Models:* a logistic regression (baseline, scaled numeric features and one-hot encoded categories) and a random forest. Both use balanced class weights because delayed flights are the minority class.
+- *Metrics:* accuracy, precision, recall, F1, ROC AUC and PR AUC for the delayed class, compared with a majority-class baseline accuracy.
+- *Interpretation:* permutation importance of the random forest on the test set (drop in ROC AUC when a feature is shuffled).
+
+**Outputs**
+- `figures/roc_curves.png`: ROC curves of both models on the test set;
+- `figures/feature_importance.png`: permutation importance by feature;
+- `reports/metrics.json`: dataset size, test split settings, chi-square results, model metrics and feature importances.
+
+All numbers are produced by running the script and are not copied into this README. Because the data is synthetic, conclusions describe the generating process of this dataset, not real airline performance.
+
+## SQL analysis
+The same three tables are queried with SQL (SQLite dialect).
+
+- `sql/queries.sql` contains 8 commented queries. Each one is preceded by a comment line of the form `-- Q<n>: <question>`.
+- `src/run_sql.py` loads `airports.csv`, `carriers.csv` and `flights.csv` into an in-memory SQLite database with `pandas.to_sql`, splits the query file into statements, runs each one and prints the question and the first rows of the result. No database file is created.
+
+Questions covered:
+1. Delay rate, flight count and mean arrival delay by origin airport (join with `airports`).
+2. Carrier ranking by delay rate with name and type (join with `carriers`, `RANK()` window function).
+3. Hourly profile of delays by scheduled departure hour.
+4. Delay rate by carrier type and part of the day (`CASE` buckets).
+5. Delay rate by weather severity band.
+6. Monthly delay rate compared with the overall rate (CTE).
+7. Airport and carrier combinations with the highest delay rate (`HAVING` on a minimum number of flights).
+8. Routes with the highest mean arrival delay (self-style double join with `airports`).
+
+Because statements are split on semicolons, comments inside `queries.sql` must not contain a semicolon. As with the other scripts, results come from running the code on synthetic data and are not copied into this README.
 
 ---
 
