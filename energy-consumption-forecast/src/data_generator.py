@@ -56,7 +56,8 @@ def make_households(rng: np.random.Generator) -> pd.DataFrame:
 def make_weather(rng: np.random.Generator, timestamps: pd.DatetimeIndex) -> pd.DataFrame:
     """Hourly temperature: winter level + daily cycle + slowly drifting weather."""
     n_hours = len(timestamps)
-    hour = timestamps.hour.to_numpy()
+    # np.asarray works whether pandas returns an Index or an ndarray
+    hour = np.asarray(timestamps.hour)
 
     # Day-to-day drift as an AR(1) process, one value per day
     daily = np.zeros(N_DAYS)
@@ -78,8 +79,9 @@ def make_energy(rng: np.random.Generator, households: pd.DataFrame,
                 weather: pd.DataFrame, timestamps: pd.DatetimeIndex) -> pd.DataFrame:
     """Hourly kWh per household."""
     n_hours = len(timestamps)
-    hour = timestamps.hour.to_numpy()
-    is_weekend = (timestamps.dayofweek >= 5).to_numpy()
+    hour = np.asarray(timestamps.hour)
+    # day_of_week: 0 = Monday ... 6 = Sunday
+    is_weekend = np.asarray(timestamps.day_of_week) >= 5
     temp = weather["temperature_c"].to_numpy()
     cold = np.clip(16.0 - temp, 0, None)  # degrees below the heating threshold
 
@@ -117,8 +119,6 @@ def main() -> None:
     energy = make_energy(rng, households, weather, timestamps)
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    import os
-    os.makedirs(DATA_DIR, exist_ok=True)
     households.to_csv(DATA_DIR / "households.csv", index=False)
     weather.to_csv(DATA_DIR / "weather_hourly.csv", index=False)
     energy.to_csv(DATA_DIR / "energy_hourly.csv", index=False)
