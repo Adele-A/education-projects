@@ -1,0 +1,7 @@
+household_id,dwelling_type,n_residents,floor_area_m2,has_electric_heating
+H001,house,4,131,1
+H002,apartment,4,66,0
+H003,house,4,173,1
+H004,house,4,148,0
+H005,apartment,3,70,0
+H006,house,1,130,1
