@@ -25,6 +25,7 @@ import seaborn as sns  # noqa: E402
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
 FIGURES_DIR = PROJECT_DIR / "figures"
+REQUIRED_FILES = ("customers.csv", "orders.csv")
 
 pd.set_option("display.width", 120)
 pd.set_option("display.max_columns", 20)
@@ -32,7 +33,20 @@ sns.set_theme(style="whitegrid")
 
 
 def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Load the customers and orders tables with date columns parsed."""
+    """Load the customers and orders tables with date columns parsed.
+
+    Raises:
+        FileNotFoundError: If one of the required CSV files is missing. The message
+            tells the user which files are missing and how to create them.
+    """
+    # Fail early with a clear hint instead of a raw pandas traceback
+    missing = [name for name in REQUIRED_FILES if not (DATA_DIR / name).is_file()]
+    if missing:
+        raise FileNotFoundError(
+            f"Missing data files in {DATA_DIR}: {', '.join(missing)}. "
+            "Run 'python src/data_generator.py' from the project root first."
+        )
+
     customers = pd.read_csv(DATA_DIR / "customers.csv", parse_dates=["signup_date"])
     orders = pd.read_csv(DATA_DIR / "orders.csv", parse_dates=["order_date"])
     return customers, orders
