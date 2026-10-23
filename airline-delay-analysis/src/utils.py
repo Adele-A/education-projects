@@ -10,6 +10,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from numpy.typing import ArrayLike
 from scipy.stats import chi2_contingency
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -34,8 +35,13 @@ CATEGORICAL_FEATURES = ["carrier_code", "origin"]
 FEATURES = NUMERIC_FEATURES + CATEGORICAL_FEATURES
 
 
-def load_tables(data_dir=DATA_DIR):
-    """Load airports, carriers and flights from CSV files."""
+def load_tables(data_dir: str | Path = DATA_DIR
+                ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Load airports, carriers and flights from CSV files.
+
+    Returns the three tables in this order. The carrier code "NA" is kept
+    as a string, not read as a missing value.
+    """
     data_dir = Path(data_dir)
     # keep_default_na=False: carrier code "NA" must not be read as missing
     airports = pd.read_csv(data_dir / "airports.csv", keep_default_na=False)
@@ -45,7 +51,8 @@ def load_tables(data_dir=DATA_DIR):
     return airports, carriers, flights
 
 
-def build_model_frame(flights, airports):
+def build_model_frame(flights: pd.DataFrame,
+                      airports: pd.DataFrame) -> pd.DataFrame:
     """Add pre-departure features: origin congestion and a weekend flag."""
     df = flights.merge(
         airports[["airport_code", "congestion_factor"]],
@@ -55,12 +62,12 @@ def build_model_frame(flights, airports):
     return df
 
 
-def get_X_y(df):
+def get_X_y(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     """Split a model frame into the feature matrix and the target."""
     return df[FEATURES].copy(), df[TARGET].astype(int)
 
 
-def build_preprocessor():
+def build_preprocessor() -> ColumnTransformer:
     """Scale numeric features and one-hot encode categorical ones."""
     return ColumnTransformer([
         ("num", StandardScaler(), NUMERIC_FEATURES),
@@ -69,7 +76,7 @@ def build_preprocessor():
     ])
 
 
-def build_models():
+def build_models() -> dict[str, Pipeline]:
     """Return the baseline and the tree-based model as sklearn pipelines."""
     logreg = Pipeline([
         ("prep", build_preprocessor()),
@@ -85,7 +92,8 @@ def build_models():
     return {"logistic_regression": logreg, "random_forest": forest}
 
 
-def compute_metrics(y_true, y_pred, y_proba):
+def compute_metrics(y_true: ArrayLike, y_pred: ArrayLike,
+                    y_proba: ArrayLike) -> dict[str, float]:
     """Classification metrics for the positive class (delayed = 1)."""
     return {
         "accuracy": float(accuracy_score(y_true, y_pred)),
@@ -97,13 +105,15 @@ def compute_metrics(y_true, y_pred, y_proba):
     }
 
 
-def majority_baseline_accuracy(y_train, y_test):
+def majority_baseline_accuracy(y_train: pd.Series,
+                               y_test: pd.Series) -> float:
     """Accuracy of always predicting the most frequent training class."""
     majority = int(y_train.mean() >= 0.5)
     return float((np.asarray(y_test) == majority).mean())
 
 
-def chi_square_delay_test(df, column):
+def chi_square_delay_test(df: pd.DataFrame,
+                          column: str) -> dict[str, str | float | int]:
     """Chi-square test of independence between a column and the delay flag.
 
     Returns chi2, p-value, degrees of freedom and Cramer's V (effect size).
