@@ -15,8 +15,8 @@ When during the day and week do households use the most electricity, and how wel
 
 ## Plan of the work
 
-1. **Data generation** (current step): create synthetic tables with a fixed seed.
-2. **EDA**: data quality checks, daily and weekly profiles, temperature relationship, household comparison.
+1. **Data generation** (done): create synthetic tables with a fixed seed.
+2. **EDA** (current step): data quality checks, daily and weekly profiles, temperature relationship, household comparison.
 3. **Analysis / model**: baseline (same hour on the previous day or week) versus a regression or time-series model, evaluated on a held-out final period.
 4. **SQL**: aggregation queries (peak hours, daily totals, household rankings) over the generated tables.
 5. **Tests**: pytest checks for the data generator (shape, ranges, reproducibility) and for the analysis functions.
@@ -44,17 +44,38 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-The script is non-interactive, needs no network access, and recreates the CSV files in `data/` on every run. The `data/` folder is created automatically if it does not exist. The fixed seed (42) makes the output reproducible, so repeated runs produce identical files.
+Both scripts are non-interactive and need no network access. `data_generator.py` recreates the CSV files in `data/` on every run (the folder is created automatically). The fixed seed (42) makes the output reproducible, so repeated runs produce identical files. `eda.py` must be run after the generator because it reads those files.
 
-A successful run prints one line per table:
+A successful generator run prints one line per table:
 
 ```
 households: 6 rows, 5 columns -> data/households.csv
 weather_hourly: 720 rows, 2 columns -> data/weather_hourly.csv
 energy_hourly: 4320 rows, 3 columns -> data/energy_hourly.csv
 ```
+
+## Exploratory data analysis
+
+`src/eda.py` loads the three CSV files, joins them and adds calendar features (hour, day of week, weekday/weekend). It then:
+
+- **Checks data quality:** prints shape, dtypes, missing values and duplicated rows for each table, plus integrity checks (unknown household ids, timestamps without weather, duplicate household-hour pairs, rows per household).
+- **Prints descriptive statistics** for `kwh` and `temperature_c`.
+- **Prints five aggregations:**
+  1. mean kWh by hour of day, weekday vs weekend;
+  2. consumption by day of week;
+  3. household comparison (mean, maximum, total kWh and peak hour);
+  4. mean kWh by temperature band and heating type;
+  5. correlation between temperature and kWh by heating type.
+- **Saves four charts** to `figures/` (created automatically):
+  - `hourly_profile.png` - average daily profile, weekday vs weekend;
+  - `heatmap_day_hour.png` - mean kWh by day of week and hour;
+  - `temperature_vs_kwh.png` - temperature against consumption, split by heating type;
+  - `household_comparison.png` - mean hourly consumption per household.
+
+All findings should be read from the script output and the charts; since the data is synthetic, patterns reflect the generator's design rather than real household behaviour.
 
 ---
 
