@@ -14,9 +14,9 @@ Build interpretable customer segments from purchase behavior using Recency, Freq
 
 1. **Data generation** (`src/data_generator.py`): create synthetic customer and order tables with a fixed random seed.
 2. **EDA** (`src/eda.py`): check data quality, distributions of order values and frequencies, activity over time, and differences between countries and acquisition channels.
-3. **Analysis / model**: compute RFM features, build RFM scores, scale features, choose the number of clusters for k-means (elbow and silhouette), and profile the resulting segments.
-4. **SQL**: queries that reproduce the RFM table and segment summaries.
-5. **Tests**: pytest checks for the data generator and the feature calculations.
+3. **Analysis / model** (`src/analysis.py`, `src/utils.py`): compute RFM features, build RFM scores, scale features, choose the number of clusters for k-means (elbow and silhouette), and profile the resulting segments.
+4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): queries that reproduce the RFM table and segment summaries.
+5. **Tests** (`tests/`): pytest checks for the data generator and the feature calculations.
 
 ## Dataset (synthetic)
 
@@ -44,7 +44,60 @@ It also saves four charts to `figures/`:
 - `monthly_activity.png`: monthly orders and revenue.
 - `spend_by_channel.png`: average total spend per customer by acquisition channel.
 
-Run the script to see the actual numbers; findings are not reproduced here until they are written up from real output.
+## Method
+
+`src/analysis.py` runs the segmentation; reusable functions live in `src/utils.py`.
+
+1. **RFM features.** The snapshot date is one day after the last order in the data. For each customer:
+   - *Recency* = days between the last order and the snapshot date,
+   - *Frequency* = number of orders,
+   - *Monetary* = total order value.
+2. **Rule-based segments.** Each of R, F and M is scored 1-5 by quintile (for recency the scale is reversed, so recent buyers score higher). Ties are broken by row order so that every quintile exists even when many customers have the same number of orders. Named segments (Champions, Loyal, At Risk, Lapsed, New / Promising, Occasional) are assigned from simple rules on the R and F scores.
+3. **K-means.** RFM values are right-skewed, so they are transformed with `log(1 + x)` and standardised. K-means is fitted for k = 2 to 8 (`n_init=10`, `random_state=42`). The number of clusters is chosen by the highest silhouette score, with the elbow plot of inertia as a visual cross-check.
+4. **Evaluation.** Clustering quality is measured with the silhouette score and the Davies-Bouldin index. Clusters are numbered by mean spend (cluster 0 = highest). Each cluster is profiled by size, revenue share and mean RFM values.
+5. **Comparison.** The k-means clusters are compared with the rule-based segments using the Adjusted Rand Index and a cross-tabulation.
+
+The task is unsupervised, so there is no train/test split. All randomness uses `random_state=42`.
+
+### Outputs
+
+- Console: RFM summary, segment profiles, k-selection table, quality metrics and the comparison.
+- `figures/k_selection.png`: elbow and silhouette curves.
+- `figures/kmeans_segments.png`: recency vs frequency scatter coloured by cluster.
+- `reports/metrics.json`: chosen k, quality metrics, segment profiles and the Adjusted Rand Index.
+
+Run the scripts to see the actual numbers; findings are not reproduced here until they are written up from real output.
+
+## SQL analysis
+
+`sql/queries.sql` contains 7 commented queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: <question>`.
+
+| Query | Question |
+|---|---|
+| Q1 | Row counts, distinct customers and date ranges of both tables |
+| Q2 | RFM table for the 10 highest-spending customers |
+| Q3 | Quintile scores (R, F, M) and rule-based segment per customer, using `NTILE(5)` |
+| Q4 | Size, average RFM values and revenue share of each rule-based segment |
+| Q5 | Revenue concentration by customer spend quintile |
+| Q6 | Orders and revenue per customer by acquisition channel |
+| Q7 | Monthly orders, active customers, revenue and running revenue total |
+
+`src/run_sql.py` loads the two CSV files into an in-memory SQLite database (`pandas.to_sql`, with dates stored as `YYYY-MM-DD` text), splits `queries.sql` into statements, runs each one and prints its description and the first 10 result rows. No database file is created.
+
+The SQL scoring mirrors the Python logic in `src/utils.py` (same snapshot date, quintiles with ties broken by `customer_id`, same segment rules). Small differences from the Python tie-breaking are possible, so use the console output of each script as the source of numbers.
+
+## Tests
+
+The `tests/` folder contains pytest checks:
+
+- `tests/test_data_generator.py`: columns, row counts, value ranges, referential integrity (every customer has orders, none dated before signup) and reproducibility of the synthetic data.
+- `tests/test_utils.py`: RFM calculation on a small hand-made table, quintile scoring with ties, rule-based segments, feature scaling, choice of k, cluster relabelling and segment profiles.
+
+The tests generate or build their own small tables in memory, so they do not need the files in `data/` or `figures/` and run in a few seconds.
+
+```bash
+python -m pytest -q
+```
 
 ## How to run
 
@@ -54,9 +107,12 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+python src/run_sql.py
+python -m pytest -q
 ```
 
-The first script creates `data/customers.csv` and `data/orders.csv`; the second prints the EDA summary and creates the charts in `figures/`.
+The first script creates `data/customers.csv` and `data/orders.csv`; the second prints the EDA summary and creates the EDA charts in `figures/`; the third runs the segmentation, prints the metrics, saves two more charts and writes `reports/metrics.json`; the fourth runs the SQL queries and prints their results; the last command runs the test suite.
 
 ---
 
