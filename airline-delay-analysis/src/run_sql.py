@@ -22,7 +22,7 @@ QUERY_FILE = utils.PROJECT_DIR / "sql" / "queries.sql"
 MAX_ROWS = 10
 
 
-def build_database(connection):
+def build_database(connection: sqlite3.Connection) -> None:
     """Load the three CSV tables into the SQLite connection."""
     # utils.load_tables keeps the carrier code "NA" from becoming missing
     airports, carriers, flights = utils.load_tables()
@@ -31,7 +31,7 @@ def build_database(connection):
     flights.to_sql("flights", connection, index=False)
 
 
-def parse_queries(text):
+def parse_queries(text: str) -> list[tuple[str, str]]:
     """Split SQL text into (description, statement) pairs.
 
     Statements are separated by semicolons. Lines starting with '--' are
@@ -56,7 +56,7 @@ def parse_queries(text):
     return queries
 
 
-def main():
+def main() -> None:
     """Load data, run every query and print the first rows."""
     text = QUERY_FILE.read_text(encoding="utf-8")
     queries = parse_queries(text)

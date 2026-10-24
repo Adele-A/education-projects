@@ -54,8 +54,14 @@ DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday",
              "Friday", "Saturday", "Sunday"]
 
 
-def haversine_miles(lat1, lon1, lat2, lon2):
-    """Great-circle distance in miles between two points (degrees)."""
+def haversine_miles(lat1: float | np.ndarray, lon1: float | np.ndarray,
+                    lat2: float | np.ndarray,
+                    lon2: float | np.ndarray) -> float | np.ndarray:
+    """Great-circle distance in miles between two points (degrees).
+
+    Accepts scalars or NumPy arrays of coordinates and returns the distance
+    in the same shape.
+    """
     earth_radius_miles = 3958.8
     p1, p2 = np.radians(lat1), np.radians(lat2)
     dphi = p2 - p1
@@ -64,8 +70,8 @@ def haversine_miles(lat1, lon1, lat2, lon2):
     return 2 * earth_radius_miles * np.arcsin(np.sqrt(a))
 
 
-def build_airports():
-    """Airport reference table."""
+def build_airports() -> pd.DataFrame:
+    """Return the airport reference table (one row per airport)."""
     return pd.DataFrame(
         [a[:6] for a in AIRPORTS],
         columns=["airport_code", "city", "region", "latitude",
@@ -73,15 +79,15 @@ def build_airports():
     )
 
 
-def build_carriers():
-    """Carrier reference table."""
+def build_carriers() -> pd.DataFrame:
+    """Return the carrier reference table (one row per carrier)."""
     return pd.DataFrame(
         [c[:3] for c in CARRIERS],
         columns=["carrier_code", "carrier_name", "carrier_type"],
     )
 
 
-def build_flights(rng):
+def build_flights(rng: np.random.Generator) -> pd.DataFrame:
     """Generate the flights table with realistic delay structure."""
     n = N_FLIGHTS
     codes = [a[0] for a in AIRPORTS]
@@ -169,7 +175,7 @@ def build_flights(rng):
     return flights
 
 
-def main():
+def main() -> None:
     """Generate all tables and save them to data/."""
     os.makedirs(DATA_DIR, exist_ok=True)
     rng = np.random.default_rng(SEED)
