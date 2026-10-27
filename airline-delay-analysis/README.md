@@ -83,7 +83,7 @@ Note: the carrier code `NA` is a valid code, so the CSVs are read with `keep_def
 - `figures/feature_importance.png`: permutation importance by feature;
 - `reports/metrics.json`: dataset size, test split settings, chi-square results, model metrics and feature importances.
 
-All numbers are produced by running the script and are not copied into this README. Because the data is synthetic, conclusions describe the generating process of this dataset, not real airline performance.
+Because the data is synthetic, conclusions describe the generating process of this dataset, not real airline performance.
 
 ## SQL analysis
 The same three tables are queried with SQL (SQLite dialect).
@@ -101,7 +101,73 @@ Questions covered:
 7. Airport and carrier combinations with the highest delay rate (`HAVING` on a minimum number of flights).
 8. Routes with the highest mean arrival delay (self-style double join with `airports`).
 
-Because statements are split on semicolons, comments inside `queries.sql` must not contain a semicolon. As with the other scripts, results come from running the code on synthetic data and are not copied into this README.
+Because statements are split on semicolons, comments inside `queries.sql` must not contain a semicolon.
+
+## Results
+All numbers below are taken from the output of the scripts (and `reports/metrics.json`) on the synthetic dataset of 5,000 flights.
+
+### Delay patterns
+- Overall delay rate (arrival delay of 15 minutes or more): **0.395**. Arrival delay is right-skewed (skewness 2.02).
+- **Airports:** the delay rate ranges from **0.495 (ORD)** and 0.469 (JFK) at the top to **0.267 (PHX)** and 0.298 (MSP) at the bottom.
+- **Carriers:** SkyJet (SJ) **0.453** and EconoFly (EC) 0.450 are highest; Pacific Wings (PW) is lowest at **0.322**.
+- **Hour of day:** the delay rate rises from **0.247** for 05:00 departures to **0.573** for 22:00 departures.
+- **Weather severity band:** the delay rate rises from **0.337** (band 0-1) to **0.636** (band 4-10).
+- **Month:** the highest delay rate is in January (0.434), the lowest in October (0.337).
+- **Time of day and carrier type (SQL Q4):** for each carrier type, the delay rate is higher in the evening than in the morning (legacy 0.474 vs. 0.262, low-cost 0.562 vs. 0.340, regional 0.476 vs. 0.292).
+
+### Statistical tests (chi-square, delay flag vs. group)
+| Group | Chi-square | dof | p-value | Cramer's V |
+|---|---|---|---|---|
+| Carrier | 45.43 | 5 | 1.187e-08 | 0.095 |
+| Origin airport | 86.14 | 11 | 9.456e-14 | 0.131 |
+| Scheduled departure hour | 191.62 | 17 | 1.376e-31 | 0.196 |
+| Weekend vs. weekday | 12.85 | 1 | 0.0003382 | 0.051 |
+
+### Delay classifier (held-out test set, 1,000 flights)
+Majority-class baseline accuracy: **0.605**.
+
+| Model | Accuracy | Precision | Recall | F1 | ROC AUC | PR AUC |
+|---|---|---|---|---|---|---|
+| Logistic regression | 0.633 | 0.530 | 0.618 | 0.571 | 0.676 | 0.573 |
+| Random forest | 0.601 | 0.495 | 0.549 | 0.521 | 0.643 | 0.545 |
+
+Permutation importance of the random forest (drop in test ROC AUC): weather_severity 0.0497, scheduled_dep_hour 0.0395, carrier_code 0.0059, is_weekend 0.0045, distance_miles 0.0024, congestion_factor -0.0023, month -0.0091, origin -0.0116.
+
+### Figures
+Delay rate by scheduled departure hour:
+
+![Delay rate by hour](figures/delay_rate_by_hour.png)
+
+ROC curves of both models on the test set:
+
+![ROC curves](figures/roc_curves.png)
+
+Permutation importance of the random forest:
+
+![Feature importance](figures/feature_importance.png)
+
+## Conclusions
+- In this dataset, delays are clearly more frequent later in the day: the delay rate grows from 0.247 (05:00) to 0.573 (22:00). Departure hour also has the largest Cramer's V of the four grouping variables tested (0.196).
+- Weather severity is strongly associated with delays: the delay rate is 0.337 in the calmest band and 0.636 in the most severe one. Weather severity and departure hour are also the two most important features in the permutation importance (0.0497 and 0.0395).
+- Airports and carriers differ (ORD 0.495 vs. PHX 0.267, SJ 0.453 vs. PW 0.322), and the chi-square tests are significant. The effect sizes are small (Cramer's V of 0.131 for airport and 0.095 for carrier), and the weekend effect is smaller still (0.051).
+- The classifier has only modest predictive power. The logistic regression reaches ROC AUC 0.676 and accuracy 0.633, which is only slightly above the majority-class baseline accuracy of 0.605. The random forest is weaker (ROC AUC 0.643) and its accuracy of 0.601 is below the baseline. Accuracy alone is not a good yardstick here, so recall (0.618 for logistic regression) and ROC AUC are more informative.
+- Origin, month and congestion factor have negative permutation importance for the random forest, meaning that shuffling them did not reduce test ROC AUC. This suggests they add little to the model beyond noise, even though origin airports differ in the raw delay rates.
+- These are associations in a synthetic dataset and do not show causes.
+
+## Limitations & next steps
+**Limitations**
+- The data is **synthetic**, generated by this project's own code. The patterns reflect the assumptions built into the generator, not real airline or airport performance, so no conclusion applies to real flights.
+- The test set has 1,000 flights, so the metrics have some sampling noise. No confidence intervals or cross-validation are reported.
+- Hyperparameters of the models were not tuned, and the chi-square tests do not adjust for other factors (for example, hour and weather together).
+- Only pre-departure features are used. Information such as the inbound aircraft delay is not available.
+- The weather bands in the EDA and in SQL Q5 use different cut-offs, so their flight counts and rates differ slightly and should not be compared directly.
+- The data generator triggers a pandas deprecation warning (`DatetimeIndex.dayofweek`); it does not affect the results.
+
+**Next steps**
+- Use cross-validation and confidence intervals for the metrics, and tune the models (for example, gradient boosting and the decision threshold).
+- Fit a multivariable model (logistic regression with interactions, such as hour and weather) to separate the effects of the factors.
+- Replace `dayofweek` with `day_of_week` in the generator.
+- Repeat the analysis on real public flight data, if available, to check which patterns hold outside the synthetic setting.
 
 ---
 
