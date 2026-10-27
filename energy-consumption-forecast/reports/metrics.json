@@ -1,0 +1,76 @@
+{
+  "data": "synthetic",
+  "random_state": 42,
+  "split": {
+    "type": "chronological",
+    "test_days": 6,
+    "train_rows": 2448,
+    "test_rows": 864,
+    "train_start": "2025-01-08",
+    "train_end": "2025-01-24",
+    "test_start": "2025-01-25",
+    "test_end": "2025-01-30"
+  },
+  "features": [
+    "lag_24",
+    "lag_168",
+    "prev_day_mean",
+    "hour",
+    "hour_sin",
+    "hour_cos",
+    "day_of_week",
+    "is_weekend",
+    "temperature_c",
+    "cold_degrees",
+    "heating_x_cold",
+    "n_residents",
+    "floor_area_m2",
+    "has_electric_heating"
+  ],
+  "metrics": {
+    "baseline_same_hour_yesterday": {
+      "mae": 0.22400694444444444,
+      "rmse": 0.3089884706586963,
+      "wape": 0.19783886224919017,
+      "r2": 0.6862968448002364
+    },
+    "baseline_same_hour_last_week": {
+      "mae": 0.24323726851851854,
+      "rmse": 0.35073641278031,
+      "wape": 0.21482273498105353,
+      "r2": 0.5958002422832664
+    },
+    "ridge": {
+      "mae": 0.19112860818391297,
+      "rmse": 0.2589627985886596,
+      "wape": 0.1688013131921205,
+      "r2": 0.7796520082122623
+    },
+    "gradient_boosting": {
+      "mae": 0.18394215193123992,
+      "rmse": 0.25512720212954937,
+      "wape": 0.162454365635836,
+      "r2": 0.7861309846857143
+    }
+  },
+  "best_baseline": "baseline_same_hour_yesterday",
+  "best_model": "gradient_boosting",
+  "mae_reduction_vs_best_baseline_pct": 17.885513599843293,
+  "rmse_reduction_vs_best_baseline_pct": 17.431481638886524,
+  "gradient_boosting_feature_importance": {
+    "lag_24": 0.5199506203064566,
+    "lag_168": 0.32700178808291586,
+    "prev_day_mean": 0.06041189106790519,
+    "hour": 0.027430584058094874,
+    "floor_area_m2": 0.01773107844071859,
+    "heating_x_cold": 0.015128516343285504,
+    "hour_sin": 0.012751241147630559,
+    "day_of_week": 0.006329493062748251,
+    "hour_cos": 0.005453777866910826,
+    "cold_degrees": 0.003816905534085134,
+    "temperature_c": 0.0022957512078336175,
+    "n_residents": 0.0011527176338933522,
+    "is_weekend": 0.0004958389871637872,
+    "has_electric_heating": 4.9796260357976385e-05
+  }
+}

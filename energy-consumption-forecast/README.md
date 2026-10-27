@@ -16,9 +16,9 @@ When during the day and week do households use the most electricity, and how wel
 ## Plan of the work
 
 1. **Data generation** (done): create synthetic tables with a fixed seed.
-2. **EDA** (current step): data quality checks, daily and weekly profiles, temperature relationship, household comparison.
-3. **Analysis / model**: baseline (same hour on the previous day or week) versus a regression or time-series model, evaluated on a held-out final period.
-4. **SQL**: aggregation queries (peak hours, daily totals, household rankings) over the generated tables.
+2. **EDA** (done): data quality checks, daily and weekly profiles, temperature relationship, household comparison.
+3. **Analysis / model** (done): baselines versus regression models, evaluated on a held-out final period.
+4. **SQL** (current step): aggregation queries (peak hours, daily totals, household rankings) over the generated tables.
 5. **Tests**: pytest checks for the data generator (shape, ranges, reproducibility) and for the analysis functions.
 
 ## Dataset (synthetic)
@@ -45,9 +45,11 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+python src/run_sql.py
 ```
 
-Both scripts are non-interactive and need no network access. `data_generator.py` recreates the CSV files in `data/` on every run (the folder is created automatically). The fixed seed (42) makes the output reproducible, so repeated runs produce identical files. `eda.py` must be run after the generator because it reads those files.
+All scripts are non-interactive and need no network access. `data_generator.py` recreates the CSV files in `data/` on every run (the folder is created automatically). The fixed seed (42) makes the output reproducible. `eda.py`, `analysis.py` and `run_sql.py` must be run after the generator because they read those files.
 
 A successful generator run prints one line per table:
 
@@ -76,6 +78,65 @@ energy_hourly: 4320 rows, 3 columns -> data/energy_hourly.csv
   - `household_comparison.png` - mean hourly consumption per household.
 
 All findings should be read from the script output and the charts; since the data is synthetic, patterns reflect the generator's design rather than real household behaviour.
+
+## Method: next-day forecast
+
+`src/analysis.py` (with reusable logic in `src/utils.py`) forecasts the consumption of each household for every hour of the next day.
+
+**Features** (built in `utils.add_features`):
+
+- lags: consumption at the same hour one day earlier (`lag_24`) and one week earlier (`lag_168`), and the previous day's mean (`prev_day_mean`);
+- calendar: hour, cyclic hour encoding (sine/cosine), day of week, weekend flag;
+- temperature: outdoor temperature, degrees below a 16 °C heating threshold, and that value multiplied by the electric-heating flag;
+- household attributes: number of residents, floor area, electric heating flag.
+
+The temperature of the predicted hour is used as if it were a weather forecast for the next day. In practice a forecast would be slightly less accurate than the observed value, so the results are somewhat optimistic in that respect.
+
+**Validation:** a chronological split, not a random one, so the model never sees the future. The first 7 days are dropped because the weekly lag does not exist yet; the last 6 days are the test set and everything between is the training set. All random components use `random_state=42`.
+
+**Compared approaches:**
+
+1. baseline: same hour yesterday;
+2. baseline: same hour last week;
+3. Ridge regression (standardised features);
+4. gradient boosting regressor.
+
+**Metrics** (on the test set, per household-hour): MAE, RMSE, WAPE (total absolute error divided by total actual consumption) and R². The script also reports the percentage reduction in MAE and RMSE of the best model compared with the best baseline.
+
+**Outputs:**
+
+- `reports/metrics.json` - split description, feature list, all metrics, best baseline and model, feature importance;
+- `figures/forecast_vs_actual.png` - total consumption of all households on the test period: actual, baseline and best model;
+- `figures/error_by_hour.png` - mean absolute error by hour of day, baseline vs best model.
+
+Numbers are not quoted here on purpose: read them from the script output or `reports/metrics.json` after running the analysis.
+
+**Limitations:** the dataset is small (6 households, 30 days) and synthetic, so the results show how the method behaves on generated data and say nothing about real households. The test period is only 6 days, so metrics may vary with the choice of period.
+
+## SQL analysis
+
+`sql/queries.sql` holds eight commented queries in the SQLite dialect. Each one is preceded by a `-- Q<n>:` line that states the business question:
+
+| Query | Question |
+|---|---|
+| Q1 | Which five hours of the day have the highest mean consumption? |
+| Q2 | Which ten days had the highest total consumption, and what was the mean temperature? |
+| Q3 | How do households rank by total consumption and consumption per square metre? |
+| Q4 | How do weekday and weekend consumption compare for each household? |
+| Q5 | What is mean consumption by temperature band and heating type? |
+| Q6 | What share of each household's consumption falls into the evening peak (18:00-21:59)? |
+| Q7 | Which five household-hours had the highest consumption? |
+| Q8 | Which days had the largest increase in total consumption versus the previous day? |
+
+The queries use joins across the three tables, `GROUP BY` aggregation, `CASE` expressions, SQLite date functions (`strftime`, `date`), common table expressions and window functions (`RANK`, `LAG`).
+
+`src/run_sql.py` loads the three CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints its description and the first rows of the result. It writes no files. Because statements are split on the semicolon character, comments in `queries.sql` must not contain one.
+
+```bash
+python src/run_sql.py
+```
+
+As with the other steps, results are not quoted in this README. Read them from the script output. Since the data is synthetic, they reflect the generator's design, not real households.
 
 ---
 
