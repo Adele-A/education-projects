@@ -86,16 +86,29 @@ def rmse(y_true, y_pred) -> float:
 
 
 def wape(y_true, y_pred) -> float:
-    """Weighted absolute percentage error: sum|error| / sum(actual)."""
+    """Weighted absolute percentage error: sum|error| / sum(actual).
+
+    Raises ValueError if the total actual consumption is zero, because the
+    ratio is then undefined.
+    """
     y_true, y_pred = np.asarray(y_true, float), np.asarray(y_pred, float)
-    return float(np.sum(np.abs(y_true - y_pred)) / np.sum(y_true))
+    total_actual = np.sum(y_true)
+    if total_actual == 0:
+        raise ValueError("WAPE is undefined when the total actual consumption is zero")
+    return float(np.sum(np.abs(y_true - y_pred)) / total_actual)
 
 
 def r2(y_true, y_pred) -> float:
-    """Coefficient of determination."""
+    """Coefficient of determination.
+
+    Raises ValueError if the actual values are constant, because the total
+    sum of squares is then zero and R2 is undefined.
+    """
     y_true, y_pred = np.asarray(y_true, float), np.asarray(y_pred, float)
     ss_res = np.sum((y_true - y_pred) ** 2)
     ss_tot = np.sum((y_true - y_true.mean()) ** 2)
+    if ss_tot == 0:
+        raise ValueError("R2 is undefined when all actual values are identical")
     return float(1 - ss_res / ss_tot)
 
 
@@ -110,5 +123,11 @@ def evaluate(y_true, y_pred) -> dict:
 
 
 def improvement_pct(baseline_value: float, model_value: float) -> float:
-    """Relative error reduction of a model versus a baseline, in percent."""
+    """Relative error reduction of a model versus a baseline, in percent.
+
+    Raises ValueError if the baseline value is zero, because the reduction
+    is then undefined.
+    """
+    if baseline_value == 0:
+        raise ValueError("improvement is undefined for a zero baseline value")
     return float((baseline_value - model_value) / baseline_value * 100)
