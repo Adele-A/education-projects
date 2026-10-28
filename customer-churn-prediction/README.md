@@ -14,11 +14,11 @@ Build and evaluate a classification model that predicts churn for a subscription
 
 ## Plan of the work
 
-1. **Data generation** (this step): create a synthetic customer table and a support ticket table.
-2. **EDA**: data quality checks, churn rate, distributions, and churn by segment (contract, plan, tenure, usage).
-3. **Analysis / model**: feature engineering, baseline logistic regression, a gradient boosting model, cross-validated evaluation (ROC AUC, precision/recall) and feature importance.
+1. **Data generation** (done): create a synthetic customer table and a support ticket table.
+2. **EDA** (done): data quality checks, churn rate, distributions, and churn by segment.
+3. **Analysis / model** (this step): feature engineering, baseline logistic regression, a gradient boosting model, cross-validated evaluation and feature importance.
 4. **SQL**: analytical queries on the same data (churn by segment, ticket load vs. churn), run through the standard-library `sqlite3`.
-5. **Tests**: `pytest` checks for data integrity and for the reproducibility of the generator.
+5. **Tests**: `pytest` checks for data integrity, feature preparation and the reproducibility of the generator.
 
 ## Dataset (synthetic)
 
@@ -31,6 +31,29 @@ Two tables are written to `data/`:
 
 A full column-level description is in [data_description.md](data_description.md).
 
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files, prints data quality checks, descriptive statistics and five churn aggregations (contract type, plan, tenure band, late payments, ticket count), and saves four charts to `figures/` (`churn_by_contract.png`, `tenure_by_churn.png`, `logins_by_churn.png`, `correlation_heatmap.png`). All numbers appear in the script output; none are hard-coded.
+
+## Method
+
+`src/analysis.py` (with reusable logic in `src/utils.py`) does the following:
+
+1. **Features.** Support tickets are aggregated per customer: ticket count, billing ticket count, mean resolution hours and mean satisfaction score. These are joined to the customer table, and one engineered feature is added, `weekly_minutes` (weekly logins x average session minutes). `customer_id` and `signup_date` are dropped. Customers without tickets get a ticket count of 0; other missing values are median-imputed.
+2. **Preprocessing.** Numeric columns are imputed and standardised; categorical columns (country, contract type, plan, payment method) are one-hot encoded. This is done inside a scikit-learn `Pipeline`, so it is fitted on training data only.
+3. **Split.** Stratified 80/20 train/test split with `random_state=42`. The test set is not used for model selection.
+4. **Models.** A logistic regression baseline and a histogram-based gradient boosting classifier (shallow trees, fixed random state).
+5. **Evaluation.** 5-fold stratified cross-validated ROC AUC on the training set, then test-set metrics: ROC AUC, average precision, and accuracy, precision, recall and F1 at a 0.5 threshold. The best model is chosen by cross-validated ROC AUC.
+6. **Feature importance.** Permutation importance of the selected model on the test set, measured as the mean drop in ROC AUC when a raw input feature is shuffled (10 repeats). It is computed on the original features, so one-hot columns of the same variable are grouped.
+
+Outputs:
+
+- `figures/roc_curves.png` - ROC curves of both models on the test set
+- `figures/feature_importance.png` - top features by permutation importance
+- `reports/metrics.json` - cross-validation and test metrics for both models, the selected model and the full importance table
+
+All results are printed when the script runs and written to `reports/metrics.json`; none are hard-coded in the code or this README. Because the data is synthetic and generated from a known churn formula, the results show how the workflow behaves and do not say anything about real customers. Permutation importance shows how much the model relies on a feature, not a causal effect of changing it. The 0.5 decision threshold is a default; a real retention campaign would choose it from the cost of an offer versus the value of a saved customer.
+
 ## Project structure
 
 ```
@@ -39,8 +62,13 @@ customer-churn-prediction/
 ├── requirements.txt
 ├── data_description.md
 ├── src/
-│   └── data_generator.py
-└── data/                # created by the generator
+│   ├── data_generator.py
+│   ├── eda.py
+│   ├── utils.py
+│   └── analysis.py
+├── data/                # created by the generator
+├── figures/             # created by the EDA and analysis scripts
+└── reports/             # created by the analysis script (metrics.json)
 ```
 
 ## How to run
@@ -48,9 +76,11 @@ customer-churn-prediction/
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
 ```
 
-The script runs non-interactively from the project root. It creates the `data/` folder if needed and writes `customers.csv` and `support_tickets.csv`. The seed is fixed (42), so repeated runs produce identical files.
+All scripts run non-interactively from the project root. The generator creates `data/` and writes `customers.csv` and `support_tickets.csv`; the seed is fixed (42), so repeated runs produce identical files. The EDA and analysis scripts require these files and create `figures/` and `reports/` as needed.
 
 ---
 
