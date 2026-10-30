@@ -18,8 +18,8 @@ When during the day and week do households use the most electricity, and how wel
 1. **Data generation** (done): create synthetic tables with a fixed seed.
 2. **EDA** (done): data quality checks, daily and weekly profiles, temperature relationship, household comparison.
 3. **Analysis / model** (done): baselines versus regression models, evaluated on a held-out final period.
-4. **SQL** (current step): aggregation queries (peak hours, daily totals, household rankings) over the generated tables.
-5. **Tests**: pytest checks for the data generator (shape, ranges, reproducibility) and for the analysis functions.
+4. **SQL** (done): aggregation queries (peak hours, daily totals, household rankings) over the generated tables.
+5. **Tests** (current step): pytest checks for the data generator (shape, ranges, reproducibility) and for the helper functions in `src/utils.py`.
 
 ## Dataset (synthetic)
 
@@ -47,6 +47,7 @@ python src/data_generator.py
 python src/eda.py
 python src/analysis.py
 python src/run_sql.py
+python -m pytest -q
 ```
 
 All scripts are non-interactive and need no network access. `data_generator.py` recreates the CSV files in `data/` on every run (the folder is created automatically). The fixed seed (42) makes the output reproducible. `eda.py`, `analysis.py` and `run_sql.py` must be run after the generator because they read those files.
@@ -137,6 +138,21 @@ python src/run_sql.py
 ```
 
 As with the other steps, results are not quoted in this README. Read them from the script output. Since the data is synthetic, they reflect the generator's design, not real households.
+
+## Tests
+
+The `tests/` folder contains pytest checks. Run them from the project root:
+
+```bash
+python -m pytest -q
+```
+
+| File | What it checks |
+|---|---|
+| `tests/test_data_generator.py` | Column names and row counts of the three tables, value ranges (residents, floor area, heating flag, `kwh` clipping), unique household-hour keys, weather coverage, reproducibility with the fixed seed, and that `main()` writes the CSV files (to a temporary folder). |
+| `tests/test_utils.py` | Metric functions on hand-computed values (MAE, RMSE, WAPE, R²), errors for undefined cases, `improvement_pct`, lag and calendar features from `add_features`, `drop_incomplete` (first week removed) and the chronological split (no overlap between train and test). |
+
+The tests build the synthetic data in memory with the generator's own functions, so they do not need the files in `data/` and do not depend on the charts in `figures/`. They run in a few seconds.
 
 ---
 
