@@ -16,8 +16,8 @@ Build and evaluate a classification model that predicts churn for a subscription
 
 1. **Data generation** (done): create a synthetic customer table and a support ticket table.
 2. **EDA** (done): data quality checks, churn rate, distributions, and churn by segment.
-3. **Analysis / model** (this step): feature engineering, baseline logistic regression, a gradient boosting model, cross-validated evaluation and feature importance.
-4. **SQL**: analytical queries on the same data (churn by segment, ticket load vs. churn), run through the standard-library `sqlite3`.
+3. **Analysis / model** (done): feature engineering, baseline logistic regression, a gradient boosting model, cross-validated evaluation and feature importance.
+4. **SQL** (this step): analytical queries on the same data (churn by segment, ticket load vs. churn), run through the standard-library `sqlite3`.
 5. **Tests**: `pytest` checks for data integrity, feature preparation and the reproducibility of the generator.
 
 ## Dataset (synthetic)
@@ -54,6 +54,23 @@ Outputs:
 
 All results are printed when the script runs and written to `reports/metrics.json`; none are hard-coded in the code or this README. Because the data is synthetic and generated from a known churn formula, the results show how the workflow behaves and do not say anything about real customers. Permutation importance shows how much the model relies on a feature, not a causal effect of changing it. The 0.5 decision threshold is a default; a real retention campaign would choose it from the cost of an offer versus the value of a saved customer.
 
+## SQL analysis
+
+`sql/queries.sql` contains eight commented queries in the SQLite dialect. Each one is preceded by a `-- Q<n>:` line that states the question:
+
+| Query | Question |
+|-------|----------|
+| Q1 | Customer count and churn rate by contract type |
+| Q2 | Churn rate and average price by plan and discount flag |
+| Q3 | Churn rate by tenure band (`CASE` expression) |
+| Q4 | Ticket load vs. churn (CTE + `LEFT JOIN`) |
+| Q5 | Customers with and without a Billing ticket (CTE + `LEFT JOIN`) |
+| Q6 | Resolution time and satisfaction of tickets, split by the customer's churn status (`JOIN`) |
+| Q7 | Churn rate of a high-risk segment (month-to-month, no auto-renew, 2+ late payments) vs. all others |
+| Q8 | Countries ranked by churn rate with the difference to the overall rate (CTE + window function `RANK`) |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each query and prints its description and the first rows of the result. Nothing is written to disk and all numbers come from the query output. The queries describe associations in synthetic data and do not show causal effects.
+
 ## Project structure
 
 ```
@@ -61,11 +78,14 @@ customer-churn-prediction/
 ├── README.md
 ├── requirements.txt
 ├── data_description.md
+├── sql/
+│   └── queries.sql
 ├── src/
 │   ├── data_generator.py
 │   ├── eda.py
 │   ├── utils.py
-│   └── analysis.py
+│   ├── analysis.py
+│   └── run_sql.py
 ├── data/                # created by the generator
 ├── figures/             # created by the EDA and analysis scripts
 └── reports/             # created by the analysis script (metrics.json)
@@ -78,9 +98,10 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
 ```
 
-All scripts run non-interactively from the project root. The generator creates `data/` and writes `customers.csv` and `support_tickets.csv`; the seed is fixed (42), so repeated runs produce identical files. The EDA and analysis scripts require these files and create `figures/` and `reports/` as needed.
+All scripts run non-interactively from the project root. The generator creates `data/` and writes `customers.csv` and `support_tickets.csv`; the seed is fixed (42), so repeated runs produce identical files. The EDA, analysis and SQL scripts require these files; the EDA and analysis scripts create `figures/` and `reports/` as needed.
 
 ---
 
