@@ -1,0 +1,61 @@
+product_id,category,brand_tier,base_price
+1,Beverages,Mainstream,2.14
+2,Beverages,Premium,3.89
+3,Beverages,Budget,1.65
+4,Beverages,Mainstream,2.38
+5,Beverages,Budget,1.76
+6,Beverages,Mainstream,2.81
+7,Beverages,Mainstream,2.96
+8,Beverages,Mainstream,2.2
+9,Beverages,Mainstream,2.17
+10,Beverages,Premium,3.35
+11,Beverages,Mainstream,2.26
+12,Beverages,Premium,3.3
+13,Snacks,Mainstream,3.04
+14,Snacks,Mainstream,3.38
+15,Snacks,Budget,2.73
+16,Snacks,Mainstream,3.01
+17,Snacks,Mainstream,2.83
+18,Snacks,Mainstream,3.79
+19,Snacks,Budget,2.26
+20,Snacks,Budget,2.82
+21,Snacks,Mainstream,3.47
+22,Snacks,Premium,4.47
+23,Snacks,Mainstream,3.31
+24,Snacks,Mainstream,3.31
+25,Personal Care,Budget,5.25
+26,Personal Care,Mainstream,7.15
+27,Personal Care,Mainstream,6.2
+28,Personal Care,Mainstream,5.91
+29,Personal Care,Budget,6.51
+30,Personal Care,Mainstream,7.52
+31,Personal Care,Mainstream,6.18
+32,Personal Care,Mainstream,7.1
+33,Personal Care,Mainstream,7.32
+34,Personal Care,Budget,4.85
+35,Personal Care,Budget,5.05
+36,Personal Care,Premium,7.4
+37,Household,Budget,6.46
+38,Household,Budget,6.65
+39,Household,Mainstream,7.68
+40,Household,Mainstream,7.16
+41,Household,Premium,9.17
+42,Household,Budget,5.67
+43,Household,Mainstream,8.07
+44,Household,Budget,6.01
+45,Household,Budget,6.42
+46,Household,Mainstream,7.39
+47,Household,Mainstream,7.41
+48,Household,Mainstream,6.04
+49,Dairy,Budget,2.62
+50,Dairy,Premium,4.48
+51,Dairy,Budget,3.69
+52,Dairy,Mainstream,4.24
+53,Dairy,Mainstream,3.68
+54,Dairy,Budget,2.89
+55,Dairy,Mainstream,2.93
+56,Dairy,Mainstream,3.94
+57,Dairy,Budget,2.45
+58,Dairy,Mainstream,3.51
+59,Dairy,Mainstream,3.81
+60,Dairy,Mainstream,3.67
