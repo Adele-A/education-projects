@@ -17,12 +17,12 @@ Build and evaluate a classification model that predicts churn for a subscription
 1. **Data generation** (done): create a synthetic customer table and a support ticket table.
 2. **EDA** (done): data quality checks, churn rate, distributions, and churn by segment.
 3. **Analysis / model** (done): feature engineering, baseline logistic regression, a gradient boosting model, cross-validated evaluation and feature importance.
-4. **SQL** (this step): analytical queries on the same data (churn by segment, ticket load vs. churn), run through the standard-library `sqlite3`.
+4. **SQL** (done): analytical queries on the same data (churn by segment, ticket load vs. churn), run through the standard-library `sqlite3`.
 5. **Tests**: `pytest` checks for data integrity, feature preparation and the reproducibility of the generator.
 
 ## Dataset (synthetic)
 
-Two tables are written to `data/`:
+Two tables are written to `data/` by the generator. They are not produced by any other script, so run the generator before the other scripts.
 
 | File | Rows | Description |
 |------|------|-------------|
@@ -39,7 +39,7 @@ A full column-level description is in [data_description.md](data_description.md)
 
 `src/analysis.py` (with reusable logic in `src/utils.py`) does the following:
 
-1. **Features.** Support tickets are aggregated per customer: ticket count, billing ticket count, mean resolution hours and mean satisfaction score. These are joined to the customer table, and one engineered feature is added, `weekly_minutes` (weekly logins x average session minutes). `customer_id` and `signup_date` are dropped. Customers without tickets get a ticket count of 0; other missing values are median-imputed.
+1. **Features.** Support tickets are aggregated per customer: ticket count, billing ticket count, mean resolution hours and mean satisfaction score. These are joined to the customer table, and one engineered feature is added, `weekly_minutes` (weekly logins multiplied by average session minutes). `customer_id` and `signup_date` are dropped. Customers without tickets get a ticket count of 0; other missing values are median-imputed.
 2. **Preprocessing.** Numeric columns are imputed and standardised; categorical columns (country, contract type, plan, payment method) are one-hot encoded. This is done inside a scikit-learn `Pipeline`, so it is fitted on training data only.
 3. **Split.** Stratified 80/20 train/test split with `random_state=42`. The test set is not used for model selection.
 4. **Models.** A logistic regression baseline and a histogram-based gradient boosting classifier (shallow trees, fixed random state).
@@ -93,15 +93,17 @@ customer-churn-prediction/
 
 ## How to run
 
+Requires Python 3.11. From the project root, install the dependencies and run the scripts in this order:
+
 ```bash
 pip install -r requirements.txt
-python src/data_generator.py
-python src/eda.py
-python src/analysis.py
-python src/run_sql.py
+python src/data_generator.py   # 1. creates data/customers.csv and data/support_tickets.csv
+python src/eda.py              # 2. needs the CSV files from step 1
+python src/analysis.py         # 3. needs the CSV files; writes figures/ and reports/
+python src/run_sql.py          # 4. needs the CSV files; prints query results only
 ```
 
-All scripts run non-interactively from the project root. The generator creates `data/` and writes `customers.csv` and `support_tickets.csv`; the seed is fixed (42), so repeated runs produce identical files. The EDA, analysis and SQL scripts require these files; the EDA and analysis scripts create `figures/` and `reports/` as needed.
+All scripts run non-interactively and do not need network access. The generator creates `data/` if it is missing; the seed is fixed (42), so repeated runs produce identical files. The EDA and analysis scripts create `figures/` and `reports/` as needed. If a script reports that the data files are missing, run `src/data_generator.py` first.
 
 ---
 
