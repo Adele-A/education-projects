@@ -6,6 +6,7 @@ unit tested.
 """
 import numpy as np
 import pandas as pd
+from numpy.typing import ArrayLike
 
 # Forecast set-up: predict every hour of day D using information from day D-1
 # and earlier (lags of 24 h and 168 h), plus calendar and temperature inputs.
@@ -64,8 +65,13 @@ def drop_incomplete(df: pd.DataFrame) -> pd.DataFrame:
     return df.dropna(subset=["lag_24", "lag_168", "prev_day_mean"]).reset_index(drop=True)
 
 
-def chronological_split(df: pd.DataFrame, test_days: int):
-    """Split by time: the last `test_days` calendar days form the test set."""
+def chronological_split(df: pd.DataFrame,
+                        test_days: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Split by time: the last `test_days` calendar days form the test set.
+
+    Returns a (train, test) tuple with reset indexes. Rows before the cutoff
+    day go to train, rows from the cutoff day onwards go to test.
+    """
     last_day = df["date"].max()
     cutoff = last_day - pd.Timedelta(days=test_days - 1)
     train = df[df["date"] < cutoff].reset_index(drop=True)
@@ -73,19 +79,19 @@ def chronological_split(df: pd.DataFrame, test_days: int):
     return train, test
 
 
-def mae(y_true, y_pred) -> float:
+def mae(y_true: ArrayLike, y_pred: ArrayLike) -> float:
     """Mean absolute error."""
     y_true, y_pred = np.asarray(y_true, float), np.asarray(y_pred, float)
     return float(np.mean(np.abs(y_true - y_pred)))
 
 
-def rmse(y_true, y_pred) -> float:
+def rmse(y_true: ArrayLike, y_pred: ArrayLike) -> float:
     """Root mean squared error."""
     y_true, y_pred = np.asarray(y_true, float), np.asarray(y_pred, float)
     return float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
 
 
-def wape(y_true, y_pred) -> float:
+def wape(y_true: ArrayLike, y_pred: ArrayLike) -> float:
     """Weighted absolute percentage error: sum|error| / sum(actual).
 
     Raises ValueError if the total actual consumption is zero, because the
@@ -98,7 +104,7 @@ def wape(y_true, y_pred) -> float:
     return float(np.sum(np.abs(y_true - y_pred)) / total_actual)
 
 
-def r2(y_true, y_pred) -> float:
+def r2(y_true: ArrayLike, y_pred: ArrayLike) -> float:
     """Coefficient of determination.
 
     Raises ValueError if the actual values are constant, because the total
@@ -112,7 +118,7 @@ def r2(y_true, y_pred) -> float:
     return float(1 - ss_res / ss_tot)
 
 
-def evaluate(y_true, y_pred) -> dict:
+def evaluate(y_true: ArrayLike, y_pred: ArrayLike) -> dict[str, float]:
     """All metrics in one dictionary."""
     return {
         "mae": mae(y_true, y_pred),

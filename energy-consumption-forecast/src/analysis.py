@@ -16,7 +16,9 @@ import matplotlib
 
 matplotlib.use("Agg")  # non-interactive backend
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+from sklearn.base import BaseEstimator
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.linear_model import Ridge
 from sklearn.pipeline import make_pipeline
@@ -37,6 +39,7 @@ pd.set_option("display.width", 120)
 
 
 def section(title: str) -> None:
+    """Print a section header."""
     print(f"\n=== {title} ===")
 
 
@@ -49,8 +52,11 @@ def load_prepared() -> pd.DataFrame:
     return utils.add_features(df)
 
 
-def fit_models(train: pd.DataFrame) -> dict:
-    """Train the regression models on the training period."""
+def fit_models(train: pd.DataFrame) -> dict[str, BaseEstimator]:
+    """Train the regression models on the training period.
+
+    Returns a dictionary mapping the model name to the fitted estimator.
+    """
     X, y = train[utils.FEATURE_COLUMNS], train[utils.TARGET]
     models = {
         "ridge": make_pipeline(StandardScaler(), Ridge(alpha=1.0)),
@@ -63,7 +69,8 @@ def fit_models(train: pd.DataFrame) -> dict:
     return models
 
 
-def plot_forecast(test: pd.DataFrame, preds: dict, best_name: str) -> None:
+def plot_forecast(test: pd.DataFrame, preds: dict[str, np.ndarray],
+                  best_name: str) -> None:
     """Total consumption of all households: actual vs forecasts."""
     frame = test[["timestamp", "kwh"]].copy()
     frame["baseline_24h"] = preds["baseline_same_hour_yesterday"]
@@ -87,7 +94,8 @@ def plot_forecast(test: pd.DataFrame, preds: dict, best_name: str) -> None:
     plt.close(fig)
 
 
-def plot_error_by_hour(test: pd.DataFrame, preds: dict, best_name: str) -> None:
+def plot_error_by_hour(test: pd.DataFrame, preds: dict[str, np.ndarray],
+                       best_name: str) -> None:
     """Mean absolute error per hour of day for baseline and best model."""
     errors = pd.DataFrame({
         "hour": test["hour"],
