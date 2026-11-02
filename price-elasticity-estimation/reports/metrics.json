@@ -1,0 +1,123 @@
+{
+  "random_state": 42,
+  "rows_used": 3120,
+  "rows_dropped_zero_units": 0,
+  "pooled": {
+    "naive": {
+      "elasticity": -1.648983811167721,
+      "std_err": 0.03262569891079138,
+      "ci_low": -1.7129290060033198,
+      "ci_high": -1.5850386163321224,
+      "p_value": 0.0,
+      "n_obs": 3120,
+      "r2": 0.9176977814239069
+    },
+    "controlled": {
+      "elasticity": -1.3003278659881738,
+      "std_err": 0.032952802870083855,
+      "ci_low": -1.3649141728031864,
+      "ci_high": -1.2357415591731613,
+      "p_value": 0.0,
+      "n_obs": 3120,
+      "r2": 0.9661469763664841
+    }
+  },
+  "by_category": [
+    {
+      "category": "Beverages",
+      "true_elasticity": -2.1,
+      "naive_elasticity": -2.433970713362097,
+      "controlled_elasticity": -2.102171472012794,
+      "std_err": 0.05306315358357505,
+      "ci_low": -2.2061733419427187,
+      "ci_high": -1.9981696020828694,
+      "p_value": 0.0,
+      "n_obs": 624,
+      "abs_error_controlled": 0.0021714720127938847,
+      "abs_error_naive": 0.3339707133620968,
+      "true_in_ci": true,
+      "demand_type": "elastic",
+      "revenue_change_pct": 12.313665369410455
+    },
+    {
+      "category": "Snacks",
+      "true_elasticity": -1.6,
+      "naive_elasticity": -1.9028657991443203,
+      "controlled_elasticity": -1.4952526304389946,
+      "std_err": 0.0630752855769581,
+      "ci_low": -1.618877918484411,
+      "ci_high": -1.371627342393578,
+      "p_value": 3.1388016905036586e-124,
+      "n_obs": 624,
+      "abs_error_controlled": 0.1047473695610055,
+      "abs_error_naive": 0.3028657991443202,
+      "true_in_ci": true,
+      "demand_type": "elastic",
+      "revenue_change_pct": 5.35654436214501
+    },
+    {
+      "category": "Personal Care",
+      "true_elasticity": -1.2,
+      "naive_elasticity": -1.6606709749685222,
+      "controlled_elasticity": -1.335938879256328,
+      "std_err": 0.05253439044857907,
+      "ci_low": -1.438904392485308,
+      "ci_high": -1.232973366027348,
+      "p_value": 1.1812163217427359e-142,
+      "n_obs": 624,
+      "abs_error_controlled": 0.13593887925632808,
+      "abs_error_naive": 0.4606709749685223,
+      "true_in_ci": false,
+      "demand_type": "elastic",
+      "revenue_change_pct": 3.6028541893410315
+    },
+    {
+      "category": "Household",
+      "true_elasticity": -0.9,
+      "naive_elasticity": -1.1650973319022844,
+      "controlled_elasticity": -0.8502955323793189,
+      "std_err": 0.04925795806140735,
+      "ci_low": -0.9468393561316617,
+      "ci_high": -0.753751708626976,
+      "p_value": 9.075817336325698e-67,
+      "n_obs": 624,
+      "abs_error_controlled": 0.04970446762068115,
+      "abs_error_naive": 0.26509733190228435,
+      "true_in_ci": true,
+      "demand_type": "inelastic",
+      "revenue_change_pct": -1.564919853083424
+    },
+    {
+      "category": "Dairy",
+      "true_elasticity": -0.7,
+      "naive_elasticity": -1.0471707005592796,
+      "controlled_elasticity": -0.6186181264209949,
+      "std_err": 0.053311786939587734,
+      "ci_low": -0.7231073087740597,
+      "ci_high": -0.5141289440679301,
+      "p_value": 3.9428082847351457e-31,
+      "n_obs": 624,
+      "abs_error_controlled": 0.08138187357900506,
+      "abs_error_naive": 0.3471707005592797,
+      "true_in_ci": true,
+      "demand_type": "inelastic",
+      "revenue_change_pct": -3.9385976205263296
+    }
+  ],
+  "mean_abs_error_naive": 0.34195510398730067,
+  "mean_abs_error_controlled": 0.07478881240596273,
+  "holdout": {
+    "n_train": 2496,
+    "n_test": 624,
+    "model": {
+      "rmse": 0.08918371207929553,
+      "mae": 0.06930864172351181,
+      "r2": 0.973841780230265
+    },
+    "product_mean_baseline": {
+      "rmse": 0.2409076873066536,
+      "mae": 0.1866290283862382,
+      "r2": 0.809129675790243
+    }
+  }
+}

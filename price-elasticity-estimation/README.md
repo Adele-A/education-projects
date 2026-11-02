@@ -16,8 +16,8 @@ Estimate the price elasticity of demand for each product category with a log-log
 
 1. **Data generation** – build a synthetic weekly sales dataset (products and weekly sales) with a fixed random seed.
 2. **EDA** – check distributions, missing values, price and units relationships per category, promotion effects and seasonality.
-3. **Analysis / model** – fit log-log regressions (overall and per category) with statsmodels, add controls (promo, holiday, competitor price, product fixed effects), check diagnostics and compare the estimates with the elasticities used in the generator.
-4. **SQL** – aggregate queries on the same tables (revenue and average price by category, promo vs. non-promo weeks).
+3. **Analysis / model** – fit log-log regressions (overall and per category) with statsmodels, add controls (promo, holiday, competitor price, seasonality, product fixed effects), check out-of-sample fit and compare the estimates with the elasticities used in the generator.
+4. **SQL** – aggregate queries on the same tables (revenue and average price by category, promo vs. non-promo weeks, and more).
 5. **Tests** – pytest checks for the data generator (shape, ranges, reproducibility) and for the modelling helpers.
 
 ## Dataset (synthetic)
@@ -31,6 +31,75 @@ Two CSV tables are written to `data/`:
 
 The full column list is in [data_description.md](data_description.md).
 
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files and joins them on `product_id`. When run, it:
+
+- prints the shape, data types, missing values, duplicate count and descriptive statistics of each table;
+- prints five aggregations: sales summary and revenue share by category, promo vs. non-promo weeks by category, holiday vs. regular weeks, brand tier summary, and the raw correlation between log price ratio and centered log units per category;
+- saves three charts to `figures/`:
+  - `log_log_by_category.png` – log price ratio vs. centered log units with a fitted line, one panel per category;
+  - `price_ratio_by_promo.png` – price relative to base price in promo and non-promo weeks;
+  - `weekly_seasonality.png` – average weekly units per category as an index, with holiday weeks highlighted.
+
+The correlations printed in the EDA are raw, uncontrolled associations (promotions, seasonality and competitor prices are not yet accounted for). They are not elasticity estimates; those come from the regression step.
+
+## Method
+
+`src/analysis.py` estimates elasticity with constant-elasticity (log-log) regressions. Reusable helpers (feature preparation, model fitting, metrics) live in `src/utils.py`.
+
+**Model.** For product *i* in week *t*:
+
+```
+log(units_it) = a_i + e * log(price_it / base_price_i)
+                + b1 * log(competitor_price_it / base_price_i)
+                + b2 * is_promo + b3 * is_holiday_week
+                + b4 * sin(2*pi*week/52) + b5 * cos(2*pi*week/52) + error
+```
+
+- The coefficient `e` on the log price ratio is the price elasticity.
+- `a_i` are product fixed effects, which remove differences in demand level between products.
+- The controls handle the cross-price effect, promotion lift (promotions are correlated with price), the holiday uplift and smooth yearly seasonality.
+- Standard errors are heteroskedasticity-robust (HC1). Rows with zero units are dropped because the log is undefined; their number is printed.
+
+**Steps in the script.**
+
+1. *Pooled models* – one elasticity for all categories, in a naive version (price and product fixed effects only) and a controlled version.
+2. *Per-category models* – the same two specifications fitted separately for each category. The controlled estimate is the main result; the naive estimate shows how much omitting the controls changes the answer.
+3. *Comparison with the generator* – because the data is synthetic, the per-category elasticities used to generate it (`CATEGORY_ELASTICITY` in `src/data_generator.py`) are compared with the estimates, including whether each value lies inside the 95% confidence interval. The generator also adds a small product-level deviation around each category value, so exact equality is not expected.
+4. *Business reading* – each category is labelled elastic (|e| > 1) or inelastic (|e| <= 1), and the revenue change implied by a 10% price cut is computed as `(0.9 ** (1 + e) - 1)`. This assumes constant elasticity and unchanged competitor prices and promotions.
+5. *Hold-out check* – an 80/20 random split (`random_state=42`). Per-category controlled models are fitted on the training part and scored on the test part (RMSE, MAE and R² on log units), next to a baseline that predicts each product's mean log units.
+
+**Outputs.**
+
+- Console report with all key metrics, clearly labelled.
+- `figures/elasticity_estimates.png` – controlled estimates with 95% confidence intervals, naive estimates and generator values by category.
+- `figures/holdout_actual_vs_predicted.png` – actual vs. predicted log units on the test split.
+- `reports/metrics.json` – pooled and per-category results and hold-out metrics.
+
+Run the script to see the numbers; none are quoted here.
+
+**Limitations.** The generator's demand process matches the model form closely, so this is a best-case check of the method. Real data would add price endogeneity, stockouts and changing assortments. Elasticity is assumed constant over the price range, and weeks with zero sales are excluded.
+
+## SQL analysis
+
+`sql/queries.sql` holds eight commented queries (SQLite dialect) over the same two tables. Each query is preceded by a `-- Q<n>:` comment that states the question it answers.
+
+| Query | Question |
+|-------|----------|
+| Q1 | Revenue, average price and revenue share by category |
+| Q2 | Discount depth and average units in promo vs. non-promo weeks, per category |
+| Q3 | Raw promo uplift in average units per category (product-level ratios) |
+| Q4 | Brand tier summary: base price, average units, revenue |
+| Q5 | Holiday vs. regular weeks: average units per category |
+| Q6 | Top 10 products by revenue, with overall and within-category rank |
+| Q7 | Monthly revenue with the change vs. the previous month |
+| Q8 | Average units by price-ratio bucket within each category |
+
+`src/run_sql.py` loads `data/products.csv` and `data/weekly_sales.csv` into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements on semicolons (so comments in the SQL file must not contain semicolons), runs each statement and prints its description and the first 10 result rows. No database file is created.
+
+The SQL results are descriptive, uncontrolled aggregations. They help to understand the data but are not elasticity estimates, which come from the regression step.
+
 ## Project structure
 
 ```
@@ -39,8 +108,18 @@ price-elasticity-estimation/
 ├── requirements.txt
 ├── data_description.md
 ├── data/            # created by the generator
-└── src/
-    └── data_generator.py
+├── figures/         # created by the EDA and analysis scripts
+├── reports/         # metrics.json, created by the analysis script
+├── sql/
+│   └── queries.sql
+├── src/
+│   ├── data_generator.py
+│   ├── eda.py
+│   ├── utils.py
+│   ├── analysis.py
+│   └── run_sql.py
+└── tests/
+    └── test_utils.py
 ```
 
 ## How to run
@@ -50,9 +129,13 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
+python src/run_sql.py
+pytest tests
 ```
 
-The script is non-interactive and writes `data/products.csv` and `data/weekly_sales.csv`. The random seed is fixed (42), so repeated runs produce identical files.
+All scripts are non-interactive. The generator writes `data/products.csv` and `data/weekly_sales.csv`; its random seed is fixed (42), so repeated runs produce identical files. The EDA script prints its report and writes PNG charts to `figures/`. The analysis script prints the model results, writes two more charts to `figures/` and saves `reports/metrics.json`. The SQL script prints the result of each query in `sql/queries.sql`.
 
 ---
 
