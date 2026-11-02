@@ -18,7 +18,7 @@ Build and evaluate a classification model that predicts churn for a subscription
 2. **EDA** (done): data quality checks, churn rate, distributions, and churn by segment.
 3. **Analysis / model** (done): feature engineering, baseline logistic regression, a gradient boosting model, cross-validated evaluation and feature importance.
 4. **SQL** (done): analytical queries on the same data (churn by segment, ticket load vs. churn), run through the standard-library `sqlite3`.
-5. **Tests**: `pytest` checks for data integrity, feature preparation and the reproducibility of the generator.
+5. **Tests** (done): `pytest` checks for data integrity, feature preparation and the reproducibility of the generator.
 
 ## Dataset (synthetic)
 
@@ -71,6 +71,21 @@ All results are printed when the script runs and written to `reports/metrics.jso
 
 `src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each query and prints its description and the first rows of the result. Nothing is written to disk and all numbers come from the query output. The queries describe associations in synthetic data and do not show causal effects.
 
+## Tests
+
+The `tests/` folder contains `pytest` tests that run in a few seconds:
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | Column names, row counts, value ranges and categories of both synthetic tables, the price rule (plan price and discount), valid customer references in tickets, and that the same seed gives identical tables |
+| `tests/test_utils.py` | Ticket aggregation per customer (including customers without tickets and missing scores), feature building (dropped columns, `weekly_minutes`), the preprocessor (no missing values, unseen categories) and `compute_metrics` (perfect predictions, threshold handling) |
+
+The tests generate data in memory or use small hand-made tables. They do not need the files in `data/` or `figures/`, and they do not write any files.
+
+```bash
+python -m pytest -q
+```
+
 ## Project structure
 
 ```
@@ -86,6 +101,9 @@ customer-churn-prediction/
 │   ├── utils.py
 │   ├── analysis.py
 │   └── run_sql.py
+├── tests/
+│   ├── test_data_generator.py
+│   └── test_utils.py
 ├── data/                # created by the generator
 ├── figures/             # created by the EDA and analysis scripts
 └── reports/             # created by the analysis script (metrics.json)
@@ -101,6 +119,7 @@ python src/data_generator.py   # 1. creates data/customers.csv and data/support_
 python src/eda.py              # 2. needs the CSV files from step 1
 python src/analysis.py         # 3. needs the CSV files; writes figures/ and reports/
 python src/run_sql.py          # 4. needs the CSV files; prints query results only
+python -m pytest -q            # 5. runs the tests (independent of steps 1-4)
 ```
 
 All scripts run non-interactively and do not need network access. The generator creates `data/` if it is missing; the seed is fixed (42), so repeated runs produce identical files. The EDA and analysis scripts create `figures/` and `reports/` as needed. If a script reports that the data files are missing, run `src/data_generator.py` first.
