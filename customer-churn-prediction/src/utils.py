@@ -29,7 +29,16 @@ def add_ticket_features(customers: pd.DataFrame, tickets: pd.DataFrame) -> pd.Da
       * avg_resolution_hours - mean resolution time (NaN if no tickets)
       * avg_satisfaction     - mean satisfaction score, ignoring missing answers
                                (NaN if no scores are available)
+
+    Raises ValueError if customer_id is not unique in `customers`, because a
+    duplicated customer row would silently inflate the join result.
     """
+    if not customers["customer_id"].is_unique:
+        raise ValueError(
+            "customers['customer_id'] must be unique; duplicate rows would "
+            "inflate the join with the ticket aggregates."
+        )
+
     grouped = tickets.groupby("customer_id")
     agg = pd.DataFrame({
         "n_tickets": grouped.size(),
