@@ -18,7 +18,7 @@ Estimate the price elasticity of demand for each product category with a log-log
 2. **EDA** – check distributions, missing values, price and units relationships per category, promotion effects and seasonality.
 3. **Analysis / model** – fit log-log regressions (overall and per category) with statsmodels, add controls (promo, holiday, competitor price, seasonality, product fixed effects), check out-of-sample fit and compare the estimates with the elasticities used in the generator.
 4. **SQL** – aggregate queries on the same tables (revenue and average price by category, promo vs. non-promo weeks, and more).
-5. **Tests** – pytest checks for the data generator (shape, ranges, reproducibility) and for the modelling helpers.
+5. **Tests** – pytest checks for the data generator (columns, row counts, value ranges, reproducibility) and for the modelling helpers.
 
 ## Dataset (synthetic)
 
@@ -29,7 +29,7 @@ Two CSV tables are written to `data/`:
 | `products.csv` | one row per product | category, brand tier and regular base price |
 | `weekly_sales.csv` | one row per product per week | price, competitor price, promotion flag, units sold, revenue |
 
-The full column list is in [data_description.md](data_description.md).
+The generator produces 60 products and 3,120 product-week rows. The full column list is in [data_description.md](data_description.md).
 
 ## Exploratory data analysis
 
@@ -77,9 +77,7 @@ log(units_it) = a_i + e * log(price_it / base_price_i)
 - `figures/holdout_actual_vs_predicted.png` – actual vs. predicted log units on the test split.
 - `reports/metrics.json` – pooled and per-category results and hold-out metrics.
 
-Run the script to see the numbers; none are quoted here.
-
-**Limitations.** The generator's demand process matches the model form closely, so this is a best-case check of the method. Real data would add price endogeneity, stockouts and changing assortments. Elasticity is assumed constant over the price range, and weeks with zero sales are excluded.
+The numbers from one run are summarised in the [Results](#results) section below.
 
 ## SQL analysis
 
@@ -100,6 +98,112 @@ Run the script to see the numbers; none are quoted here.
 
 The SQL results are descriptive, uncontrolled aggregations. They help to understand the data but are not elasticity estimates, which come from the regression step.
 
+## Results
+
+All numbers below come from the program output of a single run with the fixed seed (42) on the **synthetic** dataset. All 3,120 rows had positive units, so no rows were dropped.
+
+### Descriptive findings (uncontrolled)
+
+- Household (31.66%) and Personal Care (29.84%) generate the largest revenue shares; Snacks (10.41%) the smallest.
+- In promo weeks the average price ratio is about 0.79 to 0.81, against about 1.00 in non-promo weeks. Average units are higher in promo weeks in every category, for example Beverages 285.9 vs. 160.0 and Snacks 215.3 vs. 122.9.
+- Holiday weeks have higher average units than regular weeks in every category. The ratio ranges from 1.05 (Beverages) to 1.19 (Dairy).
+- The raw correlation between log price ratio and centered log units is negative in every category, from -0.592 (Dairy) to -0.857 (Beverages).
+
+These are raw associations, not elasticity estimates.
+
+### Pooled elasticity
+
+| Model | Elasticity | SE | 95% CI | R² |
+|-------|-----------|----|--------|----|
+| Naive (price + product fixed effects) | -1.649 | 0.033 | [-1.713, -1.585] | 0.918 |
+| Controlled | -1.300 | 0.033 | [-1.365, -1.236] | 0.966 |
+
+### Elasticity by category
+
+The generator value is the elasticity used to create the synthetic data.
+
+| Category | Generator value | Naive | Controlled | SE | 95% CI (controlled) | Generator value in CI | Type |
+|----------|-----------------|-------|------------|----|---------------------|-----------------------|------|
+| Beverages | -2.1 | -2.434 | -2.102 | 0.053 | [-2.206, -1.998] | True | elastic |
+| Snacks | -1.6 | -1.903 | -1.495 | 0.063 | [-1.619, -1.372] | True | elastic |
+| Personal Care | -1.2 | -1.661 | -1.336 | 0.053 | [-1.439, -1.233] | False | elastic |
+| Household | -0.9 | -1.165 | -0.850 | 0.049 | [-0.947, -0.754] | True | inelastic |
+| Dairy | -0.7 | -1.047 | -0.619 | 0.053 | [-0.723, -0.514] | True | inelastic |
+
+Mean absolute error vs. the generator value: naive 0.342, controlled 0.075.
+
+![Elasticity estimates by category](figures/elasticity_estimates.png)
+
+### Implied revenue effect of a 10% price cut
+
+Computed from the controlled estimates, assuming constant elasticity and no change in competitor prices or promotions.
+
+| Category | Controlled elasticity | Type | Revenue change |
+|----------|-----------------------|------|----------------|
+| Beverages | -2.102 | elastic | +12.314% |
+| Snacks | -1.495 | elastic | +5.357% |
+| Personal Care | -1.336 | elastic | +3.603% |
+| Household | -0.850 | inelastic | -1.565% |
+| Dairy | -0.619 | inelastic | -3.939% |
+
+### Hold-out evaluation
+
+80/20 split (`random_state=42`): 2,496 training rows and 624 test rows. Metrics are on log units.
+
+| Model | RMSE | MAE | R² |
+|-------|------|-----|----|
+| Controlled per-category model | 0.089 | 0.069 | 0.974 |
+| Product-mean baseline | 0.241 | 0.187 | 0.809 |
+
+![Actual vs. predicted log units on the test split](figures/holdout_actual_vs_predicted.png)
+
+### Raw log-log relationship
+
+![Log price ratio vs. centered log units by category](figures/log_log_by_category.png)
+
+## Conclusions
+
+- **Controls matter.** Omitting promotions, holidays, competitor price and seasonality makes demand look more price sensitive in every category. The pooled elasticity is -1.649 in the naive model and -1.300 in the controlled one, and the mean absolute error vs. the generator value drops from 0.342 to 0.075.
+- **Categories differ.** The controlled estimates run from -2.102 (Beverages) to -0.619 (Dairy). A single pooled value of -1.300 would hide this spread.
+- **Elastic vs. inelastic.** Beverages, Snacks and Personal Care are classified as elastic (|e| > 1). Household and Dairy are classified as inelastic.
+- **Implied pricing direction.** Under the constant-elasticity assumption, a 10% price cut raises revenue in the three elastic categories (largest in Beverages, +12.314%) and lowers it in Household (-1.565%) and Dairy (-3.939%).
+- **Recovery of the generator values.** The 95% interval contains the generator value in four of five categories. Personal Care is the exception: the estimate is -1.336, the interval is [-1.439, -1.233] and the generator value is -1.2. The generator adds a product-level deviation around each category value, which may contribute, but this was not tested separately.
+- **Out-of-sample fit.** On the 20% hold-out, the controlled model reaches R² = 0.974 and RMSE = 0.089 on log units, against R² = 0.809 and RMSE = 0.241 for the product-mean baseline.
+
+## Limitations & next steps
+
+**Limitations**
+
+- **The data is synthetic.** It is generated by this project's own code, so the results say nothing about any real market. The generator's demand process closely matches the model form, which makes this a best-case test of the method.
+- Elasticity is assumed constant over the whole price range, and the revenue effects assume that competitor prices and promotions do not react to a price change.
+- Price endogeneity (prices set in response to expected demand), stockouts and changing assortments are not present in the data and are not handled.
+- Each category has 12 products over 52 weeks. The hold-out split is random by row, so the same products and weeks appear in both train and test parts. This is not a test of forecasting future weeks or new products.
+- Weeks with zero sales would be excluded from the log model. This did not occur in this run.
+
+**Next steps**
+
+- Use a time-based hold-out (train on early weeks, test on later weeks) and a hold-out of whole products.
+- Add instrumental-variable or other identification checks on data with endogenous prices.
+- Allow elasticity to vary by brand tier or between promo and non-promo weeks.
+- Test non-constant elasticity, for example with a quadratic term in log price.
+- Add price-change scenarios with confidence intervals for the implied revenue effect.
+
+## Tests
+
+The tests live in `tests/` and run in a few seconds. They generate their own data in memory, so they need neither the CSV files in `data/` nor any figures.
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | Column names, row counts, value ranges, promo and holiday flags, revenue = price x units, and reproducibility for a fixed seed |
+| `tests/test_utils.py` | Feature preparation, model formula, pooled elasticity sign and interval, metrics, elasticity classification and implied revenue change |
+| `tests/test_prepare_data.py` | Edge cases: zero-unit rows dropped, unmatched products rejected, structure of the extracted price effect |
+
+Run them from the project root:
+
+```bash
+python -m pytest -q
+```
+
 ## Project structure
 
 ```
@@ -119,6 +223,8 @@ price-elasticity-estimation/
 │   ├── analysis.py
 │   └── run_sql.py
 └── tests/
+    ├── test_data_generator.py
+    ├── test_prepare_data.py
     └── test_utils.py
 ```
 
@@ -132,10 +238,10 @@ python src/data_generator.py
 python src/eda.py
 python src/analysis.py
 python src/run_sql.py
-pytest tests
+python -m pytest -q
 ```
 
-All scripts are non-interactive. The generator writes `data/products.csv` and `data/weekly_sales.csv`; its random seed is fixed (42), so repeated runs produce identical files. The EDA script prints its report and writes PNG charts to `figures/`. The analysis script prints the model results, writes two more charts to `figures/` and saves `reports/metrics.json`. The SQL script prints the result of each query in `sql/queries.sql`.
+All scripts are non-interactive. The generator writes `data/products.csv` and `data/weekly_sales.csv`; its random seed is fixed (42), so repeated runs produce identical files. The EDA script prints its report and writes PNG charts to `figures/`. The analysis script prints the model results, writes two more charts to `figures/` and saves `reports/metrics.json`. The SQL script prints the result of each query in `sql/queries.sql`. The tests do not require the other scripts to have been run first.
 
 ---
 
