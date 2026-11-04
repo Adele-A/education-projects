@@ -1,0 +1,7 @@
+asset,asset_name,category,start_price_usd
+BTC,Bitcoin-like,Store of value,16500.0
+ETH,Ether-like,Smart contract platform,1200.0
+SOL,Solana-like,Smart contract platform,10.0
+BNB,BNB-like,Exchange token,245.0
+ADA,Cardano-like,Smart contract platform,0.32
+DOGE,Dogecoin-like,Meme,0.07
