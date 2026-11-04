@@ -29,7 +29,7 @@ Two CSV tables are written to `data/`:
 | `products.csv` | one row per product | category, brand tier and regular base price |
 | `weekly_sales.csv` | one row per product per week | price, competitor price, promotion flag, units sold, revenue |
 
-The generator produces 60 products and 3,120 product-week rows. The full column list is in [data_description.md](data_description.md).
+The generator produces 60 products and 3,120 product-week rows. The full column list and value ranges are in [data_description.md](data_description.md).
 
 ## Exploratory data analysis
 
@@ -77,7 +77,7 @@ log(units_it) = a_i + e * log(price_it / base_price_i)
 - `figures/holdout_actual_vs_predicted.png` – actual vs. predicted log units on the test split.
 - `reports/metrics.json` – pooled and per-category results and hold-out metrics.
 
-The numbers from one run are summarised in the [Results](#results) section below.
+The numbers from one run are listed in the [Results](#results) section below.
 
 ## SQL analysis
 
@@ -230,7 +230,7 @@ price-elasticity-estimation/
 
 ## How to run
 
-From the project root:
+**Requirements:** Python 3.11 and the packages listed in `requirements.txt`. Run all commands from the project root, the folder that contains `README.md`.
 
 ```bash
 pip install -r requirements.txt
@@ -240,6 +240,8 @@ python src/analysis.py
 python src/run_sql.py
 python -m pytest -q
 ```
+
+Run `src/data_generator.py` first. The EDA, analysis and SQL scripts read the CSV files in `data/` and stop with a message if they are missing. Running the generator again overwrites both CSV files with identical content, because the seed is fixed.
 
 All scripts are non-interactive. The generator writes `data/products.csv` and `data/weekly_sales.csv`; its random seed is fixed (42), so repeated runs produce identical files. The EDA script prints its report and writes PNG charts to `figures/`. The analysis script prints the model results, writes two more charts to `figures/` and saves `reports/metrics.json`. The SQL script prints the result of each query in `sql/queries.sql`. The tests do not require the other scripts to have been run first.
 
