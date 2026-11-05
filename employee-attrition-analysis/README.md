@@ -16,9 +16,9 @@ Which employee and workplace characteristics (overtime, compensation, satisfacti
 
 ## Plan of the work
 
-1. **Data generation** (this step): create reproducible synthetic tables in `data/`.
-2. **EDA**: check data quality and missing values, look at distributions, and compare attrition rates across groups.
-3. **Analysis and model**: statistical tests for key drivers, then a logistic regression (scikit-learn / statsmodels) with evaluation on a hold-out set and interpretation of coefficients and odds ratios.
+1. **Data generation** (done): create reproducible synthetic tables in `data/`.
+2. **EDA** (done): check data quality and missing values, look at distributions, and compare attrition rates across groups.
+3. **Analysis and model** (this step): statistical tests for key drivers, then a logistic regression with evaluation on a hold-out set and interpretation of odds ratios.
 4. **SQL**: analytical queries (attrition by department, level, and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
 5. **Tests**: `pytest` checks for the data generator and the data-processing code in `tests/`.
 
@@ -41,13 +41,53 @@ Install dependencies (Python 3.11):
 pip install -r requirements.txt
 ```
 
-Generate the data from the project root:
+Run everything from the project root, in this order:
 
 ```bash
-python src/data_generator.py
+python src/data_generator.py   # creates data/employees.csv and data/satisfaction_surveys.csv (seed 42)
+python src/eda.py              # exploratory analysis, charts in figures/
+python src/analysis.py         # statistical tests, model, metrics, charts, reports/metrics.json
 ```
 
-This creates `data/employees.csv` and `data/satisfaction_surveys.csv`. Running it again reproduces identical files (seed 42).
+Running the generator again reproduces identical files.
+
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files and prints its findings to the console. It:
+
+- reports shape, data types, missing values and duplicate IDs for each table;
+- measures survey coverage, i.e. how many employees have no survey response (these become missing values after a left join);
+- prints descriptive statistics for numeric columns and value shares for categorical columns, plus the overall attrition rate;
+- aggregates the attrition rate by department, overtime, job level and tenure band, and compares mean feature values for employees who stayed vs left.
+
+It also saves three charts to `figures/`:
+
+| File | Content |
+|------|---------|
+| `attrition_by_group.png` | attrition rate by department and by overtime |
+| `income_distribution.png` | monthly income distribution for employees who stayed vs left |
+| `correlation_heatmap.png` | correlation matrix of numeric features, survey scores and attrition |
+
+## Method: analysis and model
+
+`src/analysis.py` runs the core analysis; reusable logic (data joining, preprocessing pipeline, metric functions, odds ratio table) is in `src/utils.py` so it can be unit-tested.
+
+1. **Data preparation.** Employees are left-joined with survey responses. Employees without a survey keep missing survey scores, which are imputed with the training-set median.
+2. **Univariate tests.** Each feature is tested against attrition on its own: Mann-Whitney U for numeric features and a chi-square test of independence for categorical ones. These tests are exploratory and p-values are not adjusted for multiple comparisons.
+3. **Train/test split.** A stratified 75/25 split with `random_state=42`. All fitted steps (imputation, scaling, encoding, the model) learn from the training set only, so the test set stays a clean hold-out.
+4. **Model.** An unpenalised logistic regression in a scikit-learn pipeline. Numeric features are standardised, so coefficients are per +1 standard deviation; categorical features are one-hot encoded with the first category as the reference. Features: demographics, job level, tenure, income, commute, projects, promotion gap, the three survey scores, department and overtime.
+5. **Evaluation.** 5-fold cross-validated ROC AUC on the training set, plus hold-out accuracy, precision, recall, F1, ROC AUC and average precision. Because attrition is the minority class, results are shown at the default 0.5 threshold and at a threshold that maximises F1 on the training set (then applied unchanged to the test set). The majority-class accuracy is printed as a baseline.
+6. **Interpretation.** The same design matrix is fitted with `statsmodels` Logit to obtain odds ratios, 95% confidence intervals and p-values on the training set.
+
+### Outputs
+
+| File | Content |
+|------|---------|
+| `figures/roc_curve.png` | ROC curve on the hold-out set |
+| `figures/odds_ratios.png` | forest plot of odds ratios with 95% CI (log scale) |
+| `reports/metrics.json` | split settings, cross-validation AUC, hold-out metrics at both thresholds, odds ratios |
+
+All numbers come from the synthetic data at run time; run the scripts to see them. Because the data is generated from a known logistic relationship (see `data_description.md`), the model recovering similar directions of effect is expected and says nothing about real employees. The association found is not proof of causation.
 
 ## Project structure
 
@@ -57,7 +97,9 @@ employee-attrition-analysis/
 ├── requirements.txt
 ├── data_description.md
 ├── data/            # generated CSV files
-├── src/             # Python scripts
+├── figures/         # charts (created by src/eda.py and src/analysis.py)
+├── reports/         # metrics.json (created by src/analysis.py)
+├── src/             # Python scripts (data_generator, eda, analysis, utils)
 ├── sql/             # SQL queries
 └── tests/           # pytest tests
 ```
