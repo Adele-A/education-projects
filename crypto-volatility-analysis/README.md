@@ -20,8 +20,8 @@ and that turns these findings into simple risk metrics (for example volatility a
 
 ## Plan of the work
 
-1. **Data generation** (this step): simulate correlated daily prices for several assets with fat-tailed shocks and regime-switching volatility.
-2. **EDA**: price and return charts, summary statistics, distribution plots, normality checks, data quality checks.
+1. **Data generation**: simulate correlated daily prices for several assets with fat-tailed shocks and regime-switching volatility.
+2. **EDA** (this step): price and return charts, summary statistics, distribution plots, normality checks, data quality checks.
 3. **Analysis / model**: rolling volatility, volatility clustering, rolling and regime-conditional correlations, simple risk metrics such as historical VaR, and a comparison of the estimates with the known simulation settings.
 4. **SQL**: analytical queries over the CSV tables (for example loaded into SQLite from the standard library) for aggregations and window-function based volatility.
 5. **Tests**: pytest tests for the data generator (shapes, reproducibility, value constraints) and for the analysis functions.
@@ -53,9 +53,26 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-The script writes the CSV files to the `data/` folder and prints a short summary of the generated tables.
+The generator writes the CSV files to the `data/` folder and prints a short summary of the generated tables. The EDA script reads those files, so run the generator first.
+
+## EDA
+
+`src/eda.py` explores the generated tables. It:
+
+- prints the shape, dtypes and missing values of each table,
+- runs data quality checks (duplicate keys, non-positive prices and volumes, unknown assets, date coverage),
+- prints descriptive statistics of close price, log return and volume,
+- prints five aggregations: return distribution statistics per asset (volatility, skewness, excess kurtosis, Jarque-Bera test), return volatility by regime, days per regime, relative volume by size of the absolute return, and the correlation matrix of returns,
+- saves four charts to `figures/`:
+  - `prices_rebased.png`: prices rebased to 100 (log scale),
+  - `return_distributions.png`: standardized return histograms against a normal density,
+  - `rolling_volatility.png`: 30-day rolling annualized volatility with turbulent days shaded,
+  - `return_correlation.png`: heatmap of the return correlation matrix.
+
+All figures and numbers come from the script output on the synthetic data; run the script to see them.
 
 ---
 
