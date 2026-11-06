@@ -21,10 +21,10 @@ and that turns these findings into simple risk metrics (for example volatility a
 ## Plan of the work
 
 1. **Data generation**: simulate correlated daily prices for several assets with fat-tailed shocks and regime-switching volatility.
-2. **EDA** (this step): price and return charts, summary statistics, distribution plots, normality checks, data quality checks.
-3. **Analysis / model**: rolling volatility, volatility clustering, rolling and regime-conditional correlations, simple risk metrics such as historical VaR, and a comparison of the estimates with the known simulation settings.
+2. **EDA**: price and return charts, summary statistics, distribution plots, normality checks, data quality checks.
+3. **Analysis / model** (this step): rolling volatility, volatility clustering, rolling and regime-conditional correlations, historical VaR and Expected Shortfall, and a comparison of the estimates with the known simulation settings.
 4. **SQL**: analytical queries over the CSV tables (for example loaded into SQLite from the standard library) for aggregations and window-function based volatility.
-5. **Tests**: pytest tests for the data generator (shapes, reproducibility, value constraints) and for the analysis functions.
+5. **Tests**: pytest tests for the data generator (shapes, reproducibility, value constraints) and for the analysis functions in `src/utils.py`.
 
 ## Dataset (synthetic)
 
@@ -54,9 +54,10 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
 ```
 
-The generator writes the CSV files to the `data/` folder and prints a short summary of the generated tables. The EDA script reads those files, so run the generator first.
+The generator writes the CSV files to the `data/` folder. The EDA and analysis scripts read those files, so run the generator first.
 
 ## EDA
 
@@ -66,13 +67,30 @@ The generator writes the CSV files to the `data/` folder and prints a short summ
 - runs data quality checks (duplicate keys, non-positive prices and volumes, unknown assets, date coverage),
 - prints descriptive statistics of close price, log return and volume,
 - prints five aggregations: return distribution statistics per asset (volatility, skewness, excess kurtosis, Jarque-Bera test), return volatility by regime, days per regime, relative volume by size of the absolute return, and the correlation matrix of returns,
-- saves four charts to `figures/`:
-  - `prices_rebased.png`: prices rebased to 100 (log scale),
-  - `return_distributions.png`: standardized return histograms against a normal density,
-  - `rolling_volatility.png`: 30-day rolling annualized volatility with turbulent days shaded,
-  - `return_correlation.png`: heatmap of the return correlation matrix.
+- saves four charts to `figures/`: `prices_rebased.png`, `return_distributions.png`, `rolling_volatility.png`, `return_correlation.png`.
 
-All figures and numbers come from the script output on the synthetic data; run the script to see them.
+## Method (analysis)
+
+`src/analysis.py` uses the reusable functions in `src/utils.py` and works on the daily log returns (date x asset matrix). No model is trained, so there is no train/test split; the analysis is descriptive and the estimates are checked against the known simulation settings.
+
+1. **Rolling volatility.** Rolling standard deviation of returns (30-day window), annualized with the square root of 365 days, computed for an equal-weight basket. The basket return is the daily mean of the asset log returns (a daily-rebalanced approximation).
+2. **Volatility clustering.** For each asset and the basket: the lag-1 autocorrelation of absolute returns and the Ljung-Box test (10 lags, `statsmodels`) on squared returns. Positive autocorrelation and small p-values indicate clustering.
+3. **Regime-conditional volatility.** Annualized volatility is estimated separately on calm and turbulent days using the regime labels from `market_regimes.csv`. It is compared with the volatility implied by the generator settings (base annual volatility times the regime multiplier), as an estimated / expected ratio. The turbulent / calm ratio shows how strongly stress raises risk.
+4. **Correlation.** The average pairwise correlation is computed over all days, per regime, and on a rolling 60-day window. For each regime it is compared with the value implied by the one-factor simulation, where the correlation of two assets is the product of their market loadings (with the turbulent boost and the cap).
+5. **Risk metrics.** Historical Value-at-Risk (95% and 99%) and Expected Shortfall per asset and for the basket, reported as positive daily losses in log-return units, together with excess kurtosis as a tail-heaviness indicator.
+
+### Outputs
+
+- Printed, labelled metric tables (run the script to see the values).
+- `figures/rolling_vol_and_correlation.png`: basket rolling volatility and rolling average pairwise correlation, with turbulent days shaded.
+- `figures/volatility_estimated_vs_expected.png`: estimated vs simulated annualized volatility per asset for each regime.
+- `reports/metrics.json`: all metrics above in machine-readable form.
+
+### Limitations
+
+- The data is simulated, so the findings only show that the methods recover the simulation settings; they say nothing about real markets.
+- Historical VaR relies on a single simulated path of 730 days, so 99% estimates rest on few tail observations.
+- Regime labels are taken from the generator (ground truth). With real data they would have to be estimated.
 
 ---
 
