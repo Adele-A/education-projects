@@ -61,8 +61,11 @@ def merge_data(employees: pd.DataFrame, surveys: pd.DataFrame) -> pd.DataFrame:
     """Left-join surveys onto employees.
 
     Employees who did not answer the survey keep NaN in the survey columns.
+    The join is validated as one-to-one: if employee_id is duplicated in either
+    table, pandas raises MergeError instead of silently multiplying rows, which
+    would double-count employees and leak them into both train and test sets.
     """
-    return employees.merge(surveys, on="employee_id", how="left")
+    return employees.merge(surveys, on="employee_id", how="left", validate="one_to_one")
 
 
 def split_features_target(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
