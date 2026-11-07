@@ -18,8 +18,8 @@ Which employee and workplace characteristics (overtime, compensation, satisfacti
 
 1. **Data generation** (done): create reproducible synthetic tables in `data/`.
 2. **EDA** (done): check data quality and missing values, look at distributions, and compare attrition rates across groups.
-3. **Analysis and model** (this step): statistical tests for key drivers, then a logistic regression with evaluation on a hold-out set and interpretation of odds ratios.
-4. **SQL**: analytical queries (attrition by department, level, and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
+3. **Analysis and model** (done): statistical tests for key drivers, then a logistic regression with evaluation on a hold-out set and interpretation of odds ratios.
+4. **SQL** (this step): analytical queries (attrition by department, level, tenure, income and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
 5. **Tests**: `pytest` checks for the data generator and the data-processing code in `tests/`.
 
 ## Dataset (synthetic)
@@ -47,6 +47,7 @@ Run everything from the project root, in this order:
 python src/data_generator.py   # creates data/employees.csv and data/satisfaction_surveys.csv (seed 42)
 python src/eda.py              # exploratory analysis, charts in figures/
 python src/analysis.py         # statistical tests, model, metrics, charts, reports/metrics.json
+python src/run_sql.py          # runs the queries in sql/queries.sql on the CSV data (in-memory SQLite)
 ```
 
 Running the generator again reproduces identical files.
@@ -89,6 +90,25 @@ It also saves three charts to `figures/`:
 
 All numbers come from the synthetic data at run time; run the scripts to see them. Because the data is generated from a known logistic relationship (see `data_description.md`), the model recovering similar directions of effect is expected and says nothing about real employees. The association found is not proof of causation.
 
+## SQL analysis
+
+The queries in `sql/queries.sql` (SQLite dialect) answer the same business questions as the EDA, but in SQL. `src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql` (tables `employees` and `satisfaction_surveys`), splits the query file into statements, runs each one and prints its description and the first rows of the result. Nothing is written to disk and no database server is needed.
+
+Each query is preceded by a comment line of the form `-- Q<n>: <question>`, which the runner uses as its description.
+
+| Query | Question | SQL features |
+|-------|----------|--------------|
+| Q1 | Overall headcount, leavers and attrition rate | aggregates |
+| Q2 | Attrition by department | `GROUP BY`, `ORDER BY` |
+| Q3 | Attrition and average income with vs without overtime | `GROUP BY`, `AVG` |
+| Q4 | Attrition and average income by job level | `GROUP BY` |
+| Q5 | Attrition by tenure band | `CASE` |
+| Q6 | Attrition by job satisfaction, including survey non-respondents | `LEFT JOIN`, `COALESCE` |
+| Q7 | Highest-attrition department and overtime combinations (at least 30 employees) | `HAVING`, `LIMIT` |
+| Q8 | Attrition by income quartile | CTE, `NTILE` window function |
+
+Since `attrition` is coded 0/1, `AVG(attrition)` is the attrition rate. Results depend on the synthetic data generated at run time; they are not reproduced here, so run `python src/run_sql.py` to see them. As in the EDA, differences between groups are descriptive associations, not proof of causation.
+
 ## Project structure
 
 ```
@@ -99,8 +119,8 @@ employee-attrition-analysis/
 ├── data/            # generated CSV files
 ├── figures/         # charts (created by src/eda.py and src/analysis.py)
 ├── reports/         # metrics.json (created by src/analysis.py)
-├── src/             # Python scripts (data_generator, eda, analysis, utils)
-├── sql/             # SQL queries
+├── src/             # Python scripts (data_generator, eda, analysis, utils, run_sql)
+├── sql/             # SQL queries (queries.sql)
 └── tests/           # pytest tests
 ```
 
