@@ -22,9 +22,9 @@ and that turns these findings into simple risk metrics (for example volatility a
 
 1. **Data generation**: simulate correlated daily prices for several assets with fat-tailed shocks and regime-switching volatility.
 2. **EDA**: price and return charts, summary statistics, distribution plots, normality checks, data quality checks.
-3. **Analysis / model** (this step): rolling volatility, volatility clustering, rolling and regime-conditional correlations, historical VaR and Expected Shortfall, and a comparison of the estimates with the known simulation settings.
-4. **SQL**: analytical queries over the CSV tables (for example loaded into SQLite from the standard library) for aggregations and window-function based volatility.
-5. **Tests**: pytest tests for the data generator (shapes, reproducibility, value constraints) and for the analysis functions in `src/utils.py`.
+3. **Analysis / model**: rolling volatility, volatility clustering, rolling and regime-conditional correlations, historical VaR and Expected Shortfall, and a comparison of the estimates with the known simulation settings.
+4. **SQL**: analytical queries over the CSV tables, loaded into an in-memory SQLite database (standard library), for aggregations and window-function based volatility.
+5. **Tests** (this step): pytest tests for the data generator (columns, row counts, value ranges, reproducibility) and for the analysis functions in `src/utils.py`.
 
 ## Dataset (synthetic)
 
@@ -55,9 +55,26 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
+python -m pytest -q
 ```
 
-The generator writes the CSV files to the `data/` folder. The EDA and analysis scripts read those files, so run the generator first.
+The generator writes the CSV files to the `data/` folder. The EDA, analysis and SQL scripts read those files, so run the generator first. The tests do not need the CSV files or figures.
+
+## Tests
+
+Run the tests from the project root:
+
+```bash
+python -m pytest -q
+```
+
+The tests are fast (a few seconds at most) and build the synthetic tables in memory, so they do not read or write files in `data/`, `figures/` or `reports/`.
+
+| File | What it checks |
+|---|---|
+| `tests/test_data_generator.py` | Table columns and row counts, positive prices and volumes, valid regime labels, unique keys, reproducibility with the fixed seed, first close consistent with the start price and first return |
+| `tests/test_utils.py` | Wide returns matrix and regime split, historical VaR and Expected Shortfall on a hand-computed series, annualized and rolling volatility, mean pairwise correlation (plain and rolling), and the correlation implied by the simulation settings (including the loading cap) |
 
 ## EDA
 
@@ -91,6 +108,28 @@ The generator writes the CSV files to the `data/` folder. The EDA and analysis s
 - The data is simulated, so the findings only show that the methods recover the simulation settings; they say nothing about real markets.
 - Historical VaR relies on a single simulated path of 730 days, so 99% estimates rest on few tail observations.
 - Regime labels are taken from the generator (ground truth). With real data they would have to be estimated.
+
+## SQL
+
+`sql/queries.sql` contains 8 commented queries in the SQLite dialect. Each query is preceded by a comment line `-- Q<n>: <question>`. `src/run_sql.py` loads the three CSV tables into an in-memory SQLite database with `pandas.to_sql`, splits the file into statements, runs each one and prints the question and the first 10 rows of the result. Nothing is written to disk.
+
+| Query | Question |
+|---|---|
+| Q1 | Return and annualized volatility per asset over the whole period (join with `assets`) |
+| Q2 | Annualized volatility per asset on calm vs turbulent days (join with `market_regimes`) |
+| Q3 | Worst single day of each asset and its regime (`ROW_NUMBER` window function) |
+| Q4 | Days with the highest 30-day rolling annualized volatility of BTC (rolling window frame) |
+| Q5 | Frequency of daily losses larger than 5 percent by asset and regime (conditional aggregation) |
+| Q6 | Monthly equal-weight basket return and number of turbulent days (CTE, grouping by month) |
+| Q7 | Relative trading volume by absolute-return quartile (`NTILE` and `AVG ... OVER`) |
+| Q8 | Share of days on which all or none of the assets fell, by regime (co-movement under stress) |
+
+Notes:
+
+- SQLite has no standard deviation function, so volatility is computed as the population standard deviation `SQRT(AVG(r*r) - AVG(r)*AVG(r))`. It differs slightly from the sample standard deviation used by pandas in `src/analysis.py`.
+- `SQRT` is registered from Python by `src/run_sql.py`, so the queries run the same way on any SQLite build. If you run `sql/queries.sql` in another SQLite client, you need a build with math functions.
+- Window functions require SQLite 3.25 or newer, which ships with Python 3.11.
+- The query results are printed when you run the script; they are not copied here because they depend on the simulated data.
 
 ---
 
