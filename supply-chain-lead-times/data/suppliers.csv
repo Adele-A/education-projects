@@ -1,0 +1,61 @@
+supplier_id,supplier_name,country,region,category,transport_mode,reliability_tier,contract_lead_time_days,price_index
+S001,Supplier 001,Vietnam,Asia,Electronics,sea,B,26,0.981
+S002,Supplier 002,Turkey,Europe,Packaging,road,B,21,0.799
+S003,Supplier 003,Vietnam,Asia,Electronics,sea,B,28,1.034
+S004,Supplier 004,China,Asia,Components,sea,C,33,1.016
+S005,Supplier 005,USA,North America,Components,road,B,7,0.858
+S006,Supplier 006,India,Asia,Electronics,sea,B,39,0.913
+S007,Supplier 007,Vietnam,Asia,Components,sea,B,31,1.101
+S008,Supplier 008,Vietnam,Asia,Packaging,sea,B,40,1.112
+S009,Supplier 009,Mexico,North America,Components,road,A,9,0.995
+S010,Supplier 010,Turkey,Europe,Electronics,sea,B,16,1.054
+S011,Supplier 011,Poland,Europe,Electronics,road,A,11,0.847
+S012,Supplier 012,India,Asia,Packaging,air,B,31,1.189
+S013,Supplier 013,China,Asia,Electronics,air,C,32,1.034
+S014,Supplier 014,Vietnam,Asia,Raw Materials,sea,A,41,1.026
+S015,Supplier 015,Turkey,Europe,Components,sea,A,15,1.051
+S016,Supplier 016,Germany,Europe,Electronics,rail,A,10,1.022
+S017,Supplier 017,China,Asia,Components,air,A,45,1.198
+S018,Supplier 018,USA,North America,Electronics,rail,B,4,0.978
+S019,Supplier 019,Vietnam,Asia,Electronics,sea,B,32,0.867
+S020,Supplier 020,China,Asia,Packaging,sea,C,38,1.077
+S021,Supplier 021,Vietnam,Asia,Components,air,B,34,0.98
+S022,Supplier 022,Poland,Europe,Electronics,road,B,13,1.169
+S023,Supplier 023,India,Asia,Raw Materials,sea,C,24,0.754
+S024,Supplier 024,India,Asia,MRO,sea,A,35,0.899
+S025,Supplier 025,Vietnam,Asia,MRO,sea,A,33,0.96
+S026,Supplier 026,Mexico,North America,Packaging,road,A,6,0.841
+S027,Supplier 027,Turkey,Europe,Packaging,road,B,15,1.059
+S028,Supplier 028,USA,North America,Raw Materials,road,B,3,0.961
+S029,Supplier 029,Mexico,North America,Components,road,A,9,1.16
+S030,Supplier 030,China,Asia,Packaging,sea,B,39,0.916
+S031,Supplier 031,Vietnam,Asia,Raw Materials,sea,A,36,1.021
+S032,Supplier 032,India,Asia,Electronics,sea,B,33,1.011
+S033,Supplier 033,Poland,Europe,Electronics,road,B,8,1.225
+S034,Supplier 034,Poland,Europe,MRO,rail,B,18,0.966
+S035,Supplier 035,Turkey,Europe,Packaging,road,B,18,1.038
+S036,Supplier 036,Mexico,North America,Packaging,road,B,11,0.913
+S037,Supplier 037,Mexico,North America,Packaging,road,B,8,0.98
+S038,Supplier 038,China,Asia,Components,sea,A,32,0.936
+S039,Supplier 039,Germany,Europe,Electronics,road,A,16,0.989
+S040,Supplier 040,China,Asia,Electronics,air,C,35,0.824
+S041,Supplier 041,Turkey,Europe,Raw Materials,road,C,13,0.868
+S042,Supplier 042,Vietnam,Asia,Packaging,sea,B,30,1.349
+S043,Supplier 043,China,Asia,Components,sea,A,36,1.041
+S044,Supplier 044,Germany,Europe,Packaging,rail,C,12,0.882
+S045,Supplier 045,Vietnam,Asia,Packaging,sea,C,41,1.052
+S046,Supplier 046,Vietnam,Asia,MRO,sea,B,41,0.984
+S047,Supplier 047,Poland,Europe,Electronics,road,B,13,0.968
+S048,Supplier 048,Germany,Europe,Packaging,road,A,7,0.933
+S049,Supplier 049,China,Asia,Packaging,sea,A,37,1.019
+S050,Supplier 050,Mexico,North America,Packaging,road,C,10,1.006
+S051,Supplier 051,Mexico,North America,MRO,rail,B,11,1.038
+S052,Supplier 052,USA,North America,Raw Materials,road,A,9,1.338
+S053,Supplier 053,Vietnam,Asia,MRO,sea,B,36,1.046
+S054,Supplier 054,China,Asia,Raw Materials,sea,B,38,0.867
+S055,Supplier 055,China,Asia,Packaging,air,A,29,1.058
+S056,Supplier 056,Vietnam,Asia,Packaging,sea,C,26,1.111
+S057,Supplier 057,Turkey,Europe,MRO,sea,C,13,0.943
+S058,Supplier 058,China,Asia,Packaging,sea,B,45,1.006
+S059,Supplier 059,Mexico,North America,Raw Materials,road,B,10,0.97
+S060,Supplier 060,USA,North America,Electronics,road,B,4,1.177
