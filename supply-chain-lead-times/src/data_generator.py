@@ -55,7 +55,19 @@ TIERS = {
 
 
 def generate_suppliers(rng: np.random.Generator) -> pd.DataFrame:
-    """Create the supplier master table."""
+    """Create the supplier master table.
+
+    Each supplier gets a country (weighted), a reliability tier, a category,
+    a transport mode and a contractual lead time drawn from the country range.
+
+    Args:
+        rng: Seeded numpy random generator used for all draws.
+
+    Returns:
+        DataFrame with one row per supplier (N_SUPPLIERS rows), with columns
+        supplier_id, supplier_name, country, region, category, transport_mode,
+        reliability_tier, contract_lead_time_days and price_index.
+    """
     country_names = list(COUNTRIES)
     countries = rng.choice(country_names, size=N_SUPPLIERS, p=COUNTRY_WEIGHTS)
     tier_names = list(TIERS)
@@ -85,7 +97,20 @@ def generate_suppliers(rng: np.random.Generator) -> pd.DataFrame:
 
 
 def generate_orders(rng: np.random.Generator, suppliers: pd.DataFrame) -> pd.DataFrame:
-    """Create purchase orders with promised and actual delivery dates."""
+    """Create purchase orders with promised and actual delivery dates.
+
+    Actual lead times combine supplier tier noise, a Q4 seasonal slowdown,
+    expedited orders (faster) and occasional random disruptions. Dates are
+    returned as YYYY-MM-DD strings, sorted by order date.
+
+    Args:
+        rng: Seeded numpy random generator used for all draws.
+        suppliers: Supplier master table produced by generate_suppliers().
+
+    Returns:
+        DataFrame with N_ORDERS rows, one per purchase order, including
+        delay_days, on_time, order_qty, unit_price, is_expedited and order_value.
+    """
     # Some suppliers receive many more orders than others
     weights = rng.lognormal(mean=0.0, sigma=0.7, size=len(suppliers))
     weights /= weights.sum()
@@ -153,6 +178,12 @@ def generate_orders(rng: np.random.Generator, suppliers: pd.DataFrame) -> pd.Dat
 
 
 def main() -> None:
+    """Generate both synthetic tables and save them as CSV files in data/.
+
+    Seeds the random generator with SEED so the output is reproducible,
+    creates the data/ folder if needed, and prints row counts and the
+    on-time share of the generated orders.
+    """
     rng = np.random.default_rng(SEED)
     os.makedirs(DATA_DIR, exist_ok=True)
 
