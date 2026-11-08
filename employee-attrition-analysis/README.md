@@ -19,8 +19,8 @@ Which employee and workplace characteristics (overtime, compensation, satisfacti
 1. **Data generation** (done): create reproducible synthetic tables in `data/`.
 2. **EDA** (done): check data quality and missing values, look at distributions, and compare attrition rates across groups.
 3. **Analysis and model** (done): statistical tests for key drivers, then a logistic regression with evaluation on a hold-out set and interpretation of odds ratios.
-4. **SQL** (this step): analytical queries (attrition by department, level, tenure, income and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
-5. **Tests**: `pytest` checks for the data generator and the data-processing code in `tests/`.
+4. **SQL** (done): analytical queries (attrition by department, level, tenure, income and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
+5. **Tests** (this step): `pytest` checks for the data generator and the helper functions in `src/utils.py`, stored in `tests/`.
 
 ## Dataset (synthetic)
 
@@ -48,9 +48,25 @@ python src/data_generator.py   # creates data/employees.csv and data/satisfactio
 python src/eda.py              # exploratory analysis, charts in figures/
 python src/analysis.py         # statistical tests, model, metrics, charts, reports/metrics.json
 python src/run_sql.py          # runs the queries in sql/queries.sql on the CSV data (in-memory SQLite)
+python -m pytest -q            # runs the automated tests
 ```
 
 Running the generator again reproduces identical files.
+
+## Tests
+
+Run the tests from the project root:
+
+```bash
+python -m pytest -q
+```
+
+The tests live in `tests/` and take only a few seconds. They build small synthetic tables in memory with fixed seeds, so they do not need the CSV files in `data/`, the charts in `figures/` or any other output of the other scripts.
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | employee and survey columns, row counts, unique IDs, value ranges (age, job level, income, tenure, survey scores 1-4, promotion gap not above tenure), binary `attrition`, reproducibility with the same seed |
+| `tests/test_utils.py` | left join keeps employees without a survey, duplicate IDs are rejected, feature/target split, `compute_metrics` on a hand-checked example, `best_f1_threshold` on separable data, the model pipeline and the odds ratio table |
 
 ## Exploratory data analysis
 
@@ -121,7 +137,7 @@ employee-attrition-analysis/
 ├── reports/         # metrics.json (created by src/analysis.py)
 ├── src/             # Python scripts (data_generator, eda, analysis, utils, run_sql)
 ├── sql/             # SQL queries (queries.sql)
-└── tests/           # pytest tests
+└── tests/           # pytest tests (test_data_generator.py, test_utils.py)
 ```
 
 ---
