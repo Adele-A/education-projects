@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib.ticker import PercentFormatter
 from scipy import stats
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -133,9 +134,10 @@ def plot_normalized_prices(prices: pd.DataFrame) -> None:
     fig, ax = plt.subplots(figsize=(10, 5))
     rebased.plot(ax=ax)
     ax.set_yscale("log")
+    ax.grid(True, which="major", alpha=0.3)
     ax.set_title("Simulated prices rebased to 100 (log scale, synthetic data)")
     ax.set_xlabel("Date")
-    ax.set_ylabel("Rebased price (first day = 100)")
+    ax.set_ylabel("Rebased price index (first day = 100, log scale)")
     ax.legend(title="Asset")
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "prices_rebased.png", dpi=120)
@@ -153,8 +155,8 @@ def plot_return_distributions(prices: pd.DataFrame) -> None:
         ax.plot(grid, stats.norm.pdf(grid), color="black", lw=1,
                 label="Normal")
         ax.set_title(asset)
-        ax.set_xlabel("Standardized log return")
-        ax.set_ylabel("Density")
+        ax.set_xlabel("Standardized log return (z-score, unitless)")
+        ax.set_ylabel("Density (per unit z)")
     axes[0, 0].legend()
     fig.suptitle("Distribution of standardized daily returns (synthetic data)")
     fig.tight_layout()
@@ -167,7 +169,7 @@ def plot_rolling_volatility(prices: pd.DataFrame, regimes: pd.DataFrame) -> None
     wide = prices.pivot(index="date", columns="asset", values="log_return")
     rolling = wide.rolling(ROLLING_WINDOW).std() * np.sqrt(DAYS_PER_YEAR)
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(10, 5.5))
     rolling.plot(ax=ax)
 
     # Shade turbulent days (one-day-wide spans, merged visually)
@@ -175,10 +177,14 @@ def plot_rolling_volatility(prices: pd.DataFrame, regimes: pd.DataFrame) -> None
     for d in turbulent:
         ax.axvspan(d, d + pd.Timedelta(days=1), color="red", alpha=0.08, lw=0)
 
-    ax.set_title(f"{ROLLING_WINDOW}-day rolling annualized volatility "
-                 "(red = turbulent days, synthetic data)")
+    # Two-line title so it is not cut off at this figure width
+    ax.set_title(f"{ROLLING_WINDOW}-day rolling annualized volatility\n"
+                 "(red shading = turbulent days, synthetic data)")
     ax.set_xlabel("Date")
-    ax.set_ylabel("Annualized volatility")
+    # Ticks are shown in percent of annual volatility (0.5 -> 50%)
+    ax.set_ylabel("Annualized volatility (%)")
+    ax.yaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=0))
+    ax.grid(True, alpha=0.3)
     ax.legend(title="Asset", ncol=2)
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "rolling_volatility.png", dpi=120)
@@ -189,8 +195,11 @@ def plot_correlation_heatmap(corr: pd.DataFrame) -> None:
     """Chart 4: heatmap of the return correlation matrix."""
     fig, ax = plt.subplots(figsize=(6.5, 5.5))
     sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm",
-                vmin=-1, vmax=1, square=True, ax=ax)
+                vmin=-1, vmax=1, square=True, ax=ax,
+                cbar_kws={"label": "Correlation coefficient (-1 to 1)"})
     ax.set_title("Correlation of daily log returns (synthetic data)")
+    ax.set_xlabel("Asset")
+    ax.set_ylabel("Asset")
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "return_correlation.png", dpi=120)
     plt.close(fig)
