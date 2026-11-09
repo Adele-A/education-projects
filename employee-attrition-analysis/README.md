@@ -20,7 +20,7 @@ Which employee and workplace characteristics (overtime, compensation, satisfacti
 2. **EDA** (done): check data quality and missing values, look at distributions, and compare attrition rates across groups.
 3. **Analysis and model** (done): statistical tests for key drivers, then a logistic regression with evaluation on a hold-out set and interpretation of odds ratios.
 4. **SQL** (done): analytical queries (attrition by department, level, tenure, income and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
-5. **Tests** (this step): `pytest` checks for the data generator and the helper functions in `src/utils.py`, stored in `tests/`.
+5. **Tests** (done): `pytest` checks for the data generator and the helper functions in `src/utils.py`, stored in `tests/`.
 
 ## Dataset (synthetic)
 
@@ -35,13 +35,13 @@ The tables are linked by `employee_id`. Attrition depends on the other columns t
 
 ## How to run
 
-Install dependencies (Python 3.11):
+Requirements: Python 3.11. Optionally create a virtual environment first, then install the dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run everything from the project root, in this order:
+Run everything from the project root, in this order. Each script creates the folders it writes to (`data/`, `figures/`, `reports/`). `analysis.py` and `run_sql.py` read the CSV files created in step 1, so generate the data first:
 
 ```bash
 python src/data_generator.py   # creates data/employees.csv and data/satisfaction_surveys.csv (seed 42)
@@ -51,7 +51,7 @@ python src/run_sql.py          # runs the queries in sql/queries.sql on the CSV 
 python -m pytest -q            # runs the automated tests
 ```
 
-Running the generator again reproduces identical files.
+Running the generator again reproduces identical files, because the random seed is fixed.
 
 ## Tests
 
