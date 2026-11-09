@@ -24,11 +24,25 @@ TABLES = ["assets", "market_regimes", "daily_prices"]
 MAX_ROWS = 10  # rows printed per query
 
 
+def safe_sqrt(x):
+    """Square root that can be registered as a SQLite user-defined function.
+
+    The volatility queries compute SQRT(AVG(r*r) - AVG(r)*AVG(r)). Floating-point
+    cancellation can leave such a variance slightly negative when the true value
+    is essentially zero. math.sqrt would raise on it and SQLite would abort the
+    whole query, so tiny negative values are clamped to zero. NULL (None) is
+    passed through unchanged.
+    """
+    if x is None:
+        return None
+    return math.sqrt(max(float(x), 0.0))
+
+
 def load_database() -> sqlite3.Connection:
     """Create an in-memory SQLite database from the CSV tables."""
     conn = sqlite3.connect(":memory:")
     # Make SQRT available regardless of how SQLite was compiled
-    conn.create_function("SQRT", 1, lambda x: None if x is None else math.sqrt(x))
+    conn.create_function("SQRT", 1, safe_sqrt)
     for name in TABLES:
         path = DATA_DIR / f"{name}.csv"
         if not path.exists():
