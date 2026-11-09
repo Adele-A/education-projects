@@ -14,8 +14,8 @@ Quantify on-time delivery performance and lead time variability by supplier, cou
 
 ## Plan of the work
 
-1. **Data generation**: build a synthetic supplier master table and a purchase order table with promised and actual delivery dates (this step).
-2. **EDA**: data quality checks, distributions of lead time and delay, and on-time rate by segment and over time.
+1. **Data generation**: build a synthetic supplier master table and a purchase order table with promised and actual delivery dates (done).
+2. **EDA**: data quality checks, distributions of lead time and delay, and on-time rate by segment and over time (this step).
 3. **Analysis / model**: supplier KPIs (on-time rate, mean and standard deviation of lead time, coefficient of variation), statistical comparisons between segments, and a regression model of delivery delay on supplier and order attributes.
 4. **SQL**: KPI queries (on-time rate by supplier, monthly trend, supplier ranking) over the same tables.
 5. **Tests**: pytest checks for data integrity (keys, date logic, value ranges) and KPI calculations.
@@ -38,9 +38,26 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-The script is non-interactive and creates the `data/` folder if it does not exist.
+Both scripts are non-interactive. The generator creates the `data/` folder and `eda.py` creates the `figures/` folder if they do not exist.
+
+## EDA
+
+`src/eda.py` loads both CSV files from `data/` and:
+
+- prints shape, data types, missing values and duplicate counts for each table;
+- runs integrity checks (unique keys, no orphan supplier ids, `delay_days` and `on_time` consistent with the dates);
+- prints descriptive statistics of lead times, delay, quantity, price and order value, plus the overall on-time rate;
+- prints aggregations of on-time rate, delay and lead time mean/standard deviation by reliability tier, transport mode, region, category, order quarter and expedited flag, and lists the suppliers with the lowest on-time rates;
+- saves four charts to `figures/`:
+  - `delay_distribution.png`: histogram of delay days;
+  - `on_time_by_mode_tier.png`: on-time rate by transport mode and reliability tier;
+  - `monthly_on_time_rate.png`: monthly on-time rate trend;
+  - `lead_time_by_region.png`: actual lead time boxplots by region.
+
+All figures and numbers come from the script output on the synthetic data; run the script to see them.
 
 ---
 
