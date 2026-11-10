@@ -15,8 +15,8 @@ Quantify on-time delivery performance and lead time variability by supplier, cou
 ## Plan of the work
 
 1. **Data generation**: build a synthetic supplier master table and a purchase order table with promised and actual delivery dates (done).
-2. **EDA**: data quality checks, distributions of lead time and delay, and on-time rate by segment and over time (this step).
-3. **Analysis / model**: supplier KPIs (on-time rate, mean and standard deviation of lead time, coefficient of variation), statistical comparisons between segments, and a regression model of delivery delay on supplier and order attributes.
+2. **EDA**: data quality checks, distributions of lead time and delay, and on-time rate by segment and over time (done).
+3. **Analysis / model**: supplier KPIs (on-time rate, mean and standard deviation of lead time, coefficient of variation), statistical comparisons between segments, and models of late delivery and delay (this step).
 4. **SQL**: KPI queries (on-time rate by supplier, monthly trend, supplier ranking) over the same tables.
 5. **Tests**: pytest checks for data integrity (keys, date logic, value ranges) and KPI calculations.
 
@@ -39,9 +39,10 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
 ```
 
-Both scripts are non-interactive. The generator creates the `data/` folder and `eda.py` creates the `figures/` folder if they do not exist.
+All scripts are non-interactive. The generator creates the `data/` folder, `eda.py` creates `figures/`, and `analysis.py` creates `reports/` if they do not exist.
 
 ## EDA
 
@@ -57,7 +58,29 @@ Both scripts are non-interactive. The generator creates the `data/` folder and `
   - `monthly_on_time_rate.png`: monthly on-time rate trend;
   - `lead_time_by_region.png`: actual lead time boxplots by region.
 
-All figures and numbers come from the script output on the synthetic data; run the script to see them.
+## Method
+
+`src/analysis.py` merges orders with supplier attributes and runs the following steps. Reusable logic (KPI functions, test wrappers, feature preparation, metric functions) lives in `src/utils.py`.
+
+1. **KPIs.** For each supplier, country and reliability tier it computes the number of orders, on-time rate (share of orders with `delay_days <= 0`), mean delay, and the mean, standard deviation and coefficient of variation (CV = std / mean) of actual lead time. Suppliers with at least 30 orders are ranked, and the Spearman correlation between supplier lead time CV and on-time rate is reported.
+2. **Statistical tests.** Chi-square tests of independence between the on-time flag and reliability tier, transport mode, region, category and season (Q4 vs the rest of the year), plus a Kruskal-Wallis test of delay days across reliability tiers.
+3. **Late delivery models.** The target is a late delivery (`on_time == 0`). Features are promised lead time, expedited flag, log order quantity, a Q4 flag, and one-hot encoded transport mode, reliability tier, region and category. The data is split 75/25 into train and test sets with `random_state=42`, stratified on the target. Two classifiers are fitted:
+   - logistic regression on standardised features (odds ratios are per 1 standard deviation of a feature);
+   - gradient boosting, whose drivers are ranked with permutation importance on the test set (drop in ROC AUC).
+
+   Test metrics are ROC AUC, accuracy, precision, recall and F1, compared against a majority-class accuracy baseline.
+4. **Delay regression.** A linear regression of `delay_days` on the same features, evaluated on the same test set with MAE, RMSE and R², compared with a baseline that always predicts the training mean delay.
+
+Caveats: the data is synthetic, so the drivers found simply reflect the rules written into the generator. Reliability tier is a generator-level attribute and in real data it would have to be estimated from history. Feature importance describes association in this dataset, not causal effects.
+
+### Outputs
+
+- Console output with all labelled metrics, tables and test results.
+- `reports/metrics.json`: summary of KPIs, test results and model metrics.
+- `figures/supplier_otd_vs_variability.png`: supplier on-time rate vs lead time CV, coloured by tier.
+- `figures/late_delivery_feature_importance.png`: permutation importance of the drivers of late delivery.
+
+No results are quoted in this README; run the scripts to see the actual numbers.
 
 ---
 
