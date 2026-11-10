@@ -21,6 +21,7 @@ Which employee and workplace characteristics (overtime, compensation, satisfacti
 3. **Analysis and model** (done): statistical tests for key drivers, then a logistic regression with evaluation on a hold-out set and interpretation of odds ratios.
 4. **SQL** (done): analytical queries (attrition by department, level, tenure, income and survey scores) run against the CSV data loaded into SQLite, stored in `sql/`.
 5. **Tests** (done): `pytest` checks for the data generator and the helper functions in `src/utils.py`, stored in `tests/`.
+6. **Results and conclusions** (done): key numbers, figures, conclusions and limitations summarised in this README.
 
 ## Dataset (synthetic)
 
@@ -29,7 +30,7 @@ Two tables are saved to `data/`:
 | File | Grain | Rows |
 |------|-------|------|
 | `employees.csv` | one row per employee, includes the target `attrition` | 3000 |
-| `satisfaction_surveys.csv` | one row per employee who answered the survey (some employees did not) | fewer than 3000 |
+| `satisfaction_surveys.csv` | one row per employee who answered the survey (some employees did not) | 2740 |
 
 The tables are linked by `employee_id`. Attrition depends on the other columns through a hidden logistic relationship defined in the generator, plus random noise. The full column list with types, meanings and value ranges is in [data_description.md](data_description.md).
 
@@ -61,7 +62,7 @@ Run the tests from the project root:
 python -m pytest -q
 ```
 
-The tests live in `tests/` and take only a few seconds. They build small synthetic tables in memory with fixed seeds, so they do not need the CSV files in `data/`, the charts in `figures/` or any other output of the other scripts.
+The tests live in `tests/` and take only a few seconds. They build small synthetic tables in memory with fixed seeds, so they do not need the CSV files in `data/`, the charts in `figures/` or any other output of the other scripts. In the last run, 11 tests passed.
 
 | File | What it checks |
 |------|----------------|
@@ -104,7 +105,7 @@ It also saves three charts to `figures/`:
 | `figures/odds_ratios.png` | forest plot of odds ratios with 95% CI (log scale) |
 | `reports/metrics.json` | split settings, cross-validation AUC, hold-out metrics at both thresholds, odds ratios |
 
-All numbers come from the synthetic data at run time; run the scripts to see them. Because the data is generated from a known logistic relationship (see `data_description.md`), the model recovering similar directions of effect is expected and says nothing about real employees. The association found is not proof of causation.
+Because the data is generated from a known logistic relationship (see `data_description.md`), the model recovering similar directions of effect is expected and says nothing about real employees. The association found is not proof of causation.
 
 ## SQL analysis
 
@@ -123,7 +124,90 @@ Each query is preceded by a comment line of the form `-- Q<n>: <question>`, whic
 | Q7 | Highest-attrition department and overtime combinations (at least 30 employees) | `HAVING`, `LIMIT` |
 | Q8 | Attrition by income quartile | CTE, `NTILE` window function |
 
-Since `attrition` is coded 0/1, `AVG(attrition)` is the attrition rate. Results depend on the synthetic data generated at run time; they are not reproduced here, so run `python src/run_sql.py` to see them. As in the EDA, differences between groups are descriptive associations, not proof of causation.
+Since `attrition` is coded 0/1, `AVG(attrition)` is the attrition rate. As in the EDA, differences between groups are descriptive associations, not proof of causation.
+
+## Results
+
+All numbers below come from the program output of a run on the synthetic data (seed 42). Rates are shares, e.g. 0.225 = 22.5%.
+
+### Attrition in the data
+
+- Overall: **676 of 3000** employees left, an attrition rate of **0.225**.
+- **Overtime:** 0.370 with overtime (927 employees) vs 0.161 without (2073 employees).
+- **Job level:** 0.379 at level 1 (692 employees), 0.229 at level 2, 0.112 at level 3 and 0.071 at level 4 (113 employees). Level 5 has a single employee, so its rate (0.000) is not informative.
+- **Income quartile (SQL Q8):** 0.376 in the lowest quartile, then 0.245, 0.183, and 0.097 in the highest.
+- **Job satisfaction (SQL Q6):** 0.399 for score 1, 0.236 for 2, 0.145 for 3 and 0.069 for 4. The 260 employees with no survey response have a rate of 0.212.
+- **Department:** highest in Sales (0.268) and Support (0.267), lowest in Finance (0.169) and HR (0.179).
+- **Department and overtime (SQL Q7):** Sales with overtime is the highest group at 0.443 (280 employees).
+- **Tenure band (EDA):** 0.276 for 0-2 years, 0.226 for 2-5, 0.221 for 5-10 and 0.149 for 10+ years.
+
+![Attrition rate by department and overtime](figures/attrition_by_group.png)
+
+### Logistic regression (hold-out set of 750 employees)
+
+- Split: 2250 training and 750 test rows (stratified, `random_state=42`).
+- 5-fold cross-validated ROC AUC on the training set: **0.772** (std 0.031).
+- Hold-out ROC AUC: **0.775**; average precision: **0.515**.
+- Majority-class baseline accuracy on the test set: **0.775**.
+
+| Metric (test set) | Threshold 0.5 | Tuned threshold (0.244) |
+|-------------------|---------------|-------------------------|
+| Accuracy | 0.799 | 0.711 |
+| Precision | 0.636 | 0.412 |
+| Recall | 0.249 | 0.669 |
+| F1 | 0.357 | 0.510 |
+| True positives / false negatives | 42 / 127 | 113 / 56 |
+| False positives / true negatives | 24 / 557 | 161 / 420 |
+
+The tuned threshold was chosen to maximise F1 on the training set and then applied unchanged to the test set.
+
+![ROC curve on the hold-out set](figures/roc_curve.png)
+
+### Odds ratios (statsmodels Logit, training set)
+
+Numeric features are standardised, so their odds ratios are per +1 standard deviation. The values below are those visible in the program output; the full table is in `reports/metrics.json`.
+
+| Feature | Odds ratio | 95% CI | p-value |
+|---------|-----------|--------|---------|
+| `overtime_Yes` (vs No) | 2.48 | 1.95 - 3.16 | 2.0e-13 |
+| `job_satisfaction` | 0.60 | 0.53 - 0.69 | 3.8e-15 |
+| `work_life_balance` | 0.73 | 0.64 - 0.82 | 2.6e-07 |
+| `monthly_income` | 0.71 | 0.52 - 0.96 | 0.024 |
+| `years_since_last_promotion` | 1.34 | 1.20 - 1.50 | 3.4e-07 |
+| `distance_from_home_km` | 1.29 | 1.16 - 1.43 | 3.5e-06 |
+| `job_level` | 0.80 | 0.60 - 1.07 | 0.130 |
+
+![Odds ratios with 95% confidence intervals](figures/odds_ratios.png)
+
+## Conclusions
+
+These conclusions describe associations in synthetic data only.
+
+- **Overtime is the strongest single signal.** Attrition is 0.370 with overtime vs 0.161 without, and in the model overtime has the largest odds ratio (2.48, CI 1.95 - 3.16).
+- **Lower satisfaction goes with higher attrition.** The rate falls from 0.399 (score 1) to 0.069 (score 4), and both job satisfaction (OR 0.60) and work-life balance (OR 0.73) have odds ratios below 1 in the model.
+- **Junior and lower-paid employees leave more often.** Attrition is 0.379 at job level 1 vs 0.071 at level 4, and 0.376 in the lowest income quartile vs 0.097 in the highest. In the model, income keeps an odds ratio below 1 (0.71), while job level's interval includes 1 (0.60 - 1.07). The two may carry overlapping information, since average income rises with job level (SQL Q4), but this was not tested directly.
+- **A longer gap since the last promotion and a longer commute go with higher odds of leaving** (OR 1.34 and 1.29 per +1 SD).
+- **Retention efforts could start with overtime-heavy groups,** for example Sales employees with overtime (0.443, 280 employees), and with low-satisfaction and early-career employees.
+- **The model ranks leavers moderately well but is not a precise predictor.** Hold-out ROC AUC is 0.775. At the default 0.5 threshold, accuracy (0.799) is only slightly above the majority-class baseline (0.775) and recall is 0.249, so most leavers are missed. At the tuned threshold, recall rises to 0.669 at the cost of precision (0.412).
+
+## Limitations & next steps
+
+**Limitations**
+
+- **The data is synthetic.** It comes from a hidden logistic relationship in the generator, so the model finding the same drivers is expected. Nothing here shows how a real company behaves.
+- **Associations, not causes.** Group differences and odds ratios do not show that changing a factor (for example removing overtime) would reduce attrition.
+- **Single split.** Hold-out metrics come from one 75/25 split; cross-validation (AUC std 0.031) suggests some variation between folds.
+- **Exploratory tests.** Univariate p-values are not adjusted for multiple comparisons.
+- **Small groups.** Job level 5 has one employee, and some department and overtime groups are small, so their rates are unstable.
+- **Survey non-response.** 260 employees have no survey answers; their missing scores are imputed with the training median.
+- **Library warning.** `analysis.py` currently triggers a scikit-learn `FutureWarning` about the deprecated `penalty` argument of `LogisticRegression`. It does not change the results here, but the call should be updated for newer scikit-learn versions.
+
+**Next steps**
+
+- Try regularised logistic regression and tree-based models, and compare them using cross-validation.
+- Check calibration of predicted probabilities and choose a decision threshold based on the relative cost of missing a leaver vs a false alarm.
+- Test interactions such as overtime by department, and check collinearity between income and job level.
+- Validate the approach on real, anonymised HR data (with permission) before drawing any business conclusions.
 
 ## Project structure
 
