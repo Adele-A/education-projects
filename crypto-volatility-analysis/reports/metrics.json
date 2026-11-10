@@ -165,7 +165,7 @@
   "volatility_clustering": {
     "ADA": {
       "abs_return_autocorr_lag1": 0.14387500726338756,
-      "ljung_box_sq_pvalue": 3.413545023461708e-08
+      "ljung_box_sq_pvalue": 3.413545023461696e-08
     },
     "BNB": {
       "abs_return_autocorr_lag1": 0.16976688983398824,
@@ -176,19 +176,19 @@
       "ljung_box_sq_pvalue": 0.0034812721408766954
     },
     "DOGE": {
-      "abs_return_autocorr_lag1": 0.17895053902678093,
+      "abs_return_autocorr_lag1": 0.17895053902678099,
       "ljung_box_sq_pvalue": 1.1148387544464102e-10
     },
     "ETH": {
       "abs_return_autocorr_lag1": 0.2030702153181935,
-      "ljung_box_sq_pvalue": 0.0009313199789196746
+      "ljung_box_sq_pvalue": 0.0009313199789196707
     },
     "SOL": {
       "abs_return_autocorr_lag1": 0.15632476782525329,
-      "ljung_box_sq_pvalue": 0.011628053312135386
+      "ljung_box_sq_pvalue": 0.011628053312135376
     },
     "BASKET": {
-      "abs_return_autocorr_lag1": 0.16621932707759818,
+      "abs_return_autocorr_lag1": 0.16621932707759812,
       "ljung_box_sq_pvalue": 0.032006545841898125
     }
   }

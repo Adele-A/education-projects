@@ -4,6 +4,7 @@ Small hand-made inputs with known answers are used where possible, plus the
 synthetic tables built in memory by the generator. No files or figures are used.
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -77,3 +78,30 @@ def test_correlation_helpers():
     assert utils.expected_mean_corr([0.9, 0.9], boost=0.1, max_loading=0.95) == (
         pytest.approx(0.9025)
     )
+
+
+def test_expected_annual_vol_scales_settings_by_regime():
+    """Expected volatility is the base annual volatility times the regime multiplier."""
+    calm = utils.expected_annual_vol(dg.ASSETS, dg.VOL_MULTIPLIER[0])
+    turbulent = utils.expected_annual_vol(dg.ASSETS, dg.VOL_MULTIPLIER[1])
+    base = dg.ASSETS.set_index("asset")["annual_volatility"]
+
+    assert list(calm.index) == list(dg.ASSETS["asset"])
+    pd.testing.assert_series_equal(calm, base * dg.VOL_MULTIPLIER[0], check_names=False)
+    # Turbulent / calm ratio equals the ratio of the two multipliers
+    np.testing.assert_allclose(turbulent / calm, dg.VOL_MULTIPLIER[1] / dg.VOL_MULTIPLIER[0])
+
+
+def test_to_jsonable_makes_output_json_serialisable():
+    """NaN becomes None and numpy scalars become plain Python before json.dumps."""
+    obj = {
+        "vol": np.float64(0.5),
+        "count": np.int64(3),
+        "missing": np.nan,
+        "nested": [np.float32(1.5), {"flag": "ok"}],
+    }
+    result = utils.to_jsonable(obj)
+    assert result == {"vol": 0.5, "count": 3, "missing": None,
+                      "nested": [1.5, {"flag": "ok"}]}
+    assert isinstance(result["count"], int)
+    assert json.loads(json.dumps(result))["missing"] is None
