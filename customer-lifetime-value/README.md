@@ -16,15 +16,15 @@ How much revenue can we expect from each customer over the next 12 months, and w
 
 ## Plan of the work
 
-1. **Data generation** – create synthetic customers and transactions (done in this step).
-2. **EDA** – distributions of orders per customer, order values, inter-purchase times, cohort behavior, and segment differences.
+1. **Data generation**: create synthetic customers and transactions (implemented in `src/data_generator.py`).
+2. **EDA**: distributions of orders per customer, order values, inter-purchase times, cohort behavior, and segment differences.
 3. **Analysis / model**
    - RFM-style summary per customer (frequency, recency, age *T*, monetary value).
    - Historical CLV by customer and segment.
    - BG/NBD-style approximation fitted with `scipy` (no specialized CLV libraries), with an average order value component for predictive CLV.
    - Validation with a holdout period.
-4. **SQL** – queries for cohort revenue, customer-level summaries, and top customers (in `sql/`).
-5. **Tests** – `pytest` tests for data integrity and for the core functions (in `tests/`).
+4. **SQL**: queries for cohort revenue, customer-level summaries, and top customers (in `sql/`).
+5. **Tests**: `pytest` tests for data integrity and for the core functions (in `tests/`).
 
 ## Dataset (synthetic)
 
@@ -39,6 +39,8 @@ Customers are acquired between 2024-01-01 and 2025-06-30, and the observation wi
 
 ## How to run
 
+Requirements: Python 3.11 and the packages listed in `requirements.txt`. No network access or user input is needed.
+
 From the project root:
 
 ```bash
@@ -46,7 +48,14 @@ pip install -r requirements.txt
 python src/data_generator.py
 ```
 
-The script is non-interactive, uses a fixed random seed (42), and creates the `data/` folder if needed.
+The script:
+
+- uses a fixed random seed (42), so re-running it produces the same files;
+- creates the `data/` folder if it does not exist;
+- overwrites `data/customers.csv` and `data/transactions.csv` if they already exist;
+- prints the number of rows saved to each file.
+
+Run the script from any directory with `python /path/to/customer-lifetime-value/src/data_generator.py`; the paths are resolved relative to the project, not the current directory.
 
 ## Project structure
 
@@ -58,6 +67,8 @@ customer-lifetime-value/
 ├── src/
 │   └── data_generator.py
 └── data/               # created by the generator
+    ├── customers.csv
+    └── transactions.csv
 ```
 
 ---
