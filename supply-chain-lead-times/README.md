@@ -16,33 +16,35 @@ Quantify on-time delivery performance and lead time variability by supplier, cou
 
 1. **Data generation**: build a synthetic supplier master table and a purchase order table with promised and actual delivery dates (done).
 2. **EDA**: data quality checks, distributions of lead time and delay, and on-time rate by segment and over time (done).
-3. **Analysis / model**: supplier KPIs (on-time rate, mean and standard deviation of lead time, coefficient of variation), statistical comparisons between segments, and models of late delivery and delay (this step).
+3. **Analysis / model**: supplier KPIs (on-time rate, mean and standard deviation of lead time, coefficient of variation), statistical comparisons between segments, and models of late delivery and delay (implemented in `src/analysis.py`).
 4. **SQL**: KPI queries (on-time rate by supplier, monthly trend, supplier ranking) over the same tables.
 5. **Tests**: pytest checks for data integrity (keys, date logic, value ranges) and KPI calculations.
 
 ## Dataset (synthetic)
 
-Two CSV tables are written to `data/`:
+The generator writes two CSV tables to `data/`:
 
 | Table | Rows | Description |
 |---|---|---|
 | `suppliers.csv` | 60 | Supplier master data: country, region, category, transport mode, reliability tier, contractual lead time |
 | `purchase_orders.csv` | 5000 | Purchase orders from 2023-01-01 to 2025-06-30 with promised and actual delivery dates, quantity, price and on-time flag |
 
-Lead times depend on geography and transport mode, supplier reliability tier, a mild Q4 seasonal slowdown, expedited orders, and occasional random disruptions. Full column definitions are in [data_description.md](data_description.md).
+Lead times depend on geography and transport mode, supplier reliability tier, a mild Q4 seasonal slowdown, expedited orders, and occasional random disruptions. Full column definitions and valid ranges are in [data_description.md](data_description.md).
 
 ## How to run
 
-From the project root:
+Requirements: Python 3.11 and the packages listed in `requirements.txt`.
 
 ```bash
 pip install -r requirements.txt
-python src/data_generator.py
-python src/eda.py
-python src/analysis.py
+python src/data_generator.py   # 1. creates data/suppliers.csv and data/purchase_orders.csv
+python src/eda.py              # 2. reads data/, creates figures/
+python src/analysis.py         # 3. reads data/, creates figures/ and reports/
 ```
 
-All scripts are non-interactive. The generator creates the `data/` folder, `eda.py` creates `figures/`, and `analysis.py` creates `reports/` if they do not exist.
+Run the steps in this order: `eda.py` and `analysis.py` read the CSV files written by the generator. The generator uses a fixed seed (42), so running it again produces the same data. The scripts resolve paths from their own location, so they work from the project root or any other working directory.
+
+All scripts are non-interactive: they ask for no input, need no network access and do not open plot windows. Charts are saved as PNG files.
 
 ## EDA
 
@@ -60,7 +62,7 @@ All scripts are non-interactive. The generator creates the `data/` folder, `eda.
 
 ## Method
 
-`src/analysis.py` merges orders with supplier attributes and runs the following steps. Reusable logic (KPI functions, test wrappers, feature preparation, metric functions) lives in `src/utils.py`.
+`src/analysis.py` merges orders with supplier attributes and runs the following steps. Reusable logic (KPI functions, test wrappers, feature preparation, metric functions) lives in `src/utils.py`, which `analysis.py` imports from the same `src/` folder.
 
 1. **KPIs.** For each supplier, country and reliability tier it computes the number of orders, on-time rate (share of orders with `delay_days <= 0`), mean delay, and the mean, standard deviation and coefficient of variation (CV = std / mean) of actual lead time. Suppliers with at least 30 orders are ranked, and the Spearman correlation between supplier lead time CV and on-time rate is reported.
 2. **Statistical tests.** Chi-square tests of independence between the on-time flag and reliability tier, transport mode, region, category and season (Q4 vs the rest of the year), plus a Kruskal-Wallis test of delay days across reliability tiers.
@@ -76,9 +78,10 @@ Caveats: the data is synthetic, so the drivers found simply reflect the rules wr
 ### Outputs
 
 - Console output with all labelled metrics, tables and test results.
-- `reports/metrics.json`: summary of KPIs, test results and model metrics.
+- `figures/` from `eda.py`: the four EDA charts listed above.
 - `figures/supplier_otd_vs_variability.png`: supplier on-time rate vs lead time CV, coloured by tier.
 - `figures/late_delivery_feature_importance.png`: permutation importance of the drivers of late delivery.
+- `reports/metrics.json`: summary of KPIs, test results and model metrics.
 
 No results are quoted in this README; run the scripts to see the actual numbers.
 
