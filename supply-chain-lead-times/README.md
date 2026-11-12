@@ -36,13 +36,17 @@ Lead times depend on geography and transport mode, supplier reliability tier, a 
 Requirements: Python 3.11 and the packages listed in `requirements.txt`.
 
 ```bash
+python -m venv .venv                 # optional, but recommended
+source .venv/bin/activate            # on Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python src/data_generator.py   # 1. creates data/suppliers.csv and data/purchase_orders.csv
 python src/eda.py              # 2. reads data/, creates figures/
 python src/analysis.py         # 3. reads data/, creates figures/ and reports/
 ```
 
-Run the steps in this order: `eda.py` and `analysis.py` read the CSV files written by the generator. The generator uses a fixed seed (42), so running it again produces the same data. The scripts resolve paths from their own location, so they work from the project root or any other working directory.
+Run the steps in this order: `eda.py` and `analysis.py` read the CSV files written by the generator. The `data/`, `figures/` and `reports/` folders are created automatically if they are missing. Re-running a script overwrites its previous output files.
+
+The generator uses a fixed seed (42), so running it again produces the same data. The scripts resolve paths from their own location, so they work from the project root or any other working directory.
 
 All scripts are non-interactive: they ask for no input, need no network access and do not open plot windows. Charts are saved as PNG files.
 
@@ -62,7 +66,7 @@ All scripts are non-interactive: they ask for no input, need no network access a
 
 ## Method
 
-`src/analysis.py` merges orders with supplier attributes and runs the following steps. Reusable logic (KPI functions, test wrappers, feature preparation, metric functions) lives in `src/utils.py`, which `analysis.py` imports from the same `src/` folder.
+`src/analysis.py` merges orders with supplier attributes and runs the following steps. Reusable logic (KPI functions, statistical test wrappers, feature preparation, metric functions) lives in `src/utils.py`, which `analysis.py` imports from the same `src/` folder.
 
 1. **KPIs.** For each supplier, country and reliability tier it computes the number of orders, on-time rate (share of orders with `delay_days <= 0`), mean delay, and the mean, standard deviation and coefficient of variation (CV = std / mean) of actual lead time. Suppliers with at least 30 orders are ranked, and the Spearman correlation between supplier lead time CV and on-time rate is reported.
 2. **Statistical tests.** Chi-square tests of independence between the on-time flag and reliability tier, transport mode, region, category and season (Q4 vs the rest of the year), plus a Kruskal-Wallis test of delay days across reliability tiers.
@@ -75,7 +79,7 @@ All scripts are non-interactive: they ask for no input, need no network access a
 
 Caveats: the data is synthetic, so the drivers found simply reflect the rules written into the generator. Reliability tier is a generator-level attribute and in real data it would have to be estimated from history. Feature importance describes association in this dataset, not causal effects.
 
-### Outputs
+## Outputs
 
 - Console output with all labelled metrics, tables and test results.
 - `figures/` from `eda.py`: the four EDA charts listed above.
