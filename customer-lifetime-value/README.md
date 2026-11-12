@@ -17,13 +17,13 @@ How much revenue can we expect from each customer over the next 12 months, and w
 ## Plan of the work
 
 1. **Data generation**: create synthetic customers and transactions (implemented in `src/data_generator.py`).
-2. **EDA**: distributions of orders per customer, order values, inter-purchase times, cohort behavior, and segment differences.
-3. **Analysis / model**
+2. **EDA**: distributions of orders per customer, order values, inter-purchase times, cohort behavior, and segment differences (implemented in `src/eda.py`).
+3. **Analysis / model** (implemented in `src/analysis.py` and `src/utils.py`)
    - RFM-style summary per customer (frequency, recency, age *T*, monetary value).
    - Historical CLV by customer and segment.
-   - BG/NBD-style approximation fitted with `scipy` (no specialized CLV libraries), with an average order value component for predictive CLV.
+   - BG/NBD model fitted with `scipy` (no specialized CLV libraries), with an average order value component for predictive CLV.
    - Validation with a holdout period.
-4. **SQL**: queries for cohort revenue, customer-level summaries, and top customers (in `sql/`).
+4. **SQL**: queries for totals, segments, cohorts, monthly revenue, and top customers (in `sql/queries.sql`, run by `src/run_sql.py`).
 5. **Tests**: `pytest` tests for data integrity and for the core functions (in `tests/`).
 
 ## Dataset (synthetic)
@@ -46,16 +46,113 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
+python src/run_sql.py
+python -m pytest -q
 ```
 
-The script:
+The data generator:
 
 - uses a fixed random seed (42), so re-running it produces the same files;
 - creates the `data/` folder if it does not exist;
 - overwrites `data/customers.csv` and `data/transactions.csv` if they already exist;
 - prints the number of rows saved to each file.
 
-Run the script from any directory with `python /path/to/customer-lifetime-value/src/data_generator.py`; the paths are resolved relative to the project, not the current directory.
+Run the scripts from any directory with `python /path/to/customer-lifetime-value/src/<name>.py`; the paths are resolved relative to the project, not the current directory.
+
+## Exploratory data analysis
+
+`src/eda.py` reads the two CSV files from `data/` (run the generator first) and:
+
+- prints the shape, data types, missing values per column and descriptive statistics of both tables;
+- builds a customer-level summary (orders, revenue, average order value, days observed, acquisition quarter);
+- prints aggregations: orders per customer (including the share of one-time buyers), revenue concentration among the top 10% of customers, segment comparisons by acquisition channel and by country, acquisition cohorts by quarter, and inter-purchase times;
+- saves four charts to `figures/` (the folder is created automatically):
+  - `orders_per_customer.png`: number of customers by number of orders;
+  - `order_value_distribution.png`: histogram of order values;
+  - `revenue_by_channel.png`: average revenue per customer by acquisition channel;
+  - `monthly_revenue.png`: total revenue per calendar month.
+
+All numbers appear in the script output when it is run. Because customers acquired later have been observed for a shorter time, raw revenue comparisons between cohorts are not like-for-like; this is the motivation for the predictive model.
+
+## Method
+
+`src/analysis.py` runs the full analysis; reusable functions (feature preparation, the BG/NBD model, metrics) live in `src/utils.py`.
+
+### 1. Customer features (RFM-style)
+
+For a chosen cutoff date, each customer is summarized by:
+
+- **frequency**: number of repeat orders (orders minus one);
+- **recency**: weeks between the first and the last order;
+- **T**: weeks between the first order and the cutoff (how long the customer has been observable);
+- **average order value** and total revenue to date (**historical CLV**).
+
+### 2. BG/NBD model
+
+The model follows the BG/NBD idea (Fader, Hardie and Lee, 2005), implemented directly with `numpy`/`scipy`:
+
+- while active, a customer buys at a customer-specific rate, with rates varying across customers following a Gamma distribution (parameters `r`, `alpha`);
+- after each purchase, a customer becomes inactive with a customer-specific probability, varying across customers following a Beta distribution (parameters `a`, `b`);
+- the four parameters are estimated by maximum likelihood (`scipy.optimize.minimize`, L-BFGS-B) from each customer's frequency, recency and *T*;
+- from the fitted model, the script computes each customer's **probability of being alive** and the **expected number of purchases** in a future period.
+
+Practical choices: time is measured in weeks, and `a` is kept slightly above 1 because the expected-purchases formula requires `a > 1`.
+
+### 3. Predictive CLV
+
+Predicted CLV for the next 12 months (365 days) is:
+
+`expected purchases in the next 365 days x average order value`
+
+The average order value is shrunk toward the global mean with weight `n / (n + 5)`, where `n` is the customer's number of orders. This simple heuristic limits noise for customers with few orders; the constant 5 is a choice, not a fitted value.
+
+### 4. Validation
+
+The split is **by time**, not random, because the task is forecasting: the model is fitted on orders up to 182 days before the end of the observation window and its predictions are compared with the orders that actually occurred in those final 182 days. It is compared with a **naive baseline** that extrapolates each customer's observed purchase rate and ignores churn. Reported metrics (customer-level MAE, RMSE, R-squared, total predicted vs actual, Spearman rank correlation, and the share of actual holdout revenue captured by the top 10% of customers ranked by predicted revenue) are printed by the script and saved to `reports/metrics.json`. This README does not quote them; read them from the script output.
+
+Because the data is synthetic and generated by a similar process, good agreement is expected and does not show how the method would perform on real customers.
+
+### 5. Final model and outputs
+
+The model is refitted on all data to forecast the next 12 months. The script prints historical vs predicted CLV by acquisition channel and country, and the top 10 customers by predicted revenue.
+
+Outputs:
+
+- `figures/holdout_calibration.png`: mean predicted vs actual holdout revenue per decile of predicted revenue;
+- `figures/clv_by_channel.png`: average historical revenue vs predicted next-12-month revenue by channel;
+- `reports/metrics.json`: validation metrics, fitted parameters and final-model summary.
+
+## SQL analysis
+
+`sql/queries.sql` contains 8 queries in the SQLite dialect over the two CSV tables. Each query is preceded by a comment line of the form `-- Q<n>: <question>`. Dates are stored as `YYYY-MM-DD` text.
+
+| Query | Question |
+|-------|----------|
+| Q1 | Overall totals: customers, orders, revenue, average order value |
+| Q2 | Distribution of customers by number of orders |
+| Q3 | Channel comparison: orders and revenue per customer |
+| Q4 | Revenue per acquisition cohort (quarter) |
+| Q5 | Repeat-purchase rate by country |
+| Q6 | Monthly revenue with a running total (window function) |
+| Q7 | Top 10 customers by historical revenue and days since last order |
+| Q8 | Share of revenue from the top 10% of customers |
+
+`src/run_sql.py` loads the CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one, and prints the question and the first rows of the result. It needs the data files, so run the generator first. Results appear only in the script output; the README does not quote them. The window-function queries (Q6, Q8) need SQLite 3.25 or newer, which ships with current Python 3.11 builds.
+
+## Tests
+
+The `tests/` folder contains 8 `pytest` tests. Run them from the project root:
+
+```bash
+python -m pytest -q
+```
+
+- `tests/test_data_generator.py` (3 tests): generates the tables in memory with the project's own functions and checks column names, row counts, value ranges (dates, order values, channels, countries), the customer/transaction relationship, and reproducibility with the fixed seed.
+- `tests/test_utils.py` (5 tests): checks the functions in `src/utils.py`: the RFM features and the holdout actuals on a tiny hand-made table with values computed by hand, the shrunk average order value, basic properties of the BG/NBD predictions (probabilities between 0 and 1, non-negative expected purchases that grow with the horizon), a model fit on freshly generated synthetic data, and the evaluation metrics and the naive baseline.
+
+The tests do not read the CSV files in `data/`, do not use the figures, and need no network access, so they can run before any other script. They are fast (a few seconds). Each test file adds `src/` to `sys.path` at the top so the modules can be imported without installing the project.
 
 ## Project structure
 
@@ -65,10 +162,28 @@ customer-lifetime-value/
 ├── requirements.txt
 ├── data_description.md
 ├── src/
-│   └── data_generator.py
-└── data/               # created by the generator
-    ├── customers.csv
-    └── transactions.csv
+│   ├── data_generator.py
+│   ├── eda.py
+│   ├── utils.py
+│   ├── analysis.py
+│   └── run_sql.py
+├── sql/
+│   └── queries.sql
+├── tests/
+│   ├── test_data_generator.py
+│   └── test_utils.py
+├── data/               # created by the generator
+│   ├── customers.csv
+│   └── transactions.csv
+├── figures/            # created by the EDA and analysis scripts
+│   ├── orders_per_customer.png
+│   ├── order_value_distribution.png
+│   ├── revenue_by_channel.png
+│   ├── monthly_revenue.png
+│   ├── holdout_calibration.png
+│   └── clv_by_channel.png
+└── reports/            # created by the analysis script
+    └── metrics.json
 ```
 
 ---
