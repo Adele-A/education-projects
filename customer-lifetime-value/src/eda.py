@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import seaborn as sns  # noqa: E402
+from matplotlib.ticker import FuncFormatter  # noqa: E402
 
 # Project paths (resolved relative to the project root)
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -25,6 +26,12 @@ FIGURES_DIR = PROJECT_DIR / "figures"
 
 # End of the observation window (same as in the data generator)
 OBSERVATION_END = pd.Timestamp("2025-12-31")
+
+# The data has no currency: values are in a generic currency unit
+UNIT_LABEL = "currency units"
+
+# Tick formatter with thousands separators, e.g. 12,500 instead of 12500
+THOUSANDS = FuncFormatter(lambda value, _pos: f"{value:,.0f}")
 
 sns.set_theme(style="whitegrid")
 
@@ -83,6 +90,11 @@ def segment_table(summary: pd.DataFrame, by: str) -> pd.DataFrame:
     )
 
 
+def pretty_label(code: str) -> str:
+    """Turn a category code such as 'paid_search' into a readable label ('Paid search')."""
+    return str(code).replace("_", " ").capitalize()
+
+
 def print_aggregations(summary: pd.DataFrame, transactions: pd.DataFrame) -> None:
     """Print the key aggregations."""
     print("\n=== Aggregation 1: distribution of orders per customer ===")
@@ -127,8 +139,9 @@ def plot_orders_per_customer(summary: pd.DataFrame, cap: int = 10) -> None:
     ax.set_xticks(range(cap))
     ax.set_xticklabels(labels)
     ax.set_title("Orders per customer (synthetic data)")
-    ax.set_xlabel("Number of orders")
+    ax.set_xlabel("Number of orders per customer")
     ax.set_ylabel("Number of customers")
+    ax.yaxis.set_major_formatter(THOUSANDS)
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "orders_per_customer.png", dpi=120)
     plt.close(fig)
@@ -139,8 +152,9 @@ def plot_order_value_distribution(transactions: pd.DataFrame) -> None:
     fig, ax = plt.subplots(figsize=(8, 5))
     sns.histplot(transactions["order_value"], bins=40, color="darkorange", ax=ax)
     ax.set_title("Distribution of order values (synthetic data)")
-    ax.set_xlabel("Order value")
+    ax.set_xlabel(f"Order value ({UNIT_LABEL})")
     ax.set_ylabel("Number of orders")
+    ax.yaxis.set_major_formatter(THOUSANDS)
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "order_value_distribution.png", dpi=120)
     plt.close(fig)
@@ -151,14 +165,20 @@ def plot_revenue_by_channel(summary: pd.DataFrame) -> None:
     order = (
         summary.groupby("acquisition_channel")["revenue"].mean().sort_values(ascending=False).index
     )
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(9, 5))
     sns.barplot(
         data=summary, x="acquisition_channel", y="revenue", order=order,
         color="seagreen", errorbar=("ci", 95), ax=ax,
     )
-    ax.set_title("Average revenue per customer by acquisition channel (synthetic data)")
+    ax.set_xticks(range(len(order)))
+    ax.set_xticklabels([pretty_label(code) for code in order])
+    ax.set_title(
+        "Average revenue per customer by acquisition channel\n"
+        "(synthetic data; error bars show 95% confidence intervals)"
+    )
     ax.set_xlabel("Acquisition channel")
-    ax.set_ylabel("Average revenue per customer")
+    ax.set_ylabel(f"Average revenue per customer ({UNIT_LABEL})")
+    ax.yaxis.set_major_formatter(THOUSANDS)
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "revenue_by_channel.png", dpi=120)
     plt.close(fig)
@@ -168,11 +188,12 @@ def plot_monthly_revenue(transactions: pd.DataFrame) -> None:
     """Line chart of total revenue per calendar month."""
     monthly = transactions.set_index("transaction_date")["order_value"].resample("MS").sum()
 
-    fig, ax = plt.subplots(figsize=(9, 5))
+    fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(monthly.index, monthly.values, marker="o", color="purple")
-    ax.set_title("Monthly revenue (synthetic data)")
-    ax.set_xlabel("Month")
-    ax.set_ylabel("Total revenue")
+    ax.set_title("Monthly revenue, all customers (synthetic data)")
+    ax.set_xlabel("Calendar month")
+    ax.set_ylabel(f"Total revenue per month ({UNIT_LABEL})")
+    ax.yaxis.set_major_formatter(THOUSANDS)
     fig.autofmt_xdate()
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "monthly_revenue.png", dpi=120)
