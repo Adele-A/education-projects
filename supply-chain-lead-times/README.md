@@ -17,8 +17,8 @@ Quantify on-time delivery performance and lead time variability by supplier, cou
 1. **Data generation**: build a synthetic supplier master table and a purchase order table with promised and actual delivery dates (done).
 2. **EDA**: data quality checks, distributions of lead time and delay, and on-time rate by segment and over time (done).
 3. **Analysis / model**: supplier KPIs (on-time rate, mean and standard deviation of lead time, coefficient of variation), statistical comparisons between segments, and models of late delivery and delay (implemented in `src/analysis.py`).
-4. **SQL**: KPI queries (on-time rate by supplier, monthly trend, supplier ranking) over the same tables.
-5. **Tests**: pytest checks for data integrity (keys, date logic, value ranges) and KPI calculations.
+4. **SQL**: KPI queries (on-time rate by supplier, monthly trend, supplier ranking) over the same tables (implemented in `sql/queries.sql`, run by `src/run_sql.py`).
+5. **Tests**: pytest checks for data generation (columns, row counts, keys, date logic, value ranges) and for the helper functions in `src/utils.py` (implemented in `tests/`).
 
 ## Dataset (synthetic)
 
@@ -42,13 +42,30 @@ pip install -r requirements.txt
 python src/data_generator.py   # 1. creates data/suppliers.csv and data/purchase_orders.csv
 python src/eda.py              # 2. reads data/, creates figures/
 python src/analysis.py         # 3. reads data/, creates figures/ and reports/
+python src/run_sql.py          # 4. runs sql/queries.sql on the CSV data and prints results
+python -m pytest -q            # 5. runs the tests (see "Tests" below)
 ```
 
-Run the steps in this order: `eda.py` and `analysis.py` read the CSV files written by the generator. The `data/`, `figures/` and `reports/` folders are created automatically if they are missing. Re-running a script overwrites its previous output files.
+Run the steps in this order: `eda.py`, `analysis.py` and `run_sql.py` read the CSV files written by the generator. The `data/`, `figures/` and `reports/` folders are created automatically if they are missing. Re-running a script overwrites its previous output files.
 
 The generator uses a fixed seed (42), so running it again produces the same data. The scripts resolve paths from their own location, so they work from the project root or any other working directory.
 
 All scripts are non-interactive: they ask for no input, need no network access and do not open plot windows. Charts are saved as PNG files.
+
+## Tests
+
+Run the tests from the project root:
+
+```bash
+python -m pytest -q
+```
+
+The tests live in `tests/` and are fast (a few seconds). They do not read or write `data/`, `figures/` or `reports/`, so they can be run before or after the other scripts.
+
+- `tests/test_data_generator.py`: calls the generator functions with the project seed and checks column names, row counts, unique keys, supplier references, date logic (`promised_date`, `delivery_date`, `delay_days`, `on_time`), value ranges and reproducibility.
+- `tests/test_utils.py`: checks the functions in `src/utils.py` on small hand-made tables: coefficient of variation, segment and supplier KPIs, chi-square and Kruskal-Wallis wrappers, feature preparation, and classification, regression and baseline metrics.
+
+Each test file adds `src/` to `sys.path`, so the modules can be imported without installing the project.
 
 ## EDA
 
@@ -79,6 +96,23 @@ All scripts are non-interactive: they ask for no input, need no network access a
 
 Caveats: the data is synthetic, so the drivers found simply reflect the rules written into the generator. Reliability tier is a generator-level attribute and in real data it would have to be estimated from history. Feature importance describes association in this dataset, not causal effects.
 
+## SQL
+
+`sql/queries.sql` holds eight commented queries in the SQLite dialect. Each query is preceded by a `-- Q<n>:` comment line that states the business question:
+
+| Query | Question |
+|---|---|
+| Q1 | On-time rate by reliability tier and transport mode |
+| Q2 | Lowest on-time suppliers with at least 30 orders, ranked with `RANK()` |
+| Q3 | Monthly on-time rate with a 3-month moving average (window function) |
+| Q4 | Lead time mean, standard deviation and CV by country |
+| Q5 | On-time rate for orders placed in Q4 vs the rest of the year |
+| Q6 | Expedited vs standard orders |
+| Q7 | Suppliers that perform worst relative to their own tier average (CTEs) |
+| Q8 | Share of order value delivered late, by category |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql` (dates stay as `YYYY-MM-DD` text), splits `queries.sql` into statements on semicolons, runs each one and prints its description and the first rows of the result. Nothing is written to disk. Because SQLite has no standard deviation function, Q4 computes the population standard deviation from averages, so it can differ slightly from the sample standard deviation reported by `analysis.py`.
+
 ## Outputs
 
 - Console output with all labelled metrics, tables and test results.
@@ -86,6 +120,7 @@ Caveats: the data is synthetic, so the drivers found simply reflect the rules wr
 - `figures/supplier_otd_vs_variability.png`: supplier on-time rate vs lead time CV, coloured by tier.
 - `figures/late_delivery_feature_importance.png`: permutation importance of the drivers of late delivery.
 - `reports/metrics.json`: summary of KPIs, test results and model metrics.
+- Console output of `run_sql.py` with the result of each SQL query.
 
 No results are quoted in this README; run the scripts to see the actual numbers.
 
