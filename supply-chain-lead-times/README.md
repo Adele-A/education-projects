@@ -122,7 +122,122 @@ Caveats: the data is synthetic, so the drivers found simply reflect the rules wr
 - `reports/metrics.json`: summary of KPIs, test results and model metrics.
 - Console output of `run_sql.py` with the result of each SQL query.
 
-No results are quoted in this README; run the scripts to see the actual numbers.
+## Results
+
+All numbers below come from the program output of a run with seed 42 on the synthetic data (5000 orders, 60 suppliers). Re-running the scripts reproduces them.
+
+### Overall delivery performance
+
+- Overall on-time rate: **0.515**; mean delay: **1.53 days**.
+- Expedited share of orders: **0.085**.
+- 48 suppliers have at least 30 orders and are ranked.
+
+### On-time rate by segment
+
+| Segment | On-time rate | Mean delay (days) |
+|---|---|---|
+| Reliability tier A | 0.621 | 0.122 |
+| Reliability tier B | 0.484 | 1.551 |
+| Reliability tier C | 0.395 | 4.351 |
+| Transport: road | 0.587 | 0.606 |
+| Transport: rail | 0.574 | 0.687 |
+| Transport: air | 0.497 | 1.337 |
+| Transport: sea | 0.467 | 2.236 |
+| Region: North America | 0.636 | 0.407 |
+| Region: Europe | 0.510 | 0.999 |
+| Region: Asia | 0.466 | 2.268 |
+| Orders placed in Q1-Q3 | 0.553 | 1.19 |
+| Orders placed in Q4 | 0.371 | 2.83 |
+| Standard orders | 0.478 | 2.076 |
+| Expedited orders | 0.917 | -4.348 |
+
+By category, the on-time rate ranges from **0.623** (Raw Materials) to **0.471** (MRO); Packaging is **0.476**. The share of order value delivered late is highest for Packaging (**0.565**) and lowest for Raw Materials (**0.311**).
+
+### Suppliers
+
+- Lowest on-time rates (at least 30 orders): S004 (0.312, China, tier C, mean delay 7.200 days), S002 (0.314, Turkey, tier B) and S021 (0.328, Vietnam, tier B).
+- Highest on-time rates: S026 (0.750, Mexico, tier A), S029 (0.745, Mexico, tier A) and S052 (0.728, USA, tier A).
+- Spearman correlation between supplier lead time CV and on-time rate (n=48): **rho = -0.301, p = 0.03793**.
+- Lead time CV by country ranges from **0.453** (USA) to **0.222** (India), while the lead time standard deviation is largest for China (**10.04** days) and Vietnam (**9.61** days) and smallest for USA (**2.88** days).
+- Lead time CV by tier: A 0.602, B 0.622, C 0.537.
+
+### Statistical tests
+
+All tests reject independence or equality at very small p-values:
+
+| Test | Statistic | p-value |
+|---|---|---|
+| Chi-square, on-time vs reliability tier | 131.94 | 2.238e-29 |
+| Chi-square, on-time vs transport mode | 61.55 | 2.738e-13 |
+| Chi-square, on-time vs region | 91.69 | 1.231e-20 |
+| Chi-square, on-time vs category | 49.50 | 4.599e-10 |
+| Chi-square, on-time vs season (Q4 vs rest) | 108.84 | 1.762e-25 |
+| Kruskal-Wallis, delay days by tier | H = 140.48 | 3.134e-31 |
+
+### Models
+
+Test set of 1250 orders, majority-class accuracy baseline **0.515**.
+
+| Model (target: late delivery) | ROC AUC | Accuracy | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| Logistic regression | 0.700 | 0.650 | 0.624 | 0.696 | 0.658 |
+| Gradient boosting | 0.707 | 0.655 | 0.634 | 0.683 | 0.658 |
+
+- Logistic regression odds ratios per 1 SD: reliability tier C **1.459**, tier B **1.373**, Q4 flag **1.370**, promised lead time **1.140**, expedited **0.498**, region North America **0.799**.
+- Permutation importance (ROC AUC drop) of gradient boosting: `is_expedited` **0.0776**, `is_q4` **0.0510**, `promised_lead_time_days` **0.0507**, `reliability_tier_C` **0.0349**, `reliability_tier_B` **0.0203**.
+
+| Delay regression (test set) | MAE | RMSE | R² |
+|---|---|---|---|
+| Linear regression | 3.598 | 6.037 | 0.144 |
+| Mean-only baseline | 3.980 | 6.526 | -0.000 |
+
+### Figures
+
+On-time rate over time (monthly trend from `eda.py`):
+
+![Monthly on-time rate](figures/monthly_on_time_rate.png)
+
+Supplier on-time rate vs lead time variability (CV), coloured by reliability tier:
+
+![Supplier on-time rate vs lead time variability](figures/supplier_otd_vs_variability.png)
+
+Permutation importance of the drivers of late delivery (gradient boosting):
+
+![Permutation importance of late delivery drivers](figures/late_delivery_feature_importance.png)
+
+## Conclusions
+
+These conclusions apply to the synthetic dataset only and are limited to what the numbers above show.
+
+- **The supply base is unreliable against promised dates.** Only 0.515 of orders arrive on or before the promised date, with a mean delay of 1.53 days.
+- **Reliability tier separates suppliers clearly.** The on-time rate falls from 0.621 (A) to 0.484 (B) and 0.395 (C), and mean delay rises from 0.122 to 4.351 days. Tier is significant in both the chi-square and Kruskal-Wallis tests.
+- **Orders placed in Q4 are much more often late.** The on-time rate is 0.371 in Q4 against 0.553 in Q1-Q3. Q4 is also among the top drivers in both models, so safety stock or earlier ordering for Q4 looks worth considering.
+- **Expedited orders are the strongest single signal.** Their on-time rate is 0.917 against 0.478 for standard orders, and `is_expedited` has the largest permutation importance (0.0776). Expedited orders are only 0.085 of volume, and this is an association, not proof that expediting itself causes on-time delivery.
+- **Long routes perform worse.** Sea (0.467) and Asia (0.466) have the lowest on-time rates and the highest mean delays. The raw road figure (0.587) and its adjusted odds ratio (1.095 per SD) point in different directions, so transport mode and region are entangled and should not be read separately.
+- **Variability depends on the metric used.** In absolute terms, long-haul countries (China, Vietnam) have the largest lead time standard deviations. In relative terms (CV), the USA is the highest (0.453) and India the lowest (0.222). Across suppliers, higher CV goes with a lower on-time rate, but the correlation is only weak to moderate (rho = -0.301, p = 0.03793). The tier CVs (A 0.602, B 0.622, C 0.537) do not rise steadily with worse tiers.
+- **Individual suppliers stand out.** S004 (0.312 on-time, mean delay 7.200 days) and S002 (0.314) are the weakest ranked suppliers, making them natural candidates for renegotiation or diversification. Q7 shows S002, S025 and S021 as the furthest below their own tier average (gaps of -0.170, -0.164 and -0.155).
+- **Packaging is the weakest category by value.** Its late value share is 0.565, while Raw Materials is 0.311.
+- **Late deliveries are only partly predictable.** Both classifiers reach about 0.70 ROC AUC and accuracy of 0.650-0.655 against a 0.515 baseline. The delay regression explains only R² = 0.144 of delay variance, which beats the mean baseline (MAE 3.598 vs 3.980) but leaves most of it unexplained.
+
+## Limitations & next steps
+
+**Limitations**
+
+- The data is **synthetic**. The drivers found (tier, Q4, expedited, geography) reflect rules written into `src/data_generator.py`, so the results say nothing about real suppliers or logistics networks.
+- Reliability tier is a generator attribute. In practice it would have to be estimated from past performance, which risks leakage when evaluated on the same history.
+- Model and importance results show association, not causation. Features such as region and transport mode are correlated, which makes single coefficients hard to interpret.
+- Model performance is modest (ROC AUC around 0.70) and was measured on a single 75/25 split with no cross-validation or hyperparameter tuning.
+- Supplier rankings for suppliers with only 30 or so orders rest on small samples, and no confidence intervals are reported.
+- The Q4 effect is defined on the order quarter, and only about two and a half years of data are covered, so the seasonal pattern cannot be separated from year-to-year effects.
+
+**Next steps**
+
+- Add bootstrap confidence intervals for supplier on-time rates and rank suppliers with a shrinkage or Bayesian estimate.
+- Use cross-validation and a time-based split (train on earlier orders, test on later ones) to check that the models hold up over time.
+- Fit a multivariable model that accounts for region and transport mode together, or add an interaction term, to separate their effects.
+- Translate the delay distribution into safety stock levels per supplier or country, using the lead time standard deviation.
+- Replace the generator-level tier with a tier estimated from the first part of the history, then validate it on later orders.
+- Repeat the analysis on real purchase order data, if available.
 
 ---
 
