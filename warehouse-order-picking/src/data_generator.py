@@ -24,9 +24,13 @@ N_ORDERS = 5000
 START_DATE = "2025-01-01"
 N_DAYS = 90
 
+# Type of one profile entry:
+# (share, base_lines, line_lambda, unit_lambda_per_line, unit_weight_kg, zone_prob)
+ProfileParams = tuple[float, int, float, float, float, float]
+
 # Latent order profiles (not saved to the output tables).
 # Each profile defines the typical shape of an order.
-PROFILES = {
+PROFILES: dict[str, ProfileParams] = {
     # name: (share, base_lines, extra_lines_lambda, extra_units_per_line,
     #        mean_unit_weight_kg, zone_prob)
     "small":      (0.45, 1, 1.0, 0.3, 0.6, 0.10),
@@ -56,7 +60,12 @@ def generate_pickers(rng: np.random.Generator) -> pd.DataFrame:
 
 
 def generate_orders(rng: np.random.Generator, pickers: pd.DataFrame) -> pd.DataFrame:
-    """Create the orders table; picking time depends on order and picker traits."""
+    """Create the orders table; picking time depends on order and picker traits.
+
+    Each order is drawn from one latent profile in PROFILES. The returned
+    DataFrame has one row per order with the columns described in
+    data_description.md, including the picking time in minutes.
+    """
     names = list(PROFILES.keys())
     shares = [PROFILES[n][0] for n in names]
     profile_idx = rng.choice(len(names), size=N_ORDERS, p=shares)
