@@ -1,0 +1,120 @@
+{
+  "regression": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "n_train": 4000,
+    "n_test": 1000,
+    "models": {
+      "baseline_mean": {
+        "mae": 2.918783775,
+        "rmse": 3.6459902230952634,
+        "r2": -5.386212210534147e-05
+      },
+      "linear_log_target": {
+        "mae": 1.0743951646879422,
+        "rmse": 1.5510546543073216,
+        "r2": 0.8190133279269971,
+        "cv_r2_train": 0.8540962608796505
+      },
+      "gradient_boosting": {
+        "mae": 0.9318389138425621,
+        "rmse": 1.3232815711334578,
+        "r2": 0.8682662907604849,
+        "cv_r2_train": 0.8694587436918573
+      }
+    },
+    "linear_standardized_coefficients": {
+      "n_lines": 0.1661065389940501,
+      "distance_m": 0.1363263962666807,
+      "n_units": 0.10131766885203586,
+      "total_weight_kg": 0.08353528096634005,
+      "n_zones": 0.050810390335306356,
+      "shift_night": 0.022670345679876743,
+      "contract_type_temp": 0.018800556447244217,
+      "experience_months": -0.016186831943041845,
+      "contract_type_part_time": -0.0034881921543904767,
+      "priority_standard": 0.0028014706524630713,
+      "shift_morning": -0.0016141707941538734
+    },
+    "gradient_boosting_importances": {
+      "n_units": 0.45431235805128073,
+      "distance_m": 0.2093846081269968,
+      "n_lines": 0.14909297351215797,
+      "total_weight_kg": 0.1462565594804228,
+      "experience_months": 0.019123434922243006,
+      "n_zones": 0.01487937311088391,
+      "shift_night": 0.0032916323719723007,
+      "contract_type_temp": 0.0024733495635849917,
+      "contract_type_part_time": 0.0010343003917453802,
+      "shift_morning": 0.00014263935927621171,
+      "priority_standard": 8.771109435992972e-06
+    }
+  },
+  "clustering": {
+    "k_scores": [
+      {
+        "k": 3,
+        "inertia": 6799.304755915646,
+        "silhouette": 0.48875634389509703
+      },
+      {
+        "k": 4,
+        "inertia": 4973.555569072334,
+        "silhouette": 0.48486487814115725
+      },
+      {
+        "k": 5,
+        "inertia": 4146.9807082718,
+        "silhouette": 0.46474367732044536
+      },
+      {
+        "k": 6,
+        "inertia": 3366.826596259802,
+        "silhouette": 0.39617437923054316
+      },
+      {
+        "k": 7,
+        "inertia": 2978.912339160853,
+        "silhouette": 0.419266796606217
+      },
+      {
+        "k": 8,
+        "inertia": 2673.0558343548682,
+        "silhouette": 0.4186744753487261
+      }
+    ],
+    "selected_k": 3,
+    "cluster_profiles": {
+      "0": {
+        "orders": 2293.0,
+        "share_pct": 45.86,
+        "n_lines": 2.01,
+        "n_units": 2.61,
+        "total_weight_kg": 1.63,
+        "n_zones": 1.27,
+        "distance_m": 72.16,
+        "pick_time_min": 3.79
+      },
+      "1": {
+        "orders": 1518.0,
+        "share_pct": 30.36,
+        "n_lines": 5.75,
+        "n_units": 31.37,
+        "total_weight_kg": 54.27,
+        "n_zones": 1.67,
+        "distance_m": 100.73,
+        "pick_time_min": 7.97
+      },
+      "2": {
+        "orders": 1189.0,
+        "share_pct": 23.78,
+        "n_lines": 9.29,
+        "n_units": 21.3,
+        "total_weight_kg": 20.31,
+        "n_zones": 3.71,
+        "distance_m": 187.39,
+        "pick_time_min": 10.74
+      }
+    }
+  }
+}

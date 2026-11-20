@@ -41,9 +41,57 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
 ```
 
-The generator creates the `data/` folder if needed and writes `data/pickers.csv` and `data/orders.csv`. It runs non-interactively and gives the same output on every run (seed 42).
+The generator creates the `data/` folder if needed and writes `data/pickers.csv` and `data/orders.csv`. It runs non-interactively and gives the same output on every run (seed 42). Run the generator before the EDA and analysis scripts.
+
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files from `data/` and:
+
+- prints the shape, data types, missing values and duplicate count of each table;
+- prints descriptive statistics and skewness of the numeric order columns;
+- prints aggregations of picking time by shift, priority, contract type, number of zones and picker experience band, plus the correlation of each numeric column with picking time;
+- saves four charts to `figures/`:
+  - `pick_time_distribution.png`: histogram of picking time;
+  - `pick_time_vs_lines.png`: picking time vs number of lines, colored by zones;
+  - `pick_time_by_shift_contract.png`: box plots of picking time by shift and contract type;
+  - `correlation_heatmap.png`: correlation matrix of the numeric order columns.
+
+All figures and printed numbers come from the synthetic data and are produced when the script runs; run it to see the results.
+
+## Method (analysis)
+
+`src/analysis.py` joins orders with pickers and runs two analyses. Reusable logic (feature preparation, metrics, clustering helpers) lives in `src/utils.py`.
+
+### 1. Regression of picking time
+
+- **Features:** `n_lines`, `n_units`, `total_weight_kg`, `n_zones`, `distance_m`, picker `experience_months`, and one-hot encoded `shift`, `priority` and `contract_type`.
+- **Split:** 80% train / 20% test with `random_state=42`.
+- **Models:**
+  - a baseline that always predicts the training mean;
+  - linear regression on `log(1 + pick_time_min)` with standardized features (effects on time are roughly multiplicative, and standardized coefficients show relative driver strength);
+  - gradient boosting (`GradientBoostingRegressor`) on the raw target, to capture non-linear effects.
+- **Metrics:** MAE, RMSE and R² on the test set (in minutes for MAE and RMSE), plus 5-fold cross-validated R² on the training set. Linear model predictions are transformed back to minutes before computing metrics.
+- **Interpretation:** standardized linear coefficients and gradient boosting feature importances are printed to show which factors matter most.
+
+### 2. K-means clustering of order profiles
+
+- **Features:** `n_lines`, `n_units`, `total_weight_kg`, `n_zones`, `distance_m`. Picking time and picker information are deliberately excluded, so clusters describe the order itself.
+- **Preparation:** `n_lines`, `n_units` and `total_weight_kg` are right-skewed and are log-transformed; all features are then standardized.
+- **Choice of k:** k-means is fitted for k = 3 to 8 and the k with the highest silhouette score is selected. The lower bound of 3 is a design choice, so the result is detailed enough to be useful for planning. Inertia is printed too for an elbow check.
+- **Interpretation:** each cluster is summarized by size, share, mean order features and mean picking time. A PCA projection to two dimensions is used only for visualization.
+
+### Outputs
+
+- Printed, labelled metrics, coefficient and importance tables, k-selection scores and cluster profiles.
+- `figures/regression_results.png`: gradient boosting feature importances and actual vs predicted picking time on the test set.
+- `figures/cluster_profiles_pca.png`: clusters projected onto the first two principal components.
+- `reports/metrics.json`: regression metrics, k-selection scores and cluster profiles.
+
+All numbers come from running the script on the synthetic data; none are quoted here. Because the data is synthetic, the findings illustrate the method and do not describe a real warehouse.
 
 ---
 
