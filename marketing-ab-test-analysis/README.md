@@ -18,8 +18,8 @@ Does the redesigned landing page (variant) convert visitors into buyers better t
 ## Plan of the work
 
 1. **Data generation**: build a synthetic dataset of landing page visitors and their orders (`src/data_generator.py`).
-2. **EDA**: data quality checks, group balance (sample ratio), distributions of features and metrics.
-3. **Analysis / model**: two-proportion z-test, chi-square test, confidence intervals, effect size, power and sample size analysis, a logistic regression adjusting for covariates, and segment breakdowns.
+2. **EDA**: data quality checks, group balance (sample ratio), distributions of features and metrics (`src/eda.py`).
+3. **Analysis / model**: two-proportion z-test, chi-square test, confidence intervals, effect size, power and sample size analysis, a logistic regression adjusting for covariates, and segment breakdowns (`src/analysis.py`, helpers in `src/utils.py`).
 4. **SQL**: queries that reproduce the key metrics (conversion by group, revenue per visitor, segment breakdowns) from the CSV tables.
 5. **Tests**: pytest tests for the data generator and the analysis functions.
 
@@ -41,9 +41,55 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
+python src/analysis.py
 ```
 
-This creates `data/users.csv` and `data/orders.csv`. Later steps will add further scripts in `src/`, each runnable as `python src/<name>.py`.
+`data_generator.py` creates `data/users.csv` and `data/orders.csv`. `eda.py` and `analysis.py` read them and must be run after the generator. `analysis.py` writes charts to `figures/` and a metrics summary to `reports/metrics.json`.
+
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV tables and prints to the console:
+
+- shape, dtypes, missing values and duplicate rows for each table;
+- integrity checks (unique IDs, converted users match users with orders);
+- descriptive statistics for numeric columns;
+- aggregations: group balance (sample ratio), conversion rate by group, revenue per visitor and average order value by group, covariate balance between groups (device, traffic source, country, engagement), and conversion rate by device and traffic source for each group.
+
+It also saves four PNG charts to `figures/` (created automatically):
+
+- `conversion_by_group.png`: conversion rate by group;
+- `conversion_by_source.png`: conversion rate by traffic source and group;
+- `order_value_distribution.png`: order value distribution by group (buyers only);
+- `daily_visitors.png`: daily visitors by group.
+
+All numbers come from the script's output at run time; nothing in this EDA is a statement about real users, since the data is synthetic.
+
+## Method
+
+`src/analysis.py` answers the business question with the following steps. The statistical functions live in `src/utils.py` so they can be unit tested. Every number is produced at run time; none are hard-coded here.
+
+1. **Sample ratio check**: chi-square goodness-of-fit test of the group sizes against the intended 50/50 split, to detect broken randomization.
+2. **Conversion comparison**: conversion rate per group with Wilson 95% confidence intervals; absolute difference (percentage points) with a Wald 95% CI; relative uplift with a log risk-ratio CI; a pooled two-proportion z-test and a chi-square test of independence (equivalent without continuity correction); Cohen's h as the effect size. Significance is judged at alpha = 0.05.
+3. **Power and sample size**: the minimum detectable conversion rate at 80% power for the realized group size, the post-hoc power at the observed effect (shown for information only, since it merely restates the p-value), and the visitors per group required to detect relative lifts of 5%, 10%, 15% and 20% over the control baseline.
+4. **Secondary metrics**: revenue per visitor (non-buyers count as 0) compared with Welch's t-test and a percentile bootstrap CI of the difference (seed 42); average order value among buyers is reported descriptively.
+5. **Adjusted estimate**: a logistic regression of conversion on the variant flag plus device, traffic source, country, returning status, page views and time on page, reported as the variant odds ratio with a 95% CI.
+6. **Segment breakdowns**: the variant-vs-control difference within each device, traffic source and country, with Holm-adjusted p-values. These are exploratory because each segment has fewer visitors and therefore lower power.
+
+Because this is a randomized experiment analysed with inferential statistics rather than a predictive model, no train/test split is used.
+
+### Outputs
+
+- Console report with labelled results for each step.
+- `figures/analysis_conversion_ci.png`: conversion rate per group with 95% confidence intervals.
+- `figures/analysis_segment_differences.png`: forest plot of the conversion difference by segment.
+- `reports/metrics.json`: all key metrics (conversion, tests, power, revenue, regression, segments).
+
+### Limitations
+
+- The data is synthetic, so conclusions describe the simulation, not real customer behavior.
+- With 5000 visitors the experiment can only detect fairly large effects; the power section quantifies this from the data.
+- Segment-level results are exploratory and subject to multiple-comparison noise.
 
 ## Project structure
 
@@ -53,7 +99,9 @@ marketing-ab-test-analysis/
 ├── requirements.txt
 ├── data_description.md
 ├── data/            # generated CSV files
-├── src/             # Python scripts
+├── figures/         # PNG charts produced by src/eda.py and src/analysis.py
+├── reports/         # metrics.json produced by src/analysis.py
+├── src/             # Python scripts (data_generator, eda, analysis, utils)
 ├── sql/             # SQL queries
 └── tests/           # pytest tests
 ```

@@ -1,0 +1,237 @@
+{
+  "alpha": 0.05,
+  "target_power": 0.8,
+  "sample_ratio": {
+    "n_control": 2545,
+    "n_variant": 2455,
+    "srm_p_value": 0.20309178757716426
+  },
+  "conversion": {
+    "rate_control": 0.10884086444007858,
+    "rate_variant": 0.125050916496945,
+    "ci_control": [
+      0.09732536350849505,
+      0.12153542788760768
+    ],
+    "ci_variant": [
+      0.11254930857035383,
+      0.1387240936265582
+    ],
+    "abs_difference": 0.016210052056866417,
+    "abs_diff_ci": [
+      -0.001611538287382138,
+      0.034031642401114975
+    ],
+    "relative_uplift": 0.14893351077518058,
+    "relative_uplift_ci": [
+      -0.013736348420710365,
+      0.3384333996983546
+    ],
+    "z_stat": 1.784095498165453,
+    "z_p_value": 0.07440814868226887,
+    "chi2_stat": 3.1829967465742275,
+    "chi2_p_value": 0.07440814868226923,
+    "cohens_h": 0.05047089664409943,
+    "significant": false
+  },
+  "power": {
+    "min_detectable_rate": 0.1349675998624399,
+    "min_detectable_relative_lift": 0.24004527671447495,
+    "post_hoc_power": 0.43030135961043137,
+    "required_sample_sizes": [
+      {
+        "relative_lift": 0.05,
+        "n_per_group": 52529
+      },
+      {
+        "relative_lift": 0.1,
+        "n_per_group": 13407
+      },
+      {
+        "relative_lift": 0.15,
+        "n_per_group": 6078
+      },
+      {
+        "relative_lift": 0.2,
+        "n_per_group": 3485
+      }
+    ]
+  },
+  "revenue": {
+    "rpv_control": 9.50355206286837,
+    "rpv_variant": 10.390207739307536,
+    "rpv_difference": 0.8866556764391671,
+    "rpv_diff_ci_low": -1.0634537972303024,
+    "rpv_diff_ci_high": 2.756894805717051,
+    "welch_t": 0.888485998469757,
+    "welch_p_value": 0.3743221412780097
+  },
+  "avg_order_value": {
+    "control": 87.31602888086643,
+    "variant": 83.08781758957655
+  },
+  "logistic_regression": {
+    "odds_ratio": 1.1573989387452286,
+    "or_ci_low": 0.9727916951345007,
+    "or_ci_high": 1.3770392059354175,
+    "p_value": 0.09918648629368199
+  },
+  "segments": [
+    {
+      "segment": "device: desktop",
+      "n_control": 910,
+      "n_variant": 858,
+      "rate_control": 0.11538461538461539,
+      "rate_variant": 0.1386946386946387,
+      "diff": 0.023310023310023298,
+      "ci_low": -0.007766062439120411,
+      "ci_high": 0.05438610905916701,
+      "p_value": 0.14084453930685498,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "device: mobile",
+      "n_control": 1445,
+      "n_variant": 1424,
+      "rate_control": 0.09965397923875433,
+      "rate_variant": 0.1151685393258427,
+      "diff": 0.015514560087088375,
+      "ci_low": -0.007144387458052355,
+      "ci_high": 0.038173507632229105,
+      "p_value": 0.17953488712002796,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "device: tablet",
+      "n_control": 190,
+      "n_variant": 173,
+      "rate_control": 0.14736842105263157,
+      "rate_variant": 0.13872832369942195,
+      "diff": -0.008640097353209614,
+      "ci_low": -0.08070637064419746,
+      "ci_high": 0.06342617593777823,
+      "p_value": 0.8144513006354057,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "traffic_source: direct",
+      "n_control": 369,
+      "n_variant": 393,
+      "rate_control": 0.1111111111111111,
+      "rate_variant": 0.15521628498727735,
+      "diff": 0.04410517387616625,
+      "ci_low": -0.003956177820816448,
+      "ci_high": 0.09216652557314894,
+      "p_value": 0.07395087234183656,
+      "p_holm": 0.8874104681020387
+    },
+    {
+      "segment": "traffic_source: email",
+      "n_control": 243,
+      "n_variant": 267,
+      "rate_control": 0.1440329218106996,
+      "rate_variant": 0.19850187265917604,
+      "diff": 0.054468950848476444,
+      "ci_low": -0.010631118481364471,
+      "ci_high": 0.11956902017831736,
+      "p_value": 0.10396975673187529,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "traffic_source: organic",
+      "n_control": 756,
+      "n_variant": 736,
+      "rate_control": 0.11243386243386243,
+      "rate_variant": 0.12228260869565218,
+      "diff": 0.009848746261789748,
+      "ci_low": -0.022820324181457505,
+      "ci_high": 0.042517816705037,
+      "p_value": 0.5544604469450107,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "traffic_source: paid_search",
+      "n_control": 629,
+      "n_variant": 576,
+      "rate_control": 0.10810810810810811,
+      "rate_variant": 0.08506944444444445,
+      "diff": -0.023038663663663667,
+      "ci_low": -0.056324497408440956,
+      "ci_high": 0.010247170081113623,
+      "p_value": 0.1772690821942754,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "traffic_source: social",
+      "n_control": 548,
+      "n_variant": 483,
+      "rate_control": 0.08759124087591241,
+      "rate_variant": 0.11180124223602485,
+      "diff": 0.024210001360112435,
+      "ci_low": -0.012532462928902324,
+      "ci_high": 0.060952465649127194,
+      "p_value": 0.19387115876277217,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "country: CA",
+      "n_control": 291,
+      "n_variant": 315,
+      "rate_control": 0.09278350515463918,
+      "rate_variant": 0.12380952380952381,
+      "diff": 0.031026018654884635,
+      "ci_low": -0.01831073590289567,
+      "ci_high": 0.08036277321266494,
+      "p_value": 0.22061858599704676,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "country: DE",
+      "n_control": 384,
+      "n_variant": 372,
+      "rate_control": 0.08333333333333333,
+      "rate_variant": 0.13172043010752688,
+      "diff": 0.04838709677419355,
+      "ci_low": 0.004282416929000971,
+      "ci_high": 0.09249177661938612,
+      "p_value": 0.03151815007369134,
+      "p_holm": 0.4097359509579874
+    },
+    {
+      "segment": "country: FR",
+      "n_control": 379,
+      "n_variant": 344,
+      "rate_control": 0.1266490765171504,
+      "rate_variant": 0.0872093023255814,
+      "diff": -0.03943977419156901,
+      "ci_low": -0.08427332681100697,
+      "ci_high": 0.0053937784278689505,
+      "p_value": 0.08779158001691886,
+      "p_holm": 0.9657073801861075
+    },
+    {
+      "segment": "country: UK",
+      "n_control": 362,
+      "n_variant": 374,
+      "rate_control": 0.11878453038674033,
+      "rate_variant": 0.1443850267379679,
+      "diff": 0.025600496351227575,
+      "ci_low": -0.02318143996792106,
+      "ci_high": 0.07438243267037621,
+      "p_value": 0.30467586344392916,
+      "p_holm": 1.0
+    },
+    {
+      "segment": "country: US",
+      "n_control": 1129,
+      "n_variant": 1050,
+      "rate_control": 0.112488928255093,
+      "rate_variant": 0.12857142857142856,
+      "diff": 0.016082500316335555,
+      "ci_low": -0.01129627450303063,
+      "ci_high": 0.043461275135701735,
+      "p_value": 0.2487656850530513,
+      "p_holm": 1.0
+    }
+  ]
+}
