@@ -21,7 +21,7 @@ Which kinds of orders take the longest to pick, and which factors (order size, w
    - a regression model of picking time based on order characteristics;
    - k-means clustering of order profiles (scaled features, choice of k, cluster interpretation).
 3. **SQL**: analytical queries on the order and picker tables (aggregations by shift, picker group, and so on).
-4. **Tests**: pytest checks of the data generator (reproducibility, schema, value ranges) and of later analysis code.
+4. **Tests**: pytest checks of the data generator (reproducibility, schema, value ranges) and of the helper functions in `src/utils.py`.
 
 ## Dataset (synthetic)
 
@@ -43,9 +43,11 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
+python -m pytest -q
 ```
 
-The generator creates the `data/` folder if needed and writes `data/pickers.csv` and `data/orders.csv`. It runs non-interactively and gives the same output on every run (seed 42). Run the generator before the EDA and analysis scripts.
+The generator creates the `data/` folder if needed and writes `data/pickers.csv` and `data/orders.csv`. It runs non-interactively and gives the same output on every run (seed 42). Run the generator before the EDA, analysis and SQL scripts.
 
 ## Exploratory data analysis
 
@@ -92,6 +94,40 @@ All figures and printed numbers come from the synthetic data and are produced wh
 - `reports/metrics.json`: regression metrics, k-selection scores and cluster profiles.
 
 All numbers come from running the script on the synthetic data; none are quoted here. Because the data is synthetic, the findings illustrate the method and do not describe a real warehouse.
+
+## SQL analysis
+
+`sql/queries.sql` holds eight analytical queries in the SQLite dialect over the `orders` and `pickers` tables. Each query is preceded by a comment line of the form `-- Q<n>: <question>`. The queries cover:
+
+- Q1: orders and picking time by shift;
+- Q2: picking time by priority and contract type (join with `pickers`);
+- Q3: picking time and time per line by picker experience band (`CASE` expression);
+- Q4: walking distance and picking time by number of zones;
+- Q5: order size classes with their share of all orders (CTE and window function);
+- Q6: monthly trend of picking time;
+- Q7: the ten slowest pickers per line, with at least 50 orders (`HAVING`);
+- Q8: the fastest picker within each contract type (CTEs and `ROW_NUMBER`).
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements on semicolons, runs each one and prints its description and the first rows of the result. Nothing is written to disk and no network access is needed.
+
+```bash
+python src/run_sql.py
+```
+
+Window functions require SQLite 3.25 or newer, which is included with Python 3.11. All results come from the synthetic data when the script runs, so no numbers are quoted here.
+
+## Tests
+
+The `tests/` folder contains pytest checks that run in a few seconds. They generate the synthetic data in memory, so they do not need `data/` or `figures/` to exist.
+
+- `tests/test_data_generator.py`: table columns, row counts, unique IDs, value ranges (lines, units, weight, zones, distance, picking time, dates), category values and reproducibility with a fixed seed.
+- `tests/test_utils.py`: `load_merged` (using temporary CSV files), `build_regression_data`, `regression_metrics` (known values), `prepare_cluster_features` (scaling, input not modified), `choose_k`, `evaluate_k_range` and `profile_clusters`.
+
+Run all tests from the project root:
+
+```bash
+python -m pytest -q
+```
 
 ---
 
