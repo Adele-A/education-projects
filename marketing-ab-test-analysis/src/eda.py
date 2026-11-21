@@ -7,6 +7,7 @@ Run from the project root:
     python src/eda.py
 """
 
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -17,19 +18,11 @@ import pandas as pd
 import seaborn as sns
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = PROJECT_DIR / "data"
 FIG_DIR = PROJECT_DIR / "figures"
 
-
-def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Read both CSV tables."""
-    users = pd.read_csv(DATA_DIR / "users.csv", parse_dates=["visit_date"])
-    orders = pd.read_csv(DATA_DIR / "orders.csv", parse_dates=["order_date"])
-    return users, orders
-
-
-def section(title: str) -> None:
-    print(f"\n{'=' * 60}\n{title}\n{'=' * 60}")
+# load_data and section are shared with analysis.py through utils
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from utils import load_data, section  # noqa: E402
 
 
 def overview(name: str, df: pd.DataFrame) -> None:

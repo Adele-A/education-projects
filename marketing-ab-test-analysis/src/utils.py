@@ -20,6 +20,14 @@ DATA_DIR = PROJECT_DIR / "data"
 
 
 # --------------------------------------------------------------------------
+# Console output
+# --------------------------------------------------------------------------
+def section(title: str) -> None:
+    """Print a boxed section title to the console."""
+    print(f"\n{'=' * 60}\n{title}\n{'=' * 60}")
+
+
+# --------------------------------------------------------------------------
 # Data loading and preparation
 # --------------------------------------------------------------------------
 def load_data(data_dir: Path = DATA_DIR) -> tuple[pd.DataFrame, pd.DataFrame]:

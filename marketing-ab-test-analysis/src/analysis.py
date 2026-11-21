@@ -26,6 +26,7 @@ import seaborn as sns
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import utils  # noqa: E402
+from utils import section  # noqa: E402
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 FIG_DIR = PROJECT_DIR / "figures"
@@ -34,10 +35,6 @@ REPORT_DIR = PROJECT_DIR / "reports"
 ALPHA = 0.05
 POWER = 0.80
 RELATIVE_LIFTS = [0.05, 0.10, 0.15, 0.20]  # lifts used for the sample size table
-
-
-def section(title: str) -> None:
-    print(f"\n{'=' * 60}\n{title}\n{'=' * 60}")
 
 
 def plot_conversion(counts: dict, path: Path) -> None:
