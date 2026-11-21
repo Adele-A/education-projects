@@ -43,10 +43,14 @@ def test_build_regression_data_shape_and_types(merged):
     assert len(X) == len(y) == len(merged)
     assert X.isna().sum().sum() == 0
     assert all(np.issubdtype(t, np.floating) for t in X.dtypes)
-    # drop_first=True keeps k-1 dummy columns per categorical feature
-    assert "shift_night" in X.columns
-    assert "priority_express" in X.columns
-    assert "shift_afternoon" not in X.columns or "shift_morning" not in X.columns
+    # drop_first=True drops the alphabetically first category of each feature:
+    # shift -> afternoon, priority -> express, contract_type -> full_time
+    assert {"shift_morning", "shift_night"} <= set(X.columns)
+    assert "shift_afternoon" not in X.columns
+    assert "priority_standard" in X.columns
+    assert "priority_express" not in X.columns
+    assert {"contract_type_part_time", "contract_type_temp"} <= set(X.columns)
+    assert "contract_type_full_time" not in X.columns
     assert "pick_time_min" not in X.columns
 
 
