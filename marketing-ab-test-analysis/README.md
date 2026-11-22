@@ -20,8 +20,8 @@ Does the redesigned landing page (variant) convert visitors into buyers better t
 1. **Data generation**: build a synthetic dataset of landing page visitors and their orders (`src/data_generator.py`).
 2. **EDA**: data quality checks, group balance (sample ratio), distributions of features and metrics (`src/eda.py`).
 3. **Analysis / model**: two-proportion z-test, chi-square test, confidence intervals, effect size, power and sample size analysis, a logistic regression adjusting for covariates, and segment breakdowns (`src/analysis.py`, helpers in `src/utils.py`).
-4. **SQL**: queries that reproduce the key metrics (conversion by group, revenue per visitor, segment breakdowns) from the CSV tables.
-5. **Tests**: pytest tests for the data generator and the analysis functions.
+4. **SQL**: queries that reproduce the key metrics (conversion by group, revenue per visitor, segment breakdowns) from the CSV tables (`sql/queries.sql`, `src/run_sql.py`).
+5. **Tests**: pytest tests for the data generator and the analysis functions (`tests/`).
 
 ## Dataset (synthetic)
 
@@ -30,7 +30,7 @@ Two CSV tables are written to `data/`:
 | Table | Grain | Rows |
 |-------|-------|------|
 | `users.csv` | one row per visitor in the experiment | 5000 |
-| `orders.csv` | one row per order (converted visitors only) | depends on simulated conversions |
+| `orders.csv` | one row per order (converted visitors only) | 584 in the generated run |
 
 See `data_description.md` for every column, its type, meaning and value range.
 
@@ -43,9 +43,11 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
+python -m pytest -q
 ```
 
-`data_generator.py` creates `data/users.csv` and `data/orders.csv`. `eda.py` and `analysis.py` read them and must be run after the generator. `analysis.py` writes charts to `figures/` and a metrics summary to `reports/metrics.json`.
+`data_generator.py` creates `data/users.csv` and `data/orders.csv`. `eda.py`, `analysis.py` and `run_sql.py` read them and must be run after the generator. `analysis.py` writes charts to `figures/` and a metrics summary to `reports/metrics.json`.
 
 ## Exploratory data analysis
 
@@ -67,7 +69,7 @@ All numbers come from the script's output at run time; nothing in this EDA is a 
 
 ## Method
 
-`src/analysis.py` answers the business question with the following steps. The statistical functions live in `src/utils.py` so they can be unit tested. Every number is produced at run time; none are hard-coded here.
+`src/analysis.py` answers the business question with the following steps. The statistical functions live in `src/utils.py` so they can be unit tested.
 
 1. **Sample ratio check**: chi-square goodness-of-fit test of the group sizes against the intended 50/50 split, to detect broken randomization.
 2. **Conversion comparison**: conversion rate per group with Wilson 95% confidence intervals; absolute difference (percentage points) with a Wald 95% CI; relative uplift with a log risk-ratio CI; a pooled two-proportion z-test and a chi-square test of independence (equivalent without continuity correction); Cohen's h as the effect size. Significance is judged at alpha = 0.05.
@@ -85,11 +87,116 @@ Because this is a randomized experiment analysed with inferential statistics rat
 - `figures/analysis_segment_differences.png`: forest plot of the conversion difference by segment.
 - `reports/metrics.json`: all key metrics (conversion, tests, power, revenue, regression, segments).
 
+## Results
+
+All numbers below are copied from the output of `python src/analysis.py` and `python src/eda.py` on the synthetic dataset (5000 visitors, 584 orders).
+
+### Conversion
+
+| Group | Visitors | Buyers | Conversion rate | 95% CI (Wilson) |
+|-------|----------|--------|-----------------|-----------------|
+| Control | 2545 | 277 | 0.1088 | 0.0973 to 0.1215 |
+| Variant | 2455 | 307 | 0.1251 | 0.1125 to 0.1387 |
+
+- Absolute difference: 1.62 pp (95% CI -0.16 to 3.40 pp).
+- Relative uplift: 14.9% (95% CI -1.4% to 33.8%).
+- Two-proportion z-test: z = 1.784, p-value = 0.0744. Chi-square test: chi2 = 3.183, p-value = 0.0744.
+- Cohen's h: 0.0505.
+- Verdict at alpha = 0.05: the difference is **not** statistically significant.
+- Sample ratio check: group sizes are 2545 vs 2455, SRM p-value = 0.2031, so no sign of broken randomization.
+
+![Conversion rate per group with 95% confidence intervals](figures/analysis_conversion_ci.png)
+
+### Power and sample size
+
+- Minimum detectable variant rate at 80% power with n = 2455 per group: 0.1350 (absolute lift 2.61 pp, relative 24.0%).
+- Post-hoc power at the observed effect: 0.430 (informational only; it restates the p-value).
+
+| Relative lift over control | Required visitors per group (80% power, alpha = 0.05) |
+|----------------------------|-------------------------------------------------------|
+| 5% | 52529 |
+| 10% | 13407 |
+| 15% | 6078 |
+| 20% | 3485 |
+
+### Secondary metrics
+
+- Revenue per visitor: control 9.50, variant 10.39; difference 0.89 (bootstrap 95% CI -1.06 to 2.76); Welch t-test t = 0.888, p-value = 0.3743.
+- Average order value (buyers only): control 87.32, variant 83.09.
+- Adjusted logistic regression: variant odds ratio 1.157 (95% CI 0.973 to 1.377), p-value = 0.0992.
+
+### Segments (exploratory)
+
+Segment differences in conversion (variant minus control) range from -3.94 pp (country: FR) to +5.45 pp (traffic source: email). After Holm adjustment, no segment has a p-value below 0.05 (the smallest is 0.3 or higher in the output: country: DE has p = 0.0315 unadjusted and p_holm = 0.4097).
+
+![Conversion difference by segment](figures/analysis_segment_differences.png)
+
+![Conversion rate by traffic source and group](figures/conversion_by_source.png)
+
+## Conclusions
+
+- The variant has a higher observed conversion rate (0.1251 vs 0.1088), but the difference is not statistically significant at alpha = 0.05 (p = 0.0744), and the 95% CI of the difference (-0.16 to 3.40 pp) includes zero.
+- The adjusted logistic regression points the same way as the raw test: odds ratio 1.157 with a CI (0.973 to 1.377) that includes 1.
+- Revenue per visitor is higher for the variant (10.39 vs 9.50), but the difference is also not significant (p = 0.3743). Average order value is lower for the variant (83.09 vs 87.32), though this was only described, not tested.
+- The experiment was underpowered for an effect of this size: the minimum detectable relative lift at 80% power is 24.0%, while the observed lift is 14.9%. Post-hoc power is 0.430.
+- No segment shows a significant difference after Holm adjustment, so the data gives no support for claims that the variant works better or worse in a particular device, source or country.
+- Based on these numbers alone, the data does not allow a conclusion that the new page is better. The result is inconclusive rather than evidence of no effect.
+
+## Limitations & next steps
+
 ### Limitations
 
-- The data is synthetic, so conclusions describe the simulation, not real customer behavior.
-- With 5000 visitors the experiment can only detect fairly large effects; the power section quantifies this from the data.
-- Segment-level results are exploratory and subject to multiple-comparison noise.
+- The data is **synthetic**, so conclusions describe the simulation, not real customer behavior.
+- With 5000 visitors the experiment can only detect fairly large effects (about 24.0% relative lift at 80% power).
+- Segment-level results are exploratory, have few visitors per segment and are subject to multiple-comparison noise.
+- Only a single test period was analysed (14 days of visits in the SQL output), so novelty effects or weekday patterns are not assessed.
+
+### Next steps
+
+- Plan a larger experiment: for example about 6078 visitors per group to detect a 15% relative lift, or 3485 per group for 20%, at 80% power.
+- Define the primary metric and the minimum effect worth acting on before the test starts.
+- Test the average order value difference formally, and consider revenue per visitor as a primary metric if it matters to the business.
+- Treat the segment patterns (for example paid search being negative and email being positive) as hypotheses to confirm in a new test, not as findings.
+
+## SQL analysis
+
+`sql/queries.sql` contains 8 commented queries in the SQLite dialect. Each query is preceded by a comment line starting with `-- Q<n>:` that states the question it answers.
+
+| Query | Question |
+|-------|----------|
+| Q1 | Visitors, buyers and conversion rate by group |
+| Q2 | Revenue per visitor and average order value by group (`LEFT JOIN` of users and orders) |
+| Q3 | Conversion by device and group, with the difference in percentage points |
+| Q4 | Conversion by traffic source and group, sorted by the difference |
+| Q5 | Country mix within each group (covariate balance check, subquery join) |
+| Q6 | Daily visitors, buyers and conversion rate |
+| Q7 | Orders and order value by number of items and group |
+| Q8 | Days between visit and order by group (`julianday`) |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints the question followed by the first rows of the result (at most 10). It uses only the standard library `sqlite3` module plus pandas, needs no database server and writes no files.
+
+```bash
+python src/run_sql.py
+```
+
+Notes:
+
+- The queries only describe the data (descriptive metrics); significance tests and confidence intervals are in `src/analysis.py`.
+- `queries.sql` is split on the semicolon character, so comments and strings in it must not contain semicolons.
+- All numbers come from the output at run time, and the data is synthetic.
+
+## Tests
+
+The `tests/` folder contains pytest tests that run in a few seconds:
+
+- `tests/test_data_generator.py`: columns, row counts, value ranges, consistency between users and orders, and reproducibility with a fixed seed.
+- `tests/test_utils.py`: the statistical helpers in `src/utils.py` (z-test vs chi-square, confidence intervals, power and sample size, revenue preparation, segment breakdown, Holm adjustment).
+
+The tests generate small datasets in memory, so they do not need the CSV files, the figures or the other scripts to be run first. Run them from the project root:
+
+```bash
+python -m pytest -q
+```
 
 ## Project structure
 
@@ -101,9 +208,9 @@ marketing-ab-test-analysis/
 ├── data/            # generated CSV files
 ├── figures/         # PNG charts produced by src/eda.py and src/analysis.py
 ├── reports/         # metrics.json produced by src/analysis.py
-├── src/             # Python scripts (data_generator, eda, analysis, utils)
-├── sql/             # SQL queries
-└── tests/           # pytest tests
+├── src/             # Python scripts (data_generator, eda, analysis, utils, run_sql)
+├── sql/             # SQL queries (queries.sql)
+└── tests/           # pytest tests (test_data_generator.py, test_utils.py)
 ```
 
 ---
