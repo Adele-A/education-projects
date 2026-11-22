@@ -1,0 +1,3001 @@
+response_id,customer_id,survey_date,nps_score,nps_category,comment
+1,1559,2025-01-01,3,Detractor,I think too expensive and frequent outages.
+2,602,2025-01-01,8,Passive,
+3,2182,2025-01-01,7,Passive,Mainly average experience.
+4,2321,2025-01-01,4,Detractor,"Overall, frequent outages and too expensive."
+5,2918,2025-01-01,2,Detractor,
+6,3314,2025-01-01,7,Passive,"Overall, average experience."
+7,312,2025-01-01,8,Passive,
+8,1939,2025-01-01,9,Promoter,
+9,82,2025-01-02,3,Detractor,"Overall, billing errors."
+10,1979,2025-01-02,9,Promoter,Mainly fast delivery.
+11,2094,2025-01-02,8,Passive,I think works as expected.
+12,3553,2025-01-02,8,Passive,I think nothing special.
+13,3492,2025-01-02,7,Passive,The service is okay and good value for money
+14,965,2025-01-02,8,Passive,Mainly works as expected.
+15,334,2025-01-02,5,Detractor,Billing errors
+16,3860,2025-01-03,6,Detractor,
+17,1412,2025-01-03,8,Passive,Mainly nothing special and easy to use.
+18,2466,2025-01-03,6,Detractor,Slow support response and frequent outages
+19,762,2025-01-03,7,Passive,
+20,1555,2025-01-03,3,Detractor,Billing errors
+21,1254,2025-01-03,6,Detractor,I think long wait times.
+22,3826,2025-01-03,10,Promoter,I think friendly staff and great customer support.
+23,1014,2025-01-04,6,Detractor,Mainly too expensive.
+24,3324,2025-01-04,6,Detractor,I think slow support response and long wait times.
+25,1002,2025-01-04,10,Promoter,Easy to use
+26,3300,2025-01-04,7,Passive,I think nothing special and the app works well.
+27,2046,2025-01-04,5,Detractor,Long wait times and billing errors
+28,2726,2025-01-04,6,Detractor,"Overall, slow support response."
+29,409,2025-01-04,8,Passive,Mainly average experience.
+30,3117,2025-01-04,8,Passive,I think the service is okay and confusing app.
+31,3719,2025-01-05,10,Promoter,
+32,288,2025-01-05,9,Promoter,Easy to use
+33,2642,2025-01-05,10,Promoter,Mainly easy to use.
+34,619,2025-01-05,10,Promoter,Easy to use and reliable service
+35,3319,2025-01-06,8,Passive,"Overall, nothing special."
+36,893,2025-01-06,7,Passive,Mainly works as expected.
+37,3321,2025-01-06,3,Detractor,
+38,2085,2025-01-06,7,Passive,Mainly average experience and easy to use.
+39,687,2025-01-06,7,Passive,Mainly nothing special and reliable service.
+40,2154,2025-01-06,5,Detractor,I think poor communication and long wait times.
+41,3545,2025-01-06,6,Detractor,I think confusing app and billing errors.
+42,3950,2025-01-06,10,Promoter,"Overall, easy to use."
+43,2064,2025-01-06,7,Passive,"Overall, nothing special."
+44,156,2025-01-06,8,Passive,I think average experience.
+45,1414,2025-01-07,8,Passive,"Overall, the service is okay."
+46,1311,2025-01-07,9,Promoter,
+47,1222,2025-01-07,6,Detractor,I think slow support response.
+48,550,2025-01-07,4,Detractor,I think confusing app.
+49,1421,2025-01-07,7,Passive,Mainly works as expected.
+50,113,2025-01-07,8,Passive,Average experience
+51,491,2025-01-08,8,Passive,I think the service is okay and fast delivery.
+52,478,2025-01-08,10,Promoter,"Overall, friendly staff."
+53,2737,2025-01-08,5,Detractor,Too expensive
+54,2639,2025-01-08,10,Promoter,I think friendly staff and great customer support.
+55,3986,2025-01-08,8,Passive,Mainly nothing special.
+56,1428,2025-01-08,5,Detractor,
+57,282,2025-01-08,6,Detractor,Mainly too expensive.
+58,348,2025-01-09,10,Promoter,Easy to use and good value for money
+59,760,2025-01-09,5,Detractor,I think long wait times and poor communication.
+60,3329,2025-01-09,7,Passive,Works as expected
+61,2836,2025-01-09,9,Promoter,
+62,2952,2025-01-09,6,Detractor,"Overall, frequent outages and long wait times."
+63,3494,2025-01-09,7,Passive,
+64,473,2025-01-09,6,Detractor,Slow support response and frequent outages
+65,420,2025-01-10,8,Passive,Nothing special and friendly staff
+66,428,2025-01-10,5,Detractor,Poor communication and billing errors
+67,3057,2025-01-10,6,Detractor,Long wait times
+68,1512,2025-01-10,6,Detractor,
+69,214,2025-01-10,7,Passive,
+70,1865,2025-01-10,8,Passive,"Overall, nothing special."
+71,1312,2025-01-10,10,Promoter,Good value for money and great customer support
+72,3517,2025-01-11,6,Detractor,"Overall, confusing app and too expensive."
+73,140,2025-01-11,10,Promoter,I think great customer support.
+74,2620,2025-01-11,4,Detractor,Mainly too expensive.
+75,2700,2025-01-11,7,Passive,"Overall, works as expected."
+76,1351,2025-01-11,7,Passive,"Overall, average experience."
+77,1536,2025-01-11,10,Promoter,Easy to use
+78,2401,2025-01-11,5,Detractor,
+79,1394,2025-01-11,6,Detractor,
+80,3519,2025-01-11,6,Detractor,I think long wait times and slow support response.
+81,1915,2025-01-11,6,Detractor,Slow support response and poor communication
+82,2443,2025-01-11,5,Detractor,Confusing app and frequent outages
+83,3578,2025-01-12,7,Passive,Mainly nothing special.
+84,2471,2025-01-12,10,Promoter,Good value for money
+85,2177,2025-01-12,6,Detractor,Mainly poor communication and too expensive.
+86,1848,2025-01-12,9,Promoter,Fast delivery
+87,3591,2025-01-12,6,Detractor,Mainly billing errors and slow support response.
+88,3464,2025-01-12,9,Promoter,
+89,2371,2025-01-12,7,Passive,Nothing special and frequent outages
+90,862,2025-01-13,6,Detractor,Mainly poor communication and long wait times.
+91,2857,2025-01-13,8,Passive,Mainly the service is okay and fast delivery.
+92,351,2025-01-13,3,Detractor,I think too expensive and poor communication.
+93,3726,2025-01-13,6,Detractor,Mainly poor communication and slow support response.
+94,1379,2025-01-13,5,Detractor,
+95,275,2025-01-13,8,Passive,
+96,884,2025-01-13,7,Passive,
+97,2862,2025-01-13,9,Promoter,Mainly great customer support.
+98,109,2025-01-13,4,Detractor,
+99,3957,2025-01-13,6,Detractor,Mainly long wait times.
+100,576,2025-01-13,6,Detractor,
+101,3638,2025-01-14,7,Passive,"Overall, average experience and long wait times."
+102,620,2025-01-14,6,Detractor,Poor communication and frequent outages
+103,528,2025-01-14,8,Passive,"Overall, works as expected."
+104,2031,2025-01-14,7,Passive,"Overall, average experience and friendly staff."
+105,1233,2025-01-14,5,Detractor,Mainly slow support response.
+106,2452,2025-01-14,5,Detractor,
+107,1744,2025-01-14,10,Promoter,
+108,3333,2025-01-14,8,Passive,
+109,289,2025-01-14,5,Detractor,"Overall, frequent outages."
+110,375,2025-01-14,9,Promoter,Mainly the app works well.
+111,3758,2025-01-14,2,Detractor,
+112,574,2025-01-15,5,Detractor,
+113,1087,2025-01-15,4,Detractor,
+114,2553,2025-01-15,3,Detractor,
+115,1490,2025-01-15,9,Promoter,
+116,1201,2025-01-15,6,Detractor,Mainly billing errors and long wait times.
+117,2972,2025-01-15,10,Promoter,Mainly great customer support and friendly staff.
+118,3145,2025-01-15,6,Detractor,
+119,1511,2025-01-16,8,Passive,The service is okay
+120,2103,2025-01-16,8,Passive,I think average experience and frequent outages.
+121,77,2025-01-16,3,Detractor,Billing errors and slow support response
+122,2137,2025-01-16,6,Detractor,I think long wait times.
+123,3522,2025-01-16,8,Passive,
+124,1766,2025-01-16,9,Promoter,
+125,3144,2025-01-16,10,Promoter,I think fast delivery.
+126,3866,2025-01-16,9,Promoter,
+127,3011,2025-01-16,6,Detractor,"Overall, poor communication."
+128,3008,2025-01-17,7,Passive,Mainly the service is okay and easy to use.
+129,1889,2025-01-17,10,Promoter,I think reliable service.
+130,150,2025-01-17,8,Passive,Nothing special and easy to use
+131,915,2025-01-17,7,Passive,
+132,2865,2025-01-17,10,Promoter,
+133,492,2025-01-17,10,Promoter,"Overall, friendly staff."
+134,1933,2025-01-17,6,Detractor,Too expensive
+135,3025,2025-01-18,8,Passive,Nothing special
+136,1809,2025-01-18,6,Detractor,"Overall, slow support response."
+137,556,2025-01-18,9,Promoter,I think friendly staff.
+138,149,2025-01-18,8,Passive,Mainly nothing special and the app works well.
+139,3668,2025-01-19,9,Promoter,Friendly staff and easy to use
+140,425,2025-01-19,3,Detractor,Mainly slow support response.
+141,359,2025-01-19,10,Promoter,"Overall, the app works well and fast delivery."
+142,527,2025-01-19,8,Passive,Mainly the service is okay and frequent outages.
+143,783,2025-01-19,10,Promoter,I think the app works well.
+144,863,2025-01-19,7,Passive,Works as expected
+145,1544,2025-01-19,5,Detractor,Mainly too expensive and poor communication.
+146,3267,2025-01-19,5,Detractor,"Overall, long wait times."
+147,1108,2025-01-19,6,Detractor,Billing errors and slow support response
+148,613,2025-01-19,8,Passive,
+149,1433,2025-01-20,10,Promoter,
+150,696,2025-01-20,7,Passive,
+151,3075,2025-01-20,10,Promoter,Reliable service and fast delivery
+152,2002,2025-01-20,10,Promoter,
+153,7,2025-01-20,10,Promoter,"Overall, fast delivery."
+154,1226,2025-01-21,8,Passive,"Overall, average experience and friendly staff."
+155,2668,2025-01-21,8,Passive,Mainly average experience and great customer support.
+156,1942,2025-01-21,7,Passive,"Overall, average experience and billing errors."
+157,319,2025-01-21,7,Passive,I think nothing special and good value for money.
+158,2055,2025-01-21,10,Promoter,"Overall, easy to use."
+159,2054,2025-01-21,5,Detractor,
+160,1422,2025-01-21,8,Passive,Nothing special and reliable service
+161,1209,2025-01-21,7,Passive,
+162,521,2025-01-21,7,Passive,I think nothing special and too expensive.
+163,1507,2025-01-22,7,Passive,
+164,1118,2025-01-22,4,Detractor,
+165,2589,2025-01-22,7,Passive,"Overall, average experience and billing errors."
+166,2052,2025-01-22,7,Passive,Mainly the service is okay and reliable service.
+167,510,2025-01-22,5,Detractor,
+168,388,2025-01-22,8,Passive,Average experience and easy to use
+169,582,2025-01-23,4,Detractor,Mainly slow support response.
+170,2949,2025-01-23,10,Promoter,
+171,644,2025-01-23,9,Promoter,
+172,2543,2025-01-23,8,Passive,I think nothing special and too expensive.
+173,535,2025-01-23,10,Promoter,
+174,3729,2025-01-23,10,Promoter,"Overall, the app works well."
+175,274,2025-01-23,6,Detractor,Long wait times and billing errors
+176,1317,2025-01-23,6,Detractor,Mainly slow support response and poor communication.
+177,2567,2025-01-23,7,Passive,I think works as expected and fast delivery.
+178,3997,2025-01-23,4,Detractor,Frequent outages
+179,3032,2025-01-24,10,Promoter,
+180,2535,2025-01-24,10,Promoter,
+181,391,2025-01-24,6,Detractor,"Overall, long wait times."
+182,183,2025-01-25,8,Passive,
+183,188,2025-01-25,5,Detractor,Mainly frequent outages.
+184,1284,2025-01-25,7,Passive,"Overall, average experience and the app works well."
+185,423,2025-01-25,9,Promoter,
+186,1715,2025-01-26,4,Detractor,Mainly billing errors and long wait times.
+187,3338,2025-01-26,10,Promoter,Mainly the app works well and good value for money.
+188,3053,2025-01-26,7,Passive,Nothing special and fast delivery
+189,3362,2025-01-26,8,Passive,
+190,937,2025-01-26,10,Promoter,
+191,3921,2025-01-26,7,Passive,
+192,1424,2025-01-26,8,Passive,
+193,2985,2025-01-26,6,Detractor,
+194,2845,2025-01-27,9,Promoter,
+195,3849,2025-01-27,5,Detractor,
+196,276,2025-01-27,8,Passive,
+197,1031,2025-01-27,5,Detractor,Mainly too expensive and confusing app.
+198,1950,2025-01-27,7,Passive,
+199,2971,2025-01-27,7,Passive,"Overall, nothing special and poor communication."
+200,1838,2025-01-27,8,Passive,Mainly average experience.
+201,1345,2025-01-28,6,Detractor,
+202,1522,2025-01-28,10,Promoter,
+203,2753,2025-01-28,10,Promoter,Reliable service and good value for money
+204,1570,2025-01-28,8,Passive,
+205,2520,2025-01-28,6,Detractor,"Overall, frequent outages."
+206,2883,2025-01-28,3,Detractor,Mainly long wait times.
+207,652,2025-01-28,4,Detractor,I think billing errors and poor communication.
+208,769,2025-01-28,7,Passive,"Overall, average experience and good value for money."
+209,2187,2025-01-28,4,Detractor,Mainly slow support response.
+210,1402,2025-01-29,5,Detractor,"Overall, slow support response and too expensive."
+211,1508,2025-01-29,6,Detractor,Slow support response
+212,3505,2025-01-29,6,Detractor,
+213,2275,2025-01-29,6,Detractor,"Overall, long wait times."
+214,1657,2025-01-29,5,Detractor,
+215,3506,2025-01-29,10,Promoter,I think good value for money and fast delivery.
+216,1547,2025-01-29,9,Promoter,"Overall, fast delivery and great customer support."
+217,1961,2025-01-29,8,Passive,
+218,1653,2025-01-29,3,Detractor,Billing errors
+219,3263,2025-01-29,10,Promoter,Friendly staff
+220,85,2025-01-29,6,Detractor,I think confusing app and frequent outages.
+221,2149,2025-01-29,10,Promoter,
+222,3047,2025-01-29,8,Passive,I think the service is okay and long wait times.
+223,3556,2025-01-29,6,Detractor,Mainly confusing app and frequent outages.
+224,445,2025-01-29,10,Promoter,Mainly great customer support.
+225,3179,2025-01-29,9,Promoter,Mainly friendly staff.
+226,2963,2025-01-29,4,Detractor,Long wait times and billing errors
+227,2600,2025-01-29,9,Promoter,Mainly fast delivery and reliable service.
+228,3373,2025-01-29,9,Promoter,"Overall, the app works well."
+229,3598,2025-01-29,10,Promoter,
+230,1179,2025-01-29,8,Passive,The service is okay
+231,1802,2025-01-30,6,Detractor,Mainly billing errors and too expensive.
+232,1352,2025-01-30,9,Promoter,"Overall, good value for money."
+233,1736,2025-01-30,1,Detractor,"Overall, billing errors."
+234,2990,2025-01-30,7,Passive,
+235,2284,2025-01-30,4,Detractor,Billing errors
+236,3902,2025-01-30,7,Passive,"Overall, the service is okay."
+237,3,2025-01-30,7,Passive,I think average experience and confusing app.
+238,2722,2025-01-30,9,Promoter,Mainly good value for money.
+239,858,2025-01-30,7,Passive,
+240,768,2025-01-30,10,Promoter,
+241,442,2025-01-30,8,Passive,Mainly the service is okay and long wait times.
+242,2760,2025-01-30,7,Passive,I think the service is okay.
+243,2040,2025-01-30,3,Detractor,I think too expensive.
+244,892,2025-01-31,8,Passive,I think the service is okay.
+245,1591,2025-01-31,6,Detractor,
+246,3270,2025-01-31,7,Passive,Mainly the service is okay and great customer support.
+247,3116,2025-01-31,6,Detractor,"Overall, frequent outages and billing errors."
+248,103,2025-01-31,6,Detractor,"Overall, too expensive and confusing app."
+249,2729,2025-01-31,7,Passive,
+250,1561,2025-01-31,10,Promoter,Easy to use and fast delivery
+251,2941,2025-02-01,8,Passive,I think average experience and too expensive.
+252,3449,2025-02-01,10,Promoter,Mainly good value for money.
+253,1958,2025-02-01,8,Passive,"Overall, the service is okay and fast delivery."
+254,906,2025-02-01,9,Promoter,I think the app works well.
+255,1855,2025-02-01,8,Passive,"Overall, works as expected and frequent outages."
+256,326,2025-02-01,7,Passive,"Overall, nothing special and the app works well."
+257,2476,2025-02-01,8,Passive,Works as expected and great customer support
+258,3929,2025-02-01,8,Passive,Mainly average experience.
+259,2621,2025-02-01,7,Passive,Nothing special and friendly staff
+260,2647,2025-02-01,9,Promoter,I think the app works well and good value for money.
+261,3356,2025-02-02,10,Promoter,I think fast delivery.
+262,2243,2025-02-02,8,Passive,Mainly nothing special and great customer support.
+263,3286,2025-02-02,10,Promoter,
+264,799,2025-02-03,5,Detractor,
+265,3318,2025-02-03,5,Detractor,
+266,2099,2025-02-03,8,Passive,"Overall, nothing special and the app works well."
+267,1404,2025-02-03,5,Detractor,Mainly billing errors.
+268,2038,2025-02-03,7,Passive,"Overall, average experience."
+269,206,2025-02-03,6,Detractor,"Overall, confusing app and long wait times."
+270,238,2025-02-03,7,Passive,Nothing special
+271,185,2025-02-04,6,Detractor,Mainly slow support response and confusing app.
+272,952,2025-02-04,5,Detractor,"Overall, billing errors."
+273,384,2025-02-04,9,Promoter,"Overall, friendly staff."
+274,53,2025-02-04,9,Promoter,I think great customer support and easy to use.
+275,1275,2025-02-04,10,Promoter,Friendly staff
+276,2829,2025-02-04,8,Passive,
+277,1418,2025-02-04,10,Promoter,"Overall, the app works well."
+278,3200,2025-02-04,10,Promoter,
+279,3132,2025-02-04,8,Passive,
+280,1622,2025-02-04,8,Passive,Mainly works as expected.
+281,1442,2025-02-04,7,Passive,Average experience and great customer support
+282,1334,2025-02-04,7,Passive,The service is okay and fast delivery
+283,361,2025-02-04,7,Passive,Mainly nothing special and poor communication.
+284,2603,2025-02-04,10,Promoter,
+285,3002,2025-02-05,7,Passive,I think the service is okay.
+286,457,2025-02-05,9,Promoter,
+287,2156,2025-02-05,5,Detractor,I think frequent outages.
+288,3376,2025-02-05,9,Promoter,I think the app works well and reliable service.
+289,1913,2025-02-05,10,Promoter,
+290,1309,2025-02-05,8,Passive,"Overall, average experience and the app works well."
+291,30,2025-02-05,8,Passive,The service is okay and long wait times
+292,2339,2025-02-05,6,Detractor,I think slow support response.
+293,2580,2025-02-05,10,Promoter,I think easy to use and good value for money.
+294,1892,2025-02-05,8,Passive,I think the service is okay.
+295,1698,2025-02-05,9,Promoter,Mainly easy to use and fast delivery.
+296,565,2025-02-06,8,Passive,"Overall, works as expected and friendly staff."
+297,2980,2025-02-06,8,Passive,I think the service is okay and the app works well.
+298,3869,2025-02-06,8,Passive,Works as expected
+299,55,2025-02-06,7,Passive,Mainly nothing special.
+300,778,2025-02-06,4,Detractor,Too expensive and poor communication
+301,3251,2025-02-06,10,Promoter,Fast delivery
+302,1515,2025-02-06,5,Detractor,Mainly frequent outages.
+303,2176,2025-02-06,7,Passive,Mainly works as expected and good value for money.
+304,3624,2025-02-06,9,Promoter,
+305,982,2025-02-06,6,Detractor,Billing errors and too expensive
+306,169,2025-02-06,10,Promoter,Mainly reliable service and friendly staff.
+307,84,2025-02-07,7,Passive,Mainly works as expected.
+308,3576,2025-02-07,7,Passive,I think average experience and easy to use.
+309,3602,2025-02-07,7,Passive,I think works as expected and easy to use.
+310,3923,2025-02-07,8,Passive,"Overall, average experience and frequent outages."
+311,2191,2025-02-07,8,Passive,
+312,2105,2025-02-07,5,Detractor,
+313,346,2025-02-07,5,Detractor,"Overall, slow support response and confusing app."
+314,3016,2025-02-07,7,Passive,Mainly the service is okay and the app works well.
+315,795,2025-02-07,5,Detractor,
+316,168,2025-02-07,6,Detractor,
+317,157,2025-02-07,10,Promoter,
+318,2303,2025-02-07,7,Passive,Average experience
+319,1314,2025-02-08,8,Passive,I think average experience and long wait times.
+320,3371,2025-02-09,3,Detractor,Mainly billing errors.
+321,194,2025-02-09,6,Detractor,"Overall, poor communication."
+322,2507,2025-02-09,7,Passive,
+323,752,2025-02-09,9,Promoter,
+324,3629,2025-02-09,8,Passive,Average experience
+325,3293,2025-02-09,6,Detractor,Mainly long wait times.
+326,2767,2025-02-10,7,Passive,"Overall, the service is okay and good value for money."
+327,2035,2025-02-10,7,Passive,Mainly nothing special and fast delivery.
+328,1145,2025-02-10,5,Detractor,"Overall, too expensive."
+329,225,2025-02-10,6,Detractor,
+330,1248,2025-02-10,8,Passive,
+331,3180,2025-02-10,7,Passive,Mainly the service is okay and frequent outages.
+332,1654,2025-02-10,3,Detractor,"Overall, too expensive."
+333,3166,2025-02-10,10,Promoter,Mainly fast delivery and friendly staff.
+334,1287,2025-02-10,8,Passive,
+335,48,2025-02-11,7,Passive,Average experience
+336,252,2025-02-11,8,Passive,Average experience
+337,1821,2025-02-11,9,Promoter,Easy to use and the app works well
+338,2467,2025-02-11,7,Passive,I think nothing special.
+339,501,2025-02-11,7,Passive,Mainly average experience.
+340,349,2025-02-11,9,Promoter,Mainly fast delivery.
+341,1790,2025-02-11,7,Passive,Works as expected
+342,430,2025-02-11,7,Passive,I think the service is okay.
+343,3533,2025-02-11,5,Detractor,"Overall, slow support response."
+344,3831,2025-02-11,8,Passive,"Overall, works as expected and easy to use."
+345,2391,2025-02-11,6,Detractor,Billing errors
+346,3456,2025-02-11,6,Detractor,Mainly slow support response and billing errors.
+347,3795,2025-02-11,7,Passive,Average experience and too expensive
+348,1656,2025-02-11,8,Passive,"Overall, average experience and friendly staff."
+349,3424,2025-02-11,9,Promoter,I think friendly staff and easy to use.
+350,916,2025-02-11,9,Promoter,
+351,1504,2025-02-11,9,Promoter,"Overall, easy to use and fast delivery."
+352,1648,2025-02-11,10,Promoter,Mainly friendly staff.
+353,3593,2025-02-11,7,Passive,Mainly the service is okay and easy to use.
+354,164,2025-02-11,9,Promoter,
+355,2438,2025-02-11,6,Detractor,Too expensive and frequent outages
+356,1175,2025-02-11,8,Passive,
+357,148,2025-02-12,10,Promoter,Mainly easy to use.
+358,1815,2025-02-12,6,Detractor,
+359,2190,2025-02-12,7,Passive,
+360,2795,2025-02-12,5,Detractor,Long wait times
+361,1132,2025-02-12,4,Detractor,I think long wait times and slow support response.
+362,3786,2025-02-12,10,Promoter,
+363,2551,2025-02-13,6,Detractor,
+364,1937,2025-02-13,6,Detractor,
+365,3852,2025-02-13,8,Passive,"Overall, average experience and friendly staff."
+366,1640,2025-02-13,9,Promoter,Fast delivery and easy to use
+367,891,2025-02-13,6,Detractor,Too expensive
+368,3962,2025-02-13,7,Passive,"Overall, nothing special and easy to use."
+369,1878,2025-02-13,6,Detractor,
+370,3566,2025-02-14,3,Detractor,
+371,1872,2025-02-14,7,Passive,
+372,1845,2025-02-14,7,Passive,Works as expected
+373,3803,2025-02-14,8,Passive,
+374,127,2025-02-14,3,Detractor,I think slow support response.
+375,2292,2025-02-14,6,Detractor,I think long wait times and billing errors.
+376,985,2025-02-15,9,Promoter,
+377,143,2025-02-15,10,Promoter,"Overall, great customer support and good value for money."
+378,1369,2025-02-15,7,Passive,"Overall, nothing special and reliable service."
+379,1266,2025-02-15,6,Detractor,
+380,2120,2025-02-15,8,Passive,"Overall, average experience and fast delivery."
+381,2061,2025-02-16,8,Passive,
+382,2596,2025-02-16,7,Passive,I think nothing special.
+383,2463,2025-02-16,6,Detractor,Mainly too expensive.
+384,2965,2025-02-16,10,Promoter,
+385,3872,2025-02-16,8,Passive,
+386,3493,2025-02-16,8,Passive,
+387,3224,2025-02-16,5,Detractor,
+388,2406,2025-02-16,5,Detractor,
+389,3389,2025-02-16,7,Passive,
+390,2469,2025-02-16,8,Passive,
+391,765,2025-02-16,10,Promoter,
+392,3550,2025-02-16,6,Detractor,
+393,2958,2025-02-17,7,Passive,
+394,3497,2025-02-17,8,Passive,"Overall, nothing special and friendly staff."
+395,33,2025-02-17,10,Promoter,I think friendly staff and easy to use.
+396,3637,2025-02-17,10,Promoter,Mainly the app works well.
+397,75,2025-02-17,7,Passive,Mainly average experience and great customer support.
+398,1721,2025-02-17,6,Detractor,"Overall, frequent outages."
+399,2252,2025-02-17,9,Promoter,I think the app works well and good value for money.
+400,2203,2025-02-17,6,Detractor,
+401,3471,2025-02-17,10,Promoter,"Overall, reliable service."
+402,2334,2025-02-17,10,Promoter,
+403,3469,2025-02-18,6,Detractor,
+404,1668,2025-02-18,10,Promoter,Mainly reliable service and friendly staff.
+405,3987,2025-02-18,7,Passive,I think the service is okay and easy to use.
+406,2412,2025-02-18,7,Passive,Average experience and reliable service
+407,902,2025-02-18,5,Detractor,
+408,546,2025-02-18,7,Passive,
+409,1419,2025-02-19,9,Promoter,I think easy to use.
+410,931,2025-02-19,6,Detractor,
+411,3704,2025-02-19,7,Passive,
+412,693,2025-02-19,7,Passive,Mainly the service is okay.
+413,3218,2025-02-19,10,Promoter,I think great customer support.
+414,526,2025-02-19,6,Detractor,Poor communication and too expensive
+415,562,2025-02-19,6,Detractor,Mainly frequent outages.
+416,2462,2025-02-19,5,Detractor,
+417,2608,2025-02-19,10,Promoter,
+418,730,2025-02-20,0,Detractor,Mainly slow support response.
+419,340,2025-02-20,8,Passive,I think nothing special and the app works well.
+420,364,2025-02-20,8,Passive,I think the service is okay.
+421,2622,2025-02-20,6,Detractor,
+422,2372,2025-02-20,8,Passive,
+423,112,2025-02-20,9,Promoter,Mainly friendly staff and reliable service.
+424,3021,2025-02-20,6,Detractor,I think poor communication.
+425,2051,2025-02-20,4,Detractor,"Overall, slow support response and too expensive."
+426,1431,2025-02-20,10,Promoter,I think friendly staff.
+427,2904,2025-02-20,5,Detractor,"Overall, billing errors and confusing app."
+428,2241,2025-02-20,7,Passive,"Overall, works as expected and friendly staff."
+429,2731,2025-02-20,2,Detractor,
+430,2212,2025-02-20,9,Promoter,
+431,1430,2025-02-20,8,Passive,
+432,3715,2025-02-20,6,Detractor,
+433,1733,2025-02-20,8,Passive,"Overall, average experience and fast delivery."
+434,2025,2025-02-20,10,Promoter,"Overall, reliable service."
+435,1524,2025-02-21,6,Detractor,Long wait times and billing errors
+436,1237,2025-02-21,7,Passive,
+437,71,2025-02-21,4,Detractor,I think too expensive.
+438,3928,2025-02-21,10,Promoter,
+439,1916,2025-02-22,10,Promoter,The app works well
+440,175,2025-02-22,8,Passive,
+441,3710,2025-02-22,4,Detractor,Poor communication and frequent outages
+442,561,2025-02-22,7,Passive,Nothing special and fast delivery
+443,2288,2025-02-23,10,Promoter,Mainly fast delivery and the app works well.
+444,3672,2025-02-23,7,Passive,Average experience
+445,421,2025-02-23,6,Detractor,I think poor communication and confusing app.
+446,905,2025-02-23,8,Passive,The service is okay and confusing app
+447,3979,2025-02-23,3,Detractor,"Overall, too expensive and slow support response."
+448,3342,2025-02-23,10,Promoter,
+449,3570,2025-02-23,9,Promoter,
+450,3941,2025-02-24,10,Promoter,I think reliable service and fast delivery.
+451,595,2025-02-24,10,Promoter,
+452,1438,2025-02-24,6,Detractor,
+453,2058,2025-02-24,4,Detractor,Too expensive
+454,917,2025-02-24,6,Detractor,Slow support response and too expensive
+455,707,2025-02-24,4,Detractor,Mainly slow support response and billing errors.
+456,610,2025-02-24,10,Promoter,"Overall, friendly staff."
+457,2648,2025-02-25,7,Passive,Average experience
+458,309,2025-02-25,7,Passive,I think the service is okay and easy to use.
+459,1791,2025-02-25,10,Promoter,I think fast delivery and easy to use.
+460,126,2025-02-25,6,Detractor,I think long wait times.
+461,3151,2025-02-25,9,Promoter,Mainly easy to use.
+462,3765,2025-02-25,6,Detractor,
+463,3713,2025-02-25,10,Promoter,
+464,278,2025-02-25,10,Promoter,Reliable service
+465,2410,2025-02-26,10,Promoter,I think friendly staff.
+466,1951,2025-02-26,7,Passive,
+467,1170,2025-02-26,10,Promoter,
+468,2247,2025-02-26,9,Promoter,"Overall, good value for money and reliable service."
+469,1660,2025-02-26,8,Passive,
+470,3425,2025-02-26,8,Passive,Mainly the service is okay and fast delivery.
+471,1024,2025-02-26,3,Detractor,Mainly billing errors and frequent outages.
+472,14,2025-02-27,6,Detractor,
+473,229,2025-02-27,7,Passive,
+474,2504,2025-02-27,6,Detractor,I think slow support response.
+475,1917,2025-02-27,3,Detractor,I think too expensive and confusing app.
+476,1527,2025-02-27,10,Promoter,
+477,444,2025-02-27,9,Promoter,"Overall, easy to use and reliable service."
+478,1953,2025-02-28,6,Detractor,Billing errors and too expensive
+479,1785,2025-02-28,3,Detractor,
+480,2935,2025-02-28,7,Passive,"Overall, the service is okay."
+481,953,2025-02-28,7,Passive,I think the service is okay.
+482,1119,2025-02-28,9,Promoter,I think reliable service.
+483,2894,2025-02-28,5,Detractor,"Overall, poor communication."
+484,1605,2025-02-28,10,Promoter,
+485,817,2025-03-01,8,Passive,Works as expected and great customer support
+486,1423,2025-03-01,6,Detractor,"Overall, slow support response and poor communication."
+487,3468,2025-03-01,4,Detractor,
+488,621,2025-03-01,7,Passive,"Overall, average experience."
+489,1871,2025-03-01,10,Promoter,"Overall, the app works well and great customer support."
+490,3908,2025-03-01,8,Passive,I think average experience and confusing app.
+491,1672,2025-03-01,7,Passive,"Overall, nothing special and too expensive."
+492,3901,2025-03-02,5,Detractor,
+493,1304,2025-03-02,5,Detractor,I think too expensive and slow support response.
+494,2655,2025-03-02,8,Passive,Mainly average experience.
+495,1964,2025-03-02,8,Passive,Average experience and good value for money
+496,328,2025-03-02,6,Detractor,
+497,2304,2025-03-02,8,Passive,I think works as expected.
+498,2294,2025-03-02,8,Passive,
+499,3641,2025-03-02,8,Passive,I think the service is okay and billing errors.
+500,1195,2025-03-02,5,Detractor,"Overall, confusing app and too expensive."
+501,1743,2025-03-02,5,Detractor,"Overall, too expensive."
+502,860,2025-03-03,8,Passive,Mainly average experience.
+503,3461,2025-03-03,6,Detractor,I think poor communication and slow support response.
+504,914,2025-03-03,10,Promoter,"Overall, friendly staff and easy to use."
+505,3503,2025-03-03,7,Passive,"Overall, average experience."
+506,522,2025-03-03,7,Passive,Nothing special and the app works well
+507,3640,2025-03-03,6,Detractor,Billing errors and slow support response
+508,1011,2025-03-03,6,Detractor,Mainly long wait times and poor communication.
+509,1921,2025-03-04,9,Promoter,Mainly good value for money.
+510,1456,2025-03-04,6,Detractor,Mainly long wait times and poor communication.
+511,72,2025-03-04,3,Detractor,Mainly long wait times.
+512,1971,2025-03-04,8,Passive,
+513,2672,2025-03-04,9,Promoter,Great customer support
+514,1202,2025-03-04,6,Detractor,"Overall, billing errors and confusing app."
+515,3685,2025-03-04,9,Promoter,Great customer support and reliable service
+516,1740,2025-03-04,7,Passive,
+517,2219,2025-03-05,9,Promoter,
+518,3164,2025-03-05,7,Passive,"Overall, works as expected and poor communication."
+519,1762,2025-03-05,5,Detractor,
+520,2119,2025-03-05,9,Promoter,
+521,2910,2025-03-06,9,Promoter,"Overall, reliable service and friendly staff."
+522,1274,2025-03-06,10,Promoter,
+523,1427,2025-03-06,9,Promoter,The app works well
+524,3399,2025-03-06,5,Detractor,"Overall, too expensive and billing errors."
+525,1272,2025-03-06,7,Passive,I think the service is okay.
+526,3723,2025-03-07,6,Detractor,Mainly slow support response.
+527,1025,2025-03-07,8,Passive,"Overall, works as expected and good value for money."
+528,1738,2025-03-07,5,Detractor,
+529,3404,2025-03-07,9,Promoter,I think friendly staff and the app works well.
+530,29,2025-03-07,5,Detractor,I think too expensive and slow support response.
+531,2627,2025-03-07,10,Promoter,Friendly staff and fast delivery
+532,1434,2025-03-07,5,Detractor,
+533,2090,2025-03-07,9,Promoter,
+534,1018,2025-03-07,10,Promoter,
+535,3817,2025-03-08,9,Promoter,
+536,1197,2025-03-08,8,Passive,Mainly nothing special.
+537,1460,2025-03-08,3,Detractor,
+538,352,2025-03-08,10,Promoter,"Overall, fast delivery and easy to use."
+539,2888,2025-03-08,10,Promoter,
+540,1382,2025-03-08,8,Passive,The service is okay and easy to use
+541,3981,2025-03-08,9,Promoter,
+542,3169,2025-03-08,10,Promoter,I think great customer support.
+543,1980,2025-03-09,6,Detractor,Mainly too expensive.
+544,281,2025-03-09,7,Passive,"Overall, nothing special."
+545,3848,2025-03-09,9,Promoter,
+546,2619,2025-03-09,6,Detractor,Slow support response
+547,2460,2025-03-09,10,Promoter,Mainly reliable service.
+548,1877,2025-03-09,6,Detractor,
+549,611,2025-03-09,7,Passive,I think works as expected and fast delivery.
+550,1968,2025-03-09,9,Promoter,Mainly good value for money.
+551,3285,2025-03-09,6,Detractor,"Overall, billing errors and slow support response."
+552,3457,2025-03-09,7,Passive,I think average experience and friendly staff.
+553,3536,2025-03-09,7,Passive,Nothing special
+554,454,2025-03-10,8,Passive,Average experience
+555,1457,2025-03-10,7,Passive,Mainly the service is okay.
+556,1714,2025-03-10,10,Promoter,"Overall, fast delivery and easy to use."
+557,3298,2025-03-10,10,Promoter,Mainly easy to use.
+558,529,2025-03-10,7,Passive,I think works as expected.
+559,1923,2025-03-10,9,Promoter,I think good value for money and fast delivery.
+560,2273,2025-03-10,9,Promoter,"Overall, the app works well."
+561,1574,2025-03-10,4,Detractor,Mainly frequent outages and billing errors.
+562,830,2025-03-11,8,Passive,The service is okay
+563,523,2025-03-11,8,Passive,Mainly nothing special and too expensive.
+564,558,2025-03-11,7,Passive,Works as expected and slow support response
+565,2237,2025-03-11,10,Promoter,"Overall, good value for money and reliable service."
+566,612,2025-03-11,9,Promoter,Mainly good value for money and fast delivery.
+567,3126,2025-03-12,5,Detractor,"Overall, slow support response and long wait times."
+568,745,2025-03-12,7,Passive,Mainly works as expected and fast delivery.
+569,1348,2025-03-12,10,Promoter,"Overall, good value for money and friendly staff."
+570,95,2025-03-12,8,Passive,Mainly the service is okay.
+571,3233,2025-03-12,9,Promoter,"Overall, good value for money and easy to use."
+572,1437,2025-03-12,7,Passive,I think the service is okay.
+573,3717,2025-03-12,10,Promoter,Reliable service
+574,713,2025-03-12,8,Passive,
+575,1546,2025-03-13,6,Detractor,"Overall, long wait times and frequent outages."
+576,2922,2025-03-13,7,Passive,Mainly the service is okay and friendly staff.
+577,356,2025-03-13,9,Promoter,"Overall, the app works well."
+578,2262,2025-03-13,7,Passive,I think works as expected and frequent outages.
+579,3768,2025-03-13,10,Promoter,Mainly fast delivery and easy to use.
+580,615,2025-03-13,8,Passive,I think the service is okay and long wait times.
+581,1040,2025-03-13,10,Promoter,Mainly fast delivery and friendly staff.
+582,436,2025-03-14,7,Passive,
+583,3307,2025-03-14,9,Promoter,Good value for money and reliable service
+584,2029,2025-03-14,5,Detractor,
+585,62,2025-03-14,9,Promoter,I think easy to use.
+586,866,2025-03-14,6,Detractor,
+587,3945,2025-03-14,9,Promoter,Mainly reliable service and easy to use.
+588,1,2025-03-14,7,Passive,
+589,293,2025-03-14,6,Detractor,Mainly long wait times and too expensive.
+590,136,2025-03-14,6,Detractor,
+591,888,2025-03-14,8,Passive,I think average experience and too expensive.
+592,789,2025-03-14,8,Passive,I think works as expected and too expensive.
+593,1277,2025-03-15,4,Detractor,Confusing app
+594,1488,2025-03-15,6,Detractor,I think slow support response.
+595,2561,2025-03-15,7,Passive,Nothing special
+596,3818,2025-03-15,4,Detractor,
+597,1726,2025-03-15,9,Promoter,Easy to use and good value for money
+598,3507,2025-03-15,7,Passive,Mainly average experience.
+599,2997,2025-03-15,9,Promoter,I think reliable service and good value for money.
+600,1702,2025-03-16,8,Passive,I think nothing special and fast delivery.
+601,1834,2025-03-16,4,Detractor,"Overall, slow support response."
+602,1552,2025-03-16,9,Promoter,"Overall, friendly staff and the app works well."
+603,469,2025-03-16,5,Detractor,
+604,301,2025-03-16,9,Promoter,I think good value for money.
+605,179,2025-03-16,3,Detractor,"Overall, frequent outages."
+606,732,2025-03-16,9,Promoter,"Overall, easy to use."
+607,2970,2025-03-16,7,Passive,"Overall, average experience."
+608,200,2025-03-16,8,Passive,
+609,1071,2025-03-17,6,Detractor,"Overall, confusing app."
+610,1405,2025-03-17,8,Passive,
+611,1341,2025-03-17,8,Passive,
+612,3377,2025-03-17,4,Detractor,Long wait times and slow support response
+613,3427,2025-03-18,8,Passive,
+614,537,2025-03-18,7,Passive,Mainly average experience and good value for money.
+615,3790,2025-03-18,5,Detractor,I think frequent outages and long wait times.
+616,3366,2025-03-18,6,Detractor,
+617,645,2025-03-18,3,Detractor,Too expensive and poor communication
+618,2233,2025-03-18,5,Detractor,I think billing errors and too expensive.
+619,3781,2025-03-18,10,Promoter,I think great customer support and good value for money.
+620,59,2025-03-18,9,Promoter,"Overall, great customer support."
+621,335,2025-03-19,6,Detractor,"Overall, frequent outages and slow support response."
+622,2601,2025-03-19,9,Promoter,Mainly good value for money.
+623,3688,2025-03-19,7,Passive,"Overall, nothing special and poor communication."
+624,1172,2025-03-19,7,Passive,I think average experience and long wait times.
+625,2060,2025-03-19,10,Promoter,
+626,1049,2025-03-19,10,Promoter,
+627,2403,2025-03-20,5,Detractor,I think too expensive and confusing app.
+628,1539,2025-03-20,8,Passive,Mainly average experience.
+629,2728,2025-03-20,8,Passive,"Overall, average experience and great customer support."
+630,3761,2025-03-20,4,Detractor,
+631,342,2025-03-20,9,Promoter,
+632,589,2025-03-20,9,Promoter,I think reliable service.
+633,1998,2025-03-20,8,Passive,"Overall, average experience and good value for money."
+634,267,2025-03-20,9,Promoter,Fast delivery and the app works well
+635,847,2025-03-20,10,Promoter,
+636,1863,2025-03-20,10,Promoter,
+637,1448,2025-03-21,7,Passive,
+638,1643,2025-03-21,10,Promoter,The app works well and fast delivery
+639,2168,2025-03-21,5,Detractor,
+640,2023,2025-03-21,9,Promoter,Good value for money
+641,2863,2025-03-21,9,Promoter,Reliable service
+642,2866,2025-03-21,3,Detractor,Confusing app and too expensive
+643,1526,2025-03-21,10,Promoter,I think fast delivery and easy to use.
+644,3666,2025-03-21,5,Detractor,
+645,967,2025-03-21,10,Promoter,I think the app works well.
+646,2637,2025-03-21,10,Promoter,
+647,1576,2025-03-22,5,Detractor,Confusing app and billing errors
+648,1737,2025-03-22,8,Passive,I think the service is okay and reliable service.
+649,632,2025-03-22,8,Passive,
+650,479,2025-03-22,7,Passive,"Overall, works as expected and good value for money."
+651,3614,2025-03-22,10,Promoter,
+652,422,2025-03-22,9,Promoter,
+653,1899,2025-03-22,8,Passive,
+654,3530,2025-03-23,7,Passive,I think the service is okay and easy to use.
+655,3897,2025-03-23,5,Detractor,Mainly poor communication and slow support response.
+656,3656,2025-03-23,9,Promoter,I think good value for money.
+657,411,2025-03-23,9,Promoter,
+658,1784,2025-03-23,10,Promoter,I think friendly staff and the app works well.
+659,325,2025-03-23,6,Detractor,Long wait times and poor communication
+660,1962,2025-03-23,9,Promoter,
+661,2749,2025-03-23,6,Detractor,
+662,2903,2025-03-23,8,Passive,Nothing special
+663,2121,2025-03-23,7,Passive,
+664,3284,2025-03-23,10,Promoter,
+665,2792,2025-03-23,1,Detractor,Too expensive
+666,698,2025-03-23,7,Passive,Average experience and good value for money
+667,1581,2025-03-24,4,Detractor,
+668,3306,2025-03-24,7,Passive,
+669,3234,2025-03-24,8,Passive,
+670,16,2025-03-24,9,Promoter,Mainly fast delivery.
+671,3156,2025-03-24,8,Passive,Mainly average experience and friendly staff.
+672,1177,2025-03-24,7,Passive,The service is okay and billing errors
+673,1965,2025-03-24,8,Passive,I think the service is okay.
+674,305,2025-03-24,8,Passive,
+675,3645,2025-03-24,7,Passive,I think the service is okay and poor communication.
+676,2919,2025-03-24,9,Promoter,I think friendly staff and great customer support.
+677,3211,2025-03-24,4,Detractor,"Overall, frequent outages."
+678,320,2025-03-25,7,Passive,Works as expected and great customer support
+679,2733,2025-03-25,6,Detractor,Mainly poor communication and too expensive.
+680,3864,2025-03-25,8,Passive,
+681,365,2025-03-26,8,Passive,
+682,1484,2025-03-26,10,Promoter,I think reliable service and good value for money.
+683,837,2025-03-26,7,Passive,
+684,2342,2025-03-26,7,Passive,I think nothing special.
+685,909,2025-03-26,6,Detractor,Mainly confusing app and too expensive.
+686,2045,2025-03-26,9,Promoter,"Overall, good value for money and friendly staff."
+687,648,2025-03-26,10,Promoter,"Overall, reliable service."
+688,34,2025-03-27,4,Detractor,Confusing app and slow support response
+689,23,2025-03-27,8,Passive,
+690,251,2025-03-27,5,Detractor,Mainly frequent outages and billing errors.
+691,2487,2025-03-27,7,Passive,Mainly nothing special and friendly staff.
+692,3330,2025-03-27,7,Passive,I think the service is okay.
+693,1388,2025-03-27,8,Passive,
+694,3707,2025-03-27,4,Detractor,"Overall, too expensive."
+695,2899,2025-03-27,8,Passive,I think works as expected and good value for money.
+696,1211,2025-03-27,5,Detractor,I think too expensive.
+697,1843,2025-03-27,9,Promoter,"Overall, reliable service."
+698,1866,2025-03-28,5,Detractor,
+699,1731,2025-03-28,8,Passive,Average experience
+700,1944,2025-03-28,9,Promoter,I think fast delivery.
+701,1506,2025-03-28,8,Passive,Mainly nothing special.
+702,1499,2025-03-28,6,Detractor,
+703,3513,2025-03-28,10,Promoter,Reliable service
+704,725,2025-03-29,6,Detractor,Mainly frequent outages and billing errors.
+705,2714,2025-03-29,8,Passive,"Overall, the service is okay and good value for money."
+706,833,2025-03-29,6,Detractor,
+707,2697,2025-03-29,4,Detractor,Mainly slow support response and frequent outages.
+708,531,2025-03-29,7,Passive,"Overall, the service is okay."
+709,2716,2025-03-30,8,Passive,
+710,932,2025-03-30,5,Detractor,I think confusing app.
+711,2986,2025-03-30,5,Detractor,"Overall, confusing app and long wait times."
+712,3604,2025-03-30,3,Detractor,I think poor communication and slow support response.
+713,2285,2025-03-30,8,Passive,Mainly the service is okay and the app works well.
+714,3115,2025-03-30,6,Detractor,I think too expensive.
+715,3966,2025-03-30,6,Detractor,I think slow support response.
+716,723,2025-03-31,4,Detractor,I think billing errors and confusing app.
+717,533,2025-03-31,7,Passive,Average experience and fast delivery
+718,1134,2025-03-31,6,Detractor,Poor communication and confusing app
+719,1510,2025-04-01,7,Passive,
+720,3912,2025-04-01,5,Detractor,Mainly long wait times and confusing app.
+721,1963,2025-04-01,8,Passive,"Overall, the service is okay."
+722,1363,2025-04-01,8,Passive,Mainly works as expected and easy to use.
+723,943,2025-04-01,10,Promoter,I think the app works well.
+724,984,2025-04-01,4,Detractor,I think poor communication and too expensive.
+725,49,2025-04-01,5,Detractor,"Overall, slow support response."
+726,2322,2025-04-01,6,Detractor,Mainly poor communication.
+727,141,2025-04-01,6,Detractor,Confusing app
+728,18,2025-04-01,7,Passive,"Overall, works as expected and confusing app."
+729,434,2025-04-01,5,Detractor,Too expensive and slow support response
+730,782,2025-04-02,10,Promoter,Mainly the app works well.
+731,1426,2025-04-02,6,Detractor,
+732,378,2025-04-02,6,Detractor,"Overall, slow support response."
+733,3937,2025-04-02,6,Detractor,
+734,3451,2025-04-02,4,Detractor,I think poor communication.
+735,3663,2025-04-02,8,Passive,
+736,1079,2025-04-02,8,Passive,Average experience and the app works well
+737,2381,2025-04-03,4,Detractor,"Overall, poor communication and frequent outages."
+738,3150,2025-04-03,8,Passive,Mainly works as expected and too expensive.
+739,216,2025-04-03,7,Passive,Mainly average experience and frequent outages.
+740,1763,2025-04-03,8,Passive,"Overall, average experience and fast delivery."
+741,2630,2025-04-03,9,Promoter,
+742,802,2025-04-03,9,Promoter,I think reliable service and fast delivery.
+743,2762,2025-04-03,5,Detractor,
+744,2245,2025-04-03,8,Passive,I think nothing special and too expensive.
+745,2861,2025-04-03,10,Promoter,I think friendly staff and reliable service.
+746,360,2025-04-04,8,Passive,I think average experience and easy to use.
+747,2223,2025-04-04,9,Promoter,Mainly good value for money.
+748,45,2025-04-04,9,Promoter,
+749,448,2025-04-04,7,Passive,
+750,711,2025-04-04,8,Passive,
+751,410,2025-04-04,5,Detractor,Slow support response
+752,1771,2025-04-04,8,Passive,"Overall, nothing special."
+753,1806,2025-04-04,7,Passive,The service is okay
+754,3988,2025-04-05,7,Passive,
+755,248,2025-04-05,6,Detractor,Mainly too expensive and poor communication.
+756,825,2025-04-05,8,Passive,I think works as expected and fast delivery.
+757,3537,2025-04-05,5,Detractor,"Overall, poor communication."
+758,1315,2025-04-05,10,Promoter,Mainly friendly staff.
+759,3102,2025-04-05,6,Detractor,
+760,3973,2025-04-05,9,Promoter,I think friendly staff.
+761,901,2025-04-05,5,Detractor,
+762,2415,2025-04-05,7,Passive,Works as expected
+763,3033,2025-04-05,8,Passive,The service is okay and great customer support
+764,1918,2025-04-06,8,Passive,"Overall, nothing special."
+765,3671,2025-04-06,7,Passive,"Overall, works as expected and poor communication."
+766,50,2025-04-06,10,Promoter,
+767,2675,2025-04-06,6,Detractor,"Overall, slow support response and frequent outages."
+768,1068,2025-04-06,8,Passive,Works as expected
+769,1205,2025-04-06,7,Passive,"Overall, the service is okay and good value for money."
+770,606,2025-04-06,7,Passive,Nothing special and the app works well
+771,1710,2025-04-06,6,Detractor,
+772,2167,2025-04-07,9,Promoter,
+773,92,2025-04-07,9,Promoter,Mainly good value for money.
+774,3942,2025-04-07,5,Detractor,I think too expensive and poor communication.
+775,3009,2025-04-07,10,Promoter,Mainly fast delivery and friendly staff.
+776,1611,2025-04-07,7,Passive,Mainly works as expected and the app works well.
+777,2707,2025-04-08,10,Promoter,"Overall, reliable service and great customer support."
+778,2534,2025-04-08,8,Passive,I think the service is okay and poor communication.
+779,716,2025-04-08,9,Promoter,Mainly great customer support and friendly staff.
+780,3662,2025-04-08,10,Promoter,"Overall, friendly staff."
+781,1988,2025-04-08,4,Detractor,Mainly billing errors and frequent outages.
+782,2917,2025-04-08,7,Passive,
+783,1620,2025-04-09,9,Promoter,"Overall, the app works well."
+784,631,2025-04-09,10,Promoter,Mainly fast delivery.
+785,369,2025-04-09,8,Passive,Mainly average experience.
+786,2298,2025-04-09,8,Passive,Mainly the service is okay and great customer support.
+787,3261,2025-04-09,7,Passive,Works as expected
+788,3347,2025-04-10,6,Detractor,Confusing app
+789,2305,2025-04-10,6,Detractor,"Overall, too expensive and confusing app."
+790,3603,2025-04-10,9,Promoter,"Overall, easy to use and fast delivery."
+791,273,2025-04-10,7,Passive,Nothing special
+792,753,2025-04-10,6,Detractor,"Overall, confusing app and too expensive."
+793,1321,2025-04-10,10,Promoter,Good value for money and friendly staff
+794,678,2025-04-10,6,Detractor,
+795,3245,2025-04-10,10,Promoter,Good value for money and easy to use
+796,132,2025-04-10,10,Promoter,"Overall, friendly staff."
+797,2666,2025-04-10,5,Detractor,
+798,573,2025-04-10,8,Passive,
+799,2188,2025-04-11,2,Detractor,
+800,2717,2025-04-11,8,Passive,Mainly nothing special and billing errors.
+801,3217,2025-04-11,5,Detractor,Mainly long wait times.
+802,199,2025-04-11,10,Promoter,
+803,658,2025-04-11,6,Detractor,
+804,3024,2025-04-11,9,Promoter,Good value for money and great customer support
+805,1682,2025-04-11,6,Detractor,"Overall, confusing app and slow support response."
+806,1453,2025-04-11,6,Detractor,
+807,597,2025-04-12,8,Passive,
+808,3101,2025-04-12,9,Promoter,Easy to use and great customer support
+809,2346,2025-04-12,7,Passive,Mainly the service is okay.
+810,1597,2025-04-12,10,Promoter,
+811,3327,2025-04-12,9,Promoter,
+812,1818,2025-04-12,5,Detractor,"Overall, slow support response."
+813,845,2025-04-12,8,Passive,"Overall, the service is okay and long wait times."
+814,2554,2025-04-12,9,Promoter,
+815,1722,2025-04-12,7,Passive,
+816,1673,2025-04-12,10,Promoter,Mainly great customer support.
+817,1589,2025-04-12,6,Detractor,I think poor communication and billing errors.
+818,791,2025-04-13,4,Detractor,"Overall, billing errors and poor communication."
+819,584,2025-04-13,3,Detractor,I think slow support response and frequent outages.
+820,3186,2025-04-13,10,Promoter,Mainly good value for money.
+821,975,2025-04-13,10,Promoter,Mainly easy to use.
+822,908,2025-04-13,9,Promoter,Mainly friendly staff and good value for money.
+823,3312,2025-04-13,6,Detractor,Frequent outages
+824,3161,2025-04-13,6,Detractor,
+825,1464,2025-04-13,10,Promoter,
+826,100,2025-04-14,10,Promoter,
+827,3195,2025-04-14,7,Passive,"Overall, works as expected."
+828,2896,2025-04-14,9,Promoter,Mainly easy to use and reliable service.
+829,1804,2025-04-14,6,Detractor,
+830,2131,2025-04-14,7,Passive,I think the service is okay.
+831,1098,2025-04-14,9,Promoter,"Overall, friendly staff."
+832,2030,2025-04-14,5,Detractor,"Overall, long wait times and poor communication."
+833,3585,2025-04-15,4,Detractor,Mainly too expensive and long wait times.
+834,2989,2025-04-15,5,Detractor,
+835,1897,2025-04-15,7,Passive,Mainly works as expected and friendly staff.
+836,1466,2025-04-15,9,Promoter,Great customer support and friendly staff
+837,2743,2025-04-15,8,Passive,The service is okay and fast delivery
+838,1594,2025-04-15,6,Detractor,
+839,3035,2025-04-15,10,Promoter,I think easy to use.
+840,3739,2025-04-15,5,Detractor,
+841,1041,2025-04-15,5,Detractor,
+842,101,2025-04-15,8,Passive,
+843,2210,2025-04-15,8,Passive,I think the service is okay.
+844,283,2025-04-16,7,Passive,
+845,3430,2025-04-16,3,Detractor,Mainly poor communication and frequent outages.
+846,919,2025-04-16,4,Detractor,"Overall, frequent outages and too expensive."
+847,1595,2025-04-17,9,Promoter,Mainly the app works well and friendly staff.
+848,2689,2025-04-17,5,Detractor,I think long wait times.
+849,662,2025-04-17,5,Detractor,Mainly confusing app and long wait times.
+850,2488,2025-04-17,8,Passive,
+851,1232,2025-04-17,7,Passive,Mainly the service is okay and good value for money.
+852,3352,2025-04-17,7,Passive,Mainly nothing special.
+853,1969,2025-04-17,5,Detractor,
+854,2942,2025-04-17,5,Detractor,
+855,3275,2025-04-17,10,Promoter,"Overall, fast delivery."
+856,663,2025-04-18,9,Promoter,I think great customer support.
+857,3339,2025-04-18,8,Passive,I think works as expected and great customer support.
+858,3181,2025-04-18,10,Promoter,"Overall, fast delivery and the app works well."
+859,3911,2025-04-18,8,Passive,
+860,2799,2025-04-18,8,Passive,"Overall, the service is okay."
+861,3516,2025-04-18,8,Passive,
+862,3043,2025-04-18,6,Detractor,I think long wait times.
+863,807,2025-04-18,5,Detractor,
+864,218,2025-04-18,4,Detractor,
+865,347,2025-04-18,10,Promoter,I think easy to use and reliable service.
+866,2766,2025-04-19,10,Promoter,
+867,119,2025-04-19,6,Detractor,
+868,1318,2025-04-19,10,Promoter,Great customer support
+869,1624,2025-04-19,8,Passive,Mainly average experience and confusing app.
+870,2750,2025-04-19,4,Detractor,I think slow support response.
+871,1875,2025-04-19,9,Promoter,
+872,2539,2025-04-19,5,Detractor,
+873,2021,2025-04-19,10,Promoter,I think reliable service.
+874,622,2025-04-19,9,Promoter,Friendly staff
+875,2491,2025-04-19,7,Passive,Mainly works as expected and the app works well.
+876,1976,2025-04-19,10,Promoter,Mainly fast delivery.
+877,240,2025-04-20,5,Detractor,Mainly poor communication.
+878,672,2025-04-20,8,Passive,
+879,2478,2025-04-20,8,Passive,The service is okay and good value for money
+880,841,2025-04-20,9,Promoter,Mainly the app works well and good value for money.
+881,121,2025-04-20,5,Detractor,I think confusing app.
+882,3930,2025-04-20,10,Promoter,Friendly staff
+883,1194,2025-04-20,10,Promoter,Great customer support and good value for money
+884,2012,2025-04-20,8,Passive,Mainly nothing special and frequent outages.
+885,3292,2025-04-21,5,Detractor,Mainly confusing app.
+886,2891,2025-04-21,2,Detractor,Slow support response and too expensive
+887,3090,2025-04-21,9,Promoter,I think friendly staff.
+888,2577,2025-04-21,6,Detractor,
+889,1537,2025-04-21,3,Detractor,"Overall, too expensive."
+890,3885,2025-04-21,7,Passive,"Overall, the service is okay and great customer support."
+891,1208,2025-04-21,6,Detractor,Confusing app and poor communication
+892,1812,2025-04-21,10,Promoter,"Overall, friendly staff and reliable service."
+893,2565,2025-04-21,8,Passive,The service is okay
+894,2044,2025-04-21,4,Detractor,Mainly too expensive and billing errors.
+895,757,2025-04-22,7,Passive,I think nothing special.
+896,2216,2025-04-22,8,Passive,The service is okay and good value for money
+897,1615,2025-04-22,10,Promoter,"Overall, fast delivery and good value for money."
+898,3619,2025-04-22,4,Detractor,Mainly billing errors and slow support response.
+899,2923,2025-04-22,9,Promoter,Reliable service
+900,1827,2025-04-22,10,Promoter,I think great customer support.
+901,2673,2025-04-22,8,Passive,"Overall, works as expected and too expensive."
+902,2423,2025-04-22,6,Detractor,Long wait times and slow support response
+903,3387,2025-04-23,8,Passive,Average experience and billing errors
+904,532,2025-04-23,6,Detractor,Mainly billing errors.
+905,1908,2025-04-23,8,Passive,Works as expected
+906,3391,2025-04-23,9,Promoter,
+907,1245,2025-04-23,4,Detractor,I think too expensive.
+908,2855,2025-04-23,4,Detractor,
+909,3246,2025-04-23,6,Detractor,Mainly poor communication and too expensive.
+910,2629,2025-04-23,4,Detractor,
+911,2564,2025-04-23,10,Promoter,"Overall, friendly staff."
+912,3308,2025-04-24,4,Detractor,Too expensive and confusing app
+913,3791,2025-04-24,8,Passive,I think works as expected and confusing app.
+914,1495,2025-04-24,7,Passive,Works as expected and slow support response
+915,2440,2025-04-24,8,Passive,"Overall, nothing special and great customer support."
+916,3853,2025-04-24,4,Detractor,Long wait times and confusing app
+917,1358,2025-04-24,10,Promoter,Mainly reliable service and the app works well.
+918,2556,2025-04-25,10,Promoter,Friendly staff and easy to use
+919,1407,2025-04-25,9,Promoter,
+920,702,2025-04-25,6,Detractor,
+921,2097,2025-04-25,8,Passive,I think nothing special.
+922,56,2025-04-25,5,Detractor,Confusing app
+923,2944,2025-04-25,6,Detractor,
+924,998,2025-04-26,4,Detractor,Mainly slow support response and billing errors.
+925,1091,2025-04-26,9,Promoter,"Overall, good value for money."
+926,1377,2025-04-26,7,Passive,
+927,3706,2025-04-26,7,Passive,Mainly the service is okay and great customer support.
+928,1573,2025-04-26,7,Passive,
+929,3515,2025-04-27,10,Promoter,Mainly friendly staff and reliable service.
+930,2013,2025-04-27,4,Detractor,"Overall, frequent outages and slow support response."
+931,3397,2025-04-27,8,Passive,"Overall, nothing special and long wait times."
+932,3665,2025-04-27,10,Promoter,
+933,3847,2025-04-27,10,Promoter,Mainly fast delivery.
+934,3472,2025-04-27,10,Promoter,"Overall, good value for money and reliable service."
+935,3862,2025-04-27,8,Passive,I think works as expected and frequent outages.
+936,433,2025-04-27,4,Detractor,
+937,800,2025-04-27,6,Detractor,I think frequent outages and slow support response.
+938,1262,2025-04-28,6,Detractor,"Overall, long wait times."
+939,2660,2025-04-28,10,Promoter,I think good value for money.
+940,784,2025-04-28,8,Passive,"Overall, average experience."
+941,3563,2025-04-28,7,Passive,I think nothing special.
+942,1432,2025-04-28,9,Promoter,"Overall, reliable service."
+943,1472,2025-04-28,10,Promoter,"Overall, friendly staff."
+944,2016,2025-04-28,9,Promoter,"Overall, reliable service."
+945,2678,2025-04-28,7,Passive,I think average experience and long wait times.
+946,3210,2025-04-28,8,Passive,
+947,1545,2025-04-29,8,Passive,"Overall, average experience."
+948,1102,2025-04-29,7,Passive,Mainly works as expected.
+949,1482,2025-04-29,10,Promoter,
+950,3301,2025-04-29,10,Promoter,
+951,1089,2025-04-29,9,Promoter,Great customer support and friendly staff
+952,1881,2025-04-29,5,Detractor,"Overall, too expensive and long wait times."
+953,1558,2025-04-30,8,Passive,"Overall, nothing special."
+954,3669,2025-04-30,7,Passive,Mainly the service is okay.
+955,3225,2025-04-30,8,Passive,
+956,2710,2025-04-30,6,Detractor,
+957,2125,2025-04-30,8,Passive,Average experience
+958,695,2025-04-30,8,Passive,
+959,253,2025-04-30,6,Detractor,
+960,964,2025-04-30,8,Passive,
+961,221,2025-05-01,8,Passive,I think works as expected.
+962,1062,2025-05-01,6,Detractor,
+963,3059,2025-05-01,7,Passive,"Overall, the service is okay and friendly staff."
+964,2019,2025-05-01,8,Passive,
+965,3206,2025-05-01,10,Promoter,I think good value for money.
+966,1396,2025-05-02,10,Promoter,"Overall, great customer support."
+967,3127,2025-05-02,7,Passive,Nothing special and friendly staff
+968,3099,2025-05-02,10,Promoter,I think fast delivery and the app works well.
+969,3272,2025-05-02,10,Promoter,
+970,2356,2025-05-02,6,Detractor,
+971,3807,2025-05-02,7,Passive,
+972,3165,2025-05-02,4,Detractor,Poor communication
+973,1836,2025-05-02,7,Passive,"Overall, nothing special."
+974,1578,2025-05-02,5,Detractor,
+975,2703,2025-05-02,8,Passive,I think average experience.
+976,3130,2025-05-02,10,Promoter,Friendly staff
+977,107,2025-05-02,8,Passive,Mainly nothing special and billing errors.
+978,1789,2025-05-02,8,Passive,"Overall, the service is okay and frequent outages."
+979,886,2025-05-02,8,Passive,"Overall, nothing special."
+980,2311,2025-05-02,10,Promoter,
+981,3538,2025-05-02,5,Detractor,I think too expensive.
+982,209,2025-05-03,9,Promoter,Mainly the app works well.
+983,870,2025-05-03,9,Promoter,
+984,3092,2025-05-03,9,Promoter,Mainly friendly staff.
+985,2683,2025-05-03,7,Passive,
+986,3664,2025-05-03,4,Detractor,"Overall, billing errors."
+987,2852,2025-05-03,10,Promoter,
+988,738,2025-05-03,5,Detractor,
+989,1776,2025-05-03,10,Promoter,I think friendly staff and great customer support.
+990,406,2025-05-04,10,Promoter,I think great customer support.
+991,1455,2025-05-04,6,Detractor,I think billing errors.
+992,70,2025-05-04,4,Detractor,"Overall, confusing app and billing errors."
+993,2470,2025-05-04,5,Detractor,
+994,686,2025-05-04,7,Passive,Mainly nothing special and friendly staff.
+995,3935,2025-05-04,9,Promoter,"Overall, good value for money and great customer support."
+996,963,2025-05-04,8,Passive,Mainly works as expected.
+997,1753,2025-05-04,6,Detractor,"Overall, slow support response and confusing app."
+998,3480,2025-05-04,8,Passive,Mainly average experience and good value for money.
+999,3800,2025-05-04,8,Passive,Mainly nothing special.
+1000,3140,2025-05-04,10,Promoter,"Overall, the app works well."
+1001,3890,2025-05-04,7,Passive,Nothing special
+1002,3384,2025-05-05,4,Detractor,"Overall, slow support response and confusing app."
+1003,1362,2025-05-05,7,Passive,Mainly works as expected and easy to use.
+1004,2582,2025-05-06,10,Promoter,"Overall, the app works well."
+1005,1043,2025-05-06,5,Detractor,Mainly long wait times and confusing app.
+1006,3368,2025-05-06,9,Promoter,
+1007,31,2025-05-06,6,Detractor,
+1008,284,2025-05-06,7,Passive,Mainly the service is okay.
+1009,3716,2025-05-06,8,Passive,"Overall, average experience."
+1010,2499,2025-05-06,7,Passive,Mainly the service is okay.
+1011,1641,2025-05-06,6,Detractor,
+1012,3123,2025-05-06,7,Passive,Average experience and easy to use
+1013,604,2025-05-06,5,Detractor,
+1014,2427,2025-05-06,10,Promoter,The app works well and fast delivery
+1015,1869,2025-05-07,7,Passive,I think average experience and fast delivery.
+1016,2185,2025-05-07,7,Passive,Mainly the service is okay.
+1017,2299,2025-05-07,5,Detractor,I think long wait times and poor communication.
+1018,2658,2025-05-07,8,Passive,Mainly works as expected and fast delivery.
+1019,1663,2025-05-07,5,Detractor,Mainly billing errors.
+1020,494,2025-05-07,10,Promoter,I think friendly staff and good value for money.
+1021,1623,2025-05-07,8,Passive,
+1022,1329,2025-05-07,5,Detractor,Frequent outages and too expensive
+1023,105,2025-05-07,5,Detractor,Long wait times
+1024,608,2025-05-08,9,Promoter,Mainly reliable service and the app works well.
+1025,3302,2025-05-08,9,Promoter,Fast delivery and easy to use
+1026,594,2025-05-08,4,Detractor,I think slow support response.
+1027,592,2025-05-08,9,Promoter,
+1028,2999,2025-05-08,8,Passive,Average experience and easy to use
+1029,2645,2025-05-08,5,Detractor,
+1030,1775,2025-05-08,5,Detractor,I think billing errors and too expensive.
+1031,3587,2025-05-08,10,Promoter,
+1032,2514,2025-05-08,5,Detractor,"Overall, too expensive and billing errors."
+1033,3358,2025-05-09,7,Passive,I think average experience and long wait times.
+1034,3197,2025-05-09,6,Detractor,I think long wait times and confusing app.
+1035,2966,2025-05-09,9,Promoter,
+1036,1403,2025-05-09,7,Passive,Mainly the service is okay and slow support response.
+1037,2686,2025-05-09,3,Detractor,I think too expensive.
+1038,1003,2025-05-09,6,Detractor,I think poor communication and frequent outages.
+1039,572,2025-05-09,7,Passive,
+1040,2347,2025-05-09,7,Passive,"Overall, works as expected and confusing app."
+1041,2635,2025-05-09,7,Passive,Mainly works as expected.
+1042,1990,2025-05-09,9,Promoter,I think great customer support.
+1043,3780,2025-05-09,6,Detractor,"Overall, too expensive and confusing app."
+1044,876,2025-05-09,10,Promoter,"Overall, fast delivery and great customer support."
+1045,569,2025-05-09,9,Promoter,Fast delivery
+1046,2727,2025-05-10,7,Passive,Mainly works as expected and reliable service.
+1047,2579,2025-05-10,7,Passive,"Overall, the service is okay and good value for money."
+1048,2574,2025-05-10,9,Promoter,"Overall, good value for money and great customer support."
+1049,2542,2025-05-10,4,Detractor,Too expensive and long wait times
+1050,1833,2025-05-10,9,Promoter,
+1051,2529,2025-05-11,8,Passive,
+1052,3722,2025-05-11,8,Passive,Mainly the service is okay.
+1053,3610,2025-05-11,9,Promoter,I think good value for money and reliable service.
+1054,2282,2025-05-12,10,Promoter,
+1055,3417,2025-05-12,9,Promoter,"Overall, friendly staff and easy to use."
+1056,2913,2025-05-12,4,Detractor,I think slow support response and billing errors.
+1057,735,2025-05-12,7,Passive,Works as expected
+1058,868,2025-05-12,7,Passive,I think average experience.
+1059,2502,2025-05-12,9,Promoter,
+1060,2517,2025-05-12,6,Detractor,
+1061,2411,2025-05-12,6,Detractor,
+1062,262,2025-05-12,7,Passive,Mainly works as expected and friendly staff.
+1063,412,2025-05-12,10,Promoter,Friendly staff and good value for money
+1064,806,2025-05-12,2,Detractor,I think frequent outages and billing errors.
+1065,2010,2025-05-12,9,Promoter,I think friendly staff.
+1066,3415,2025-05-13,8,Passive,Average experience and good value for money
+1067,3651,2025-05-13,9,Promoter,Mainly friendly staff and reliable service.
+1068,86,2025-05-13,7,Passive,I think works as expected and frequent outages.
+1069,1922,2025-05-14,6,Detractor,"Overall, confusing app."
+1070,2333,2025-05-14,7,Passive,"Overall, average experience and poor communication."
+1071,3918,2025-05-14,4,Detractor,
+1072,3690,2025-05-14,10,Promoter,Great customer support
+1073,3874,2025-05-14,9,Promoter,I think great customer support.
+1074,3467,2025-05-14,6,Detractor,Mainly billing errors.
+1075,3110,2025-05-14,8,Passive,Mainly nothing special and good value for money.
+1076,2231,2025-05-14,6,Detractor,
+1077,1135,2025-05-14,3,Detractor,
+1078,2316,2025-05-14,9,Promoter,Mainly great customer support and friendly staff.
+1079,712,2025-05-14,6,Detractor,
+1080,327,2025-05-15,7,Passive,"Overall, the service is okay and fast delivery."
+1081,3525,2025-05-15,10,Promoter,Reliable service
+1082,3801,2025-05-15,9,Promoter,
+1083,1296,2025-05-15,7,Passive,Mainly nothing special and the app works well.
+1084,605,2025-05-15,10,Promoter,Mainly easy to use.
+1085,2991,2025-05-15,8,Passive,I think average experience and too expensive.
+1086,1601,2025-05-15,9,Promoter,I think reliable service.
+1087,2921,2025-05-15,8,Passive,Nothing special
+1088,3320,2025-05-15,5,Detractor,
+1089,2914,2025-05-16,9,Promoter,I think reliable service.
+1090,977,2025-05-16,5,Detractor,I think confusing app and slow support response.
+1091,1930,2025-05-16,6,Detractor,I think too expensive.
+1092,2189,2025-05-16,6,Detractor,
+1093,2343,2025-05-17,7,Passive,"Overall, average experience and fast delivery."
+1094,933,2025-05-17,7,Passive,Mainly average experience and easy to use.
+1095,439,2025-05-17,10,Promoter,I think fast delivery and friendly staff.
+1096,1841,2025-05-17,8,Passive,I think average experience.
+1097,2684,2025-05-17,9,Promoter,
+1098,599,2025-05-17,8,Passive,Average experience
+1099,593,2025-05-17,5,Detractor,I think too expensive and confusing app.
+1100,1630,2025-05-18,7,Passive,
+1101,3050,2025-05-18,10,Promoter,Great customer support
+1102,3504,2025-05-18,4,Detractor,I think too expensive and confusing app.
+1103,3143,2025-05-18,9,Promoter,
+1104,1271,2025-05-18,10,Promoter,"Overall, great customer support."
+1105,1612,2025-05-18,9,Promoter,
+1106,671,2025-05-19,8,Passive,I think average experience and reliable service.
+1107,2244,2025-05-19,7,Passive,Works as expected and easy to use
+1108,3134,2025-05-19,6,Detractor,Mainly long wait times and poor communication.
+1109,1238,2025-05-19,9,Promoter,
+1110,3254,2025-05-19,8,Passive,Average experience
+1111,2465,2025-05-19,10,Promoter,I think fast delivery and friendly staff.
+1112,2352,2025-05-19,10,Promoter,Mainly friendly staff and fast delivery.
+1113,1161,2025-05-20,6,Detractor,I think frequent outages.
+1114,3509,2025-05-20,3,Detractor,Too expensive and poor communication
+1115,1675,2025-05-20,7,Passive,Mainly average experience and the app works well.
+1116,3501,2025-05-20,4,Detractor,
+1117,259,2025-05-20,8,Passive,
+1118,2164,2025-05-20,8,Passive,I think works as expected.
+1119,579,2025-05-20,6,Detractor,Frequent outages and long wait times
+1120,1678,2025-05-20,5,Detractor,I think long wait times and frequent outages.
+1121,3575,2025-05-20,10,Promoter,Mainly fast delivery and good value for money.
+1122,1772,2025-05-21,6,Detractor,Confusing app and too expensive
+1123,1357,2025-05-21,4,Detractor,Mainly poor communication.
+1124,1333,2025-05-21,4,Detractor,I think long wait times.
+1125,366,2025-05-21,10,Promoter,Reliable service and great customer support
+1126,1712,2025-05-21,6,Detractor,Frequent outages
+1127,1674,2025-05-21,8,Passive,I think nothing special.
+1128,1846,2025-05-22,8,Passive,The service is okay and reliable service
+1129,1074,2025-05-22,10,Promoter,I think fast delivery.
+1130,555,2025-05-22,7,Passive,
+1131,1450,2025-05-22,7,Passive,
+1132,2338,2025-05-22,7,Passive,
+1133,1935,2025-05-22,8,Passive,"Overall, works as expected."
+1134,633,2025-05-23,7,Passive,
+1135,3095,2025-05-23,2,Detractor,"Overall, slow support response and frequent outages."
+1136,1088,2025-05-23,6,Detractor,
+1137,1868,2025-05-23,9,Promoter,Great customer support and fast delivery
+1138,3954,2025-05-23,6,Detractor,Mainly billing errors.
+1139,3474,2025-05-23,7,Passive,I think works as expected and too expensive.
+1140,1190,2025-05-23,7,Passive,I think average experience.
+1141,1094,2025-05-23,6,Detractor,
+1142,363,2025-05-24,6,Detractor,Mainly poor communication.
+1143,1278,2025-05-24,8,Passive,Mainly the service is okay.
+1144,1671,2025-05-24,7,Passive,Nothing special and great customer support
+1145,3687,2025-05-24,7,Passive,"Overall, average experience."
+1146,1324,2025-05-24,4,Detractor,
+1147,3696,2025-05-24,8,Passive,"Overall, nothing special and fast delivery."
+1148,832,2025-05-24,9,Promoter,
+1149,243,2025-05-24,7,Passive,Mainly the service is okay and fast delivery.
+1150,810,2025-05-24,10,Promoter,
+1151,1534,2025-05-24,4,Detractor,Frequent outages
+1152,519,2025-05-25,4,Detractor,
+1153,57,2025-05-25,6,Detractor,
+1154,1310,2025-05-25,10,Promoter,"Overall, reliable service and good value for money."
+1155,2943,2025-05-25,5,Detractor,"Overall, slow support response and too expensive."
+1156,623,2025-05-25,5,Detractor,Slow support response
+1157,427,2025-05-25,4,Detractor,Slow support response
+1158,3577,2025-05-25,9,Promoter,I think fast delivery and the app works well.
+1159,407,2025-05-25,10,Promoter,Mainly easy to use.
+1160,1781,2025-05-25,10,Promoter,I think easy to use and friendly staff.
+1161,1565,2025-05-25,4,Detractor,Poor communication
+1162,2654,2025-05-25,9,Promoter,"Overall, fast delivery and great customer support."
+1163,3076,2025-05-26,8,Passive,Mainly average experience and good value for money.
+1164,2375,2025-05-26,7,Passive,
+1165,2593,2025-05-26,4,Detractor,I think billing errors and long wait times.
+1166,1823,2025-05-26,8,Passive,"Overall, the service is okay."
+1167,3403,2025-05-26,6,Detractor,Mainly confusing app.
+1168,2087,2025-05-27,6,Detractor,"Overall, billing errors and confusing app."
+1169,1638,2025-05-27,7,Passive,I think works as expected and easy to use.
+1170,1196,2025-05-27,5,Detractor,Long wait times
+1171,1986,2025-05-27,8,Passive,Mainly the service is okay and long wait times.
+1172,3798,2025-05-27,5,Detractor,"Overall, too expensive."
+1173,3616,2025-05-27,5,Detractor,I think poor communication and billing errors.
+1174,440,2025-05-27,5,Detractor,"Overall, confusing app."
+1175,673,2025-05-27,8,Passive,"Overall, works as expected."
+1176,1870,2025-05-27,10,Promoter,Great customer support and the app works well
+1177,548,2025-05-28,7,Passive,
+1178,3759,2025-05-28,8,Passive,
+1179,3291,2025-05-28,5,Detractor,
+1180,880,2025-05-28,9,Promoter,Great customer support and good value for money
+1181,2474,2025-05-28,10,Promoter,
+1182,315,2025-05-28,9,Promoter,
+1183,2818,2025-05-29,8,Passive,I think the service is okay and confusing app.
+1184,3374,2025-05-29,6,Detractor,Long wait times and confusing app
+1185,6,2025-05-29,10,Promoter,I think fast delivery and easy to use.
+1186,1912,2025-05-29,6,Detractor,Too expensive and poor communication
+1187,2501,2025-05-29,6,Detractor,"Overall, long wait times."
+1188,270,2025-05-29,5,Detractor,Mainly billing errors.
+1189,1400,2025-05-29,6,Detractor,Mainly too expensive and slow support response.
+1190,2820,2025-05-29,7,Passive,I think the service is okay.
+1191,2900,2025-05-29,5,Detractor,
+1192,2806,2025-05-29,6,Detractor,"Overall, billing errors."
+1193,772,2025-05-29,9,Promoter,Mainly good value for money.
+1194,1306,2025-05-29,9,Promoter,I think fast delivery.
+1195,3214,2025-05-30,6,Detractor,
+1196,124,2025-05-30,7,Passive,I think average experience and confusing app.
+1197,487,2025-05-30,7,Passive,"Overall, nothing special."
+1198,3022,2025-05-30,9,Promoter,Mainly easy to use and great customer support.
+1199,337,2025-05-30,6,Detractor,I think billing errors.
+1200,616,2025-05-30,7,Passive,Average experience
+1201,2773,2025-05-30,9,Promoter,
+1202,3757,2025-05-30,9,Promoter,"Overall, great customer support and fast delivery."
+1203,443,2025-05-30,3,Detractor,"Overall, long wait times and too expensive."
+1204,1395,2025-05-30,4,Detractor,
+1205,1606,2025-05-31,7,Passive,"Overall, the service is okay and frequent outages."
+1206,1050,2025-05-31,5,Detractor,
+1207,2359,2025-05-31,8,Passive,
+1208,2242,2025-05-31,4,Detractor,Mainly poor communication.
+1209,630,2025-05-31,5,Detractor,
+1210,3743,2025-05-31,6,Detractor,I think slow support response.
+1211,2685,2025-05-31,7,Passive,
+1212,688,2025-05-31,10,Promoter,Mainly friendly staff and the app works well.
+1213,1236,2025-05-31,8,Passive,
+1214,1729,2025-05-31,8,Passive,
+1215,1940,2025-05-31,7,Passive,I think the service is okay and frequent outages.
+1216,2358,2025-05-31,9,Promoter,
+1217,991,2025-05-31,6,Detractor,Billing errors
+1218,3620,2025-05-31,6,Detractor,Long wait times and billing errors
+1219,3861,2025-06-01,10,Promoter,"Overall, good value for money."
+1220,1503,2025-06-01,7,Passive,Mainly works as expected and long wait times.
+1221,1028,2025-06-01,10,Promoter,
+1222,983,2025-06-01,6,Detractor,Mainly poor communication and frequent outages.
+1223,2693,2025-06-01,8,Passive,I think works as expected.
+1224,2853,2025-06-01,8,Passive,Mainly works as expected.
+1225,3039,2025-06-01,10,Promoter,"Overall, fast delivery and reliable service."
+1226,1676,2025-06-01,10,Promoter,"Overall, easy to use."
+1227,93,2025-06-02,8,Passive,I think works as expected and the app works well.
+1228,2886,2025-06-02,7,Passive,I think works as expected and frequent outages.
+1229,3540,2025-06-02,6,Detractor,"Overall, long wait times."
+1230,3514,2025-06-02,6,Detractor,I think long wait times and too expensive.
+1231,2628,2025-06-02,8,Passive,
+1232,2777,2025-06-02,6,Detractor,
+1233,182,2025-06-02,7,Passive,I think nothing special.
+1234,3388,2025-06-03,10,Promoter,I think reliable service.
+1235,3443,2025-06-03,7,Passive,"Overall, the service is okay and the app works well."
+1236,1326,2025-06-03,7,Passive,I think average experience.
+1237,2324,2025-06-03,10,Promoter,Mainly reliable service and the app works well.
+1238,2175,2025-06-03,9,Promoter,Reliable service
+1239,1732,2025-06-03,7,Passive,
+1240,1399,2025-06-04,7,Passive,Average experience and friendly staff
+1241,1835,2025-06-04,10,Promoter,"Overall, fast delivery and friendly staff."
+1242,2586,2025-06-04,8,Passive,I think the service is okay and fast delivery.
+1243,2585,2025-06-04,9,Promoter,Reliable service
+1244,639,2025-06-04,7,Passive,"Overall, nothing special."
+1245,918,2025-06-04,10,Promoter,Mainly the app works well.
+1246,3764,2025-06-04,5,Detractor,Mainly long wait times and billing errors.
+1247,3082,2025-06-04,9,Promoter,Mainly reliable service.
+1248,3596,2025-06-04,10,Promoter,
+1249,3746,2025-06-05,5,Detractor,"Overall, confusing app and poor communication."
+1250,468,2025-06-05,7,Passive,
+1251,3001,2025-06-05,6,Detractor,"Overall, too expensive and confusing app."
+1252,1250,2025-06-05,10,Promoter,"Overall, good value for money and easy to use."
+1253,89,2025-06-05,5,Detractor,Mainly frequent outages and slow support response.
+1254,819,2025-06-05,10,Promoter,Mainly good value for money.
+1255,1051,2025-06-06,8,Passive,
+1256,2742,2025-06-06,2,Detractor,"Overall, long wait times and frequent outages."
+1257,1076,2025-06-06,10,Promoter,I think fast delivery and friendly staff.
+1258,1989,2025-06-06,6,Detractor,Confusing app and too expensive
+1259,590,2025-06-06,8,Passive,Works as expected
+1260,1874,2025-06-06,9,Promoter,Mainly good value for money and fast delivery.
+1261,3239,2025-06-06,10,Promoter,
+1262,1081,2025-06-06,6,Detractor,
+1263,2429,2025-06-06,6,Detractor,Mainly long wait times and billing errors.
+1264,2813,2025-06-07,6,Detractor,"Overall, frequent outages."
+1265,3971,2025-06-07,10,Promoter,"Overall, friendly staff and good value for money."
+1266,781,2025-06-07,8,Passive,I think average experience and friendly staff.
+1267,2092,2025-06-07,6,Detractor,I think poor communication.
+1268,341,2025-06-07,9,Promoter,"Overall, good value for money and fast delivery."
+1269,1360,2025-06-07,10,Promoter,Mainly reliable service.
+1270,2581,2025-06-07,9,Promoter,
+1271,3632,2025-06-07,9,Promoter,I think reliable service and easy to use.
+1272,1059,2025-06-07,9,Promoter,
+1273,1768,2025-06-07,8,Passive,
+1274,1887,2025-06-08,8,Passive,Nothing special and poor communication
+1275,2461,2025-06-08,4,Detractor,"Overall, confusing app."
+1276,2179,2025-06-08,9,Promoter,Mainly fast delivery and good value for money.
+1277,3048,2025-06-08,10,Promoter,I think easy to use.
+1278,2439,2025-06-08,6,Detractor,"Overall, poor communication."
+1279,220,2025-06-08,8,Passive,I think average experience and frequent outages.
+1280,2380,2025-06-09,10,Promoter,Great customer support and easy to use
+1281,1629,2025-06-09,9,Promoter,Mainly easy to use.
+1282,174,2025-06-09,9,Promoter,"Overall, great customer support."
+1283,2713,2025-06-09,6,Detractor,I think poor communication.
+1284,424,2025-06-09,7,Passive,
+1285,3162,2025-06-09,10,Promoter,I think easy to use and reliable service.
+1286,2532,2025-06-09,9,Promoter,Mainly great customer support and friendly staff.
+1287,1054,2025-06-09,8,Passive,
+1288,290,2025-06-09,5,Detractor,
+1289,3958,2025-06-09,10,Promoter,"Overall, friendly staff."
+1290,81,2025-06-09,7,Passive,Mainly average experience and the app works well.
+1291,458,2025-06-10,8,Passive,Works as expected
+1292,1652,2025-06-10,9,Promoter,Easy to use
+1293,2687,2025-06-10,7,Passive,
+1294,58,2025-06-10,6,Detractor,
+1295,2027,2025-06-10,5,Detractor,Confusing app
+1296,307,2025-06-10,8,Passive,
+1297,2808,2025-06-10,8,Passive,Works as expected and good value for money
+1298,1967,2025-06-10,9,Promoter,Reliable service
+1299,3452,2025-06-10,8,Passive,"Overall, works as expected and reliable service."
+1300,2563,2025-06-11,9,Promoter,"Overall, easy to use."
+1301,3813,2025-06-11,10,Promoter,I think reliable service.
+1302,882,2025-06-11,8,Passive,"Overall, works as expected."
+1303,3785,2025-06-11,10,Promoter,
+1304,1221,2025-06-11,5,Detractor,"Overall, billing errors."
+1305,3085,2025-06-11,8,Passive,I think the service is okay.
+1306,1525,2025-06-11,8,Passive,Mainly works as expected and confusing app.
+1307,1203,2025-06-11,4,Detractor,Mainly slow support response and too expensive.
+1308,1058,2025-06-11,10,Promoter,
+1309,2874,2025-06-12,10,Promoter,Mainly reliable service and fast delivery.
+1310,786,2025-06-12,8,Passive,"Overall, works as expected."
+1311,1487,2025-06-12,7,Passive,Works as expected
+1312,3396,2025-06-12,7,Passive,
+1313,2293,2025-06-12,8,Passive,"Overall, works as expected and good value for money."
+1314,2431,2025-06-12,8,Passive,
+1315,2959,2025-06-12,8,Passive,I think the service is okay and friendly staff.
+1316,1773,2025-06-12,8,Passive,
+1317,1905,2025-06-12,7,Passive,I think works as expected.
+1318,2677,2025-06-12,10,Promoter,
+1319,1242,2025-06-12,10,Promoter,
+1320,2239,2025-06-12,6,Detractor,
+1321,2009,2025-06-12,7,Passive,I think average experience and slow support response.
+1322,3337,2025-06-13,9,Promoter,
+1323,3027,2025-06-13,9,Promoter,
+1324,498,2025-06-13,9,Promoter,Fast delivery
+1325,1256,2025-06-13,10,Promoter,I think great customer support and reliable service.
+1326,2933,2025-06-13,6,Detractor,I think too expensive and confusing app.
+1327,3405,2025-06-13,7,Passive,
+1328,3114,2025-06-13,7,Passive,Nothing special and fast delivery
+1329,477,2025-06-14,7,Passive,I think the service is okay and great customer support.
+1330,683,2025-06-14,3,Detractor,Mainly slow support response.
+1331,339,2025-06-14,8,Passive,
+1332,1259,2025-06-14,6,Detractor,Mainly poor communication.
+1333,618,2025-06-14,5,Detractor,Too expensive and poor communication
+1334,3228,2025-06-14,9,Promoter,I think easy to use and the app works well.
+1335,474,2025-06-14,4,Detractor,I think slow support response and billing errors.
+1336,3846,2025-06-14,3,Detractor,
+1337,514,2025-06-15,6,Detractor,Billing errors and confusing app
+1338,464,2025-06-15,9,Promoter,
+1339,1914,2025-06-15,7,Passive,Works as expected
+1340,2390,2025-06-15,6,Detractor,
+1341,403,2025-06-15,6,Detractor,
+1342,371,2025-06-15,8,Passive,"Overall, the service is okay and good value for money."
+1343,1182,2025-06-15,4,Detractor,Mainly frequent outages.
+1344,2500,2025-06-16,7,Passive,I think average experience.
+1345,846,2025-06-16,6,Detractor,
+1346,343,2025-06-16,8,Passive,I think nothing special.
+1347,2317,2025-06-16,6,Detractor,
+1348,3258,2025-06-16,9,Promoter,
+1349,1336,2025-06-17,8,Passive,Average experience and easy to use
+1350,1174,2025-06-17,8,Passive,Average experience and fast delivery
+1351,2674,2025-06-17,8,Passive,
+1352,2413,2025-06-17,8,Passive,
+1353,2688,2025-06-17,8,Passive,I think nothing special and the app works well.
+1354,2610,2025-06-17,6,Detractor,Mainly billing errors and long wait times.
+1355,850,2025-06-17,10,Promoter,
+1356,2715,2025-06-18,6,Detractor,"Overall, long wait times and too expensive."
+1357,1898,2025-06-18,9,Promoter,
+1358,3098,2025-06-18,3,Detractor,Mainly billing errors and slow support response.
+1359,3711,2025-06-18,8,Passive,I think the service is okay and frequent outages.
+1360,638,2025-06-18,3,Detractor,"Overall, too expensive and confusing app."
+1361,3040,2025-06-18,6,Detractor,Billing errors and too expensive
+1362,637,2025-06-19,5,Detractor,Slow support response
+1363,3332,2025-06-19,10,Promoter,I think great customer support and good value for money.
+1364,2690,2025-06-19,8,Passive,Mainly nothing special and reliable service.
+1365,804,2025-06-19,8,Passive,The service is okay and billing errors
+1366,756,2025-06-19,9,Promoter,Friendly staff and reliable service
+1367,835,2025-06-19,7,Passive,"Overall, works as expected."
+1368,1117,2025-06-19,10,Promoter,Great customer support
+1369,1269,2025-06-19,7,Passive,The service is okay and the app works well
+1370,466,2025-06-19,7,Passive,"Overall, works as expected and confusing app."
+1371,2366,2025-06-20,9,Promoter,Fast delivery
+1372,2059,2025-06-20,8,Passive,
+1373,465,2025-06-20,8,Passive,
+1374,1375,2025-06-20,9,Promoter,I think friendly staff.
+1375,3289,2025-06-20,10,Promoter,"Overall, fast delivery."
+1376,153,2025-06-20,6,Detractor,Mainly poor communication.
+1377,1037,2025-06-20,7,Passive,I think nothing special and good value for money.
+1378,1065,2025-06-20,6,Detractor,I think long wait times.
+1379,2895,2025-06-20,6,Detractor,
+1380,2575,2025-06-20,6,Detractor,
+1381,3588,2025-06-20,7,Passive,Mainly works as expected.
+1382,2379,2025-06-20,6,Detractor,
+1383,2011,2025-06-21,6,Detractor,"Overall, frequent outages."
+1384,3155,2025-06-21,6,Detractor,"Overall, frequent outages and poor communication."
+1385,2752,2025-06-21,8,Passive,Average experience and fast delivery
+1386,1583,2025-06-21,6,Detractor,Mainly long wait times.
+1387,1741,2025-06-21,9,Promoter,"Overall, good value for money and great customer support."
+1388,2844,2025-06-21,10,Promoter,"Overall, reliable service and friendly staff."
+1389,1193,2025-06-21,3,Detractor,
+1390,1957,2025-06-22,7,Passive,Mainly works as expected and billing errors.
+1391,2280,2025-06-22,9,Promoter,Reliable service and easy to use
+1392,940,2025-06-22,6,Detractor,Mainly poor communication.
+1393,2552,2025-06-22,6,Detractor,
+1394,139,2025-06-22,5,Detractor,Frequent outages
+1395,654,2025-06-22,4,Detractor,I think slow support response and frequent outages.
+1396,3436,2025-06-22,6,Detractor,"Overall, billing errors."
+1397,1207,2025-06-22,8,Passive,The service is okay and frequent outages
+1398,3042,2025-06-22,8,Passive,"Overall, the service is okay."
+1399,2615,2025-06-22,10,Promoter,
+1400,1110,2025-06-22,7,Passive,Mainly works as expected and too expensive.
+1401,3279,2025-06-23,9,Promoter,
+1402,3442,2025-06-23,8,Passive,"Overall, the service is okay and poor communication."
+1403,1538,2025-06-23,8,Passive,Mainly the service is okay and friendly staff.
+1404,3938,2025-06-23,6,Detractor,Mainly poor communication.
+1405,571,2025-06-23,8,Passive,"Overall, nothing special."
+1406,2093,2025-06-23,4,Detractor,
+1407,1113,2025-06-23,5,Detractor,
+1408,3856,2025-06-23,5,Detractor,"Overall, frequent outages."
+1409,2024,2025-06-24,8,Passive,
+1410,1658,2025-06-24,5,Detractor,
+1411,2100,2025-06-24,4,Detractor,I think frequent outages.
+1412,1178,2025-06-24,5,Detractor,"Overall, frequent outages."
+1413,1831,2025-06-24,10,Promoter,Easy to use
+1414,1449,2025-06-24,5,Detractor,
+1415,219,2025-06-24,10,Promoter,Mainly great customer support and the app works well.
+1416,3104,2025-06-24,7,Passive,I think average experience and billing errors.
+1417,1288,2025-06-25,6,Detractor,Long wait times
+1418,1459,2025-06-25,10,Promoter,I think reliable service.
+1419,920,2025-06-25,10,Promoter,The app works well
+1420,1072,2025-06-25,6,Detractor,Confusing app and poor communication
+1421,1593,2025-06-25,7,Passive,"Overall, average experience and easy to use."
+1422,3836,2025-06-25,10,Promoter,I think great customer support.
+1423,3865,2025-06-25,9,Promoter,Mainly fast delivery.
+1424,874,2025-06-25,10,Promoter,Mainly reliable service.
+1425,3689,2025-06-25,8,Passive,
+1426,1585,2025-06-25,7,Passive,
+1427,3014,2025-06-25,10,Promoter,Good value for money and the app works well
+1428,508,2025-06-25,10,Promoter,
+1429,2751,2025-06-25,9,Promoter,"Overall, fast delivery."
+1430,2781,2025-06-26,7,Passive,Works as expected
+1431,775,2025-06-26,6,Detractor,Confusing app and frequent outages
+1432,383,2025-06-27,7,Passive,I think average experience.
+1433,2494,2025-06-27,9,Promoter,
+1434,332,2025-06-27,6,Detractor,
+1435,3054,2025-06-27,7,Passive,Mainly nothing special and fast delivery.
+1436,3571,2025-06-27,1,Detractor,
+1437,2612,2025-06-27,8,Passive,I think nothing special.
+1438,2249,2025-06-27,6,Detractor,Confusing app and frequent outages
+1439,3067,2025-06-27,8,Passive,
+1440,3943,2025-06-27,10,Promoter,Mainly friendly staff and fast delivery.
+1441,3655,2025-06-28,9,Promoter,
+1442,3215,2025-06-28,8,Passive,I think average experience.
+1443,2459,2025-06-28,8,Passive,I think average experience and reliable service.
+1444,3927,2025-06-28,8,Passive,
+1445,720,2025-06-28,9,Promoter,I think the app works well.
+1446,3546,2025-06-28,9,Promoter,
+1447,3247,2025-06-28,8,Passive,I think the service is okay and the app works well.
+1448,3720,2025-06-28,7,Passive,
+1449,3078,2025-06-29,5,Detractor,"Overall, too expensive."
+1450,655,2025-06-29,10,Promoter,Mainly great customer support and reliable service.
+1451,3808,2025-06-29,5,Detractor,"Overall, confusing app."
+1452,2407,2025-06-29,5,Detractor,Mainly confusing app.
+1453,2634,2025-06-29,9,Promoter,
+1454,2134,2025-06-30,4,Detractor,
+1455,3369,2025-06-30,8,Passive,Mainly the service is okay and slow support response.
+1456,553,2025-06-30,8,Passive,Works as expected
+1457,122,2025-06-30,10,Promoter,
+1458,2572,2025-06-30,10,Promoter,
+1459,3064,2025-06-30,10,Promoter,Reliable service and the app works well
+1460,3173,2025-07-01,5,Detractor,Too expensive and frequent outages
+1461,2032,2025-07-01,7,Passive,
+1462,801,2025-07-01,6,Detractor,
+1463,1829,2025-07-02,10,Promoter,"Overall, the app works well and great customer support."
+1464,1294,2025-07-02,6,Detractor,I think frequent outages.
+1465,1289,2025-07-02,10,Promoter,
+1466,3560,2025-07-02,10,Promoter,I think good value for money.
+1467,2906,2025-07-02,4,Detractor,Slow support response
+1468,1092,2025-07-02,7,Passive,Nothing special and easy to use
+1469,2758,2025-07-02,7,Passive,The service is okay
+1470,930,2025-07-02,10,Promoter,I think easy to use and good value for money.
+1471,264,2025-07-03,5,Detractor,Slow support response and frequent outages
+1472,1392,2025-07-03,6,Detractor,Mainly confusing app and slow support response.
+1473,2133,2025-07-03,10,Promoter,Good value for money and fast delivery
+1474,2479,2025-07-03,6,Detractor,
+1475,1128,2025-07-03,5,Detractor,
+1476,244,2025-07-03,7,Passive,Mainly works as expected.
+1477,1533,2025-07-04,8,Passive,"Overall, nothing special and long wait times."
+1478,1247,2025-07-04,5,Detractor,Mainly too expensive and long wait times.
+1479,1655,2025-07-04,10,Promoter,
+1480,3400,2025-07-04,7,Passive,
+1481,1384,2025-07-04,6,Detractor,
+1482,2419,2025-07-04,10,Promoter,
+1483,3429,2025-07-04,8,Passive,
+1484,2331,2025-07-04,6,Detractor,
+1485,2669,2025-07-05,8,Passive,
+1486,1925,2025-07-05,5,Detractor,Mainly too expensive and billing errors.
+1487,1166,2025-07-05,10,Promoter,
+1488,204,2025-07-05,6,Detractor,Mainly confusing app and slow support response.
+1489,3990,2025-07-05,9,Promoter,Mainly great customer support and friendly staff.
+1490,530,2025-07-05,7,Passive,"Overall, the service is okay."
+1491,2135,2025-07-06,7,Passive,
+1492,1909,2025-07-06,5,Detractor,
+1493,266,2025-07-06,6,Detractor,Poor communication and slow support response
+1494,1373,2025-07-06,6,Detractor,Billing errors
+1495,2973,2025-07-06,8,Passive,"Overall, the service is okay and great customer support."
+1496,3152,2025-07-06,10,Promoter,
+1497,1814,2025-07-06,7,Passive,I think works as expected and slow support response.
+1498,1100,2025-07-06,7,Passive,
+1499,245,2025-07-06,9,Promoter,Fast delivery and easy to use
+1500,2947,2025-07-06,5,Detractor,
+1501,1745,2025-07-07,2,Detractor,
+1502,2527,2025-07-07,8,Passive,I think works as expected and too expensive.
+1503,2260,2025-07-07,5,Detractor,Too expensive
+1504,3205,2025-07-07,9,Promoter,"Overall, great customer support and easy to use."
+1505,2404,2025-07-07,9,Promoter,Mainly reliable service and fast delivery.
+1506,1004,2025-07-07,10,Promoter,Mainly great customer support.
+1507,3899,2025-07-07,10,Promoter,"Overall, fast delivery and great customer support."
+1508,1047,2025-07-07,7,Passive,I think the service is okay and billing errors.
+1509,73,2025-07-07,7,Passive,"Overall, nothing special and reliable service."
+1510,3191,2025-07-07,7,Passive,Nothing special and long wait times
+1511,78,2025-07-08,6,Detractor,Billing errors
+1512,2160,2025-07-08,5,Detractor,
+1513,1136,2025-07-08,8,Passive,
+1514,2841,2025-07-08,10,Promoter,Friendly staff and easy to use
+1515,3017,2025-07-08,7,Passive,Nothing special
+1516,3204,2025-07-08,7,Passive,"Overall, nothing special."
+1517,2506,2025-07-09,10,Promoter,Good value for money
+1518,2376,2025-07-09,8,Passive,I think nothing special.
+1519,1518,2025-07-09,6,Detractor,
+1520,3133,2025-07-09,5,Detractor,"Overall, confusing app."
+1521,936,2025-07-09,7,Passive,
+1522,1799,2025-07-09,7,Passive,I think average experience and friendly staff.
+1523,291,2025-07-09,10,Promoter,Mainly friendly staff and reliable service.
+1524,677,2025-07-09,10,Promoter,The app works well
+1525,234,2025-07-09,8,Passive,"Overall, works as expected and the app works well."
+1526,2664,2025-07-09,4,Detractor,Mainly poor communication and billing errors.
+1527,1160,2025-07-09,9,Promoter,I think the app works well.
+1528,3194,2025-07-09,5,Detractor,
+1529,1816,2025-07-09,7,Passive,I think average experience and billing errors.
+1530,1027,2025-07-09,9,Promoter,
+1531,344,2025-07-09,9,Promoter,"Overall, reliable service."
+1532,1106,2025-07-09,7,Passive,"Overall, average experience."
+1533,3741,2025-07-09,7,Passive,
+1534,2117,2025-07-09,10,Promoter,
+1535,724,2025-07-10,9,Promoter,
+1536,2763,2025-07-10,8,Passive,
+1537,3590,2025-07-10,7,Passive,"Overall, nothing special and reliable service."
+1538,3915,2025-07-10,9,Promoter,
+1539,2822,2025-07-10,10,Promoter,Mainly fast delivery.
+1540,159,2025-07-10,7,Passive,Works as expected
+1541,2420,2025-07-10,10,Promoter,"Overall, the app works well and easy to use."
+1542,2017,2025-07-11,10,Promoter,Reliable service and great customer support
+1543,2336,2025-07-11,9,Promoter,"Overall, the app works well and easy to use."
+1544,3933,2025-07-11,9,Promoter,"Overall, great customer support and the app works well."
+1545,651,2025-07-11,7,Passive,Works as expected and easy to use
+1546,2759,2025-07-11,10,Promoter,"Overall, reliable service."
+1547,1727,2025-07-11,2,Detractor,
+1548,1617,2025-07-11,4,Detractor,Long wait times and slow support response
+1549,865,2025-07-11,6,Detractor,"Overall, slow support response."
+1550,1600,2025-07-11,7,Passive,Mainly average experience and too expensive.
+1551,3676,2025-07-11,7,Passive,"Overall, works as expected."
+1552,794,2025-07-11,8,Passive,
+1553,1467,2025-07-11,9,Promoter,I think the app works well and fast delivery.
+1554,2858,2025-07-12,7,Passive,Nothing special and friendly staff
+1555,1115,2025-07-12,9,Promoter,Mainly the app works well.
+1556,102,2025-07-12,8,Passive,I think works as expected.
+1557,2785,2025-07-12,9,Promoter,The app works well and friendly staff
+1558,3814,2025-07-12,9,Promoter,"Overall, good value for money and the app works well."
+1559,2464,2025-07-12,10,Promoter,"Overall, great customer support and friendly staff."
+1560,2882,2025-07-12,8,Passive,Nothing special and poor communication
+1561,1340,2025-07-12,8,Passive,Mainly average experience and friendly staff.
+1562,3552,2025-07-12,8,Passive,The service is okay and too expensive
+1563,1012,2025-07-12,8,Passive,Mainly average experience and reliable service.
+1564,2126,2025-07-12,5,Detractor,
+1565,946,2025-07-12,9,Promoter,
+1566,1805,2025-07-12,5,Detractor,I think too expensive.
+1567,455,2025-07-13,10,Promoter,
+1568,323,2025-07-13,4,Detractor,"Overall, billing errors."
+1569,2088,2025-07-13,10,Promoter,
+1570,3675,2025-07-13,5,Detractor,Mainly slow support response.
+1571,721,2025-07-13,10,Promoter,
+1572,2437,2025-07-13,9,Promoter,"Overall, friendly staff."
+1573,3993,2025-07-13,9,Promoter,Mainly friendly staff and fast delivery.
+1574,900,2025-07-14,9,Promoter,Mainly friendly staff and good value for money.
+1575,461,2025-07-14,3,Detractor,I think too expensive.
+1576,3237,2025-07-14,9,Promoter,
+1577,2831,2025-07-14,6,Detractor,I think billing errors.
+1578,3535,2025-07-14,4,Detractor,"Overall, confusing app."
+1579,2409,2025-07-14,7,Passive,
+1580,2708,2025-07-14,7,Passive,
+1581,3266,2025-07-15,7,Passive,
+1582,3072,2025-07-15,9,Promoter,
+1583,286,2025-07-15,10,Promoter,Easy to use
+1584,3873,2025-07-15,8,Passive,The service is okay
+1585,1562,2025-07-15,8,Passive,Nothing special
+1586,1122,2025-07-15,7,Passive,"Overall, the service is okay and the app works well."
+1587,258,2025-07-15,9,Promoter,
+1588,3310,2025-07-16,9,Promoter,
+1589,2981,2025-07-16,8,Passive,
+1590,1540,2025-07-16,6,Detractor,
+1591,2709,2025-07-16,8,Passive,The service is okay and great customer support
+1592,2804,2025-07-16,8,Passive,"Overall, nothing special."
+1593,3569,2025-07-16,8,Passive,
+1594,3124,2025-07-17,8,Passive,Average experience and great customer support
+1595,3625,2025-07-17,9,Promoter,
+1596,2867,2025-07-17,6,Detractor,Confusing app and billing errors
+1597,1302,2025-07-17,2,Detractor,Mainly too expensive and slow support response.
+1598,3956,2025-07-17,5,Detractor,Billing errors
+1599,1069,2025-07-17,7,Passive,
+1600,1158,2025-07-18,5,Detractor,"Overall, too expensive."
+1601,3277,2025-07-18,7,Passive,Mainly nothing special and fast delivery.
+1602,2878,2025-07-18,6,Detractor,Too expensive and long wait times
+1603,2084,2025-07-18,5,Detractor,Mainly long wait times.
+1604,536,2025-07-19,9,Promoter,I think fast delivery.
+1605,2954,2025-07-19,8,Passive,
+1606,1034,2025-07-19,5,Detractor,"Overall, slow support response."
+1607,3732,2025-07-19,7,Passive,"Overall, works as expected."
+1608,295,2025-07-19,7,Passive,"Overall, works as expected and great customer support."
+1609,2214,2025-07-19,10,Promoter,I think great customer support and good value for money.
+1610,1204,2025-07-19,6,Detractor,
+1611,3294,2025-07-19,8,Passive,
+1612,2350,2025-07-20,6,Detractor,"Overall, frequent outages."
+1613,233,2025-07-20,8,Passive,
+1614,3978,2025-07-20,10,Promoter,
+1615,484,2025-07-20,1,Detractor,I think confusing app and frequent outages.
+1616,1425,2025-07-20,5,Detractor,Confusing app and slow support response
+1617,310,2025-07-20,7,Passive,"Overall, the service is okay and poor communication."
+1618,3919,2025-07-20,7,Passive,
+1619,376,2025-07-20,10,Promoter,I think fast delivery and the app works well.
+1620,2879,2025-07-20,10,Promoter,
+1621,2079,2025-07-20,6,Detractor,
+1622,3753,2025-07-21,6,Detractor,"Overall, poor communication."
+1623,1728,2025-07-21,4,Detractor,"Overall, too expensive and billing errors."
+1624,3079,2025-07-21,9,Promoter,
+1625,1751,2025-07-21,6,Detractor,Billing errors
+1626,2235,2025-07-21,4,Detractor,
+1627,1560,2025-07-21,8,Passive,
+1628,2821,2025-07-21,6,Detractor,Mainly too expensive.
+1629,849,2025-07-21,6,Detractor,"Overall, slow support response and confusing app."
+1630,11,2025-07-22,10,Promoter,
+1631,580,2025-07-22,8,Passive,"Overall, nothing special and poor communication."
+1632,2122,2025-07-22,5,Detractor,"Overall, long wait times."
+1633,3660,2025-07-22,10,Promoter,Good value for money and fast delivery
+1634,1599,2025-07-22,7,Passive,
+1635,2651,2025-07-22,10,Promoter,I think fast delivery and easy to use.
+1636,2261,2025-07-22,4,Detractor,
+1637,2036,2025-07-22,10,Promoter,Good value for money and friendly staff
+1638,1613,2025-07-22,7,Passive,I think nothing special and long wait times.
+1639,923,2025-07-22,3,Detractor,I think poor communication and confusing app.
+1640,3137,2025-07-22,9,Promoter,Mainly easy to use.
+1641,3926,2025-07-23,4,Detractor,Mainly too expensive.
+1642,1303,2025-07-23,8,Passive,Mainly the service is okay and the app works well.
+1643,296,2025-07-23,10,Promoter,Good value for money and reliable service
+1644,3977,2025-07-24,7,Passive,Mainly the service is okay and the app works well.
+1645,1502,2025-07-24,5,Detractor,
+1646,2744,2025-07-24,5,Detractor,Mainly billing errors.
+1647,1850,2025-07-24,7,Passive,"Overall, nothing special."
+1648,2402,2025-07-24,8,Passive,Works as expected and reliable service
+1649,2842,2025-07-24,9,Promoter,Mainly good value for money.
+1650,2884,2025-07-24,10,Promoter,"Overall, good value for money."
+1651,1042,2025-07-24,8,Passive,Mainly nothing special and friendly staff.
+1652,857,2025-07-25,10,Promoter,
+1653,3868,2025-07-25,7,Passive,"Overall, average experience and reliable service."
+1654,3670,2025-07-25,8,Passive,Mainly works as expected.
+1655,1299,2025-07-25,6,Detractor,I think confusing app.
+1656,1972,2025-07-25,6,Detractor,Billing errors and too expensive
+1657,437,2025-07-26,7,Passive,
+1658,1164,2025-07-26,9,Promoter,Reliable service
+1659,3012,2025-07-26,7,Passive,Mainly average experience and great customer support.
+1660,2441,2025-07-26,6,Detractor,Slow support response and long wait times
+1661,3196,2025-07-26,6,Detractor,I think long wait times.
+1662,661,2025-07-26,9,Promoter,I think great customer support and fast delivery.
+1663,1007,2025-07-26,9,Promoter,
+1664,3573,2025-07-26,10,Promoter,Good value for money and reliable service
+1665,856,2025-07-26,9,Promoter,"Overall, good value for money and great customer support."
+1666,2297,2025-07-27,10,Promoter,
+1667,739,2025-07-27,9,Promoter,"Overall, easy to use and good value for money."
+1668,3257,2025-07-27,10,Promoter,Mainly the app works well and great customer support.
+1669,3432,2025-07-27,9,Promoter,
+1670,2510,2025-07-27,8,Passive,Mainly average experience and slow support response.
+1671,2701,2025-07-27,9,Promoter,
+1672,1695,2025-07-27,6,Detractor,"Overall, slow support response and long wait times."
+1673,1563,2025-07-27,10,Promoter,I think easy to use and reliable service.
+1674,3409,2025-07-27,6,Detractor,
+1675,27,2025-07-27,9,Promoter,"Overall, great customer support and good value for money."
+1676,675,2025-07-28,7,Passive,"Overall, the service is okay and billing errors."
+1677,2892,2025-07-28,5,Detractor,"Overall, too expensive."
+1678,3995,2025-07-28,7,Passive,"Overall, the service is okay."
+1679,38,2025-07-28,6,Detractor,Mainly confusing app.
+1680,2632,2025-07-28,8,Passive,Nothing special and long wait times
+1681,2663,2025-07-28,9,Promoter,
+1682,2679,2025-07-28,9,Promoter,"Overall, friendly staff."
+1683,2107,2025-07-29,8,Passive,
+1684,3463,2025-07-29,6,Detractor,I think poor communication.
+1685,184,2025-07-29,7,Passive,
+1686,3541,2025-07-29,10,Promoter,
+1687,2523,2025-07-29,10,Promoter,The app works well and good value for money
+1688,904,2025-07-29,6,Detractor,
+1689,1577,2025-07-29,7,Passive,I think the service is okay and the app works well.
+1690,1265,2025-07-30,7,Passive,
+1691,1367,2025-07-30,7,Passive,Mainly the service is okay and billing errors.
+1692,2309,2025-07-30,5,Detractor,
+1693,898,2025-07-30,6,Detractor,Mainly too expensive and billing errors.
+1694,2548,2025-07-30,7,Passive,Works as expected and great customer support
+1695,2022,2025-07-30,10,Promoter,
+1696,3226,2025-07-30,9,Promoter,Mainly the app works well.
+1697,1757,2025-07-30,9,Promoter,
+1698,2370,2025-07-30,7,Passive,
+1699,462,2025-07-31,10,Promoter,
+1700,2756,2025-07-31,2,Detractor,
+1701,1926,2025-07-31,5,Detractor,Mainly long wait times and poor communication.
+1702,3859,2025-07-31,6,Detractor,
+1703,1884,2025-07-31,5,Detractor,
+1704,2765,2025-07-31,8,Passive,Mainly average experience.
+1705,883,2025-08-01,10,Promoter,
+1706,742,2025-08-01,4,Detractor,
+1707,3086,2025-08-01,6,Detractor,Mainly billing errors.
+1708,2269,2025-08-01,6,Detractor,
+1709,3870,2025-08-01,6,Detractor,Mainly slow support response and too expensive.
+1710,2988,2025-08-01,5,Detractor,"Overall, billing errors and poor communication."
+1711,1224,2025-08-01,4,Detractor,Mainly confusing app and slow support response.
+1712,3005,2025-08-01,8,Passive,
+1713,567,2025-08-01,7,Passive,I think average experience and reliable service.
+1714,3925,2025-08-02,7,Passive,Mainly works as expected and the app works well.
+1715,2074,2025-08-02,5,Detractor,Mainly slow support response.
+1716,1852,2025-08-02,10,Promoter,
+1717,3227,2025-08-02,7,Passive,
+1718,899,2025-08-02,5,Detractor,Confusing app
+1719,1150,2025-08-02,3,Detractor,"Overall, slow support response and too expensive."
+1720,2000,2025-08-02,10,Promoter,Friendly staff and great customer support
+1721,2264,2025-08-02,10,Promoter,Mainly great customer support and good value for money.
+1722,502,2025-08-02,8,Passive,
+1723,2374,2025-08-02,7,Passive,I think average experience and friendly staff.
+1724,172,2025-08-02,10,Promoter,I think reliable service.
+1725,1189,2025-08-03,5,Detractor,
+1726,1056,2025-08-03,8,Passive,Mainly nothing special.
+1727,1966,2025-08-03,7,Passive,
+1728,377,2025-08-03,8,Passive,
+1729,2611,2025-08-03,6,Detractor,
+1730,2472,2025-08-04,10,Promoter,I think the app works well.
+1731,2421,2025-08-04,6,Detractor,Mainly billing errors and frequent outages.
+1732,971,2025-08-04,5,Detractor,
+1733,1588,2025-08-04,3,Detractor,I think frequent outages.
+1734,3518,2025-08-04,3,Detractor,Mainly long wait times and frequent outages.
+1735,681,2025-08-04,9,Promoter,"Overall, the app works well and good value for money."
+1736,1796,2025-08-04,10,Promoter,I think friendly staff.
+1737,3823,2025-08-04,6,Detractor,I think billing errors.
+1738,3046,2025-08-04,9,Promoter,"Overall, friendly staff and reliable service."
+1739,1143,2025-08-05,6,Detractor,
+1740,2385,2025-08-05,7,Passive,Works as expected and reliable service
+1741,3678,2025-08-05,7,Passive,
+1742,1447,2025-08-05,8,Passive,Mainly average experience and easy to use.
+1743,1808,2025-08-05,8,Passive,I think works as expected and friendly staff.
+1744,1777,2025-08-05,8,Passive,"Overall, the service is okay and too expensive."
+1745,583,2025-08-06,6,Detractor,"Overall, too expensive."
+1746,2067,2025-08-06,6,Detractor,I think long wait times.
+1747,3523,2025-08-06,7,Passive,"Overall, nothing special and poor communication."
+1748,3652,2025-08-06,6,Detractor,Mainly too expensive and confusing app.
+1749,994,2025-08-06,6,Detractor,Mainly frequent outages.
+1750,3568,2025-08-06,10,Promoter,"Overall, great customer support and fast delivery."
+1751,3190,2025-08-06,8,Passive,I think average experience and fast delivery.
+1752,3779,2025-08-06,4,Detractor,"Overall, frequent outages."
+1753,3747,2025-08-06,10,Promoter,Good value for money and reliable service
+1754,2277,2025-08-06,5,Detractor,
+1755,1851,2025-08-06,8,Passive,"Overall, average experience and fast delivery."
+1756,3122,2025-08-07,4,Detractor,
+1757,2335,2025-08-07,7,Passive,I think nothing special and friendly staff.
+1758,999,2025-08-07,6,Detractor,"Overall, too expensive."
+1759,3843,2025-08-07,9,Promoter,I think fast delivery.
+1760,88,2025-08-07,10,Promoter,Mainly good value for money and easy to use.
+1761,3755,2025-08-07,6,Detractor,
+1762,3055,2025-08-07,6,Detractor,Too expensive and long wait times
+1763,2790,2025-08-07,5,Detractor,"Overall, long wait times."
+1764,524,2025-08-07,10,Promoter,Friendly staff
+1765,3455,2025-08-07,10,Promoter,Mainly friendly staff.
+1766,2068,2025-08-07,8,Passive,"Overall, average experience."
+1767,1911,2025-08-07,6,Detractor,Mainly slow support response.
+1768,3323,2025-08-07,10,Promoter,
+1769,3782,2025-08-08,7,Passive,
+1770,1353,2025-08-08,7,Passive,Nothing special and poor communication
+1771,3980,2025-08-08,8,Passive,I think nothing special and confusing app.
+1772,2112,2025-08-08,10,Promoter,Great customer support
+1773,186,2025-08-08,6,Detractor,Frequent outages and poor communication
+1774,3816,2025-08-09,8,Passive,
+1775,2497,2025-08-09,7,Passive,
+1776,944,2025-08-09,10,Promoter,"Overall, fast delivery."
+1777,842,2025-08-09,10,Promoter,I think easy to use and friendly staff.
+1778,750,2025-08-09,7,Passive,
+1779,773,2025-08-09,7,Passive,I think average experience and friendly staff.
+1780,779,2025-08-10,6,Detractor,I think poor communication.
+1781,844,2025-08-10,10,Promoter,Mainly easy to use and the app works well.
+1782,3837,2025-08-10,7,Passive,
+1783,3854,2025-08-10,5,Detractor,
+1784,2291,2025-08-10,4,Detractor,"Overall, billing errors and confusing app."
+1785,2953,2025-08-10,6,Detractor,"Overall, frequent outages and too expensive."
+1786,2950,2025-08-10,10,Promoter,Great customer support and easy to use
+1787,2847,2025-08-10,6,Detractor,Mainly poor communication and slow support response.
+1788,585,2025-08-10,9,Promoter,
+1789,3895,2025-08-10,10,Promoter,Mainly the app works well.
+1790,1749,2025-08-10,8,Passive,
+1791,986,2025-08-10,10,Promoter,
+1792,52,2025-08-11,10,Promoter,
+1793,926,2025-08-11,6,Detractor,I think too expensive and long wait times.
+1794,1531,2025-08-11,7,Passive,
+1795,1411,2025-08-11,9,Promoter,"Overall, reliable service and fast delivery."
+1796,3539,2025-08-11,6,Detractor,Mainly frequent outages and poor communication.
+1797,2417,2025-08-11,9,Promoter,"Overall, fast delivery."
+1798,3594,2025-08-11,8,Passive,I think the service is okay and good value for money.
+1799,1607,2025-08-11,9,Promoter,
+1800,3748,2025-08-11,5,Detractor,
+1801,1819,2025-08-11,8,Passive,
+1802,2453,2025-08-12,6,Detractor,
+1803,2803,2025-08-12,7,Passive,Mainly nothing special and billing errors.
+1804,2158,2025-08-12,9,Promoter,"Overall, friendly staff."
+1805,1214,2025-08-12,5,Detractor,
+1806,1974,2025-08-12,6,Detractor,I think too expensive.
+1807,2761,2025-08-12,8,Passive,"Overall, nothing special and billing errors."
+1808,2826,2025-08-12,7,Passive,
+1809,1230,2025-08-12,8,Passive,Works as expected and the app works well
+1810,990,2025-08-12,9,Promoter,"Overall, reliable service and good value for money."
+1811,3034,2025-08-13,5,Detractor,"Overall, too expensive."
+1812,106,2025-08-13,10,Promoter,"Overall, reliable service and great customer support."
+1813,3271,2025-08-13,9,Promoter,"Overall, easy to use."
+1814,429,2025-08-13,6,Detractor,
+1815,2448,2025-08-13,10,Promoter,Mainly friendly staff and fast delivery.
+1816,1718,2025-08-13,6,Detractor,I think poor communication and billing errors.
+1817,2536,2025-08-13,8,Passive,
+1818,1949,2025-08-13,10,Promoter,Mainly friendly staff.
+1819,213,2025-08-14,9,Promoter,Mainly fast delivery and reliable service.
+1820,3364,2025-08-14,8,Passive,
+1821,1608,2025-08-14,8,Passive,Nothing special
+1822,2712,2025-08-14,8,Passive,
+1823,2633,2025-08-14,8,Passive,
+1824,322,2025-08-14,8,Passive,"Overall, works as expected and the app works well."
+1825,3209,2025-08-14,10,Promoter,"Overall, good value for money and easy to use."
+1826,3883,2025-08-14,5,Detractor,
+1827,1703,2025-08-14,9,Promoter,Mainly good value for money.
+1828,2477,2025-08-14,3,Detractor,Mainly frequent outages.
+1829,2859,2025-08-14,10,Promoter,
+1830,3709,2025-08-14,6,Detractor,"Overall, slow support response."
+1831,446,2025-08-15,6,Detractor,"Overall, confusing app and slow support response."
+1832,1711,2025-08-15,7,Passive,"Overall, average experience and confusing app."
+1833,8,2025-08-15,10,Promoter,
+1834,1335,2025-08-15,10,Promoter,Fast delivery and friendly staff
+1835,1973,2025-08-15,6,Detractor,Long wait times and confusing app
+1836,1801,2025-08-16,4,Detractor,I think confusing app and long wait times.
+1837,1778,2025-08-16,7,Passive,
+1838,2005,2025-08-16,5,Detractor,"Overall, frequent outages and long wait times."
+1839,2163,2025-08-16,10,Promoter,Mainly the app works well.
+1840,432,2025-08-16,5,Detractor,
+1841,67,2025-08-16,8,Passive,"Overall, works as expected."
+1842,1104,2025-08-16,9,Promoter,
+1843,2496,2025-08-16,7,Passive,Mainly average experience.
+1844,995,2025-08-16,8,Passive,"Overall, average experience and poor communication."
+1845,3363,2025-08-16,8,Passive,I think average experience and billing errors.
+1846,2937,2025-08-16,10,Promoter,
+1847,2908,2025-08-16,6,Detractor,I think billing errors.
+1848,3346,2025-08-16,10,Promoter,The app works well and fast delivery
+1849,3581,2025-08-16,9,Promoter,Great customer support
+1850,3858,2025-08-17,8,Passive,Mainly average experience and confusing app.
+1851,2205,2025-08-17,8,Passive,"Overall, works as expected and poor communication."
+1852,1261,2025-08-17,5,Detractor,
+1853,3959,2025-08-17,6,Detractor,
+1854,1625,2025-08-17,7,Passive,The service is okay and slow support response
+1855,809,2025-08-17,4,Detractor,Poor communication and billing errors
+1856,1015,2025-08-17,5,Detractor,I think poor communication.
+1857,1943,2025-08-17,7,Passive,
+1858,2008,2025-08-17,5,Detractor,"Overall, poor communication and slow support response."
+1859,114,2025-08-18,6,Detractor,
+1860,959,2025-08-18,10,Promoter,"Overall, good value for money."
+1861,3777,2025-08-18,6,Detractor,Poor communication
+1862,3963,2025-08-18,4,Detractor,Poor communication and long wait times
+1863,669,2025-08-18,8,Passive,I think works as expected.
+1864,506,2025-08-19,6,Detractor,Mainly frequent outages.
+1865,1793,2025-08-19,7,Passive,Nothing special
+1866,706,2025-08-19,7,Passive,Mainly the service is okay.
+1867,1055,2025-08-19,6,Detractor,I think too expensive and poor communication.
+1868,353,2025-08-19,5,Detractor,Long wait times and frequent outages
+1869,2111,2025-08-19,10,Promoter,Mainly friendly staff.
+1870,1451,2025-08-20,8,Passive,
+1871,2056,2025-08-20,9,Promoter,
+1872,928,2025-08-20,9,Promoter,
+1873,1125,2025-08-20,10,Promoter,Mainly friendly staff and reliable service.
+1874,3168,2025-08-20,8,Passive,Mainly works as expected and slow support response.
+1875,372,2025-08-20,6,Detractor,"Overall, billing errors."
+1876,2926,2025-08-20,9,Promoter,
+1877,2080,2025-08-20,10,Promoter,Mainly reliable service.
+1878,485,2025-08-21,9,Promoter,"Overall, good value for money."
+1879,3512,2025-08-21,10,Promoter,I think reliable service.
+1880,1462,2025-08-21,7,Passive,
+1881,241,2025-08-21,10,Promoter,I think the app works well and easy to use.
+1882,1320,2025-08-21,6,Detractor,Billing errors and frequent outages
+1883,3867,2025-08-21,8,Passive,Average experience and fast delivery
+1884,1666,2025-08-21,5,Detractor,
+1885,3322,2025-08-21,7,Passive,"Overall, nothing special and easy to use."
+1886,2155,2025-08-22,8,Passive,I think the service is okay.
+1887,1491,2025-08-22,3,Detractor,"Overall, poor communication and too expensive."
+1888,2755,2025-08-22,9,Promoter,Mainly great customer support and reliable service.
+1889,2562,2025-08-22,7,Passive,
+1890,1628,2025-08-22,5,Detractor,
+1891,2665,2025-08-22,9,Promoter,
+1892,728,2025-08-22,5,Detractor,
+1893,1019,2025-08-22,8,Passive,Average experience and friendly staff
+1894,1223,2025-08-23,5,Detractor,I think long wait times.
+1895,3880,2025-08-23,8,Passive,"Overall, average experience and long wait times."
+1896,316,2025-08-23,10,Promoter,I think great customer support.
+1897,3375,2025-08-23,6,Detractor,"Overall, billing errors."
+1898,416,2025-08-23,4,Detractor,
+1899,1356,2025-08-23,4,Detractor,
+1900,2118,2025-08-23,8,Passive,Mainly works as expected and the app works well.
+1901,1454,2025-08-24,9,Promoter,
+1902,3278,2025-08-24,8,Passive,I think the service is okay.
+1903,195,2025-08-24,8,Passive,Nothing special
+1904,60,2025-08-24,7,Passive,
+1905,2274,2025-08-24,4,Detractor,I think long wait times and confusing app.
+1906,2382,2025-08-24,5,Detractor,"Overall, poor communication."
+1907,517,2025-08-24,7,Passive,
+1908,3824,2025-08-24,5,Detractor,
+1909,1463,2025-08-25,9,Promoter,
+1910,3565,2025-08-25,8,Passive,I think average experience and slow support response.
+1911,3609,2025-08-25,8,Passive,Mainly the service is okay and easy to use.
+1912,2640,2025-08-25,8,Passive,
+1913,2357,2025-08-25,5,Detractor,Frequent outages
+1914,272,2025-08-25,9,Promoter,
+1915,2881,2025-08-25,7,Passive,Mainly average experience and reliable service.
+1916,1279,2025-08-25,9,Promoter,
+1917,1826,2025-08-26,6,Detractor,
+1918,1085,2025-08-26,6,Detractor,"Overall, frequent outages and poor communication."
+1919,3351,2025-08-26,10,Promoter,
+1920,1374,2025-08-26,10,Promoter,
+1921,3240,2025-08-26,7,Passive,"Overall, the service is okay and fast delivery."
+1922,966,2025-08-26,5,Detractor,Mainly confusing app.
+1923,1609,2025-08-26,10,Promoter,
+1924,1057,2025-08-26,10,Promoter,Mainly great customer support.
+1925,3712,2025-08-26,9,Promoter,Mainly fast delivery.
+1926,98,2025-08-27,8,Passive,I think average experience.
+1927,3809,2025-08-27,10,Promoter,I think fast delivery and great customer support.
+1928,557,2025-08-27,7,Passive,
+1929,1837,2025-08-27,5,Detractor,Mainly billing errors.
+1930,19,2025-08-27,5,Detractor,
+1931,2723,2025-08-27,6,Detractor,Mainly billing errors.
+1932,731,2025-08-27,8,Passive,The service is okay
+1933,549,2025-08-27,7,Passive,
+1934,1936,2025-08-27,9,Promoter,Fast delivery and easy to use
+1935,3489,2025-08-27,8,Passive,"Overall, nothing special."
+1936,1692,2025-08-27,7,Passive,Mainly the service is okay.
+1937,2209,2025-08-28,7,Passive,Nothing special and the app works well
+1938,2314,2025-08-28,5,Detractor,"Overall, billing errors."
+1939,277,2025-08-28,5,Detractor,"Overall, billing errors and confusing app."
+1940,1035,2025-08-28,5,Detractor,"Overall, billing errors."
+1941,3221,2025-08-28,7,Passive,I think the service is okay.
+1942,1350,2025-08-28,2,Detractor,"Overall, frequent outages."
+1943,3372,2025-08-28,6,Detractor,Poor communication and frequent outages
+1944,3077,2025-08-28,4,Detractor,
+1945,1616,2025-08-29,10,Promoter,
+1946,1519,2025-08-29,8,Passive,Average experience and great customer support
+1947,2432,2025-08-29,6,Detractor,
+1948,1342,2025-08-29,8,Passive,I think works as expected and confusing app.
+1949,496,2025-08-29,9,Promoter,Good value for money and fast delivery
+1950,3044,2025-08-29,4,Detractor,Mainly frequent outages.
+1951,3406,2025-08-29,9,Promoter,"Overall, good value for money and easy to use."
+1952,1984,2025-08-29,10,Promoter,"Overall, great customer support."
+1953,737,2025-08-29,10,Promoter,I think great customer support.
+1954,1867,2025-08-29,7,Passive,
+1955,414,2025-08-30,5,Detractor,Mainly slow support response.
+1956,3407,2025-08-30,10,Promoter,I think good value for money.
+1957,1152,2025-08-30,7,Passive,Nothing special and reliable service
+1958,160,2025-08-30,6,Detractor,
+1959,1633,2025-08-30,8,Passive,I think nothing special.
+1960,2296,2025-08-30,8,Passive,"Overall, works as expected and frequent outages."
+1961,2360,2025-08-30,7,Passive,"Overall, works as expected."
+1962,3441,2025-08-30,8,Passive,Mainly nothing special.
+1963,980,2025-08-30,4,Detractor,Confusing app and too expensive
+1964,1742,2025-08-30,6,Detractor,
+1965,1856,2025-08-30,8,Passive,Mainly average experience and easy to use.
+1966,2659,2025-08-30,8,Passive,
+1967,2104,2025-08-30,6,Detractor,
+1968,2764,2025-08-31,10,Promoter,I think great customer support and easy to use.
+1969,1243,2025-08-31,7,Passive,Average experience and confusing app
+1970,2224,2025-08-31,7,Passive,"Overall, works as expected and great customer support."
+1971,969,2025-08-31,6,Detractor,Mainly frequent outages.
+1972,722,2025-08-31,9,Promoter,
+1973,2377,2025-08-31,7,Passive,"Overall, average experience."
+1974,3955,2025-08-31,9,Promoter,"Overall, the app works well and good value for money."
+1975,2537,2025-09-01,6,Detractor,Poor communication and slow support response
+1976,1509,2025-09-01,9,Promoter,
+1977,1755,2025-09-01,7,Passive,Works as expected and long wait times
+1978,227,2025-09-01,4,Detractor,Confusing app
+1979,395,2025-09-01,10,Promoter,Mainly fast delivery.
+1980,656,2025-09-01,8,Passive,Nothing special
+1981,2604,2025-09-01,8,Passive,I think the service is okay.
+1982,330,2025-09-01,8,Passive,I think the service is okay and confusing app.
+1983,3776,2025-09-01,8,Passive,
+1984,1006,2025-09-01,4,Detractor,
+1985,3733,2025-09-01,5,Detractor,
+1986,3149,2025-09-01,5,Detractor,I think too expensive.
+1987,2974,2025-09-01,10,Promoter,
+1988,3159,2025-09-02,7,Passive,
+1989,2652,2025-09-02,6,Detractor,I think billing errors and confusing app.
+1990,3094,2025-09-02,9,Promoter,Mainly friendly staff and fast delivery.
+1991,2363,2025-09-02,9,Promoter,
+1992,3838,2025-09-02,9,Promoter,Mainly good value for money and fast delivery.
+1993,2368,2025-09-02,5,Detractor,
+1994,2070,2025-09-03,6,Detractor,
+1995,64,2025-09-03,3,Detractor,I think confusing app.
+1996,222,2025-09-03,6,Detractor,"Overall, slow support response and billing errors."
+1997,746,2025-09-03,8,Passive,I think the service is okay.
+1998,3673,2025-09-03,10,Promoter,Fast delivery
+1999,3230,2025-09-03,7,Passive,
+2000,1378,2025-09-03,10,Promoter,
+2001,2801,2025-09-04,9,Promoter,Mainly fast delivery.
+2002,1592,2025-09-04,7,Passive,
+2003,811,2025-09-04,8,Passive,I think the service is okay.
+2004,3107,2025-09-04,7,Passive,The service is okay and slow support response
+2005,368,2025-09-04,6,Detractor,Mainly billing errors.
+2006,2310,2025-09-04,6,Detractor,
+2007,1813,2025-09-05,7,Passive,
+2008,3255,2025-09-05,7,Passive,
+2009,1008,2025-09-05,3,Detractor,"Overall, poor communication and too expensive."
+2010,3970,2025-09-05,6,Detractor,I think frequent outages and billing errors.
+2011,872,2025-09-05,9,Promoter,"Overall, reliable service."
+2012,130,2025-09-05,6,Detractor,Mainly slow support response and too expensive.
+2013,2116,2025-09-05,9,Promoter,I think reliable service.
+2014,44,2025-09-06,8,Passive,
+2015,3491,2025-09-06,9,Promoter,Mainly friendly staff and good value for money.
+2016,566,2025-09-06,7,Passive,"Overall, average experience and easy to use."
+2017,2578,2025-09-06,6,Detractor,Mainly too expensive.
+2018,1764,2025-09-06,7,Passive,
+2019,1938,2025-09-06,9,Promoter,Fast delivery
+2020,2770,2025-09-06,8,Passive,"Overall, the service is okay and great customer support."
+2021,2657,2025-09-06,4,Detractor,"Overall, confusing app."
+2022,3725,2025-09-06,4,Detractor,Mainly too expensive and poor communication.
+2023,1291,2025-09-06,7,Passive,Mainly works as expected and the app works well.
+2024,2624,2025-09-06,5,Detractor,Confusing app
+2025,1787,2025-09-06,8,Passive,Mainly works as expected.
+2026,1097,2025-09-07,9,Promoter,
+2027,3694,2025-09-07,9,Promoter,Great customer support
+2028,1709,2025-09-07,6,Detractor,Confusing app
+2029,3857,2025-09-07,10,Promoter,
+2030,2993,2025-09-07,8,Passive,"Overall, average experience."
+2031,1033,2025-09-07,7,Passive,Average experience and billing errors
+2032,2887,2025-09-08,10,Promoter,
+2033,3600,2025-09-08,4,Detractor,
+2034,3341,2025-09-08,10,Promoter,"Overall, great customer support."
+2035,1977,2025-09-08,7,Passive,I think works as expected and fast delivery.
+2036,1176,2025-09-08,9,Promoter,
+2037,1832,2025-09-09,8,Passive,
+2038,922,2025-09-09,7,Passive,I think nothing special and too expensive.
+2039,747,2025-09-09,4,Detractor,"Overall, billing errors."
+2040,129,2025-09-09,8,Passive,I think average experience.
+2041,3253,2025-09-09,7,Passive,
+2042,947,2025-09-09,3,Detractor,Mainly long wait times and poor communication.
+2043,2228,2025-09-09,5,Detractor,
+2044,2447,2025-09-09,7,Passive,Mainly average experience and slow support response.
+2045,2169,2025-09-09,8,Passive,"Overall, works as expected and friendly staff."
+2046,2091,2025-09-09,9,Promoter,I think easy to use and fast delivery.
+2047,2141,2025-09-09,6,Detractor,"Overall, frequent outages."
+2048,1380,2025-09-10,6,Detractor,
+2049,3083,2025-09-10,10,Promoter,Great customer support
+2050,614,2025-09-10,9,Promoter,I think good value for money.
+2051,3904,2025-09-10,5,Detractor,Mainly confusing app and long wait times.
+2052,509,2025-09-10,7,Passive,
+2053,345,2025-09-10,7,Passive,"Overall, nothing special and confusing app."
+2054,793,2025-09-10,6,Detractor,Billing errors
+2055,1080,2025-09-10,8,Passive,
+2056,1886,2025-09-10,8,Passive,Mainly works as expected and easy to use.
+2057,450,2025-09-10,9,Promoter,I think good value for money and reliable service.
+2058,3131,2025-09-11,7,Passive,Nothing special
+2059,1941,2025-09-11,5,Detractor,"Overall, slow support response."
+2060,1927,2025-09-11,5,Detractor,I think slow support response.
+2061,2367,2025-09-11,10,Promoter,Fast delivery
+2062,3762,2025-09-11,9,Promoter,"Overall, fast delivery and good value for money."
+2063,3667,2025-09-11,8,Passive,
+2064,1879,2025-09-11,9,Promoter,
+2065,2591,2025-09-11,8,Passive,I think the service is okay and frequent outages.
+2066,1685,2025-09-11,8,Passive,
+2067,481,2025-09-11,7,Passive,
+2068,1859,2025-09-12,9,Promoter,Mainly easy to use and good value for money.
+2069,2869,2025-09-12,9,Promoter,
+2070,399,2025-09-12,4,Detractor,"Overall, frequent outages and long wait times."
+2071,848,2025-09-12,7,Passive,Mainly the service is okay.
+2072,1390,2025-09-12,6,Detractor,
+2073,3473,2025-09-12,4,Detractor,"Overall, long wait times and confusing app."
+2074,1234,2025-09-12,6,Detractor,
+2075,2313,2025-09-12,8,Passive,
+2076,3242,2025-09-13,10,Promoter,
+2077,2584,2025-09-13,8,Passive,I think works as expected.
+2078,938,2025-09-13,10,Promoter,
+2079,1305,2025-09-13,8,Passive,
+2080,3433,2025-09-13,8,Passive,Mainly average experience and great customer support.
+2081,758,2025-09-13,10,Promoter,Fast delivery and the app works well
+2082,2595,2025-09-13,8,Passive,I think works as expected and easy to use.
+2083,790,2025-09-13,7,Passive,"Overall, the service is okay and too expensive."
+2084,2650,2025-09-13,7,Passive,
+2085,2128,2025-09-13,7,Passive,"Overall, the service is okay and frequent outages."
+2086,3013,2025-09-13,8,Passive,Nothing special and too expensive
+2087,1231,2025-09-13,6,Detractor,I think long wait times.
+2088,2823,2025-09-13,7,Passive,
+2089,2248,2025-09-13,10,Promoter,I think friendly staff.
+2090,324,2025-09-14,7,Passive,"Overall, the service is okay and the app works well."
+2091,3595,2025-09-14,6,Detractor,I think too expensive and slow support response.
+2092,2034,2025-09-14,6,Detractor,I think too expensive and billing errors.
+2093,3419,2025-09-14,7,Passive,Works as expected
+2094,2511,2025-09-14,10,Promoter,I think great customer support and the app works well.
+2095,3796,2025-09-14,6,Detractor,"Overall, long wait times."
+2096,3617,2025-09-14,8,Passive,
+2097,859,2025-09-14,10,Promoter,Mainly friendly staff.
+2098,3334,2025-09-14,9,Promoter,
+2099,598,2025-09-14,8,Passive,Works as expected and fast delivery
+2100,1610,2025-09-15,10,Promoter,Mainly easy to use.
+2101,2802,2025-09-15,7,Passive,I think nothing special and fast delivery.
+2102,3412,2025-09-15,5,Detractor,"Overall, confusing app and slow support response."
+2103,2246,2025-09-15,5,Detractor,
+2104,15,2025-09-15,8,Passive,
+2105,2015,2025-09-15,6,Detractor,"Overall, long wait times and poor communication."
+2106,2130,2025-09-15,6,Detractor,
+2107,2307,2025-09-15,5,Detractor,I think billing errors.
+2108,451,2025-09-16,3,Detractor,
+2109,1121,2025-09-16,7,Passive,Works as expected and billing errors
+2110,591,2025-09-16,6,Detractor,Mainly too expensive.
+2111,3580,2025-09-16,10,Promoter,Mainly the app works well and good value for money.
+2112,2794,2025-09-16,8,Passive,I think works as expected and the app works well.
+2113,1906,2025-09-16,10,Promoter,I think fast delivery and easy to use.
+2114,231,2025-09-16,6,Detractor,"Overall, slow support response."
+2115,1415,2025-09-16,7,Passive,Mainly nothing special and long wait times.
+2116,912,2025-09-17,7,Passive,
+2117,2890,2025-09-17,10,Promoter,
+2118,3721,2025-09-17,9,Promoter,Fast delivery and great customer support
+2119,907,2025-09-17,6,Detractor,
+2120,3188,2025-09-17,9,Promoter,
+2121,3724,2025-09-17,8,Passive,"Overall, works as expected."
+2122,3340,2025-09-17,7,Passive,I think nothing special and too expensive.
+2123,2425,2025-09-17,10,Promoter,Great customer support and fast delivery
+2124,2670,2025-09-17,6,Detractor,Mainly frequent outages and too expensive.
+2125,1103,2025-09-17,10,Promoter,
+2126,1489,2025-09-17,4,Detractor,Mainly long wait times and too expensive.
+2127,887,2025-09-17,10,Promoter,
+2128,2782,2025-09-18,10,Promoter,
+2129,3454,2025-09-18,8,Passive,I think nothing special and poor communication.
+2130,431,2025-09-18,10,Promoter,Fast delivery
+2131,3367,2025-09-18,7,Passive,Mainly the service is okay and easy to use.
+2132,1323,2025-09-18,10,Promoter,
+2133,152,2025-09-18,8,Passive,Mainly the service is okay and frequent outages.
+2134,1023,2025-09-18,9,Promoter,
+2135,355,2025-09-18,5,Detractor,
+2136,2290,2025-09-18,10,Promoter,
+2137,3490,2025-09-18,4,Detractor,Confusing app
+2138,1476,2025-09-18,5,Detractor,
+2139,3680,2025-09-19,6,Detractor,Mainly slow support response and confusing app.
+2140,354,2025-09-19,7,Passive,Mainly works as expected and easy to use.
+2141,408,2025-09-19,5,Detractor,Frequent outages
+2142,26,2025-09-19,7,Passive,
+2143,313,2025-09-19,9,Promoter,
+2144,2625,2025-09-19,10,Promoter,
+2145,3734,2025-09-19,9,Promoter,
+2146,239,2025-09-19,6,Detractor,"Overall, poor communication and long wait times."
+2147,2365,2025-09-20,9,Promoter,
+2148,3265,2025-09-20,7,Passive,Average experience and slow support response
+2149,2276,2025-09-20,8,Passive,"Overall, works as expected."
+2150,192,2025-09-21,4,Detractor,I think poor communication and long wait times.
+2151,3920,2025-09-21,8,Passive,Mainly works as expected and poor communication.
+2152,2065,2025-09-21,10,Promoter,Mainly easy to use and friendly staff.
+2153,3783,2025-09-21,10,Promoter,"Overall, the app works well and friendly staff."
+2154,520,2025-09-21,3,Detractor,Poor communication and long wait times
+2155,3139,2025-09-21,6,Detractor,
+2156,1691,2025-09-22,5,Detractor,
+2157,3510,2025-09-22,10,Promoter,
+2158,2250,2025-09-22,9,Promoter,I think friendly staff.
+2159,2747,2025-09-22,9,Promoter,Good value for money
+2160,2226,2025-09-22,7,Passive,
+2161,2222,2025-09-22,9,Promoter,Mainly easy to use and friendly staff.
+2162,3630,2025-09-22,7,Passive,"Overall, the service is okay and poor communication."
+2163,1860,2025-09-22,6,Detractor,Mainly slow support response and too expensive.
+2164,2351,2025-09-22,7,Passive,The service is okay
+2165,2597,2025-09-22,6,Detractor,I think slow support response and poor communication.
+2166,3444,2025-09-22,7,Passive,Mainly average experience.
+2167,1475,2025-09-22,7,Passive,"Overall, the service is okay and fast delivery."
+2168,3766,2025-09-22,4,Detractor,
+2169,2656,2025-09-22,9,Promoter,Friendly staff and great customer support
+2170,679,2025-09-22,7,Passive,"Overall, average experience and good value for money."
+2171,228,2025-09-23,9,Promoter,"Overall, friendly staff and reliable service."
+2172,552,2025-09-23,4,Detractor,Long wait times and confusing app
+2173,3916,2025-09-23,7,Passive,
+2174,142,2025-09-23,8,Passive,The service is okay and friendly staff
+2175,2355,2025-09-23,5,Detractor,Mainly long wait times and slow support response.
+2176,2047,2025-09-23,4,Detractor,"Overall, frequent outages."
+2177,2150,2025-09-23,8,Passive,"Overall, the service is okay and reliable service."
+2178,1724,2025-09-23,8,Passive,Works as expected and easy to use
+2179,2956,2025-09-23,6,Detractor,I think confusing app and long wait times.
+2180,2544,2025-09-24,9,Promoter,
+2181,2513,2025-09-24,9,Promoter,Reliable service
+2182,260,2025-09-24,8,Passive,Mainly works as expected.
+2183,2072,2025-09-24,5,Detractor,"Overall, slow support response and too expensive."
+2184,1717,2025-09-24,6,Detractor,Billing errors and long wait times
+2185,1765,2025-09-24,7,Passive,
+2186,3910,2025-09-24,9,Promoter,I think the app works well and fast delivery.
+2187,1162,2025-09-24,7,Passive,I think the service is okay.
+2188,2414,2025-09-24,5,Detractor,Mainly long wait times.
+2189,3909,2025-09-24,10,Promoter,
+2190,3679,2025-09-24,7,Passive,"Overall, works as expected."
+2191,2526,2025-09-24,8,Passive,"Overall, nothing special and reliable service."
+2192,1267,2025-09-25,8,Passive,The service is okay and frequent outages
+2193,1114,2025-09-25,7,Passive,
+2194,279,2025-09-25,9,Promoter,Friendly staff and good value for money
+2195,1693,2025-09-25,9,Promoter,Reliable service and easy to use
+2196,1073,2025-09-25,7,Passive,
+2197,3029,2025-09-25,7,Passive,
+2198,755,2025-09-25,5,Detractor,Poor communication
+2199,2475,2025-09-26,7,Passive,
+2200,2329,2025-09-26,9,Promoter,Easy to use
+2201,3084,2025-09-26,5,Detractor,Mainly confusing app.
+2202,1647,2025-09-26,4,Detractor,
+2203,1064,2025-09-26,6,Detractor,Confusing app and billing errors
+2204,3949,2025-09-26,7,Passive,I think average experience and good value for money.
+2205,3160,2025-09-26,7,Passive,
+2206,3023,2025-09-26,9,Promoter,Mainly reliable service and the app works well.
+2207,3189,2025-09-26,3,Detractor,Confusing app and slow support response
+2208,1387,2025-09-27,9,Promoter,Easy to use and good value for money
+2209,3174,2025-09-27,6,Detractor,I think slow support response and confusing app.
+2210,727,2025-09-27,7,Passive,
+2211,2330,2025-09-27,7,Passive,
+2212,3996,2025-09-27,6,Detractor,I think frequent outages.
+2213,1579,2025-09-27,9,Promoter,
+2214,3128,2025-09-27,3,Detractor,I think frequent outages and long wait times.
+2215,2388,2025-09-27,6,Detractor,
+2216,2928,2025-09-27,8,Passive,Mainly works as expected and confusing app.
+2217,3946,2025-09-27,3,Detractor,I think confusing app.
+2218,1126,2025-09-28,4,Detractor,
+2219,1901,2025-09-28,6,Detractor,Mainly long wait times.
+2220,504,2025-09-28,9,Promoter,Mainly the app works well.
+2221,2253,2025-09-28,10,Promoter,Mainly easy to use and the app works well.
+2222,2184,2025-09-28,6,Detractor,
+2223,210,2025-09-28,7,Passive,I think works as expected.
+2224,2458,2025-09-28,7,Passive,The service is okay and the app works well
+2225,3884,2025-09-28,10,Promoter,Mainly great customer support and easy to use.
+2226,2283,2025-09-28,6,Detractor,I think poor communication and frequent outages.
+2227,3547,2025-09-29,6,Detractor,
+2228,507,2025-09-29,4,Detractor,
+2229,3643,2025-09-29,6,Detractor,Poor communication
+2230,1188,2025-09-29,9,Promoter,Fast delivery and easy to use
+2231,1212,2025-09-29,7,Passive,I think works as expected and fast delivery.
+2232,2341,2025-09-29,10,Promoter,Mainly great customer support and easy to use.
+2233,3850,2025-09-30,5,Detractor,"Overall, poor communication."
+2234,2171,2025-09-30,9,Promoter,
+2235,1406,2025-09-30,10,Promoter,"Overall, reliable service."
+2236,2587,2025-09-30,8,Passive,Mainly the service is okay.
+2237,875,2025-09-30,8,Passive,I think works as expected and confusing app.
+2238,3752,2025-09-30,9,Promoter,I think great customer support.
+2239,629,2025-10-01,4,Detractor,"Overall, confusing app and frequent outages."
+2240,257,2025-10-01,7,Passive,Mainly average experience.
+2241,1469,2025-10-01,7,Passive,The service is okay
+2242,1690,2025-10-01,7,Passive,The service is okay
+2243,1928,2025-10-01,6,Detractor,
+2244,1994,2025-10-01,6,Detractor,
+2245,304,2025-10-01,5,Detractor,Slow support response and long wait times
+2246,512,2025-10-02,10,Promoter,I think good value for money and easy to use.
+2247,3348,2025-10-02,9,Promoter,Mainly easy to use.
+2248,1187,2025-10-02,4,Detractor,Confusing app and frequent outages
+2249,2885,2025-10-02,7,Passive,"Overall, works as expected and good value for money."
+2250,2516,2025-10-02,9,Promoter,"Overall, easy to use and good value for money."
+2251,2213,2025-10-02,5,Detractor,Mainly long wait times and frequent outages.
+2252,970,2025-10-02,8,Passive,
+2253,1993,2025-10-02,8,Passive,"Overall, the service is okay and friendly staff."
+2254,2165,2025-10-02,10,Promoter,Mainly great customer support and good value for money.
+2255,1888,2025-10-03,10,Promoter,"Overall, friendly staff and great customer support."
+2256,3379,2025-10-03,7,Passive,
+2257,1929,2025-10-03,7,Passive,Nothing special
+2258,948,2025-10-03,2,Detractor,I think billing errors and slow support response.
+2259,3383,2025-10-03,9,Promoter,
+2260,1473,2025-10-03,6,Detractor,
+2261,777,2025-10-03,4,Detractor,Mainly slow support response and too expensive.
+2262,2195,2025-10-04,6,Detractor,Long wait times and too expensive
+2263,942,2025-10-04,4,Detractor,I think frequent outages and long wait times.
+2264,1566,2025-10-04,6,Detractor,Billing errors
+2265,1183,2025-10-04,5,Detractor,
+2266,3282,2025-10-04,10,Promoter,I think great customer support and reliable service.
+2267,3832,2025-10-04,7,Passive,Mainly nothing special and the app works well.
+2268,1704,2025-10-05,9,Promoter,I think fast delivery and the app works well.
+2269,3157,2025-10-05,10,Promoter,Mainly good value for money.
+2270,1282,2025-10-05,8,Passive,
+2271,708,2025-10-05,6,Detractor,
+2272,2616,2025-10-05,7,Passive,
+2273,3631,2025-10-05,6,Detractor,
+2274,2811,2025-10-05,8,Passive,Mainly works as expected and reliable service.
+2275,2546,2025-10-05,7,Passive,Nothing special
+2276,2384,2025-10-06,10,Promoter,I think friendly staff and the app works well.
+2277,3805,2025-10-06,8,Passive,Mainly works as expected and reliable service.
+2278,2592,2025-10-06,7,Passive,
+2279,232,2025-10-06,8,Passive,The service is okay and great customer support
+2280,3264,2025-10-06,10,Promoter,Mainly easy to use.
+2281,627,2025-10-06,8,Passive,Average experience and confusing app
+2282,2824,2025-10-06,7,Passive,The service is okay and easy to use
+2283,1750,2025-10-06,8,Passive,"Overall, nothing special and long wait times."
+2284,3700,2025-10-06,7,Passive,Mainly the service is okay.
+2285,2796,2025-10-07,7,Passive,Mainly average experience and the app works well.
+2286,3411,2025-10-07,9,Promoter,Reliable service and the app works well
+2287,3878,2025-10-07,10,Promoter,Mainly reliable service.
+2288,2457,2025-10-07,4,Detractor,
+2289,2643,2025-10-08,10,Promoter,Great customer support
+2290,3274,2025-10-08,5,Detractor,"Overall, too expensive."
+2291,1667,2025-10-08,8,Passive,
+2292,3544,2025-10-08,7,Passive,"Overall, the service is okay and long wait times."
+2293,1840,2025-10-08,9,Promoter,I think the app works well and reliable service.
+2294,3470,2025-10-08,8,Passive,"Overall, average experience."
+2295,2827,2025-10-08,8,Passive,
+2296,3778,2025-10-09,5,Detractor,Mainly too expensive.
+2297,1180,2025-10-09,4,Detractor,"Overall, confusing app."
+2298,3992,2025-10-09,10,Promoter,
+2299,2754,2025-10-09,10,Promoter,Mainly reliable service and good value for money.
+2300,2257,2025-10-09,7,Passive,I think average experience and easy to use.
+2301,1992,2025-10-09,1,Detractor,"Overall, too expensive and poor communication."
+2302,823,2025-10-09,7,Passive,
+2303,2772,2025-10-09,7,Passive,I think average experience and fast delivery.
+2304,1465,2025-10-09,10,Promoter,I think the app works well.
+2305,3250,2025-10-09,6,Detractor,"Overall, confusing app."
+2306,137,2025-10-10,8,Passive,"Overall, works as expected and poor communication."
+2307,2541,2025-10-10,9,Promoter,"Overall, great customer support and reliable service."
+2308,2220,2025-10-10,5,Detractor,
+2309,2145,2025-10-10,8,Passive,Works as expected
+2310,300,2025-10-10,7,Passive,"Overall, works as expected."
+2311,939,2025-10-10,8,Passive,Mainly works as expected and poor communication.
+2312,2178,2025-10-10,5,Detractor,"Overall, poor communication."
+2313,1281,2025-10-11,7,Passive,
+2314,145,2025-10-11,7,Passive,
+2315,3288,2025-10-11,10,Promoter,I think easy to use and great customer support.
+2316,2109,2025-10-11,4,Detractor,
+2317,1026,2025-10-11,10,Promoter,Fast delivery
+2318,935,2025-10-11,9,Promoter,Mainly friendly staff and easy to use.
+2319,32,2025-10-11,7,Passive,
+2320,1730,2025-10-11,10,Promoter,"Overall, reliable service."
+2321,1996,2025-10-11,9,Promoter,
+2322,402,2025-10-11,7,Passive,Average experience
+2323,3827,2025-10-11,6,Detractor,"Overall, billing errors and poor communication."
+2324,158,2025-10-12,10,Promoter,Good value for money and great customer support
+2325,1365,2025-10-12,7,Passive,I think nothing special and long wait times.
+2326,2073,2025-10-12,7,Passive,Average experience and the app works well
+2327,2992,2025-10-12,6,Detractor,I think too expensive.
+2328,3187,2025-10-12,5,Detractor,I think long wait times.
+2329,808,2025-10-12,6,Detractor,
+2330,3841,2025-10-12,9,Promoter,
+2331,2607,2025-10-12,7,Passive,I think nothing special and confusing app.
+2332,665,2025-10-13,6,Detractor,
+2333,2860,2025-10-13,8,Passive,
+2334,2873,2025-10-13,6,Detractor,
+2335,2695,2025-10-13,10,Promoter,"Overall, fast delivery."
+2336,3775,2025-10-13,10,Promoter,"Overall, fast delivery."
+2337,2442,2025-10-13,2,Detractor,"Overall, frequent outages."
+2338,1642,2025-10-13,7,Passive,I think nothing special and reliable service.
+2339,2828,2025-10-13,8,Passive,"Overall, average experience and too expensive."
+2340,2272,2025-10-13,7,Passive,The service is okay and friendly staff
+2341,3520,2025-10-14,8,Passive,
+2342,2482,2025-10-14,9,Promoter,
+2343,499,2025-10-14,9,Promoter,"Overall, easy to use and good value for money."
+2344,2671,2025-10-14,8,Passive,
+2345,1217,2025-10-14,6,Detractor,"Overall, long wait times."
+2346,3118,2025-10-14,5,Detractor,Slow support response and confusing app
+2347,3058,2025-10-14,9,Promoter,Mainly great customer support and good value for money.
+2348,2399,2025-10-14,7,Passive,The service is okay and fast delivery
+2349,2172,2025-10-14,9,Promoter,The app works well
+2350,1084,2025-10-14,8,Passive,"Overall, nothing special and billing errors."
+2351,3730,2025-10-15,10,Promoter,Easy to use and the app works well
+2352,2576,2025-10-15,7,Passive,
+2353,3193,2025-10-15,9,Promoter,I think the app works well.
+2354,1252,2025-10-15,7,Passive,Works as expected and slow support response
+2355,2308,2025-10-15,10,Promoter,
+2356,1587,2025-10-15,6,Detractor,"Overall, frequent outages and confusing app."
+2357,2793,2025-10-15,7,Passive,"Overall, works as expected and the app works well."
+2358,2138,2025-10-15,5,Detractor,Billing errors
+2359,3408,2025-10-15,10,Promoter,Reliable service and great customer support
+2360,2081,2025-10-16,3,Detractor,"Overall, billing errors."
+2361,211,2025-10-16,10,Promoter,I think easy to use.
+2362,2893,2025-10-16,10,Promoter,Easy to use and reliable service
+2363,2638,2025-10-16,9,Promoter,
+2364,3361,2025-10-16,10,Promoter,Great customer support and reliable service
+2365,1112,2025-10-16,6,Detractor,
+2366,3683,2025-10-16,8,Passive,"Overall, the service is okay and frequent outages."
+2367,3526,2025-10-17,7,Passive,Works as expected and easy to use
+2368,3208,2025-10-17,5,Detractor,
+2369,3931,2025-10-17,4,Detractor,"Overall, poor communication and frequent outages."
+2370,463,2025-10-17,9,Promoter,Friendly staff
+2371,9,2025-10-17,7,Passive,
+2372,828,2025-10-17,10,Promoter,
+2373,1452,2025-10-17,4,Detractor,I think too expensive and confusing app.
+2374,3549,2025-10-17,7,Passive,I think works as expected.
+2375,1107,2025-10-17,8,Passive,"Overall, average experience."
+2376,586,2025-10-17,6,Detractor,Mainly too expensive and frequent outages.
+2377,1290,2025-10-18,6,Detractor,
+2378,814,2025-10-18,9,Promoter,
+2379,1408,2025-10-18,9,Promoter,I think easy to use.
+2380,2004,2025-10-18,6,Detractor,Mainly poor communication.
+2381,1981,2025-10-18,5,Detractor,Poor communication and confusing app
+2382,165,2025-10-18,9,Promoter,
+2383,515,2025-10-18,10,Promoter,Easy to use and fast delivery
+2384,749,2025-10-19,3,Detractor,I think poor communication and too expensive.
+2385,3163,2025-10-19,10,Promoter,Mainly good value for money and great customer support.
+2386,2162,2025-10-19,7,Passive,"Overall, average experience and long wait times."
+2387,3393,2025-10-19,9,Promoter,
+2388,1398,2025-10-19,10,Promoter,
+2389,646,2025-10-19,10,Promoter,Mainly friendly staff and good value for money.
+2390,2916,2025-10-19,8,Passive,"Overall, works as expected and the app works well."
+2391,705,2025-10-19,7,Passive,Nothing special and good value for money
+2392,1995,2025-10-19,7,Passive,
+2393,459,2025-10-19,9,Promoter,
+2394,1101,2025-10-19,8,Passive,
+2395,1199,2025-10-20,7,Passive,Mainly works as expected and confusing app.
+2396,2326,2025-10-20,8,Passive,"Overall, the service is okay."
+2397,1338,2025-10-20,8,Passive,Mainly works as expected.
+2398,1991,2025-10-20,10,Promoter,
+2399,2837,2025-10-20,7,Passive,Mainly average experience and billing errors.
+2400,1564,2025-10-20,9,Promoter,"Overall, friendly staff and reliable service."
+2401,2485,2025-10-20,5,Detractor,Mainly confusing app.
+2402,643,2025-10-20,10,Promoter,
+2403,812,2025-10-20,6,Detractor,Too expensive and billing errors
+2404,1514,2025-10-20,8,Passive,
+2405,1316,2025-10-20,8,Passive,
+2406,2207,2025-10-21,9,Promoter,
+2407,803,2025-10-21,10,Promoter,I think reliable service and friendly staff.
+2408,1895,2025-10-21,5,Detractor,
+2409,1798,2025-10-21,5,Detractor,
+2410,3260,2025-10-21,10,Promoter,Friendly staff and good value for money
+2411,3304,2025-10-21,6,Detractor,Mainly long wait times.
+2412,3071,2025-10-21,8,Passive,
+2413,490,2025-10-21,8,Passive,Works as expected
+2414,1862,2025-10-21,9,Promoter,Mainly fast delivery and the app works well.
+2415,2281,2025-10-21,5,Detractor,
+2416,2315,2025-10-22,7,Passive,"Overall, nothing special and too expensive."
+2417,2422,2025-10-22,8,Passive,The service is okay and reliable service
+2418,3222,2025-10-22,10,Promoter,
+2419,1770,2025-10-22,6,Detractor,
+2420,1420,2025-10-22,9,Promoter,"Overall, great customer support."
+2421,3701,2025-10-22,7,Passive,Works as expected
+2422,21,2025-10-22,6,Detractor,I think too expensive and poor communication.
+2423,1880,2025-10-22,8,Passive,Works as expected
+2424,2851,2025-10-22,4,Detractor,
+2425,680,2025-10-22,6,Detractor,Too expensive
+2426,3485,2025-10-22,6,Detractor,Mainly poor communication.
+2427,3939,2025-10-22,7,Passive,
+2428,61,2025-10-23,5,Detractor,Frequent outages
+2429,441,2025-10-23,9,Promoter,"Overall, great customer support."
+2430,94,2025-10-23,7,Passive,"Overall, average experience and the app works well."
+2431,1873,2025-10-23,10,Promoter,"Overall, great customer support and easy to use."
+2432,2096,2025-10-23,7,Passive,Mainly nothing special and confusing app.
+2433,116,2025-10-23,10,Promoter,
+2434,3597,2025-10-24,9,Promoter,Fast delivery and good value for money
+2435,2424,2025-10-24,7,Passive,Mainly nothing special and long wait times.
+2436,1756,2025-10-24,9,Promoter,Mainly friendly staff and good value for money.
+2437,3605,2025-10-24,8,Passive,Mainly works as expected.
+2438,690,2025-10-24,10,Promoter,Mainly reliable service and friendly staff.
+2439,3830,2025-10-24,8,Passive,
+2440,3804,2025-10-24,8,Passive,The service is okay
+2441,3623,2025-10-24,5,Detractor,Mainly too expensive.
+2442,3601,2025-10-25,5,Detractor,I think frequent outages.
+2443,3498,2025-10-25,10,Promoter,
+2444,1542,2025-10-25,9,Promoter,Easy to use
+2445,1689,2025-10-25,5,Detractor,Mainly frequent outages.
+2446,297,2025-10-25,10,Promoter,
+2447,3350,2025-10-25,8,Passive,Works as expected
+2448,843,2025-10-25,3,Detractor,I think confusing app and frequent outages.
+2449,889,2025-10-25,7,Passive,The service is okay
+2450,1038,2025-10-26,6,Detractor,
+2451,3401,2025-10-26,7,Passive,
+2452,1458,2025-10-26,7,Passive,
+2453,694,2025-10-26,7,Passive,
+2454,1645,2025-10-26,10,Promoter,Friendly staff
+2455,1376,2025-10-26,7,Passive,The service is okay and easy to use
+2456,3028,2025-10-26,9,Promoter,Mainly reliable service and great customer support.
+2457,3703,2025-10-27,8,Passive,"Overall, nothing special."
+2458,2484,2025-10-27,8,Passive,
+2459,3402,2025-10-27,9,Promoter,Mainly reliable service.
+2460,3551,2025-10-27,7,Passive,"Overall, the service is okay."
+2461,1551,2025-10-27,7,Passive,
+2462,3976,2025-10-27,8,Passive,"Overall, nothing special."
+2463,3440,2025-10-27,10,Promoter,Mainly reliable service and the app works well.
+2464,196,2025-10-27,6,Detractor,Mainly too expensive and poor communication.
+2465,3201,2025-10-27,7,Passive,"Overall, average experience."
+2466,2518,2025-10-27,10,Promoter,Mainly friendly staff.
+2467,1273,2025-10-27,8,Passive,
+2468,3960,2025-10-28,5,Detractor,"Overall, slow support response."
+2469,1337,2025-10-28,7,Passive,"Overall, average experience and easy to use."
+2470,2699,2025-10-28,5,Detractor,"Overall, long wait times."
+2471,3784,2025-10-28,6,Detractor,I think long wait times and poor communication.
+2472,726,2025-10-28,3,Detractor,"Overall, long wait times and frequent outages."
+2473,3359,2025-10-28,7,Passive,I think average experience and the app works well.
+2474,3674,2025-10-28,7,Passive,"Overall, nothing special."
+2475,1847,2025-10-28,6,Detractor,"Overall, long wait times."
+2476,987,2025-10-29,9,Promoter,"Overall, good value for money."
+2477,2286,2025-10-29,6,Detractor,
+2478,2979,2025-10-29,8,Passive,The service is okay
+2479,2003,2025-10-29,7,Passive,I think works as expected.
+2480,2848,2025-10-29,9,Promoter,"Overall, fast delivery."
+2481,1191,2025-10-29,10,Promoter,Easy to use and great customer support
+2482,333,2025-10-29,10,Promoter,I think great customer support.
+2483,2987,2025-10-29,7,Passive,
+2484,3564,2025-10-30,10,Promoter,I think the app works well and easy to use.
+2485,3390,2025-10-30,9,Promoter,
+2486,715,2025-10-30,9,Promoter,Mainly easy to use and reliable service.
+2487,367,2025-10-30,7,Passive,
+2488,3905,2025-10-30,8,Passive,Average experience
+2489,1436,2025-10-30,8,Passive,
+2490,2227,2025-10-31,7,Passive,"Overall, nothing special and friendly staff."
+2491,1754,2025-10-31,9,Promoter,"Overall, good value for money and reliable service."
+2492,2354,2025-10-31,9,Promoter,"Overall, the app works well and fast delivery."
+2493,1861,2025-10-31,9,Promoter,I think reliable service.
+2494,3296,2025-10-31,4,Detractor,I think long wait times and frequent outages.
+2495,788,2025-10-31,6,Detractor,"Overall, too expensive and frequent outages."
+2496,1492,2025-10-31,7,Passive,
+2497,927,2025-10-31,9,Promoter,Mainly great customer support.
+2498,261,2025-11-01,7,Passive,"Overall, average experience."
+2499,2193,2025-11-01,7,Passive,
+2500,197,2025-11-01,8,Passive,"Overall, nothing special and too expensive."
+2501,306,2025-11-01,7,Passive,Works as expected and long wait times
+2502,3056,2025-11-01,6,Detractor,I think frequent outages.
+2503,2805,2025-11-01,10,Promoter,
+2504,3529,2025-11-01,10,Promoter,
+2505,950,2025-11-01,10,Promoter,
+2506,237,2025-11-01,7,Passive,Mainly the service is okay.
+2507,670,2025-11-01,3,Detractor,
+2508,146,2025-11-01,9,Promoter,Fast delivery
+2509,2835,2025-11-02,6,Detractor,
+2510,1343,2025-11-02,9,Promoter,I think friendly staff.
+2511,1934,2025-11-02,9,Promoter,"Overall, the app works well."
+2512,2196,2025-11-02,6,Detractor,Mainly confusing app.
+2513,2127,2025-11-02,6,Detractor,"Overall, slow support response and frequent outages."
+2514,1264,2025-11-02,5,Detractor,Billing errors
+2515,2528,2025-11-02,6,Detractor,Slow support response
+2516,603,2025-11-02,8,Passive,I think average experience.
+2517,79,2025-11-02,4,Detractor,I think frequent outages and long wait times.
+2518,311,2025-11-02,9,Promoter,The app works well and easy to use
+2519,2132,2025-11-03,7,Passive,
+2520,1659,2025-11-03,8,Passive,Works as expected and the app works well
+2521,1498,2025-11-03,6,Detractor,Billing errors
+2522,2868,2025-11-03,9,Promoter,Mainly easy to use.
+2523,2043,2025-11-03,8,Passive,Mainly nothing special and billing errors.
+2524,3249,2025-11-03,4,Detractor,
+2525,3238,2025-11-03,1,Detractor,Mainly long wait times.
+2526,666,2025-11-04,6,Detractor,Poor communication
+2527,486,2025-11-04,8,Passive,I think average experience and fast delivery.
+2528,2263,2025-11-04,7,Passive,
+2529,1030,2025-11-04,6,Detractor,
+2530,180,2025-11-04,2,Detractor,
+2531,2925,2025-11-04,7,Passive,Works as expected and friendly staff
+2532,3345,2025-11-04,9,Promoter,Friendly staff and great customer support
+2533,2229,2025-11-04,7,Passive,Nothing special and fast delivery
+2534,1954,2025-11-04,9,Promoter,"Overall, the app works well."
+2535,151,2025-11-04,7,Passive,"Overall, average experience."
+2536,2340,2025-11-05,6,Detractor,I think billing errors and poor communication.
+2537,3199,2025-11-05,9,Promoter,
+2538,255,2025-11-05,5,Detractor,
+2539,1554,2025-11-05,7,Passive,Average experience
+2540,2152,2025-11-05,8,Passive,The service is okay
+2541,2230,2025-11-05,8,Passive,Mainly the service is okay and frequent outages.
+2542,2779,2025-11-05,7,Passive,Works as expected and frequent outages
+2543,1720,2025-11-05,5,Detractor,
+2544,2320,2025-11-05,10,Promoter,I think easy to use.
+2545,3015,2025-11-05,7,Passive,
+2546,2489,2025-11-05,8,Passive,I think works as expected.
+2547,303,2025-11-06,9,Promoter,Great customer support and friendly staff
+2548,2623,2025-11-06,10,Promoter,I think good value for money.
+2549,387,2025-11-06,3,Detractor,I think too expensive.
+2550,667,2025-11-06,4,Detractor,Mainly too expensive and billing errors.
+2551,2395,2025-11-06,2,Detractor,Too expensive and frequent outages
+2552,3889,2025-11-06,8,Passive,I think average experience and too expensive.
+2553,1235,2025-11-06,7,Passive,The service is okay
+2554,945,2025-11-06,7,Passive,Mainly the service is okay and frequent outages.
+2555,2454,2025-11-06,7,Passive,Mainly works as expected.
+2556,635,2025-11-07,9,Promoter,
+2557,3654,2025-11-07,8,Passive,"Overall, the service is okay and easy to use."
+2558,3378,2025-11-07,8,Passive,
+2559,1280,2025-11-07,8,Passive,
+2560,1000,2025-11-07,8,Passive,I think average experience and confusing app.
+2561,3502,2025-11-07,5,Detractor,Poor communication and slow support response
+2562,1500,2025-11-07,4,Detractor,I think poor communication.
+2563,2076,2025-11-07,6,Detractor,Long wait times
+2564,3648,2025-11-07,8,Passive,Average experience and confusing app
+2565,1322,2025-11-07,4,Detractor,Too expensive
+2566,394,2025-11-07,5,Detractor,"Overall, confusing app."
+2567,1746,2025-11-07,10,Promoter,"Overall, friendly staff and fast delivery."
+2568,3259,2025-11-08,5,Detractor,Mainly confusing app.
+2569,1910,2025-11-08,9,Promoter,I think the app works well.
+2570,3579,2025-11-08,7,Passive,
+2571,3615,2025-11-08,5,Detractor,
+2572,247,2025-11-08,10,Promoter,Mainly easy to use.
+2573,1105,2025-11-08,9,Promoter,Mainly reliable service and easy to use.
+2574,2995,2025-11-09,3,Detractor,I think billing errors.
+2575,2789,2025-11-09,6,Detractor,I think billing errors.
+2576,1246,2025-11-09,8,Passive,Mainly works as expected and billing errors.
+2577,426,2025-11-09,9,Promoter,Mainly friendly staff.
+2578,839,2025-11-09,8,Passive,"Overall, nothing special and confusing app."
+2579,3089,2025-11-09,9,Promoter,Mainly reliable service.
+2580,3087,2025-11-09,6,Detractor,Mainly frequent outages.
+2581,472,2025-11-10,4,Detractor,Mainly frequent outages.
+2582,2530,2025-11-10,10,Promoter,
+2583,314,2025-11-10,8,Passive,
+2584,1478,2025-11-10,10,Promoter,I think fast delivery.
+2585,3559,2025-11-10,4,Detractor,Mainly long wait times and confusing app.
+2586,1393,2025-11-10,6,Detractor,Mainly frequent outages and long wait times.
+2587,625,2025-11-10,8,Passive,"Overall, average experience and easy to use."
+2588,417,2025-11-10,8,Passive,Mainly nothing special.
+2589,2378,2025-11-11,10,Promoter,Reliable service
+2590,2271,2025-11-11,9,Promoter,Mainly reliable service and easy to use.
+2591,890,2025-11-11,9,Promoter,"Overall, good value for money and fast delivery."
+2592,24,2025-11-11,8,Passive,Mainly nothing special.
+2593,208,2025-11-11,9,Promoter,"Overall, great customer support and easy to use."
+2594,3392,2025-11-11,6,Detractor,
+2595,386,2025-11-11,10,Promoter,"Overall, the app works well."
+2596,2998,2025-11-11,6,Detractor,Too expensive and confusing app
+2597,3555,2025-11-11,7,Passive,Mainly nothing special and friendly staff.
+2598,317,2025-11-11,9,Promoter,"Overall, reliable service."
+2599,3875,2025-11-11,9,Promoter,I think friendly staff.
+2600,3612,2025-11-12,10,Promoter,Good value for money and easy to use
+2601,1481,2025-11-12,7,Passive,The service is okay
+2602,2026,2025-11-12,6,Detractor,Too expensive and poor communication
+2603,3136,2025-11-12,1,Detractor,"Overall, long wait times."
+2604,913,2025-11-12,10,Promoter,Mainly good value for money and great customer support.
+2605,2680,2025-11-12,7,Passive,
+2606,3049,2025-11-12,10,Promoter,Mainly easy to use and fast delivery.
+2607,3561,2025-11-12,10,Promoter,"Overall, the app works well and great customer support."
+2608,2108,2025-11-13,9,Promoter,"Overall, the app works well."
+2609,894,2025-11-13,8,Passive,
+2610,3229,2025-11-13,5,Detractor,Mainly slow support response.
+2611,1603,2025-11-13,4,Detractor,Mainly slow support response and long wait times.
+2612,2834,2025-11-13,7,Passive,
+2613,3649,2025-11-13,5,Detractor,
+2614,1001,2025-11-13,8,Passive,Mainly nothing special and easy to use.
+2615,2531,2025-11-13,10,Promoter,Friendly staff
+2616,924,2025-11-13,8,Passive,I think average experience.
+2617,2373,2025-11-14,8,Passive,
+2618,1133,2025-11-14,6,Detractor,"Overall, confusing app."
+2619,4000,2025-11-14,8,Passive,
+2620,2258,2025-11-14,9,Promoter,
+2621,2830,2025-11-14,6,Detractor,
+2622,1952,2025-11-14,9,Promoter,Mainly great customer support and friendly staff.
+2623,2287,2025-11-14,10,Promoter,
+2624,1767,2025-11-14,9,Promoter,Easy to use
+2625,1830,2025-11-14,9,Promoter,
+2626,1386,2025-11-15,7,Passive,"Overall, nothing special and long wait times."
+2627,1725,2025-11-15,8,Passive,I think nothing special.
+2628,2148,2025-11-15,10,Promoter,
+2629,3829,2025-11-15,8,Passive,Works as expected and confusing app
+2630,2646,2025-11-16,8,Passive,I think average experience and the app works well.
+2631,3062,2025-11-16,9,Promoter,
+2632,40,2025-11-16,10,Promoter,Mainly easy to use.
+2633,170,2025-11-16,6,Detractor,"Overall, confusing app and billing errors."
+2634,3845,2025-11-16,6,Detractor,
+2635,167,2025-11-16,6,Detractor,Long wait times
+2636,3750,2025-11-16,7,Passive,Nothing special and frequent outages
+2637,744,2025-11-16,6,Detractor,
+2638,2078,2025-11-16,4,Detractor,"Overall, frequent outages and too expensive."
+2639,1468,2025-11-16,6,Detractor,
+2640,2719,2025-11-16,4,Detractor,
+2641,1099,2025-11-17,9,Promoter,"Overall, the app works well."
+2642,1255,2025-11-17,9,Promoter,I think great customer support and the app works well.
+2643,1005,2025-11-17,8,Passive,I think the service is okay.
+2644,559,2025-11-17,9,Promoter,"Overall, friendly staff and fast delivery."
+2645,3106,2025-11-17,8,Passive,Average experience
+2646,2020,2025-11-17,10,Promoter,Great customer support and fast delivery
+2647,1553,2025-11-18,6,Detractor,
+2648,3839,2025-11-18,2,Detractor,"Overall, too expensive."
+2649,650,2025-11-18,6,Detractor,I think confusing app and long wait times.
+2650,1413,2025-11-18,5,Detractor,Billing errors and slow support response
+2651,2788,2025-11-18,9,Promoter,Great customer support
+2652,87,2025-11-18,9,Promoter,"Overall, great customer support."
+2653,903,2025-11-18,10,Promoter,"Overall, friendly staff."
+2654,1270,2025-11-18,10,Promoter,"Overall, easy to use."
+2655,3657,2025-11-18,10,Promoter,Great customer support and reliable service
+2656,827,2025-11-18,8,Passive,Average experience
+2657,3794,2025-11-18,8,Passive,I think the service is okay.
+2658,1381,2025-11-19,8,Passive,"Overall, nothing special."
+2659,588,2025-11-19,5,Detractor,
+2660,2426,2025-11-19,9,Promoter,
+2661,2771,2025-11-19,5,Detractor,"Overall, confusing app."
+2662,951,2025-11-19,9,Promoter,"Overall, friendly staff."
+2663,3627,2025-11-20,9,Promoter,I think friendly staff and reliable service.
+2664,1053,2025-11-20,6,Detractor,I think confusing app and long wait times.
+2665,2211,2025-11-20,6,Detractor,
+2666,110,2025-11-20,10,Promoter,"Overall, reliable service."
+2667,3613,2025-11-20,8,Passive,Mainly nothing special and slow support response.
+2668,381,2025-11-20,9,Promoter,
+2669,483,2025-11-20,10,Promoter,Mainly the app works well.
+2670,3183,2025-11-20,6,Detractor,
+2671,787,2025-11-21,4,Detractor,
+2672,480,2025-11-21,9,Promoter,"Overall, the app works well."
+2673,1955,2025-11-21,10,Promoter,"Overall, fast delivery."
+2674,3621,2025-11-21,6,Detractor,
+2675,2430,2025-11-21,8,Passive,Nothing special and frequent outages
+2676,1339,2025-11-21,6,Detractor,
+2677,46,2025-11-21,6,Detractor,"Overall, slow support response and too expensive."
+2678,2929,2025-11-21,10,Promoter,
+2679,3216,2025-11-22,2,Detractor,Mainly confusing app.
+2680,321,2025-11-22,10,Promoter,
+2681,2662,2025-11-22,3,Detractor,
+2682,2606,2025-11-22,9,Promoter,"Overall, the app works well."
+2683,2644,2025-11-22,10,Promoter,Mainly fast delivery and friendly staff.
+2684,299,2025-11-22,7,Passive,Mainly works as expected.
+2685,1129,2025-11-22,10,Promoter,Mainly good value for money.
+2686,42,2025-11-23,10,Promoter,"Overall, good value for money and easy to use."
+2687,1548,2025-11-23,7,Passive,"Overall, nothing special and good value for money."
+2688,350,2025-11-23,8,Passive,I think works as expected.
+2689,223,2025-11-23,9,Promoter,I think good value for money.
+2690,2856,2025-11-23,8,Passive,Mainly the service is okay and long wait times.
+2691,298,2025-11-23,7,Passive,Mainly the service is okay and billing errors.
+2692,3496,2025-11-23,5,Detractor,
+2693,1445,2025-11-23,7,Passive,I think average experience and fast delivery.
+2694,2033,2025-11-24,10,Promoter,I think friendly staff and easy to use.
+2695,949,2025-11-24,9,Promoter,
+2696,2405,2025-11-24,9,Promoter,"Overall, good value for money and friendly staff."
+2697,1371,2025-11-24,7,Passive,"Overall, the service is okay and frequent outages."
+2698,163,2025-11-24,10,Promoter,Easy to use and the app works well
+2699,2776,2025-11-24,9,Promoter,
+2700,1095,2025-11-24,7,Passive,I think nothing special and great customer support.
+2701,3659,2025-11-24,7,Passive,"Overall, average experience and reliable service."
+2702,2718,2025-11-24,8,Passive,
+2703,3695,2025-11-25,6,Detractor,Frequent outages and billing errors
+2704,3037,2025-11-25,6,Detractor,Mainly too expensive and long wait times.
+2705,2555,2025-11-25,7,Passive,"Overall, the service is okay."
+2706,3999,2025-11-25,7,Passive,"Overall, average experience and poor communication."
+2707,3231,2025-11-25,9,Promoter,Fast delivery and reliable service
+2708,2571,2025-11-25,5,Detractor,I think slow support response and confusing app.
+2709,1144,2025-11-25,7,Passive,
+2710,3787,2025-11-25,10,Promoter,I think the app works well.
+2711,3961,2025-11-25,8,Passive,I think nothing special.
+2712,2964,2025-11-25,10,Promoter,"Overall, friendly staff and fast delivery."
+2713,2590,2025-11-25,4,Detractor,Mainly slow support response and confusing app.
+2714,2319,2025-11-25,9,Promoter,Friendly staff and great customer support
+2715,2515,2025-11-25,8,Passive,Nothing special and easy to use
+2716,1747,2025-11-26,8,Passive,The service is okay and good value for money
+2717,1568,2025-11-26,6,Detractor,Mainly poor communication.
+2718,543,2025-11-26,8,Passive,Mainly nothing special and too expensive.
+2719,1260,2025-11-26,9,Promoter,
+2720,2508,2025-11-26,9,Promoter,
+2721,66,2025-11-26,9,Promoter,
+2722,3036,2025-11-26,10,Promoter,Fast delivery and good value for money
+2723,3653,2025-11-26,7,Passive,"Overall, nothing special and confusing app."
+2724,1919,2025-11-27,7,Passive,Nothing special
+2725,1010,2025-11-27,6,Detractor,
+2726,1346,2025-11-27,7,Passive,
+2727,3991,2025-11-27,8,Passive,I think average experience and great customer support.
+2728,2418,2025-11-27,6,Detractor,Slow support response
+2729,3855,2025-11-27,9,Promoter,I think the app works well and great customer support.
+2730,3756,2025-11-27,10,Promoter,"Overall, great customer support and fast delivery."
+2731,2740,2025-11-27,7,Passive,I think average experience and frequent outages.
+2732,1429,2025-11-27,7,Passive,
+2733,1086,2025-11-27,3,Detractor,"Overall, poor communication and confusing app."
+2734,1327,2025-11-27,7,Passive,
+2735,1249,2025-11-27,10,Promoter,Mainly fast delivery.
+2736,3735,2025-11-28,7,Passive,
+2737,1946,2025-11-28,6,Detractor,I think too expensive.
+2738,3354,2025-11-28,10,Promoter,The app works well and fast delivery
+2739,1748,2025-11-28,8,Passive,"Overall, nothing special and good value for money."
+2740,719,2025-11-28,7,Passive,I think average experience.
+2741,979,2025-11-28,8,Passive,Nothing special and too expensive
+2742,1300,2025-11-28,9,Promoter,I think the app works well and friendly staff.
+2743,2323,2025-11-28,4,Detractor,Too expensive and frequent outages
+2744,1761,2025-11-28,9,Promoter,"Overall, friendly staff and the app works well."
+2745,3820,2025-11-29,10,Promoter,
+2746,1707,2025-11-29,5,Detractor,I think poor communication.
+2747,13,2025-11-29,7,Passive,
+2748,3080,2025-11-29,9,Promoter,Mainly fast delivery.
+2749,2495,2025-11-29,3,Detractor,
+2750,2006,2025-11-29,9,Promoter,I think easy to use and good value for money.
+2751,1614,2025-11-29,8,Passive,Average experience
+2752,2468,2025-11-29,9,Promoter,Mainly good value for money and reliable service.
+2753,2173,2025-11-29,8,Passive,Mainly works as expected and great customer support.
+2754,1229,2025-11-29,10,Promoter,
+2755,1792,2025-11-30,6,Detractor,Too expensive and poor communication
+2756,178,2025-11-30,5,Detractor,
+2757,697,2025-11-30,10,Promoter,Fast delivery
+2758,97,2025-11-30,10,Promoter,"Overall, friendly staff and the app works well."
+2759,1948,2025-11-30,10,Promoter,
+2760,840,2025-11-30,5,Detractor,Long wait times and poor communication
+2761,3947,2025-11-30,7,Passive,
+2762,962,2025-11-30,7,Passive,The service is okay
+2763,2969,2025-11-30,2,Detractor,"Overall, long wait times and billing errors."
+2764,2113,2025-11-30,6,Detractor,"Overall, long wait times."
+2765,2115,2025-12-01,8,Passive,Nothing special and the app works well
+2766,108,2025-12-01,8,Passive,"Overall, average experience."
+2767,1138,2025-12-01,8,Passive,
+2768,3888,2025-12-01,4,Detractor,"Overall, billing errors and frequent outages."
+2769,1858,2025-12-01,2,Detractor,Mainly poor communication and long wait times.
+2770,1361,2025-12-01,8,Passive,
+2771,701,2025-12-01,6,Detractor,Poor communication
+2772,3385,2025-12-02,8,Passive,I think works as expected.
+2773,2911,2025-12-02,6,Detractor,"Overall, billing errors and poor communication."
+2774,2053,2025-12-02,9,Promoter,
+2775,171,2025-12-02,8,Passive,
+2776,3618,2025-12-02,6,Detractor,I think poor communication.
+2777,1739,2025-12-03,8,Passive,
+2778,3483,2025-12-03,7,Passive,Average experience and the app works well
+2779,2667,2025-12-03,8,Passive,I think average experience.
+2780,3718,2025-12-03,8,Passive,"Overall, the service is okay."
+2781,3964,2025-12-03,5,Detractor,I think slow support response.
+2782,3269,2025-12-03,10,Promoter,I think reliable service.
+2783,2936,2025-12-03,8,Passive,I think average experience.
+2784,3531,2025-12-03,7,Passive,
+2785,1044,2025-12-04,6,Detractor,I think slow support response and poor communication.
+2786,2698,2025-12-04,10,Promoter,I think easy to use.
+2787,3542,2025-12-04,7,Passive,"Overall, nothing special and slow support response."
+2788,2251,2025-12-04,5,Detractor,"Overall, long wait times."
+2789,2598,2025-12-04,6,Detractor,"Overall, slow support response and billing errors."
+2790,3953,2025-12-04,9,Promoter,Mainly friendly staff and reliable service.
+2791,1719,2025-12-04,6,Detractor,
+2792,3170,2025-12-04,4,Detractor,Mainly billing errors.
+2793,1713,2025-12-04,5,Detractor,
+2794,3103,2025-12-04,10,Promoter,"Overall, friendly staff."
+2795,3608,2025-12-05,10,Promoter,"Overall, the app works well."
+2796,3737,2025-12-05,7,Passive,"Overall, nothing special."
+2797,111,2025-12-05,7,Passive,I think average experience and the app works well.
+2798,215,2025-12-05,6,Detractor,I think slow support response.
+2799,2124,2025-12-05,8,Passive,The service is okay and friendly staff
+2800,3413,2025-12-05,6,Detractor,"Overall, slow support response and poor communication."
+2801,2345,2025-12-05,6,Detractor,"Overall, frequent outages."
+2802,1285,2025-12-05,10,Promoter,Reliable service
+2803,3241,2025-12-05,7,Passive,
+2804,2267,2025-12-05,10,Promoter,
+2805,495,2025-12-06,7,Passive,The service is okay
+2806,2180,2025-12-06,10,Promoter,
+2807,2975,2025-12-06,8,Passive,"Overall, nothing special."
+2808,910,2025-12-06,8,Passive,Mainly the service is okay and billing errors.
+2809,3772,2025-12-06,10,Promoter,
+2810,3499,2025-12-06,6,Detractor,Frequent outages and poor communication
+2811,1165,2025-12-06,3,Detractor,
+2812,133,2025-12-06,6,Detractor,
+2813,230,2025-12-06,6,Detractor,
+2814,3380,2025-12-07,9,Promoter,Mainly good value for money.
+2815,1139,2025-12-07,6,Detractor,I think frequent outages.
+2816,2041,2025-12-07,8,Passive,"Overall, the service is okay and friendly staff."
+2817,189,2025-12-07,7,Passive,Mainly nothing special and great customer support.
+2818,3317,2025-12-07,6,Detractor,Mainly long wait times.
+2819,3898,2025-12-08,5,Detractor,I think slow support response and poor communication.
+2820,3634,2025-12-08,9,Promoter,
+2821,3026,2025-12-08,7,Passive,Mainly nothing special.
+2822,766,2025-12-08,8,Passive,Mainly the service is okay and long wait times.
+2823,135,2025-12-08,6,Detractor,Slow support response and frequent outages
+2824,1651,2025-12-08,9,Promoter,
+2825,3487,2025-12-09,6,Detractor,I think slow support response and long wait times.
+2826,2649,2025-12-09,5,Detractor,Slow support response and frequent outages
+2827,2393,2025-12-09,10,Promoter,I think great customer support.
+2828,3154,2025-12-09,5,Detractor,Confusing app and too expensive
+2829,539,2025-12-09,8,Passive,Works as expected and poor communication
+2830,2300,2025-12-09,5,Detractor,
+2831,1240,2025-12-10,8,Passive,Nothing special and fast delivery
+2832,1513,2025-12-10,6,Detractor,
+2833,415,2025-12-10,9,Promoter,
+2834,1494,2025-12-10,4,Detractor,"Overall, long wait times and poor communication."
+2835,3410,2025-12-10,9,Promoter,Fast delivery and reliable service
+2836,1171,2025-12-10,9,Promoter,I think great customer support and fast delivery.
+2837,1147,2025-12-11,10,Promoter,I think fast delivery.
+2838,3584,2025-12-11,6,Detractor,I think frequent outages and billing errors.
+2839,1557,2025-12-11,9,Promoter,"Overall, the app works well and reliable service."
+2840,3944,2025-12-11,10,Promoter,"Overall, friendly staff."
+2841,2816,2025-12-11,8,Passive,Mainly nothing special and confusing app.
+2842,2631,2025-12-11,8,Passive,I think nothing special and poor communication.
+2843,1075,2025-12-11,9,Promoter,
+2844,68,2025-12-11,6,Detractor,
+2845,1810,2025-12-12,6,Detractor,Frequent outages
+2846,568,2025-12-12,6,Detractor,Too expensive
+2847,177,2025-12-12,6,Detractor,Billing errors
+2848,271,2025-12-12,4,Detractor,Mainly confusing app.
+2849,2348,2025-12-12,8,Passive,I think works as expected.
+2850,1090,2025-12-12,7,Passive,"Overall, nothing special and good value for money."
+2851,2416,2025-12-13,8,Passive,
+2852,822,2025-12-13,9,Promoter,Mainly fast delivery and great customer support.
+2853,2692,2025-12-13,4,Detractor,I think confusing app.
+2854,3394,2025-12-13,7,Passive,Works as expected
+2855,2408,2025-12-13,6,Detractor,I think confusing app and frequent outages.
+2856,818,2025-12-13,7,Passive,"Overall, the service is okay and easy to use."
+2857,1661,2025-12-13,8,Passive,"Overall, the service is okay and billing errors."
+2858,452,2025-12-13,9,Promoter,Easy to use and friendly staff
+2859,2383,2025-12-14,9,Promoter,"Overall, great customer support."
+2860,2398,2025-12-14,4,Detractor,Mainly slow support response.
+2861,600,2025-12-14,6,Detractor,Mainly billing errors and confusing app.
+2862,3065,2025-12-14,10,Promoter,Mainly friendly staff and easy to use.
+2863,2930,2025-12-14,4,Detractor,I think poor communication and confusing app.
+2864,25,2025-12-14,9,Promoter,Good value for money
+2865,280,2025-12-14,6,Detractor,
+2866,1200,2025-12-15,5,Detractor,
+2867,1627,2025-12-15,5,Detractor,I think confusing app.
+2868,3934,2025-12-15,8,Passive,I think nothing special.
+2869,193,2025-12-15,10,Promoter,"Overall, fast delivery and good value for money."
+2870,2349,2025-12-15,6,Detractor,
+2871,2705,2025-12-15,8,Passive,"Overall, average experience."
+2872,2938,2025-12-16,7,Passive,
+2873,821,2025-12-16,4,Detractor,Frequent outages
+2874,974,2025-12-16,8,Passive,The service is okay and long wait times
+2875,1780,2025-12-16,9,Promoter,
+2876,3574,2025-12-16,7,Passive,
+2877,2588,2025-12-17,7,Passive,The service is okay
+2878,1978,2025-12-17,8,Passive,Mainly works as expected and billing errors.
+2879,212,2025-12-17,9,Promoter,"Overall, friendly staff and reliable service."
+2880,1293,2025-12-17,9,Promoter,Mainly fast delivery and reliable service.
+2881,911,2025-12-17,6,Detractor,
+2882,3592,2025-12-17,8,Passive,Mainly nothing special and frequent outages.
+2883,1286,2025-12-17,9,Promoter,Great customer support
+2884,3521,2025-12-17,1,Detractor,I think long wait times.
+2885,2289,2025-12-17,7,Passive,Mainly nothing special.
+2886,1890,2025-12-17,9,Promoter,The app works well
+2887,2234,2025-12-17,10,Promoter,Great customer support
+2888,125,2025-12-18,7,Passive,"Overall, average experience."
+2889,54,2025-12-18,7,Passive,Works as expected
+2890,3769,2025-12-18,9,Promoter,Mainly the app works well and friendly staff.
+2891,3178,2025-12-18,8,Passive,
+2892,813,2025-12-18,6,Detractor,I think long wait times and frequent outages.
+2893,2114,2025-12-18,8,Passive,
+2894,743,2025-12-18,5,Detractor,Billing errors and frequent outages
+2895,74,2025-12-18,10,Promoter,
+2896,3112,2025-12-18,8,Passive,Mainly average experience.
+2897,3834,2025-12-18,7,Passive,
+2898,1124,2025-12-18,3,Detractor,I think billing errors and long wait times.
+2899,3871,2025-12-18,8,Passive,I think the service is okay and billing errors.
+2900,2197,2025-12-18,10,Promoter,Great customer support
+2901,2877,2025-12-18,6,Detractor,
+2902,2270,2025-12-18,10,Promoter,Great customer support and easy to use
+2903,482,2025-12-19,9,Promoter,
+2904,3212,2025-12-19,7,Passive,I think nothing special.
+2905,1477,2025-12-19,10,Promoter,
+2906,941,2025-12-19,9,Promoter,"Overall, easy to use and good value for money."
+2907,1308,2025-12-19,6,Detractor,
+2908,3714,2025-12-19,8,Passive,
+2909,1344,2025-12-20,6,Detractor,I think billing errors and frequent outages.
+2910,554,2025-12-20,8,Passive,I think nothing special and friendly staff.
+2911,1331,2025-12-20,5,Detractor,Mainly long wait times.
+2912,2814,2025-12-20,10,Promoter,
+2913,3428,2025-12-20,6,Detractor,"Overall, poor communication."
+2914,2609,2025-12-21,7,Passive,"Overall, average experience."
+2915,736,2025-12-21,8,Passive,
+2916,3129,2025-12-21,9,Promoter,The app works well and great customer support
+2917,2955,2025-12-21,8,Passive,
+2918,2139,2025-12-21,6,Detractor,
+2919,4,2025-12-21,10,Promoter,
+2920,2098,2025-12-21,4,Detractor,"Overall, poor communication."
+2921,2481,2025-12-21,9,Promoter,I think good value for money and great customer support.
+2922,3793,2025-12-21,6,Detractor,Mainly too expensive.
+2923,2549,2025-12-21,6,Detractor,Confusing app
+2924,3524,2025-12-22,7,Passive,Mainly average experience and confusing app.
+2925,989,2025-12-22,8,Passive,"Overall, the service is okay."
+2926,3967,2025-12-22,5,Detractor,
+2927,1621,2025-12-22,5,Detractor,Confusing app and poor communication
+2928,1701,2025-12-22,7,Passive,I think the service is okay and good value for money.
+2929,2898,2025-12-22,6,Detractor,
+2930,292,2025-12-22,7,Passive,Works as expected and slow support response
+2931,1111,2025-12-22,3,Detractor,
+2932,1443,2025-12-23,8,Passive,
+2933,3202,2025-12-23,8,Passive,
+2934,1646,2025-12-23,6,Detractor,Frequent outages
+2935,2741,2025-12-23,5,Detractor,I think frequent outages and poor communication.
+2936,734,2025-12-23,6,Detractor,I think too expensive and frequent outages.
+2937,1109,2025-12-23,8,Passive,Mainly the service is okay and easy to use.
+2938,2444,2025-12-23,9,Promoter,
+2939,3589,2025-12-24,10,Promoter,I think fast delivery.
+2940,988,2025-12-24,9,Promoter,"Overall, easy to use and the app works well."
+2941,1883,2025-12-24,10,Promoter,
+2942,3477,2025-12-25,4,Detractor,"Overall, frequent outages and too expensive."
+2943,1186,2025-12-25,9,Promoter,I think great customer support and good value for money.
+2944,2397,2025-12-25,5,Detractor,I think confusing app.
+2945,1227,2025-12-25,6,Detractor,
+2946,3998,2025-12-25,10,Promoter,
+2947,3438,2025-12-25,10,Promoter,
+2948,329,2025-12-25,8,Passive,I think the service is okay.
+2949,577,2025-12-25,10,Promoter,Good value for money and easy to use
+2950,176,2025-12-25,9,Promoter,Friendly staff and the app works well
+2951,2204,2025-12-25,10,Promoter,Mainly easy to use and reliable service.
+2952,2014,2025-12-26,8,Passive,I think works as expected and long wait times.
+2953,118,2025-12-26,5,Detractor,"Overall, poor communication."
+2954,3276,2025-12-26,8,Passive,
+2955,2602,2025-12-27,6,Detractor,"Overall, poor communication."
+2956,2186,2025-12-27,4,Detractor,Confusing app
+2957,1567,2025-12-27,4,Detractor,
+2958,2982,2025-12-27,10,Promoter,Good value for money
+2959,544,2025-12-27,8,Passive,The service is okay
+2960,1602,2025-12-27,7,Passive,
+2961,3236,2025-12-27,5,Detractor,
+2962,867,2025-12-27,7,Passive,"Overall, average experience and great customer support."
+2963,3932,2025-12-28,6,Detractor,"Overall, poor communication and confusing app."
+2964,2361,2025-12-28,8,Passive,
+2965,534,2025-12-28,4,Detractor,Billing errors and confusing app
+2966,1670,2025-12-28,6,Detractor,I think poor communication and slow support response.
+2967,308,2025-12-28,10,Promoter,Friendly staff
+2968,2568,2025-12-28,9,Promoter,
+2969,287,2025-12-28,7,Passive,Nothing special and friendly staff
+2970,820,2025-12-28,9,Promoter,
+2971,3213,2025-12-28,9,Promoter,Mainly reliable service and good value for money.
+2972,1779,2025-12-28,5,Detractor,
+2973,2259,2025-12-28,8,Passive,I think works as expected.
+2974,2721,2025-12-29,6,Detractor,"Overall, poor communication and slow support response."
+2975,691,2025-12-29,9,Promoter,I think easy to use and friendly staff.
+2976,2217,2025-12-29,5,Detractor,"Overall, frequent outages and confusing app."
+2977,545,2025-12-29,8,Passive,
+2978,1045,2025-12-29,7,Passive,Nothing special and great customer support
+2979,3528,2025-12-29,4,Detractor,I think poor communication.
+2980,1383,2025-12-29,8,Passive,Mainly average experience and reliable service.
+2981,2769,2025-12-30,9,Promoter,
+2982,2400,2025-12-30,9,Promoter,Mainly good value for money and great customer support.
+2983,3527,2025-12-30,8,Passive,I think the service is okay and good value for money.
+2984,692,2025-12-30,4,Detractor,
+2985,1619,2025-12-30,7,Passive,I think nothing special.
+2986,1048,2025-12-30,5,Detractor,Mainly long wait times.
+2987,2473,2025-12-30,6,Detractor,
+2988,1584,2025-12-30,5,Detractor,
+2989,362,2025-12-30,9,Promoter,Mainly easy to use and friendly staff.
+2990,3658,2025-12-30,8,Passive,Average experience and poor communication
+2991,1319,2025-12-30,4,Detractor,
+2992,28,2025-12-30,10,Promoter,Friendly staff
+2993,3108,2025-12-30,6,Detractor,
+2994,2583,2025-12-30,7,Passive,I think average experience.
+2995,3096,2025-12-31,10,Promoter,
+2996,1794,2025-12-31,6,Detractor,I think poor communication and too expensive.
+2997,2255,2025-12-31,10,Promoter,Mainly reliable service and friendly staff.
+2998,382,2025-12-31,9,Promoter,Easy to use and great customer support
+2999,1903,2025-12-31,6,Detractor,
+3000,3336,2025-12-31,10,Promoter,"Overall, friendly staff and good value for money."
