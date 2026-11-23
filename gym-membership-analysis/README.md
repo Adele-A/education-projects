@@ -15,7 +15,7 @@ Which members are most likely to cancel their membership, and which visit and pl
 ## Plan of the work
 
 1. **Data generation** – create a reproducible synthetic dataset (`src/data_generator.py`).
-2. **EDA** – distributions, missing values, visit frequency by plan, churn and upgrade rates by segment.
+2. **EDA** – distributions, missing values, visit frequency by plan, churn and upgrade rates by segment (`src/eda.py`).
 3. **Analysis / model** – statistical tests on upgrade drivers and a churn risk model (e.g. logistic regression) with a risk score per member.
 4. **SQL** – queries for churn rate by segment, upgrade funnel and at-risk member lists.
 5. **Tests** – pytest checks of data integrity (unique keys, valid ranges, consistent plans and dates).
@@ -38,9 +38,29 @@ From the project root:
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-The CSV files are written to the `data/` folder.
+The CSV files are written to the `data/` folder and the charts to `figures/`.
+
+## Exploratory data analysis
+
+`src/eda.py` loads both CSV files and prints to the console:
+
+- shape, dtypes and missing values of each table (an empty `churn_date` is expected for active members);
+- descriptive statistics for numeric and categorical columns of `members`;
+- five aggregations: visit frequency and churn by current plan, churned vs active behaviour, churn rate by initial plan and contract type, churn rate by visit-frequency band, and upgrade rate by initial plan and visit band.
+
+It also saves four charts to `figures/`:
+
+| File | Content |
+|------|---------|
+| `visits_by_churn_status.png` | Distribution of weekly visits, active vs churned |
+| `visits_by_plan.png` | Visit frequency by current plan |
+| `churn_upgrade_by_visit_band.png` | Churn and upgrade rates by visit band |
+| `churn_by_plan_contract.png` | Churn rate by initial plan and contract type |
+
+All figures and numbers come from the synthetic data and are produced by running the script; see its output for the actual values.
 
 ---
 
