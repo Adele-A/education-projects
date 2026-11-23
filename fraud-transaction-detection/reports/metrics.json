@@ -1,0 +1,32 @@
+{
+  "data": "synthetic",
+  "config": {
+    "random_state": 42,
+    "test_size": 0.3,
+    "alert_budget": 0.02,
+    "n_features": 20,
+    "n_train": 3500,
+    "n_test": 1500,
+    "fraud_in_test": 30
+  },
+  "isolation_forest": {
+    "pr_auc": 0.6188211238083726,
+    "roc_auc": 0.9518594104308389,
+    "alert_budget": 0.02,
+    "flagged": 30,
+    "true_positives": 18,
+    "precision": 0.6,
+    "recall": 0.6,
+    "f1": 0.6
+  },
+  "logistic_regression": {
+    "pr_auc": 0.7581819814364779,
+    "roc_auc": 0.9696371882086168,
+    "alert_budget": 0.02,
+    "flagged": 30,
+    "true_positives": 20,
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666,
+    "f1": 0.6666666666666666
+  }
+}
