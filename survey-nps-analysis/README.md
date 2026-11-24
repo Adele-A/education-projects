@@ -8,7 +8,7 @@ Calculate the Net Promoter Score (NPS) for the whole customer base, compare it a
 
 ## Plan of the work
 1. **Data generation** (`src/data_generator.py`): build a reproducible synthetic dataset of customers and survey responses.
-2. **EDA**: check data quality (missing values, duplicates, ranges), look at the score distribution, response rates and comment coverage.
+2. **EDA** (`src/eda.py`): check data quality (missing values, duplicates, ranges), look at the score distribution, response rates and comment coverage.
 3. **Analysis / model**:
    - NPS calculation (% promoters minus % detractors) overall and over time.
    - Segment comparison with bootstrap confidence intervals and significance tests.
@@ -34,9 +34,10 @@ From the project root (the folder that contains `src/`):
 ```bash
 pip install -r requirements.txt
 python src/data_generator.py
+python src/eda.py
 ```
 
-Expected console output (row and column counts):
+Expected console output of the generator (row and column counts):
 
 ```text
 Saved customers.csv: 4000 rows, 7 columns
@@ -44,9 +45,28 @@ Saved survey_responses.csv: 3000 rows, 6 columns
 Output folder: <path-to-project>/data
 ```
 
-Re-running the script overwrites both CSV files. Because the seed is fixed, the output is the same on every run.
+Re-running the generator overwrites both CSV files. Because the seed is fixed, the output is the same on every run.
 
 Scripts run non-interactively: they do not prompt for input, open plot windows or access the network. Further scripts will be added to `src/` and run the same way (`python src/<name>.py`).
+
+## Exploratory data analysis (`src/eda.py`)
+The EDA script reads both CSV files from `data/` (run the generator first) and prints its findings to the console. It does the following:
+
+- **Data quality:** shape, data types, missing values and duplicate rows for each table; uniqueness of keys, orphan `customer_id` values, score and date ranges, and whether `nps_category` matches `nps_score`.
+- **Descriptive statistics:** summary statistics for tenure and score, and category shares of segment, plan, region and acquisition channel.
+- **Aggregations:**
+  1. NPS category distribution.
+  2. Survey response rate by segment.
+  3. Mean score and promoter / detractor shares by segment and plan.
+  4. Mean score by region and acquisition channel.
+  5. Comment coverage by NPS category.
+- **Charts** saved to `figures/` (created automatically):
+  - `score_distribution.png`: counts of each 0-10 score, colored by category.
+  - `category_share_by_group.png`: category shares by segment and plan.
+  - `monthly_responses_and_score.png`: responses and mean score per month.
+  - `score_by_tenure.png`: score distribution by tenure band.
+
+The numbers are printed when the script runs; they describe synthetic data only.
 
 ---
 
