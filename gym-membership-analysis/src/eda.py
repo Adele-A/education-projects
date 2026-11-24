@@ -14,6 +14,7 @@ matplotlib.use("Agg")  # non-interactive backend: figures are only saved to file
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from matplotlib.ticker import PercentFormatter
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "data"
@@ -142,13 +143,15 @@ def make_charts(members, by_band, upg_band):
     sns.set_theme(style="whitegrid")
 
     # Chart 1: distribution of visits per week by churn status
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(9, 5.5))
     plot_df = members.assign(status=members["is_churned"].map({0: "Active", 1: "Churned"}))
     sns.histplot(data=plot_df, x="avg_visits_per_week", hue="status", bins=30,
                  stat="density", common_norm=False, element="step", ax=ax)
-    ax.set_title("Average visits per week: active vs churned members (synthetic data)")
-    ax.set_xlabel("Average visits per week (last 90 days)")
-    ax.set_ylabel("Density")
+    ax.set_title("Distribution of average visits per week: active vs churned members\n"
+                 "(synthetic data, last 90 days)")
+    ax.set_xlabel("Average visits per week (visits/week)")
+    ax.set_ylabel("Density (share of members per visits/week)")
+    sns.move_legend(ax, "upper right", title="Member status")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "visits_by_churn_status.png", dpi=120)
     plt.close(fig)
@@ -157,36 +160,50 @@ def make_charts(members, by_band, upg_band):
     fig, ax = plt.subplots(figsize=(8, 5))
     sns.boxplot(data=members, x="current_plan", y="avg_visits_per_week",
                 order=PLAN_ORDER, ax=ax)
-    ax.set_title("Visit frequency by current plan (synthetic data)")
+    ax.set_title("Visit frequency by current plan\n(synthetic data, last 90 days)")
     ax.set_xlabel("Current plan")
-    ax.set_ylabel("Average visits per week")
+    ax.set_ylabel("Average visits per week (visits/week)")
+    ax.set_ylim(bottom=0)
     fig.tight_layout()
     fig.savefig(FIG_DIR / "visits_by_plan.png", dpi=120)
     plt.close(fig)
 
-    # Chart 3: churn rate and upgrade rate by visit band
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
-    axes[0].bar(by_band.index.astype(str), by_band["churn_rate"], color="tab:red")
-    axes[0].set_title("Churn rate by visit band")
-    axes[0].set_xlabel("Average visits per week")
-    axes[0].set_ylabel("Churn rate")
-    axes[1].bar(upg_band.index.astype(str), upg_band.values, color="tab:green")
-    axes[1].set_title("Upgrade rate by visit band (Basic/Standard starters)")
-    axes[1].set_xlabel("Average visits per week")
-    axes[1].set_ylabel("Upgrade rate")
-    fig.suptitle("Synthetic data")
-    fig.tight_layout()
+    # Chart 3: churn rate and upgrade rate by visit band, with percent labels
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.8))
+    churn_bars = axes[0].bar(by_band.index.astype(str), by_band["churn_rate"], color="tab:red")
+    axes[0].set_title("Churn rate by visit band\n(all members)")
+    axes[0].set_xlabel("Average visits per week (visits/week)")
+    axes[0].set_ylabel("Churn rate (% of members)")
+    axes[0].yaxis.set_major_formatter(PercentFormatter(1.0))
+    axes[0].set_ylim(0, by_band["churn_rate"].max() * 1.15)
+    axes[0].bar_label(churn_bars, labels=[f"{v:.1%}" for v in by_band["churn_rate"]], padding=3)
+
+    upg_bars = axes[1].bar(upg_band.index.astype(str), upg_band.values, color="tab:green")
+    axes[1].set_title("Upgrade rate by visit band\n(Basic and Standard starters)")
+    axes[1].set_xlabel("Average visits per week (visits/week)")
+    axes[1].set_ylabel("Upgrade rate (% of eligible members)")
+    axes[1].yaxis.set_major_formatter(PercentFormatter(1.0))
+    axes[1].set_ylim(0, upg_band.max() * 1.15)
+    axes[1].bar_label(upg_bars, labels=[f"{v:.1%}" for v in upg_band.values], padding=3)
+
+    fig.suptitle("Churn and upgrade rates by average visits per week (synthetic data)")
+    fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(FIG_DIR / "churn_upgrade_by_visit_band.png", dpi=120)
     plt.close(fig)
 
     # Chart 4: churn rate by contract type and initial plan
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(8.5, 5.2))
     seg = members.groupby(["initial_plan", "contract_type"])["is_churned"].mean().reset_index()
     sns.barplot(data=seg, x="initial_plan", y="is_churned", hue="contract_type",
                 order=PLAN_ORDER, ax=ax)
-    ax.set_title("Churn rate by initial plan and contract type (synthetic data)")
+    ax.set_title("Churn rate by initial plan and contract type\n(synthetic data)")
     ax.set_xlabel("Initial plan")
-    ax.set_ylabel("Churn rate")
+    ax.set_ylabel("Churn rate (% of members)")
+    ax.yaxis.set_major_formatter(PercentFormatter(1.0))
+    ax.set_ylim(0, seg["is_churned"].max() * 1.15)
+    for container in ax.containers:
+        ax.bar_label(container, labels=[f"{v:.1%}" for v in container.datavalues], padding=2)
+    sns.move_legend(ax, "upper right", title="Contract type")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "churn_by_plan_contract.png", dpi=120)
     plt.close(fig)
