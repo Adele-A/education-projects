@@ -18,7 +18,7 @@ Can we flag suspicious card transactions early enough to stop losses, without ov
 1. **Data generation**: create reproducible synthetic customers and transactions (`src/data_generator.py`).
 2. **EDA**: class balance, distributions by fraud label, time patterns, categorical breakdowns (`src/eda.py`).
 3. **Analysis / model**: feature engineering, Isolation Forest, supervised baseline, comparison (`src/analysis.py`, `src/utils.py`).
-4. **SQL**: analytical queries on the same tables (fraud rate by segment, customer-level aggregates).
+4. **SQL**: analytical queries on the same tables (`sql/queries.sql`, run with `src/run_sql.py`).
 5. **Tests**: pytest checks for the helper functions (`tests/test_utils.py`); data integrity and generator tests still to be added.
 
 ## Dataset (synthetic)
@@ -68,6 +68,23 @@ All numbers appear in the script's printed output and are computed from the synt
 
 The actual metric values are printed by the script and stored in `reports/metrics.json`; run the project to see them. Because the data is simulated with built-in fraud patterns, the results show how the methods behave on this synthetic setup and say nothing about performance on real transactions. A supervised model is expected to use the labels to its advantage, while Isolation Forest shows what is possible when no labels exist.
 
+## SQL analysis
+
+`sql/queries.sql` holds eight commented queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: <question>` and ends with a semicolon. They cover:
+
+| Query | Question |
+|-------|----------|
+| Q1 | Class balance (share of fraudulent transactions) |
+| Q2 | Fraud rate by channel |
+| Q3 | Fraud rate by merchant category (categories with at least 50 transactions) |
+| Q4 | Amount and distance statistics by fraud label |
+| Q5 | Fraud rate by night/day and foreign/domestic (`CASE`, `strftime`) |
+| Q6 | Monthly number of frauds and fraud rate |
+| Q7 | Customers with the most frauds (join with `customers`, customer-level aggregate) |
+| Q8 | Fraud rate by customer home country, ranked with a CTE and a window function |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints its description together with the first rows of the result. Nothing is written to disk. The numbers appear only in the script's printed output and come from the synthetic data, so they reflect the simulation design rather than real-world behaviour.
+
 ## Project structure
 
 ```
@@ -82,8 +99,10 @@ fraud-transaction-detection/
 │   ├── data_generator.py
 │   ├── eda.py
 │   ├── utils.py
-│   └── analysis.py
+│   ├── analysis.py
+│   └── run_sql.py
 ├── sql/
+│   └── queries.sql
 └── tests/
     └── test_utils.py
 ```
@@ -97,10 +116,11 @@ pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
 python src/analysis.py
+python src/run_sql.py
 pytest
 ```
 
-The generator writes `data/customers.csv` and `data/transactions.csv` and prints a short summary. Running it again reproduces the same files. The EDA script prints the analysis and writes charts to `figures/`. The analysis script trains both models, prints the test-set metrics, saves two charts and writes `reports/metrics.json`.
+The generator writes `data/customers.csv` and `data/transactions.csv` and prints a short summary. Running it again reproduces the same files. The EDA script prints the analysis and writes charts to `figures/`. The analysis script trains both models, prints the test-set metrics, saves two charts and writes `reports/metrics.json`. The SQL script runs the queries from `sql/queries.sql` and prints the results.
 
 ---
 
