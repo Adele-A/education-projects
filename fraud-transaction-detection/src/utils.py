@@ -6,9 +6,11 @@ separately from the analysis script.
 
 import math
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
+from numpy.typing import ArrayLike
 from sklearn.metrics import average_precision_score, roc_auc_score
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -23,8 +25,19 @@ CHANNELS = ["pos", "online", "atm"]
 NIGHT_HOURS = [0, 1, 2, 3, 4, 5, 22, 23]
 
 
-def load_data(data_dir=DATA_DIR):
-    """Load both tables; fail with a clear message if data is missing."""
+def load_data(data_dir: str | Path = DATA_DIR) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Load both tables; fail with a clear message if data is missing.
+
+    Args:
+        data_dir: Folder that contains customers.csv and transactions.csv.
+
+    Returns:
+        A tuple (customers, transactions). The timestamp column of
+        transactions is parsed as datetime.
+
+    Raises:
+        SystemExit: If either CSV file does not exist.
+    """
     data_dir = Path(data_dir)
     cust_path = data_dir / "customers.csv"
     tx_path = data_dir / "transactions.csv"
@@ -35,10 +48,18 @@ def load_data(data_dir=DATA_DIR):
     return customers, transactions
 
 
-def build_features(transactions, customers):
+def build_features(
+    transactions: pd.DataFrame, customers: pd.DataFrame
+) -> tuple[pd.DataFrame, pd.Series]:
     """Join customer attributes and build a numeric feature matrix.
 
-    Returns (X, y). The label is never used as a feature.
+    Args:
+        transactions: Transactions table with a datetime timestamp column.
+        customers: Customers table keyed by customer_id.
+
+    Returns:
+        (X, y): feature DataFrame and the integer fraud label Series.
+        The label is never used as a feature.
     """
     df = transactions.merge(customers, on="customer_id", how="left", validate="m:1")
 
@@ -66,8 +87,17 @@ def build_features(transactions, customers):
     return feats, df["is_fraud"].astype(int)
 
 
-def top_k_metrics(y_true, scores, k):
-    """Precision, recall and F1 when the k highest-scored rows are flagged."""
+def top_k_metrics(y_true: ArrayLike, scores: ArrayLike, k: int) -> dict[str, Any]:
+    """Precision, recall and F1 when the k highest-scored rows are flagged.
+
+    Args:
+        y_true: Binary labels (1 = fraud).
+        scores: Anomaly or fraud scores; higher means more suspicious.
+        k: Number of rows to flag. Clipped to the range [1, len(scores)].
+
+    Returns:
+        Dictionary with keys flagged, true_positives, precision, recall, f1.
+    """
     y_true = np.asarray(y_true)
     scores = np.asarray(scores)
     k = int(min(max(k, 1), len(scores)))
@@ -86,10 +116,19 @@ def top_k_metrics(y_true, scores, k):
     }
 
 
-def evaluate_scores(y_true, scores, alert_budget=0.02):
+def evaluate_scores(
+    y_true: ArrayLike, scores: ArrayLike, alert_budget: float = 0.02
+) -> dict[str, Any]:
     """Ranking metrics (PR-AUC, ROC-AUC) plus precision/recall at an alert budget.
 
-    alert_budget is the share of transactions the review team can check.
+    Args:
+        y_true: Binary labels (1 = fraud).
+        scores: Anomaly or fraud scores; higher means more suspicious.
+        alert_budget: Share of transactions the review team can check.
+
+    Returns:
+        Dictionary with pr_auc, roc_auc, alert_budget and the keys returned
+        by top_k_metrics for the flagged share of transactions.
     """
     k = math.ceil(alert_budget * len(scores))
     result = {
