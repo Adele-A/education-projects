@@ -16,8 +16,8 @@ Which members are most likely to cancel their membership, and which visit and pl
 
 1. **Data generation** – create a reproducible synthetic dataset (`src/data_generator.py`).
 2. **EDA** – distributions, missing values, visit frequency by plan, churn and upgrade rates by segment (`src/eda.py`).
-3. **Analysis / model** – statistical tests on upgrade drivers and a churn risk model (e.g. logistic regression) with a risk score per member.
-4. **SQL** – queries for churn rate by segment, upgrade funnel and at-risk member lists.
+3. **Analysis / model** – statistical tests on upgrade drivers and a churn risk model with a risk score per member (`src/analysis.py`, helpers in `src/utils.py`).
+4. **SQL** – queries for churn rate by segment, upgrade funnel and at-risk member lists (`sql/queries.sql`, `src/run_sql.py`).
 5. **Tests** – pytest checks of data integrity (unique keys, valid ranges, consistent plans and dates).
 
 ## Dataset (synthetic)
@@ -39,9 +39,11 @@ From the project root:
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+python src/run_sql.py
 ```
 
-The CSV files are written to the `data/` folder and the charts to `figures/`.
+The CSV files are written to the `data/` folder, the charts to `figures/` and the metrics to `reports/`.
 
 ## Exploratory data analysis
 
@@ -60,7 +62,59 @@ It also saves four charts to `figures/`:
 | `churn_upgrade_by_visit_band.png` | Churn and upgrade rates by visit band |
 | `churn_by_plan_contract.png` | Churn rate by initial plan and contract type |
 
-All figures and numbers come from the synthetic data and are produced by running the script; see its output for the actual values.
+## Method
+
+`src/analysis.py` has two parts. Reusable logic (feature preparation, model construction, metric functions, risk tiers, eligibility rules) lives in `src/utils.py`.
+
+### 1. Churn risk model
+
+- **Target:** `is_churned`.
+- **Features:** weekly visits, days since last visit, distance to the gym, age, personal trainer and group class flags, initial plan, contract type and payment method.
+- **Excluded to avoid leakage:** `tenure_months` and `churn_date` (derived from the outcome), and `current_plan` / `monthly_fee` (affected by upgrades).
+- **Model:** logistic regression, chosen because its coefficients are easy to explain to a retention team. Numeric features are standardised and categorical features are one-hot encoded (first level is the reference).
+- **Evaluation:** stratified 75/25 train/test split with `random_state=42`; 5-fold cross-validated ROC AUC on the training set; test-set ROC AUC, average precision, accuracy, precision, recall, F1 (threshold 0.5) and Brier score. A single-feature baseline (fewer visits = higher risk) is reported for comparison, and a calibration table shows observed churn per predicted risk decile.
+- **Risk score:** the predicted churn probability for each active member, grouped into Low (< 0.25), Medium (0.25 to 0.50) and High (>= 0.50) tiers. The 50 highest-risk active members are saved to `reports/at_risk_members.csv`.
+
+### 2. Upgrade drivers
+
+- **Population:** members who did not start on Premium and had at least 90 days of membership (the same rule the generator uses for eligibility).
+- **Tests:** Mann-Whitney U test for visits of upgraders vs non-upgraders; chi-square tests of independence for personal trainer, group classes, contract type and initial plan.
+- **Model:** multivariable logistic regression (statsmodels) reporting odds ratios with 95% confidence intervals.
+
+### Outputs
+
+| File | Content |
+|------|---------|
+| `figures/churn_model_performance.png` | ROC curve and predicted vs observed churn by risk decile (test set) |
+| `figures/churn_model_coefficients.png` | Churn model coefficients (log-odds) |
+| `reports/metrics.json` | All metrics, coefficients, test results and risk tier counts |
+| `reports/at_risk_members.csv` | Top 50 active members by churn risk |
+
+All numbers are produced by running the script; see the console output and `reports/metrics.json` for the actual values.
+
+### Limitations
+
+- The data is synthetic, so the patterns reflect the rules written into the generator, not real member behaviour. Results show that the method works, not what a real gym would see.
+- `avg_visits_per_week` and `days_since_last_visit` are measured at the end of membership (or at the snapshot), so for churned members they describe the period right before cancelling. The model describes association, not a validated early-warning signal.
+- Upgrade associations are not causal: visit frequency is not measured specifically before the upgrade date.
+- The risk score for active members is computed with a model trained on the training split, so members in the training split are scored in-sample.
+
+## SQL analysis
+
+`sql/queries.sql` contains eight queries in the SQLite dialect. Each query is preceded by a comment line of the form `-- Q<n>: question`.
+
+| Query | Question |
+|-------|----------|
+| Q1 | Churn rate by initial plan and contract type |
+| Q2 | Churn rate and days since last visit by visit-frequency band (CTE with `CASE`) |
+| Q3 | Upgrade funnel: eligible vs upgraded members by initial plan (`LEFT JOIN`, date arithmetic with `julianday`) |
+| Q4 | Upgrade paths with count and added monthly revenue |
+| Q5 | Days from sign-up to upgrade and visit frequency by upgrade path (`JOIN`) |
+| Q6 | Rule-based list of at-risk active members (low visits, long gap, month-to-month contract) |
+| Q7 | Cities ranked by churn rate (window function `RANK`) |
+| Q8 | Churn rate and visits by sign-up year cohort |
+
+`src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints the description and the first 10 rows of the result. Nothing is written to disk. The at-risk list in Q6 is a simple business rule, not the model score; the model-based list is `reports/at_risk_members.csv`.
 
 ---
 
