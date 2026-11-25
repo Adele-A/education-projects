@@ -1,0 +1,559 @@
+{
+  "data_note": "synthetic data",
+  "n_responses": 3000,
+  "overall": {
+    "nps": -2.400000000000002,
+    "ci_low": -5.133333333333328,
+    "ci_high": 0.43333333333333,
+    "category_share_pct": {
+      "Detractor": 33.2,
+      "Passive": 36.0,
+      "Promoter": 30.8
+    }
+  },
+  "monthly_nps": [
+    {
+      "month": "2025-01",
+      "responses": 250,
+      "nps": -12.4
+    },
+    {
+      "month": "2025-02",
+      "responses": 234,
+      "nps": -2.1367521367521345
+    },
+    {
+      "month": "2025-03",
+      "responses": 234,
+      "nps": -0.42735042735042583
+    },
+    {
+      "month": "2025-04",
+      "responses": 242,
+      "nps": -4.132231404958681
+    },
+    {
+      "month": "2025-05",
+      "responses": 258,
+      "nps": -6.976744186046507
+    },
+    {
+      "month": "2025-06",
+      "responses": 241,
+      "nps": 2.904564315352698
+    },
+    {
+      "month": "2025-07",
+      "responses": 245,
+      "nps": 3.2653061224489797
+    },
+    {
+      "month": "2025-08",
+      "responses": 270,
+      "nps": -7.407407407407413
+    },
+    {
+      "month": "2025-09",
+      "responses": 264,
+      "nps": -3.0303030303030276
+    },
+    {
+      "month": "2025-10",
+      "responses": 259,
+      "nps": 5.405405405405405
+    },
+    {
+      "month": "2025-11",
+      "responses": 267,
+      "nps": 4.868913857677903
+    },
+    {
+      "month": "2025-12",
+      "responses": 236,
+      "nps": -8.898305084745761
+    }
+  ],
+  "segments": {
+    "segment": {
+      "groups": [
+        {
+          "group": "Enterprise",
+          "responses": 311,
+          "mean_score": 8.295819935691318,
+          "promoter_pct": 51.76848874598071,
+          "passive_pct": 32.154340836012864,
+          "detractor_pct": 16.077170418006432,
+          "nps": 35.69131832797428,
+          "ci_low": 27.0096463022508,
+          "ci_high": 44.05144694533762
+        },
+        {
+          "group": "Consumer",
+          "responses": 1825,
+          "mean_score": 7.292054794520548,
+          "promoter_pct": 29.26027397260274,
+          "passive_pct": 37.64383561643835,
+          "detractor_pct": 33.09589041095891,
+          "nps": -3.8356164383561655,
+          "ci_low": -7.506849315068492,
+          "ci_high": -0.16301369863014709
+        },
+        {
+          "group": "Small Business",
+          "responses": 864,
+          "mean_score": 7.028935185185185,
+          "promoter_pct": 26.504629629629626,
+          "passive_pct": 33.91203703703704,
+          "detractor_pct": 39.58333333333333,
+          "nps": -13.078703703703704,
+          "ci_low": -18.402777777777775,
+          "ci_high": -7.870370370370372
+        }
+      ],
+      "tests": {
+        "chi2": 92.74476788849637,
+        "chi2_dof": 4,
+        "chi2_p_value": 3.4375955684680975e-19,
+        "kruskal_h": 102.3800136963983,
+        "kruskal_p_value": 5.867626985344746e-23,
+        "chi2_p_bonferroni": 1.7187977842340488e-18,
+        "kruskal_p_bonferroni": 2.933813492672373e-22
+      },
+      "best_vs_worst": {
+        "best_group": "Enterprise",
+        "worst_group": "Small Business",
+        "nps_difference": 48.77002203167798,
+        "ci_low": 38.23528864475407,
+        "ci_high": 58.30022068893652
+      }
+    },
+    "plan": {
+      "groups": [
+        {
+          "group": "Premium",
+          "responses": 676,
+          "mean_score": 8.04585798816568,
+          "promoter_pct": 47.0414201183432,
+          "passive_pct": 32.39644970414201,
+          "detractor_pct": 20.562130177514792,
+          "nps": 26.479289940828405,
+          "ci_low": 20.558431952662723,
+          "ci_high": 32.24852071005917
+        },
+        {
+          "group": "Standard",
+          "responses": 1154,
+          "mean_score": 7.3422876949740035,
+          "promoter_pct": 30.24263431542461,
+          "passive_pct": 36.915077989601386,
+          "detractor_pct": 32.842287694974004,
+          "nps": -2.5996533795493937,
+          "ci_low": -7.10571923743501,
+          "ci_high": 1.9930675909878681
+        },
+        {
+          "group": "Basic",
+          "responses": 1170,
+          "mean_score": 6.87948717948718,
+          "promoter_pct": 21.965811965811966,
+          "passive_pct": 37.17948717948718,
+          "detractor_pct": 40.85470085470085,
+          "nps": -18.88888888888889,
+          "ci_low": -23.504273504273502,
+          "ci_high": -14.273504273504273
+        }
+      ],
+      "tests": {
+        "chi2": 144.03106597485703,
+        "chi2_dof": 4,
+        "chi2_p_value": 3.86782371591502e-30,
+        "kruskal_h": 158.71085545684207,
+        "kruskal_p_value": 3.4385522538814295e-35,
+        "chi2_p_bonferroni": 1.93391185795751e-29,
+        "kruskal_p_bonferroni": 1.7192761269407147e-34
+      },
+      "best_vs_worst": {
+        "best_group": "Premium",
+        "worst_group": "Basic",
+        "nps_difference": 45.368178829717294,
+        "ci_low": 38.0077251808021,
+        "ci_high": 52.63338264299802
+      }
+    },
+    "region": {
+      "groups": [
+        {
+          "group": "North",
+          "responses": 878,
+          "mean_score": 7.498861047835991,
+          "promoter_pct": 34.28246013667426,
+          "passive_pct": 36.56036446469248,
+          "detractor_pct": 29.157175398633257,
+          "nps": 5.125284738041003,
+          "ci_low": 0.11389521640091105,
+          "ci_high": 10.364464692482917
+        },
+        {
+          "group": "West",
+          "responses": 582,
+          "mean_score": 7.369415807560137,
+          "promoter_pct": 32.64604810996563,
+          "passive_pct": 35.223367697594504,
+          "detractor_pct": 32.13058419243986,
+          "nps": 0.5154639175257714,
+          "ci_low": -6.357388316151202,
+          "ci_high": 7.0446735395188975
+        },
+        {
+          "group": "East",
+          "responses": 801,
+          "mean_score": 7.30461922596754,
+          "promoter_pct": 29.213483146067414,
+          "passive_pct": 37.82771535580524,
+          "detractor_pct": 32.958801498127336,
+          "nps": -3.745318352059923,
+          "ci_low": -9.363295880149813,
+          "ci_high": 1.8726591760299616
+        },
+        {
+          "group": "South",
+          "responses": 739,
+          "mean_score": 7.086603518267929,
+          "promoter_pct": 26.928281461434374,
+          "passive_pct": 33.96481732070365,
+          "detractor_pct": 39.106901217861974,
+          "nps": -12.178619756427606,
+          "ci_low": -17.861975642760484,
+          "ci_high": -6.085926928281483
+        }
+      ],
+      "tests": {
+        "chi2": 22.42341889860455,
+        "chi2_dof": 6,
+        "chi2_p_value": 0.0010144763580389865,
+        "kruskal_h": 18.015641571500666,
+        "kruskal_p_value": 0.0004365944848103159,
+        "chi2_p_bonferroni": 0.005072381790194933,
+        "kruskal_p_bonferroni": 0.0021829724240515795
+      },
+      "best_vs_worst": {
+        "best_group": "North",
+        "worst_group": "South",
+        "nps_difference": 17.30390449446861,
+        "ci_low": 9.849982738478705,
+        "ci_high": 24.840080481843035
+      }
+    },
+    "acquisition_channel": {
+      "groups": [
+        {
+          "group": "Referral",
+          "responses": 622,
+          "mean_score": 7.381028938906752,
+          "promoter_pct": 31.832797427652732,
+          "passive_pct": 37.138263665594856,
+          "detractor_pct": 31.028938906752412,
+          "nps": 0.8038585209003191,
+          "ci_low": -5.309485530546626,
+          "ci_high": 6.913183279742762
+        },
+        {
+          "group": "Retail Store",
+          "responses": 718,
+          "mean_score": 7.31058495821727,
+          "promoter_pct": 31.337047353760443,
+          "passive_pct": 35.23676880222841,
+          "detractor_pct": 33.42618384401114,
+          "nps": -2.089136490250698,
+          "ci_low": -7.799442896935932,
+          "ci_high": 3.6211699164345412
+        },
+        {
+          "group": "Online",
+          "responses": 1192,
+          "mean_score": 7.321308724832215,
+          "promoter_pct": 30.369127516778523,
+          "passive_pct": 36.66107382550335,
+          "detractor_pct": 32.969798657718115,
+          "nps": -2.600671140939598,
+          "ci_low": -7.046979865771813,
+          "ci_high": 1.761744966442952
+        },
+        {
+          "group": "Partner",
+          "responses": 468,
+          "mean_score": 7.252136752136752,
+          "promoter_pct": 29.700854700854702,
+          "passive_pct": 33.97435897435898,
+          "detractor_pct": 36.324786324786324,
+          "nps": -6.623931623931623,
+          "ci_low": -14.102564102564102,
+          "ci_high": 0.4273504273504314
+        }
+      ],
+      "tests": {
+        "chi2": 3.8458029638713533,
+        "chi2_dof": 6,
+        "chi2_p_value": 0.6975341794995682,
+        "kruskal_h": 1.7523426670448108,
+        "kruskal_p_value": 0.6253601976256995,
+        "chi2_p_bonferroni": 1.0,
+        "kruskal_p_bonferroni": 1.0
+      },
+      "best_vs_worst": {
+        "best_group": "Referral",
+        "worst_group": "Partner",
+        "nps_difference": 7.427790144831942,
+        "ci_low": -2.617366779344274,
+        "ci_high": 16.780872976612528
+      }
+    },
+    "tenure_band": {
+      "groups": [
+        {
+          "group": "49-72",
+          "responses": 450,
+          "mean_score": 7.542222222222223,
+          "promoter_pct": 33.77777777777778,
+          "passive_pct": 37.333333333333336,
+          "detractor_pct": 28.888888888888886,
+          "nps": 4.888888888888893,
+          "ci_low": -2.666666666666667,
+          "ci_high": 11.777777777777782
+        },
+        {
+          "group": "25-48",
+          "responses": 1034,
+          "mean_score": 7.493230174081238,
+          "promoter_pct": 34.4294003868472,
+          "passive_pct": 35.1063829787234,
+          "detractor_pct": 30.464216634429402,
+          "nps": 3.9651837524177944,
+          "ci_low": -0.9671179883945835,
+          "ci_high": 8.897485493230173
+        },
+        {
+          "group": "13-24",
+          "responses": 866,
+          "mean_score": 7.228637413394919,
+          "promoter_pct": 29.214780600461893,
+          "passive_pct": 35.68129330254042,
+          "detractor_pct": 35.10392609699769,
+          "nps": -5.8891454965357966,
+          "ci_low": -11.085450346420323,
+          "ci_high": -0.692840646651266
+        },
+        {
+          "group": "1-12",
+          "responses": 650,
+          "mean_score": 7.013846153846154,
+          "promoter_pct": 25.076923076923073,
+          "passive_pct": 36.92307692307693,
+          "detractor_pct": 38.0,
+          "nps": -12.923076923076927,
+          "ci_low": -19.076923076923073,
+          "ci_high": -6.615384615384618
+        }
+      ],
+      "tests": {
+        "chi2": 24.27299191291989,
+        "chi2_dof": 6,
+        "chi2_p_value": 0.0004651845197492526,
+        "kruskal_h": 28.716910155079532,
+        "kruskal_p_value": 2.5681094935443936e-06,
+        "chi2_p_bonferroni": 0.002325922598746263,
+        "kruskal_p_bonferroni": 1.2840547467721968e-05
+      },
+      "best_vs_worst": {
+        "best_group": "49-72",
+        "worst_group": "1-12",
+        "nps_difference": 17.81196581196582,
+        "ci_low": 8.10213675213675,
+        "ci_high": 27.23290598290597
+      }
+    }
+  },
+  "comments_total": 2097,
+  "keywords": [
+    {
+      "category": "Detractor",
+      "term": "expensive",
+      "comments": 164,
+      "share_pct": 24.082232011747433
+    },
+    {
+      "category": "Detractor",
+      "term": "slow support",
+      "comments": 149,
+      "share_pct": 21.879588839941263
+    },
+    {
+      "category": "Detractor",
+      "term": "response",
+      "comments": 149,
+      "share_pct": 21.879588839941263
+    },
+    {
+      "category": "Detractor",
+      "term": "support",
+      "comments": 149,
+      "share_pct": 21.879588839941263
+    },
+    {
+      "category": "Detractor",
+      "term": "slow",
+      "comments": 149,
+      "share_pct": 21.879588839941263
+    },
+    {
+      "category": "Detractor",
+      "term": "support response",
+      "comments": 149,
+      "share_pct": 21.879588839941263
+    },
+    {
+      "category": "Detractor",
+      "term": "times",
+      "comments": 147,
+      "share_pct": 21.58590308370044
+    },
+    {
+      "category": "Detractor",
+      "term": "long",
+      "comments": 147,
+      "share_pct": 21.58590308370044
+    },
+    {
+      "category": "Detractor",
+      "term": "wait times",
+      "comments": 147,
+      "share_pct": 21.58590308370044
+    },
+    {
+      "category": "Detractor",
+      "term": "long wait",
+      "comments": 147,
+      "share_pct": 21.58590308370044
+    },
+    {
+      "category": "Passive",
+      "term": "service",
+      "comments": 226,
+      "share_pct": 29.12371134020619
+    },
+    {
+      "category": "Passive",
+      "term": "works",
+      "comments": 218,
+      "share_pct": 28.09278350515464
+    },
+    {
+      "category": "Passive",
+      "term": "experience",
+      "comments": 204,
+      "share_pct": 26.288659793814436
+    },
+    {
+      "category": "Passive",
+      "term": "average experience",
+      "comments": 204,
+      "share_pct": 26.288659793814436
+    },
+    {
+      "category": "Passive",
+      "term": "average",
+      "comments": 204,
+      "share_pct": 26.288659793814436
+    },
+    {
+      "category": "Passive",
+      "term": "okay",
+      "comments": 202,
+      "share_pct": 26.03092783505155
+    },
+    {
+      "category": "Passive",
+      "term": "nothing special",
+      "comments": 188,
+      "share_pct": 24.22680412371134
+    },
+    {
+      "category": "Passive",
+      "term": "nothing",
+      "comments": 188,
+      "share_pct": 24.22680412371134
+    },
+    {
+      "category": "Passive",
+      "term": "special",
+      "comments": 188,
+      "share_pct": 24.22680412371134
+    },
+    {
+      "category": "Passive",
+      "term": "expected",
+      "comments": 182,
+      "share_pct": 23.45360824742268
+    },
+    {
+      "category": "Promoter",
+      "term": "friendly",
+      "comments": 154,
+      "share_pct": 24.0625
+    },
+    {
+      "category": "Promoter",
+      "term": "friendly staff",
+      "comments": 154,
+      "share_pct": 24.0625
+    },
+    {
+      "category": "Promoter",
+      "term": "staff",
+      "comments": 154,
+      "share_pct": 24.0625
+    },
+    {
+      "category": "Promoter",
+      "term": "delivery",
+      "comments": 144,
+      "share_pct": 22.5
+    },
+    {
+      "category": "Promoter",
+      "term": "fast",
+      "comments": 144,
+      "share_pct": 22.5
+    },
+    {
+      "category": "Promoter",
+      "term": "fast delivery",
+      "comments": 144,
+      "share_pct": 22.5
+    },
+    {
+      "category": "Promoter",
+      "term": "value",
+      "comments": 141,
+      "share_pct": 22.03125
+    },
+    {
+      "category": "Promoter",
+      "term": "good value",
+      "comments": 141,
+      "share_pct": 22.03125
+    },
+    {
+      "category": "Promoter",
+      "term": "good",
+      "comments": 141,
+      "share_pct": 22.03125
+    },
+    {
+      "category": "Promoter",
+      "term": "money",
+      "comments": 141,
+      "share_pct": 22.03125
+    }
+  ]
+}

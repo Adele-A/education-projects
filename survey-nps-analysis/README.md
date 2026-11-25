@@ -9,11 +9,11 @@ Calculate the Net Promoter Score (NPS) for the whole customer base, compare it a
 ## Plan of the work
 1. **Data generation** (`src/data_generator.py`): build a reproducible synthetic dataset of customers and survey responses.
 2. **EDA** (`src/eda.py`): check data quality (missing values, duplicates, ranges), look at the score distribution, response rates and comment coverage.
-3. **Analysis / model**:
+3. **Analysis** (`src/analysis.py`, helpers in `src/utils.py`):
    - NPS calculation (% promoters minus % detractors) overall and over time.
    - Segment comparison with bootstrap confidence intervals and significance tests.
    - Text keyword frequency by NPS category (promoter, passive, detractor).
-4. **SQL**: queries for NPS by segment, by month and for the response rate.
+4. **SQL** (`sql/queries.sql`, `src/run_sql.py`): queries for overall NPS, NPS by segment, plan, channel, month and tenure band, response rate and comment keywords.
 5. **Tests**: pytest checks for the NPS function and for data integrity.
 
 ## Dataset (synthetic)
@@ -27,6 +27,7 @@ The `data/` folder does not need to exist beforehand; the generator creates it. 
 ## Requirements
 - Python 3.11
 - Packages listed in `requirements.txt` (numpy, pandas, matplotlib, seaborn, scipy, pytest)
+- The SQL step uses `sqlite3` from the Python standard library, so nothing extra is needed.
 
 ## How to run
 From the project root (the folder that contains `src/`):
@@ -35,6 +36,8 @@ From the project root (the folder that contains `src/`):
 pip install -r requirements.txt
 python src/data_generator.py
 python src/eda.py
+python src/analysis.py
+python src/run_sql.py
 ```
 
 Expected console output of the generator (row and column counts):
@@ -47,7 +50,7 @@ Output folder: <path-to-project>/data
 
 Re-running the generator overwrites both CSV files. Because the seed is fixed, the output is the same on every run.
 
-Scripts run non-interactively: they do not prompt for input, open plot windows or access the network. Further scripts will be added to `src/` and run the same way (`python src/<name>.py`).
+Scripts run non-interactively: they do not prompt for input, open plot windows or access the network.
 
 ## Exploratory data analysis (`src/eda.py`)
 The EDA script reads both CSV files from `data/` (run the generator first) and prints its findings to the console. It does the following:
@@ -66,7 +69,57 @@ The EDA script reads both CSV files from `data/` (run the generator first) and p
   - `monthly_responses_and_score.png`: responses and mean score per month.
   - `score_by_tenure.png`: score distribution by tenure band.
 
-The numbers are printed when the script runs; they describe synthetic data only.
+## Method (`src/analysis.py`)
+The script joins responses to customer attributes (one response per customer) and prints every result with a label. Reusable functions live in `src/utils.py` so they can be unit tested.
+
+1. **NPS definition.** NPS = % promoters (scores 9-10) minus % detractors (scores 0-6), on a scale from -100 to 100. Passives (7-8) count in the base but not in the numerator.
+2. **Uncertainty.** Each NPS value gets a 95% percentile bootstrap confidence interval (2000 resamples of the responses, fixed seed 42). This is done for the whole base and for every group.
+3. **Segment comparison.** NPS, category shares and mean score are computed by segment, plan, region, acquisition channel and tenure band (1-12, 13-24, 25-48, 49-72 months). For each dimension two tests check whether groups differ:
+   - chi-square test of independence between group and NPS category;
+   - Kruskal-Wallis test on the raw 0-10 scores (no normality assumption).
+
+   Because five dimensions are tested, a Bonferroni-adjusted p-value (p multiplied by 5, capped at 1) is reported as well. The gap between the best and worst group of each dimension is given with a bootstrap CI; since those two groups are chosen after looking at the data, that interval is optimistic and should be read as descriptive.
+4. **Time trend.** NPS and response counts per survey month. Months have fewer responses than the whole base, so month-to-month swings can be noise.
+5. **Comment keywords.** Comments are lowercased and split into words; a short stop word list is removed. Unigrams and bigrams (adjacent word pairs) are counted once per comment. For each NPS category the script reports the terms that appear in the largest share of that category's comments. Only responses with a comment are used, and no sentiment model is involved.
+
+### Outputs
+- Console tables: overall NPS, monthly NPS, group tables with test results, keyword tables.
+- `figures/nps_by_group.png`: NPS by group with 95% CI error bars for each dimension, with the overall NPS as a reference line.
+- `figures/keywords_by_category.png`: most frequent comment terms for promoters, passives and detractors.
+- `reports/metrics.json`: all computed metrics (overall NPS and CI, monthly NPS, group tables, test statistics, keyword counts). The folder is created automatically. Numbers appear only after the script has been run.
+
+### Limitations
+- The data is synthetic: group differences and comment wording were built into the generator, so findings illustrate the method and are not evidence about real customers.
+- Statistical significance does not imply practical importance; check the size of the NPS gap and the CI width.
+- Groups are analysed one dimension at a time, so overlapping effects (for example enterprise customers mostly on premium plans) are not separated.
+
+## SQL analysis (`sql/queries.sql`, `src/run_sql.py`)
+The same questions can be answered directly with SQL. `src/run_sql.py` loads both CSV files into an in-memory SQLite database (`pandas.DataFrame.to_sql`), so no database file is created and no server is needed. It then splits `sql/queries.sql` into statements, runs each one and prints the description of the query with the first 10 rows of the result.
+
+Run it from the project root after generating the data:
+
+```bash
+python src/run_sql.py
+```
+
+Each query is preceded by a comment line of the form `-- Q<n>: question`, which the script prints as the heading. The queries use the SQLite dialect:
+
+| Query | Question |
+|---|---|
+| Q1 | Overall NPS and category counts |
+| Q2 | Survey response rate by segment (LEFT JOIN of customers to responses) |
+| Q3 | NPS by customer segment |
+| Q4 | NPS by plan and by acquisition channel (UNION ALL) |
+| Q5 | NPS by survey month (`strftime`) |
+| Q6 | NPS by tenure band (CASE expression) |
+| Q7 | Lowest-NPS segment and plan combinations with at least 30 responses |
+| Q8 | Share of comments per NPS category that mention selected keywords (LIKE) |
+
+Notes:
+- NPS in SQL is `100 * (promoters - detractors) / responses`, the same definition as in `src/utils.py`.
+- The SQL queries give point estimates only. Confidence intervals and significance tests are in `src/analysis.py`.
+- Keyword matching with `LIKE` is a simple substring check, so it is less flexible than the unigram and bigram counts in the Python analysis.
+- Semicolons separate statements, so do not use them inside comments in `queries.sql`.
 
 ---
 
