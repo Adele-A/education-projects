@@ -150,9 +150,12 @@ def churn_charts(res):
     # Chart 2: coefficients (log-odds); positive = higher churn risk
     coefs = res["coefs"].sort_values("coefficient")
     colors = np.where(coefs["coefficient"] > 0, "tab:red", "tab:green")
-    fig, ax = plt.subplots(figsize=(8.5, 5.5))
-    ax.barh(coefs["feature"], coefs["coefficient"], color=colors)
+    # Taller figure when there are more features, so bars and labels do not overlap
+    fig, ax = plt.subplots(figsize=(9, max(4.5, 0.5 * len(coefs) + 1.5)))
+    bars = ax.barh(coefs["feature"], coefs["coefficient"], color=colors)
+    ax.bar_label(bars, labels=[f"{v:+.2f}" for v in coefs["coefficient"]], padding=4, fontsize=9)
     ax.axvline(0, color="black", linewidth=0.8)
+    ax.margins(x=0.15)  # room for the value labels
     ax.set_title("Churn model coefficients (synthetic data)\nred = higher churn risk, green = lower")
     ax.set_xlabel("Coefficient (log-odds; numeric features per 1 SD, categoricals vs reference level)")
     ax.set_ylabel("Feature")

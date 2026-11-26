@@ -16,7 +16,7 @@
       "f1": 0.4173027989821883,
       "roc_auc": 0.7276372059871704,
       "average_precision": 0.5136674834291692,
-      "brier_score": 0.19015152022210888
+      "brier_score": 0.19015152022210885
     },
     "baseline_visits_only_roc_auc": 0.6709324175468153,
     "active_members_scored": 2022,
@@ -27,48 +27,48 @@
     },
     "coefficients": {
       "contract_type_Month-to-month": {
-        "coefficient": 0.8954030839385662,
+        "coefficient": 0.8954030839385663,
         "odds_ratio": 2.448322470055512
       },
       "avg_visits_per_week": {
-        "coefficient": -0.7981894887007536,
-        "odds_ratio": 0.4501432161676802
+        "coefficient": -0.7981894887007535,
+        "odds_ratio": 0.45014321616768027
       },
       "initial_plan_Premium": {
-        "coefficient": -0.605944028750483,
-        "odds_ratio": 0.5455591599326175
+        "coefficient": -0.6059440287504833,
+        "odds_ratio": 0.5455591599326174
       },
       "initial_plan_Standard": {
         "coefficient": -0.5279396610215287,
         "odds_ratio": 0.5898189456118291
       },
       "payment_method_Cash": {
-        "coefficient": -0.1789391143826712,
-        "odds_ratio": 0.8361568077706507
+        "coefficient": -0.17893911438267096,
+        "odds_ratio": 0.8361568077706509
       },
       "distance_to_gym_km": {
-        "coefficient": 0.14559616062469033,
-        "odds_ratio": 1.1567289610137903
+        "coefficient": 0.14559616062469025,
+        "odds_ratio": 1.15672896101379
       },
       "has_personal_trainer": {
-        "coefficient": -0.11020250301385275,
-        "odds_ratio": 0.8956527445509247
+        "coefficient": -0.1102025030138527,
+        "odds_ratio": 0.8956527445509248
       },
       "days_since_last_visit": {
         "coefficient": 0.09964398843616076,
         "odds_ratio": 1.1047775344775037
       },
       "uses_group_classes": {
-        "coefficient": -0.08690762340670992,
+        "coefficient": -0.08690762340670999,
         "odds_ratio": 0.9167617790517165
       },
       "age": {
-        "coefficient": 0.06322474004058312,
-        "odds_ratio": 1.0652662203046248
+        "coefficient": 0.06322474004058322,
+        "odds_ratio": 1.065266220304625
       },
       "payment_method_Direct debit": {
-        "coefficient": -0.005817145852335428,
-        "odds_ratio": 0.9941997409803416
+        "coefficient": -0.0058171458523351705,
+        "odds_ratio": 0.9941997409803419
       }
     }
   },
@@ -107,32 +107,32 @@
       "C(initial_plan)[T.Standard]": {
         "odds_ratio": 0.2659316646690522,
         "ci_low": 0.17725863508921502,
-        "ci_high": 0.3989630758358244,
-        "p_value": 1.5544043608091323e-10
+        "ci_high": 0.39896307583582447,
+        "p_value": 1.5544043608091215e-10
       },
       "C(contract_type)[T.Month-to-month]": {
-        "odds_ratio": 1.1416511687668465,
-        "ci_low": 0.8227064848101059,
-        "ci_high": 1.5842434880619,
-        "p_value": 0.4280700034774896
+        "odds_ratio": 1.141651168766846,
+        "ci_low": 0.8227064848101054,
+        "ci_high": 1.5842434880618994,
+        "p_value": 0.42807000347749113
       },
       "avg_visits_per_week": {
         "odds_ratio": 1.588077464718989,
         "ci_low": 1.4304622034832284,
-        "ci_high": 1.7630595396419089,
-        "p_value": 4.21871730697867e-18
+        "ci_high": 1.7630595396419093,
+        "p_value": 4.2187173069789735e-18
       },
       "has_personal_trainer": {
-        "odds_ratio": 0.8638298031634227,
-        "ci_low": 0.5174253007253966,
+        "odds_ratio": 0.8638298031634226,
+        "ci_low": 0.5174253007253965,
         "ci_high": 1.4421442627317045,
-        "p_value": 0.575622318911754
+        "p_value": 0.5756223189117537
       },
       "uses_group_classes": {
         "odds_ratio": 1.2503340495303583,
-        "ci_low": 0.8657000527224515,
-        "ci_high": 1.8058624699150836,
-        "p_value": 0.23361874490820633
+        "ci_low": 0.8657000527224517,
+        "ci_high": 1.8058624699150838,
+        "p_value": 0.2336187449082061
       }
     }
   }
