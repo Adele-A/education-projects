@@ -19,7 +19,7 @@ Can we flag suspicious card transactions early enough to stop losses, without ov
 2. **EDA**: class balance, distributions by fraud label, time patterns, categorical breakdowns (`src/eda.py`).
 3. **Analysis / model**: feature engineering, Isolation Forest, supervised baseline, comparison (`src/analysis.py`, `src/utils.py`).
 4. **SQL**: analytical queries on the same tables (`sql/queries.sql`, run with `src/run_sql.py`).
-5. **Tests**: pytest checks for the helper functions (`tests/test_utils.py`); data integrity and generator tests still to be added.
+5. **Tests**: pytest checks for the data generator and the helper functions (`tests/`).
 
 ## Dataset (synthetic)
 
@@ -66,7 +66,49 @@ All numbers appear in the script's printed output and are computed from the synt
 - `figures/logistic_coefficients.png`: largest standardised coefficients of the logistic regression;
 - `reports/metrics.json`: all metrics and the run configuration.
 
-The actual metric values are printed by the script and stored in `reports/metrics.json`; run the project to see them. Because the data is simulated with built-in fraud patterns, the results show how the methods behave on this synthetic setup and say nothing about performance on real transactions. A supervised model is expected to use the labels to its advantage, while Isolation Forest shows what is possible when no labels exist.
+## Results
+
+All numbers below come from the scripts' printed output on the **synthetic** data (seed 42) and from `reports/metrics.json`.
+
+### Data and EDA
+
+- 5,000 transactions, of which 100 are fraudulent (2%); 4,900 are legitimate (98%).
+- Mean amount: 254.52 for fraud vs 50.81 for legitimate transactions (medians: 166.56 vs 33.86).
+- Fraud rate by channel: online 4.48% (87 of 1,944), ATM 0.90% (3 of 335), POS 0.37% (10 of 2,721).
+- Highest fraud rate by merchant category: electronics 13.38% (40 of 299), then travel 6.35% (20 of 315). Lowest: restaurant 0.23% (2 of 885).
+- Night and foreign combined: fraud rate 57.14% (28 of 49), compared with 0.52% (22 of 4,240) for daytime domestic transactions.
+- Monthly fraud rate ranges from 1.70% (April) to 2.73% (February).
+
+![Class balance and amount distribution](figures/class_balance_and_amount.png)
+
+![Fraud rate by channel and merchant category](figures/fraud_rate_by_segment.png)
+
+### Model comparison (test set: 1,500 rows, 30 frauds, base rate 0.0200)
+
+| Metric | Isolation Forest (unsupervised) | Logistic regression (supervised) |
+|--------|--------------------------------|----------------------------------|
+| PR-AUC | 0.6188 | 0.7582 |
+| ROC-AUC | 0.9519 | 0.9696 |
+| True positives at 2% alert budget (30 flagged) | 18 | 20 |
+| Precision at 2% alert budget | 0.6000 | 0.6667 |
+| Recall at 2% alert budget | 0.6000 | 0.6667 |
+| F1 at 2% alert budget | 0.6000 | 0.6667 |
+
+![Precision-recall curves](figures/pr_curves.png)
+
+## Conclusions
+
+- Fraud in this synthetic dataset is concentrated in specific segments: online channel, electronics and travel categories, night-time and foreign transactions. The combination of night and foreign had a fraud rate of 57.14%.
+- Both models rank fraud far better than chance: PR-AUC of 0.6188 (Isolation Forest) and 0.7582 (logistic regression) compared with a base rate of 0.0200.
+- The supervised baseline scored higher on every reported metric (PR-AUC 0.7582 vs 0.6188, ROC-AUC 0.9696 vs 0.9519), and caught 20 of 30 frauds against 18 of 30 within the 30-transaction alert budget.
+- Isolation Forest, which uses no labels, still caught 18 of 30 frauds (precision and recall 0.6000) in the alert budget, so it is a reasonable option when labels are not available.
+- With only 30 frauds in the test set, a difference of two caught frauds is small, so the gap at the alert budget should not be over-interpreted.
+
+## Limitations & next steps
+
+- **The data is synthetic.** The fraud patterns were built in by the generator, so the results show how the methods behave on this simulated setup, not on real transactions or real fraudsters.
+- Only 100 frauds in total (30 in the test set) make the metrics noisy; a single train/test split gives no uncertainty estimate.
+- Next steps: repeat the evaluation with cross-validation or several seeds and report intervals; tune Isolation Forest (for example the contamination and number of trees); try gradient-boosted trees or other supervised models; test other alert budgets; add cost-based evaluation (fraud loss vs review effort); and check how the models behave when fraud patterns shift over time.
 
 ## SQL analysis
 
@@ -84,6 +126,22 @@ The actual metric values are printed by the script and stored in `reports/metric
 | Q8 | Fraud rate by customer home country, ranked with a CTE and a window function |
 
 `src/run_sql.py` loads both CSV files into an in-memory SQLite database with `pandas.to_sql`, splits `queries.sql` into statements, runs each one and prints its description together with the first rows of the result. Nothing is written to disk. The numbers appear only in the script's printed output and come from the synthetic data, so they reflect the simulation design rather than real-world behaviour.
+
+## Tests
+
+The `tests/` folder contains pytest checks that run in a few seconds. They generate the synthetic tables in memory with the generator's own seed, so they need neither the CSV files in `data/` nor any figures.
+
+| File | What it checks |
+|------|----------------|
+| `tests/test_data_generator.py` | Column names, row counts, exact number of fraud rows, value ranges, valid categories, timestamp range and ordering, foreign keys, reproducibility with the same seed |
+| `tests/test_data_integrity.py` | `load_data` (missing files, timestamp parsing), `build_features` on generated data (no missing values, one-hot columns, no label leakage), metric edge cases |
+| `tests/test_utils.py` | Feature values and the ranking metrics on small hand-made examples |
+
+Run them from the project root:
+
+```bash
+python -m pytest -q
+```
 
 ## Project structure
 
@@ -104,6 +162,8 @@ fraud-transaction-detection/
 ├── sql/
 │   └── queries.sql
 └── tests/
+    ├── test_data_generator.py
+    ├── test_data_integrity.py
     └── test_utils.py
 ```
 
@@ -117,10 +177,10 @@ python src/data_generator.py
 python src/eda.py
 python src/analysis.py
 python src/run_sql.py
-pytest
+python -m pytest -q
 ```
 
-The generator writes `data/customers.csv` and `data/transactions.csv` and prints a short summary. Running it again reproduces the same files. The EDA script prints the analysis and writes charts to `figures/`. The analysis script trains both models, prints the test-set metrics, saves two charts and writes `reports/metrics.json`. The SQL script runs the queries from `sql/queries.sql` and prints the results.
+The generator writes `data/customers.csv` and `data/transactions.csv` and prints a short summary. Running it again reproduces the same files. The EDA script prints the analysis and writes charts to `figures/`. The analysis script trains both models, prints the test-set metrics, saves two charts and writes `reports/metrics.json`. The SQL script runs the queries from `sql/queries.sql` and prints the results. The tests can be run at any time, also before the data files exist.
 
 ---
 
