@@ -1,0 +1,21 @@
+course_id,title,category,difficulty,duration_weeks,n_lessons,is_free,price_usd
+1,Python Basics,Programming,Beginner,5,16,0,99
+2,Web Development Foundations,Programming,Beginner,4,11,0,149
+3,Data Structures in Practice,Programming,Intermediate,8,35,0,99
+4,Advanced Software Design,Programming,Advanced,11,56,1,0
+5,Statistics for Beginners,Data Science,Beginner,4,24,0,79
+6,Data Analysis with Pandas,Data Science,Intermediate,8,31,0,79
+7,Machine Learning Essentials,Data Science,Intermediate,6,21,1,0
+8,Deep Learning Workshop,Data Science,Advanced,10,56,1,0
+9,Business Fundamentals,Business,Beginner,4,22,0,149
+10,Project Management,Business,Intermediate,8,29,0,29
+11,Financial Modeling,Business,Advanced,11,36,0,149
+12,Product Strategy,Business,Intermediate,5,31,0,79
+13,Design Thinking,Design,Beginner,6,21,0,29
+14,UX Research Methods,Design,Intermediate,6,39,0,79
+15,Advanced Interface Design,Design,Advanced,11,35,0,49
+16,Digital Marketing Basics,Marketing,Beginner,6,17,1,0
+17,Content Marketing,Marketing,Intermediate,7,34,1,0
+18,Marketing Analytics,Marketing,Advanced,12,49,0,29
+19,SEO Fundamentals,Marketing,Beginner,6,23,0,99
+20,Brand Management,Marketing,Intermediate,6,38,0,149
