@@ -26,8 +26,11 @@ pd.set_option("display.max_columns", 30)
 DESCRIPTION_PATTERN = re.compile(r"^--\s*(Q\d+):\s*(.+)$", re.MULTILINE)
 
 
-def load_database():
-    """Create an in-memory SQLite database with the members and upgrades tables."""
+def load_database() -> sqlite3.Connection:
+    """Create an in-memory SQLite database with the members and upgrades tables.
+
+    Returns the open connection; the caller is responsible for closing it.
+    """
     conn = sqlite3.connect(":memory:")
     # Dates are kept as ISO text so SQLite date functions work on them
     for table in ["members", "upgrades"]:
@@ -40,7 +43,7 @@ def load_database():
     return conn
 
 
-def split_queries(sql_text):
+def split_queries(sql_text: str) -> list[tuple[str, str, str]]:
     """Split the SQL file into (label, description, statement) tuples.
 
     Statements are separated by semicolons; chunks without a '-- Q<n>:'
@@ -58,7 +61,8 @@ def split_queries(sql_text):
     return queries
 
 
-def main():
+def main() -> None:
+    """Load the CSV data, run every query in sql/queries.sql and print the results."""
     if not SQL_FILE.exists():
         print(f"SQL file not found: {SQL_FILE}")
         sys.exit(1)
